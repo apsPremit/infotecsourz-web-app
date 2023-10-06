@@ -12,7 +12,7 @@ import { RxDotFilled } from 'react-icons/rx';
 const OrderRow = ({ order }) => {
     const router = useRouter()
     const { _id, orderId, orderName, grandTotal, status, createdAt, returnTime, paymentStatus, invoiceStatus, deliveredFileUrl } = order || {}
-    console.log('order', order)
+
 
 
 

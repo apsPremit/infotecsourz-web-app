@@ -47,7 +47,7 @@ const SignUpForm = () => {
                         const token = await createJWT({ email })
                         Cookies.set('access-token', token?.accessToken, { expires: 2 })
 
-                        const redirectUrl = search.get('redirectUrl') || '/dashboard'
+                        const redirectUrl = '/dashboard'
                         replace(redirectUrl)
 
 

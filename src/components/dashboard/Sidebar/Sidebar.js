@@ -1,15 +1,13 @@
 "use client"
 import Image from 'next/image';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import dashboardLogo from '@/assets/images/DashboardLogo.png'
-import Dashboard from '@/assets/images/Dashboard.png'
-import faq from '@/assets/images/faq.png'
+
+
 // import invoice from '../../../assets/images/Invoice.png'
-import order from '@/assets/images/order.png'
+
 // import profile from '../../../assets/images/user.png'
-import control from '@/assets/images/control.png'
-import logo from '@/assets/images/logo.png'
-import pricing from '@/assets/images/pricing.png'
+
 import { StateContext } from '@/context/StateProvider';
 import { RxCross1 } from "react-icons/rx";
 import { RiTranslate } from "react-icons/ri";
@@ -20,6 +18,11 @@ import { IoPowerOutline } from "react-icons/io5";
 import { UserAuth } from '@/context/AuthProvider';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { AiOutlineHome } from "react-icons/ai";
+import { BsCartPlus } from "react-icons/bs";
+import { BiUserCircle } from "react-icons/bi";
+import { IoMdPaperPlane } from "react-icons/io";
+import { FaQuestion } from "react-icons/fa6";
 
 
 
@@ -27,6 +30,11 @@ const Sidebar = () => {
     const currentRoute = usePathname()
     const router = useRouter()
     const { logOut, user, setUserData } = UserAuth()
+    const [accessToken, setAccessToken] = useState('')
+    useEffect(() => {
+        const token = Cookies.remove('access-token')
+        setAccessToken(token)
+    }, [])
 
     const handleLogOut = async () => {
         await logOut()
@@ -70,34 +78,51 @@ const Sidebar = () => {
 
             <div className={`flex px-5  h-full text-white lg:px-0 flex-col duration-300 ${isSidebarOpen ? 'translate-x-0 ' : '-translate-x-52 lg:translate-x-0'}`}>
                 <ul className='pt-6 text-white flex-1'>
-                    {
-                        Menus.map((item, index) => <Link
-                            key={index}
-                            href={item?.href}
-                        >
-                            <li
-                                onClick={() => setSidebarOpen(!isSidebarOpen)}
 
-                                className={`flex gap-x-3 my-2 items-center p-2 cursor-pointer hover:bg-main rounded-lg ${currentRoute === item?.href ? 'bg-main' : ''}`}
-                            >
-                                {
-                                    item?.type === 'comIcon' ?
-                                        <span > {item?.src}</span>
-                                        : <Image
-                                            src={item.src}
-                                            alt={item.title}
-                                            width={20}
-                                            height={20}
-                                        />
-                                }
-                                {item.title}
-                            </li>
-                        </Link>)
-                    }
+                    <li onClick={() => setSidebarOpen(!isSidebarOpen)} >
+                        <Link href='/dashboard' className={`flex gap-x-3 my-3 items-center p-2 cursor-pointer hover:bg-main rounded-lg ${currentRoute === '/dashboard' ? 'bg-main' : ''}`}>
+                            <span className='text-2xl'><AiOutlineHome /></span>
+                            <span>Dashboard</span>
+                        </Link>
+                    </li>
+                    <li onClick={() => setSidebarOpen(!isSidebarOpen)} >
+                        <Link href='/dashboard/new_order' className={`flex gap-x-3 my-3 items-center p-2 cursor-pointer hover:bg-main rounded-lg ${currentRoute === '/dashboard/new_order' ? 'bg-main' : ''}`}>
+                            <span className='text-2xl'><BsCartPlus /></span>
+                            <span>New Order</span>
+                        </Link>
+                    </li>
+                    <li onClick={() => setSidebarOpen(!isSidebarOpen)} >
+                        <Link href='/dashboard/profile' className={`flex gap-x-3 my-3 items-center p-2 cursor-pointer hover:bg-main rounded-lg ${currentRoute === '/dashboard/profile' ? 'bg-main' : ''}`}>
+                            <span className='text-2xl'><BiUserCircle /></span>
+                            <span>Profile</span>
+                        </Link>
+                    </li>
+                    {/* pricing  */}
+                    <li onClick={() => setSidebarOpen(!isSidebarOpen)} >
+                        <Link href='/dashboard/pricing' className={`flex gap-x-3 my-3 items-center p-2 cursor-pointer hover:bg-main rounded-lg ${currentRoute === '/dashboard/pricing' ? 'bg-main' : ''}`}>
+                            <span className='text-2xl'><IoMdPaperPlane /></span>
+                            <span>Pricing</span>
+                        </Link>
+                    </li>
+                    {/* faq  */}
+                    <li onClick={() => setSidebarOpen(!isSidebarOpen)} >
+                        <Link href='/dashboard/faq' className={`flex gap-x-3 my-3 items-center p-2 cursor-pointer hover:bg-main rounded-lg ${currentRoute === '/dashboard/faq' ? 'bg-main' : ''}`}>
+                            <span className='text-xl'><FaQuestion /></span>
+                            <span>FAQ</span>
+                        </Link>
+                    </li>
+                    {/* support  */}
+                    <li onClick={() => setSidebarOpen(!isSidebarOpen)} >
+                        <Link href='/dashboard/support' className={`flex gap-x-3 my-3 items-center p-2 cursor-pointer hover:bg-main rounded-lg ${currentRoute === '/dashboard/support' ? 'bg-main' : ''}`}>
+                            <span className='text-xl'><BiSupport /></span>
+                            <span>Support</span>
+                        </Link>
+                    </li>
+
                 </ul>
 
                 {
-                    user?.email && <ul className='text-white mb-10'>
+                    (user?.email || accessToken) && <ul className='text-white mb-10'>
                         <li
 
 
