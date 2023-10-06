@@ -48,7 +48,7 @@ const Sidebar = () => {
     const { isSidebarOpen, setSidebarOpen } = useContext(StateContext)
 
     return (
-        <div className={` h-screen  z-20 lg:p-5  pt-8 fixed duration-300 lg:w-52 ${isSidebarOpen ? 'w-full  ' : 'w-0 lg'}`} style={{
+        <div className={` h-screen  z-20 lg:p-5  pt-8 fixed duration-300 lg:w-52 ${isSidebarOpen ? 'w-1/2  ' : 'w-0 lg'}`} style={{
             background: 'linear-gradient(175deg, #0E1A45 0.02%, #4A01A9 100.02%)'
         }}>
 
