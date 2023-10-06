@@ -14,7 +14,7 @@ import getUserData from '@/utils/functions/getUserData';
 
 const LoginForm = () => {
     const search = useSearchParams()
-    const { replace } = useRouter()
+    const router = useRouter()
     const { loginWthEmailAndPassword, user, loading } = UserAuth()
     const [isRemember, setRemember] = useState(false)
     const [error, setError] = useState('')
