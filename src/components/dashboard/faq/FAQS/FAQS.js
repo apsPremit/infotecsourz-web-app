@@ -5,24 +5,28 @@ import { ChevronUpIcon } from '@heroicons/react/20/solid'
 const FAQS = () => {
     const faqs = [
         {
-            title: 'How to place an order?',
-            description: 'It’s very easy than you think. Just request a quote with your e-mail and information. In few business hours you will get our e-mail with price quote. If you are agree on that price then upload your file and you are done. '
+            title: 'How to start ?',
+            description: 'Just signup and upload file with instruction on Upload section in dashboard'
         },
         {
-            title: 'What is your turnaround time?',
-            description: 'We have TAT 24-72 hours but we can deliver the images sooner in case of emergency.'
+            title: 'What are the photos that you edit ?',
+            description: 'We edit and retouch all types of  photos. For example- Electronics product, Food Items, Apparel, Cosmetics, machinery/parts, farming equipment, and more.'
         },
         {
-            title: 'What Payment method do you accept?',
-            description: 'We accept most of the online payment including PayPal, We are accepting bank wire transfer too.'
+            title: 'Can I get fast price quote ?',
+            description: 'Yes, we offer fast quote service on any  photo editing request. You will get response within 30 minutes . Request Quote Now.'
         },
         {
-            title: "May I get refund If I don't like photos?",
-            description: "If you don’t like our photo retouching then you can get revisions that free of cost. Unfortunately we don’t have any refund policy right now."
+            title: "How long the photo editing will take?",
+            description: "The general turnaround is 24-72 hours for up to 1000 photos. However depending on urgency, we encourage our customers to get in touch with us directly for faster turnarounds."
         },
         {
-            title: "Is there any discount if I send images regular basis?",
-            description: "Yes there is discounts and offers. for more information about discounts please contact us."
+            title: "Can I share photos via Dropbox, Google Drive, Wetransfer",
+            description: "Yes you can share photos through Dropbox, Wetransfer, Google drive to our E-mail : hello@infotecsourz.com"
+        },
+        {
+            title: "What if I don't like the editing photos?",
+            description: "You will get revisions for each photos. It's free of cos"
         },
     ]
 
