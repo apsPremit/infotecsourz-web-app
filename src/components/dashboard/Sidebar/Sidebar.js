@@ -4,9 +4,9 @@ import React, { useContext, useState } from 'react';
 import dashboardLogo from '@/assets/images/DashboardLogo.png'
 import Dashboard from '@/assets/images/Dashboard.png'
 import faq from '@/assets/images/faq.png'
-import invoice from '@/assets/images/invoice.png'
+// import invoice from '../../../assets/images/Invoice.png'
 import order from '@/assets/images/order.png'
-import profile from '../../../assets/images/user.png'
+// import profile from '../../../assets/images/user.png'
 import control from '@/assets/images/control.png'
 import logo from '@/assets/images/logo.png'
 import pricing from '@/assets/images/pricing.png'
@@ -36,13 +36,13 @@ const Sidebar = () => {
     }
 
     const Menus = [
-        { title: "Dashboard", src: Dashboard, href: '/dashboard' },
-        { title: "New order", src: order, href: '/dashboard/new_order' },
-        // { title: "Invoice", src: invoice, href: '/dashboard/invoice' },
-        { title: "Profile ", src: profile, href: '/dashboard/profile' },
-        { title: "Pricing", src: pricing, href: '/dashboard/pricing' },
-        { title: "FAQ", src: faq, href: '/dashboard/faq' },
-        { title: "Support", src: <BiSupport size={20} />, href: '/dashboard/support', type: 'comIcon' },
+        // { title: "Dashboard", src: Dashboard, href: '/dashboard' },
+        // { title: "New order", src: order, href: '/dashboard/new_order' },
+        // // { title: "Invoice", src: invoice, href: '/dashboard/invoice' },
+        // { title: "Profile ", src: profile, href: '/dashboard/profile' },
+        // { title: "Pricing", src: pricing, href: '/dashboard/pricing' },
+        // { title: "FAQ", src: faq, href: '/dashboard/faq' },
+        // { title: "Support", src: <BiSupport size={20} />, href: '/dashboard/support', type: 'comIcon' },
 
 
     ];
