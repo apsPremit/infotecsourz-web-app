@@ -43,17 +43,7 @@ const Sidebar = () => {
         setUserData({})
     }
 
-    const Menus = [
-        // { title: "Dashboard", src: Dashboard, href: '/dashboard' },
-        // { title: "New order", src: order, href: '/dashboard/new_order' },
-        // // { title: "Invoice", src: invoice, href: '/dashboard/invoice' },
-        // { title: "Profile ", src: profile, href: '/dashboard/profile' },
-        // { title: "Pricing", src: pricing, href: '/dashboard/pricing' },
-        // { title: "FAQ", src: faq, href: '/dashboard/faq' },
-        // { title: "Support", src: <BiSupport size={20} />, href: '/dashboard/support', type: 'comIcon' },
 
-
-    ];
 
     const { isSidebarOpen, setSidebarOpen } = useContext(StateContext)
 
