@@ -16,7 +16,7 @@ export const middleware = async (request) => {
         return NextResponse.next();
 
     } catch (error) {
-        return NextResponse.redirect(new URL(`/login?redirectUrl=${pathname}`, request.url))
+        return NextResponse.redirect(new URL(`/login`, request.url))
     }
 
 
