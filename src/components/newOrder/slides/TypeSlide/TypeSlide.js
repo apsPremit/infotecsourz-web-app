@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import shoes from '@/assets/images/shoes-bg.jpg'
 import Image from 'next/image';
-import modelBasic from '../../../../../public/images/model/First Image Basic.jpg'
-import productBasic from '../../../../../public/images/product/Transparent.png'
+import modelBasic from '../../../../../public/Model/Model.jpg'
+import productBasic from '../../../../../public/product/Product.jpg'
 import { StateContext } from '@/context/StateProvider';
 
 const TypeSlide = () => {
@@ -18,7 +18,7 @@ const TypeSlide = () => {
                     <Image src={productBasic} alt='item'
                         fill
                         className=' rounded-xl object-contain cursor-pointer  border border-shadow'
-
+                        style={{ objectFit: 'cover' }}
 
                     />
                     <input
@@ -36,6 +36,7 @@ const TypeSlide = () => {
                     <Image src={modelBasic} alt='item'
                         fill
                         className=' rounded-xl cursor-pointer'
+                        style={{ objectFit: 'cover' }}
 
                     />
                     <input
