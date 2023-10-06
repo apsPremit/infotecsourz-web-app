@@ -36,10 +36,11 @@ const LoginForm = () => {
             .then(async result => {
                 // set token 
                 const token = await createJWT({ email })
+                console.log('token', token)
                 Cookies.set('access-token', token?.accessToken, { expires: 2 })
 
 
-                router.push('/dashboard')
+                await router.replace('/dashboard')
 
             })
             .catch(err => setError(err?.code?.split('/')[1]?.replace('-', ' ')))

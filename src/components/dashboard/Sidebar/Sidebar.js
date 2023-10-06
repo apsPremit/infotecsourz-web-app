@@ -32,7 +32,7 @@ const Sidebar = () => {
     const { logOut, user, setUserData } = UserAuth()
     const [accessToken, setAccessToken] = useState('')
     useEffect(() => {
-        const token = Cookies.remove('access-token')
+        const token = Cookies.get('access-token')
         setAccessToken(token)
     }, [])
 

@@ -7,7 +7,7 @@ export const middleware = async (request) => {
     const { pathname } = request.nextUrl;
 
     try {
-        let cookie = request.cookies.get('access-token')?.value;
+        let cookie = await request.cookies.get('access-token')?.value;
         if (!cookie) {
             throw new Error('invalid key')
         }
