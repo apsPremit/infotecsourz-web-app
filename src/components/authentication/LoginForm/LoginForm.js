@@ -9,7 +9,7 @@ import logo from '@/assets/images/logo.png';
 import { useRouter, useSearchParams } from 'next/navigation';
 import createJWT from '@/utils/functions/createJWT';
 import Cookies from 'js-cookie';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import getUserData from '@/utils/functions/getUserData';
 
 const LoginForm = () => {
@@ -17,6 +17,7 @@ const LoginForm = () => {
     const router = useRouter()
     const { loginWthEmailAndPassword, user, loading } = UserAuth()
     const [isRemember, setRemember] = useState(false)
+    const [loginLoading, setLoginLoading] = useState(false)
     const [error, setError] = useState('')
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
@@ -28,8 +29,10 @@ const LoginForm = () => {
     });
 
 
+
     const onSubmit = (data) => {
 
+        setLoginLoading(true)
         const { email, password } = data || {}
 
         loginWthEmailAndPassword(email, password)
@@ -40,10 +43,13 @@ const LoginForm = () => {
                 Cookies.set('access-token', token?.accessToken, { expires: 2 })
 
 
-                await router.replace('/dashboard')
-
+                router.replace('/dashboard')
+                setLoginLoading(false)
             })
-            .catch(err => setError(err?.code?.split('/')[1]?.replace('-', ' ')))
+            .catch(err => {
+                setLoginLoading(false)
+                setError(err?.code?.split('/')[1]?.replace('-', ' '))
+            })
     }
 
 
@@ -121,7 +127,7 @@ const LoginForm = () => {
                     error && <p className='text-sm text-center text-red-500'>{error}</p>
                 }
                 <div>
-                    <input className='bg-main hover:bg-[#5736ce] disabled:bg-opacity-50 py-3 px-3 text-center text-white font-bold w-full rounded-lg my-5 cursor-pointer' type="submit" value="Login" />
+                    <input disabled={loginLoading} className='bg-main hover:bg-[#5736ce] disabled:bg-opacity-50 py-3 px-3 text-center text-white font-bold w-full rounded-lg my-5 cursor-pointer' type="submit" value={loginLoading ? "Please wait" : 'Login'} />
                 </div>
             </form>
             <div className="py-6 flex items-center text-gray-400  uppercase before:flex-[1_1_0%] before:border-t before:mr-6 after:flex-[1_1_0%] after:border-t after:ml-6 dark:text-gray-500 before:border-shadow after:border-shadow">Or</div>
@@ -130,6 +136,7 @@ const LoginForm = () => {
             <SocialLogin />
 
             <p className='font-semibold text-center'>Don’t have an account? <Link href='/signup' className='text-main'>Signup</Link></p>
+            <Toaster />
         </div>
 
     );
