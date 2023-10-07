@@ -4,9 +4,10 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 
 const CheckUserAuth = () => {
-    const { user } = UserAuth()
+    const { user, loading } = UserAuth()
     console.log(user)
     console.log('call check auth', user)
+
     if (!user?.email) {
         redirect('/login')
     }

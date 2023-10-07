@@ -12,6 +12,7 @@ import Cookies from 'js-cookie';
 import saveUser from '@/utils/functions/saveUser';
 import toast, { Toaster } from 'react-hot-toast';
 import getUserData from '@/utils/functions/getUserData';
+import { ImSpinner2 } from 'react-icons/im';
 
 
 const SignUpForm = () => {
@@ -165,6 +166,9 @@ const SignUpForm = () => {
                 </label>
                 {
                     error && <p className='text-sm text-center text-red-500'>{error}</p>
+                }
+                {
+                    loading && <div className='flex items-center justify-center text-xl text-main'><ImSpinner2 className='animate-spin' /></div>
                 }
                 <div>
                     <input disabled={!isAgree} className='bg-main cursor-pointer hover:bg-[#5736ce] disabled:bg-opacity-50 py-3 px-3 text-center text-white font-bold w-full rounded-lg mt-3 mb-5' type="submit" value="Sign Up" />

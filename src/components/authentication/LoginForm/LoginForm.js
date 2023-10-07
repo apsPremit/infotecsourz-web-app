@@ -11,6 +11,7 @@ import createJWT from '@/utils/functions/createJWT';
 import Cookies from 'js-cookie';
 import toast, { Toaster } from 'react-hot-toast';
 import getUserData from '@/utils/functions/getUserData';
+import { ImSpinner2 } from 'react-icons/im';
 
 const LoginForm = () => {
     const search = useSearchParams()
@@ -126,8 +127,11 @@ const LoginForm = () => {
                 {
                     error && <p className='text-sm text-center text-red-500'>{error}</p>
                 }
+                {
+                    loading && <div className='flex items-center justify-center text-xl text-main'><ImSpinner2 className='animate-spin' /></div>
+                }
                 <div>
-                    <input disabled={loginLoading} className='bg-main hover:bg-[#5736ce] disabled:bg-opacity-50 py-3 px-3 text-center text-white font-bold w-full rounded-lg my-5 cursor-pointer' type="submit" value={loginLoading ? "Please wait" : 'Login'} />
+                    <input disabled={loading} className='bg-main hover:bg-[#5736ce] disabled:bg-opacity-50 py-3 px-3 text-center text-white font-bold w-full rounded-lg my-5 cursor-pointer' type="submit" value="Login" />
                 </div>
             </form>
             <div className="py-6 flex items-center text-gray-400  uppercase before:flex-[1_1_0%] before:border-t before:mr-6 after:flex-[1_1_0%] after:border-t after:ml-6 dark:text-gray-500 before:border-shadow after:border-shadow">Or</div>
