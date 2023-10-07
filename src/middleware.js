@@ -7,7 +7,9 @@ export const middleware = async (request) => {
     const { pathname } = request.nextUrl;
 
     try {
-        let cookie = await request.cookies.get('access-token')?.value;
+        let cookie = await request.cookies.get('access-token')?.value
+        console.log('access token', cookie)
+
         if (!cookie) {
             throw new Error('invalid key')
         }
@@ -16,6 +18,7 @@ export const middleware = async (request) => {
         return NextResponse.next();
 
     } catch (error) {
+        console.log(error)
         return NextResponse.redirect(new URL(`/login`, request.url))
     }
 

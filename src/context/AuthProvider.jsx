@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
                 .catch(error => console.log('user data error', error))
         }
 
-    }, [user])
+    }, [user, userData])
 
 
     // email password register 
@@ -97,7 +97,6 @@ export const AuthProvider = ({ children }) => {
         setLoading(true)
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser)
-
             setLoading(false)
 
         })
