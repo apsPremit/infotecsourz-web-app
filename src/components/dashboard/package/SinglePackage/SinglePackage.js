@@ -35,7 +35,7 @@ const SinglePackage = ({ plan }) => {
 
                 </div>
                 <hr className='my-3' />
-                <div className=''>
+                <div className='min-h-[70px]'>
 
                     {
                         photos && <p className='gap-x-2 flex items-center my-2'>
