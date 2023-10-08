@@ -17,7 +17,7 @@ import { ImSpinner2 } from 'react-icons/im';
 
 const SignUpForm = () => {
     const router = useRouter()
-    const { user, registerWithEmailAndPassword, profileUpdate, loading } = UserAuth()
+    const { user, registerWithEmailAndPassword, profileUpdate, loading, setLoading } = UserAuth()
     const [isAgree, setAgree] = useState(false)
     const search = useSearchParams()
     const { replace } = useRouter()
@@ -49,12 +49,19 @@ const SignUpForm = () => {
                         Cookies.set('access-token', token?.accessToken, { expires: 2 })
 
 
-
+                        setLoading(false)
                         router.push('/dashboard')
+
                     })
-                    .catch(err => setError(err?.code.split('/')[1]?.replace('-', ' ')))
+                    .catch(err => {
+                        setLoading(false)
+                        setError(err?.code.split('/')[1]?.replace('-', ' '))
+                    })
             })
-            .catch(err => setError(err?.code?.split('/')[1]?.replace('-', ' ')))
+            .catch(err => {
+                setLoading(false)
+                setError(err?.code?.split('/')[1]?.replace('-', ' '))
+            })
     }
 
 

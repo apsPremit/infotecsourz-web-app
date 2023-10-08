@@ -81,6 +81,7 @@ export const AuthProvider = ({ children }) => {
     const userInfo = {
         user,
         loading,
+        setLoading,
         registerWithEmailAndPassword,
         loginWthEmailAndPassword,
         logInWithGoogle,

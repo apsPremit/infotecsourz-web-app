@@ -16,7 +16,7 @@ import { ImSpinner2 } from 'react-icons/im';
 const LoginForm = () => {
     const search = useSearchParams()
     const router = useRouter()
-    const { loginWthEmailAndPassword, user, loading } = UserAuth()
+    const { loginWthEmailAndPassword, user, loading, setLoading } = UserAuth()
     const [isRemember, setRemember] = useState(false)
     const [loginLoading, setLoginLoading] = useState(false)
     const [error, setError] = useState('')
@@ -46,9 +46,11 @@ const LoginForm = () => {
 
                 router.replace('/dashboard')
                 setLoginLoading(false)
+                setLoading(false)
             })
             .catch(err => {
                 setLoginLoading(false)
+                setLoading(false)
                 setError(err?.code?.split('/')[1]?.replace('-', ' '))
             })
     }
