@@ -31,7 +31,7 @@ const SpecificationsRightSide = () => {
     ]
 
     const handleProceed = () => {
-        router.push(selectedPackage === 'free trial' ? '/dashboard/billing' : '/dashboard/package')
+        router.push(selectedPackage?.package_name ? '/dashboard/billing' : '/dashboard/package')
     }
 
     const handleReturnTime = (e) => {

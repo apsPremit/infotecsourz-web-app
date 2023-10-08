@@ -1,5 +1,6 @@
 "use client"
 import { createContext, useEffect, useState } from "react";
+import { UserAuth } from "./AuthProvider";
 
 export const StateContext = createContext(null)
 
@@ -309,7 +310,18 @@ const StateProvider = ({ children }) => {
     //     )
     // }, [perPhotoCost, returnTime])
 
+    // if selected package is chage the userData will be changed 
+    const { userData, setUserData } = UserAuth()
+    // const [remainingCredit, setRemainingCredit] = useState(userData?.remainingCredit)
 
+    // useEffect(() => {
+    //     // const newData = userData?.remainingCredit === userData?.remainingCredit + selectedPackage?.photos
+
+    //     const updatedRemainingCredit = userData.remainingCredit + (selectedPackage.photos ? selectedPackage?.photos : 0);
+    //     setUserData({ ...userData, remainingCredit: updatedRemainingCredit });
+    //     console.log('user data', userData)
+
+    // }, [selectedPackage])
 
     // billing page states 
     const [billingMessage, setBillingMessage] = useState('')

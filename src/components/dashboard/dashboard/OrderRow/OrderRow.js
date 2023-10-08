@@ -35,7 +35,7 @@ const OrderRow = ({ order }) => {
                 }
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm   text-black font-bold ">
-                ${grandTotal.toFixed(2)}
+                ${grandTotal?.toFixed(2)}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm     ">
                 <span className={`flex items-center p-1 bg-green-100 ${status === 'denied' ? 'text-red-500 bg-red-100' : 'text-green-500'}`}>
