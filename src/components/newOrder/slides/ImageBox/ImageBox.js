@@ -1,22 +1,22 @@
 import Image from 'next/image';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import productImage from '../../../../../public/product/Product Background remove.png'
-import modelImage from '../../../../../public/Model/Model Background remove.png'
-import modelMakeup from '../../../../../public/Model/Model Beauty Makeup Retouching.png'
-import modelClithFixing from '../../../../../public/Model/Model Clothing Fixing.png'
-import modelClipping from '../../../../../public/Model/Model Clipping Path.png'
-import modelBodyShaping from '../../../../../public/Model/Model Body shaping.png'
-import modelColorCorrection from '../../../../../public/Model/Model Pimples, blemishes remove.png'
-import modelTeethAndRedEye from '../../../../../public/Model/Model Teeth retouching.png'
+import modelImage from '../../../../../public/Model/Model Background remove-min.png'
+import modelMakeup from '../../../../../public/Model/Model Beauty Makeup Retouching-min.png'
+import modelClithFixing from '../../../../../public/Model/Model Clothing Fixing-min.png'
+import modelClipping from '../../../../../public/Model/Model Clipping Path-min.png'
+import modelBodyShaping from '../../../../../public/Model/Model Body shaping-min.png'
+import modelColorCorrection from '../../../../../public/Model/Model Wrinkles Remove-min.png'
+import modelTeethAndRedEye from '../../../../../public/Model/Model Teeth retouching-min.png'
 import productNaturalShadow from '../../../../../public/product/Product Shadow.png'
 import productReflectionShadow from '../../../../../public/product/Product Reflectios.png'
 import productMasking from '../../../../../public/product/Product Masking.png'
 import productBasicClipping from '../../../../../public/product/Product Clipping Path.png'
 import productMultipleClipping from '../../../../../public/product/Product Multipath.png'
 import productColorCorrection from '../../../../../public/product/Product Color Correction _1.png'
-import productGhostMannequin from '../../../../../public/product/Product Color Correction _2.png'
+import productGhostMannequin from '../../../../../public/product/Product Background remove.png'
 import productRetouching from '../../../../../public/product/Product Retouching.png'
-import productColorVariant from '../../../../../public/product/Product Color Correction _3.png'
+import productColorVariant from '../../../../../public/product/Product Color Change.png'
 
 
 
