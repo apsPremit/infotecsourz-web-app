@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
                 .catch(error => console.log('user data error', error))
         }
 
-    }, [user, userData])
+    }, [user])
 
 
     // email password register 

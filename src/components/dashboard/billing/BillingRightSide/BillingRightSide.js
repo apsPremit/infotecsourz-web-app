@@ -6,11 +6,12 @@ import { StateContext } from '@/context/StateProvider';
 import { UserAuth } from '@/context/AuthProvider';
 
 const BillingRightSide = () => {
-    const { uploadedImages, perPhotoCost, photoType, imageQuantityFromUrl, taxRate, selectedPackage } = useContext(StateContext)
+    const { uploadedImages, perPhotoCost, photoType, imageQuantityFromUrl, taxRate, selectedPackage, updatedCredit } = useContext(StateContext)
+
     const { user, userData } = UserAuth()
 
 
-    let totalPhotos;
+    let totalPhotos = uploadedImages.length < 1 ? imageQuantityFromUrl : uploadedImages.length
     let subtotal;
     let taxTotal;
     let grandTotal;
@@ -18,23 +19,20 @@ const BillingRightSide = () => {
 
 
     if (selectedPackage.package_name == 'Pay as go') {
-        totalPhotos = uploadedImages.length < 1 ? imageQuantityFromUrl : uploadedImages.length
         subtotal = totalPhotos * perPhotoCost;
         taxTotal = (taxRate / 100) * subtotal
         grandTotal = subtotal + taxTotal;
-        remainingCredit: 0
+        remainingCredit = userData?.remainingCredit
     } else if (selectedPackage.package_name == 'Free Trial') {
-        totalPhotos = uploadedImages.length < 1 ? imageQuantityFromUrl : uploadedImages.length
         subtotal = 0
         taxTotal = 0
         grandTotal = 0;
-        remainingCredit: 0
+        remainingCredit = userData?.remainingCredit - totalPhotos
     } else {
-        totalPhotos = uploadedImages.length < 1 ? imageQuantityFromUrl : uploadedImages.length
         subtotal = selectedPackage?.price
         taxTotal = (taxRate / 100) * selectedPackage?.price
         grandTotal = subtotal + taxTotal;
-        remainingCredit = selectedPackage.package_name !== ('Free Trial' || 'Pay as go') ? userData?.remainingCredit - totalPhotos : selectedPackage.photos - totalPhotos
+        remainingCredit = updatedCredit - totalPhotos
     }
 
 

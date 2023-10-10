@@ -302,26 +302,17 @@ const StateProvider = ({ children }) => {
     const [hasInstructions, setHasInstructions] = useState(false)
 
 
+    const { userData, setUserData, user } = UserAuth()
+    const [updatedCredit, setUpdatedCredit] = useState(0);
 
-    // chage price by changing return time 
-    // useEffect(() => {
-    //     setPerPhotoCost(
-    //         while()
-    //     )
-    // }, [perPhotoCost, returnTime])
+    console.log('updated credit', updatedCredit)
 
-    // if selected package is chage the userData will be changed 
-    const { userData, setUserData } = UserAuth()
-    // const [remainingCredit, setRemainingCredit] = useState(userData?.remainingCredit)
+    useEffect(() => {
 
-    // useEffect(() => {
-    //     // const newData = userData?.remainingCredit === userData?.remainingCredit + selectedPackage?.photos
+        const newUpdatedCredit = userData?.remainingCredit + (selectedPackage.photos ? selectedPackage?.photos : 0)
+        setUpdatedCredit(newUpdatedCredit)
 
-    //     const updatedRemainingCredit = userData.remainingCredit + (selectedPackage.photos ? selectedPackage?.photos : 0);
-    //     setUserData({ ...userData, remainingCredit: updatedRemainingCredit });
-    //     console.log('user data', userData)
-
-    // }, [selectedPackage])
+    }, [selectedPackage])
 
     // billing page states 
     const [billingMessage, setBillingMessage] = useState('')
@@ -381,7 +372,8 @@ const StateProvider = ({ children }) => {
         perPhotoCost,
         setPerPhotoCost,
         hasInstructions,
-        setHasInstructions
+        setHasInstructions,
+        updatedCredit
 
     }
 
