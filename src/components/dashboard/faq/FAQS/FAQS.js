@@ -22,7 +22,7 @@ const FAQS = () => {
         },
         {
             title: "Can I share photos via Dropbox, Google Drive, Wetransfer",
-            description: "Yes you can share photos through Dropbox, Wetransfer, Google drive to our E-mail : hello@infotecsourz.com"
+            description: "Yes you can share photos through Dropbox, Wetransfer, Google drive to our E-mail: contact@infotecsourz.com"
         },
         {
             title: "What if I don't like the editing photos?",
