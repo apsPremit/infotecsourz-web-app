@@ -1,19 +1,38 @@
 "use client"
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AiOutlineCamera } from "react-icons/ai";
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { UserAuth } from '@/context/AuthProvider';
-import profileImage from '../../../../../public/images/others/profile.png'
+import defaultProfileImage from '../../../../../public/images/others/profile.png'
 import updateProfile from '@/utils/functions/updateProfile';
 import toast, { Toaster } from 'react-hot-toast';
+import axios from 'axios';
+import { baseUrl } from '@/utils/functions/baseUrl';
+import { StateContext } from '@/context/StateProvider';
 
 
 const ProfileEditForm = ({ details }) => {
+    const { photoUrl, setPhotoUrl } = useContext(StateContext)
     const { userData, user, setUserData } = UserAuth()
-    // const { name, email, imageUrl, location, phone, nid, vatId, companyName, companyWebsite, zipCode, country, dataOfBirth, gender } = details
+    const [photoUploading, setPhotoUploading] = useState(false)
+
+
+    useEffect(() => {
+        axios.get(`${baseUrl}/profile_photo/${user?.email}`)
+            .then(res => {
+                setPhotoUrl(res?.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [user])
 
     const { name, email, imageUrl, address, companyName, phone } = userData || {}
+
+
+
+
 
 
     const {
@@ -22,6 +41,31 @@ const ProfileEditForm = ({ details }) => {
         watch,
         formState: { errors },
     } = useForm()
+
+    const updateProfilePhoto = async (e) => {
+        const loadingToast = toast.loading('uploading image...')
+        const file = e.target.files[0]
+        const formData = new FormData()
+        formData.append('photo', file)
+
+        try {
+            const res = await axios.post(`${baseUrl}/profile_photo/${user?.email}`, formData)
+            const data = res?.data
+            setPhotoUrl(data?.url)
+            toast.dismiss(loadingToast)
+            toast.remove(loadingToast)
+        } catch (error) {
+            console.log(error)
+            toast.error('something wrong')
+            toast.dismiss(loadingToast)
+            toast.remove(loadingToast)
+        }
+
+
+    }
+
+
+
 
     const onSubmit = async (data) => {
         const { email, name, phone, address, companyName } = data
@@ -59,18 +103,25 @@ const ProfileEditForm = ({ details }) => {
                     <div className='relative overflow-hidden'>
                         <label htmlFor='changeProfileImage' className='bg-red-300 w-full cursor-pointer '>
                             <Image
-                                src={imageUrl || profileImage}
-                                height={150}
-                                width={150}
+                                src={photoUrl || user?.photoUrl || defaultProfileImage}
+                                height={200}
+                                width={200}
                                 alt='profile photo'
-                                className='rounded-2xl'
+                                className='rounded-2xl border'
+                                style={{ maxHeight: '200px' }}
                             />
 
-                            <input id='changeProfileImage' type="file" className='hidden' />
+                            <input
+                                onChange={updateProfilePhoto}
+                                name='photo'
+                                id='changeProfileImage'
+                                type="file"
+                                className='hidden'
+                            />
 
-                            <div className='absolute text-white w-[150px] h-1/2 top-1/2 text-center rounded-2xl bg-[#C9C9CC]'>
+                            <div className='absolute  text-white w-[200px] h-1/2 top-1/2 text-center rounded-2xl bg-[#8a7474]'>
                                 <span className='text-center text-2xl flex justify-center py-1'><AiOutlineCamera className='' /></span>
-                                <p className='text-center text-sm'>Upload a new Profile Picture</p>
+                                <p className='text-center text-sm px-3'>Upload a new Profile Picture</p>
                             </div>
 
                         </label>

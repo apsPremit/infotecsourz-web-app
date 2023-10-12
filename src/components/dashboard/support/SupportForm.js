@@ -13,12 +13,14 @@ const SupportForm = () => {
         const form = e.target;
         const subject = form.subject.value;
         const message = form.message.value;
-        const messageData = { email: user?.email, subject, message }
+        const phone = form.phone.value;
+        const messageData = { email: user?.email, subject, message, phone }
         try {
             const sendResult = await sendSupportMessage(messageData)
 
             if (sendResult.success) {
                 toast.success('message sent')
+                form.reset()
             }
         } catch (error) {
             alert('unknown error')
@@ -53,22 +55,25 @@ const SupportForm = () => {
                             required=""
                         />
                     </div>
+
                     <div>
                         <label
                             htmlFor="subject"
                             className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
-                            Subject
+                            Your Phone Number
                         </label>
                         <input
                             type="text"
-                            id="subject"
-                            name='subject'
+                            id="phone"
+                            name='phone'
                             className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-                            placeholder="Let us know how we can help you"
+                            placeholder="Give you phone number"
                             required
                         />
                     </div>
+
+
 
                     <div>
                         <label
@@ -86,6 +91,8 @@ const SupportForm = () => {
                             required
                         />
                     </div>
+
+
 
 
                     <div className="sm:col-span-2">

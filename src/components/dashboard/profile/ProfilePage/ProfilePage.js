@@ -2,16 +2,28 @@
 import LogOutBtn from '@/components/shared/LogOutBtn/LogOutBtn';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { IoLocationOutline } from 'react-icons/io5';
-import profileImage from '../../../../../public/images/others/profile.png'
+import defaultProfileImage from '../../../../../public/images/others/profile.png'
 import { UserAuth } from '@/context/AuthProvider';
 import axios from 'axios';
 import { baseUrl } from '@/utils/functions/baseUrl';
+import { StateContext } from '@/context/StateProvider';
 
 const ProfilePage = () => {
-
+    const { photoUrl, setPhotoUrl } = useContext(StateContext)
     const { user, userData } = UserAuth()
+
+    useEffect(() => {
+        axios.get(`${baseUrl}/profile_photo/${user?.email}`)
+            .then(res => {
+                console.log('result', res.data)
+                setPhotoUrl(res?.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }, [user])
 
     const { name, email, imageUrl, phone, companyName, address } = userData || {}
 
@@ -22,10 +34,12 @@ const ProfilePage = () => {
 
             <div className='flex space-x-5 p-5 bg-white rounded mb-5'>
                 <Image
-                    src={imageUrl || profileImage}
+                    src={photoUrl || user?.photoUrl || defaultProfileImage}
                     height={150}
                     width={150}
                     alt='profile photo'
+                    className='border '
+                    style={{ maxHeight: '150px' }}
                 />
                 <div>
                     <h3 className='text-3xl mb-1'>{name || user?.displayName || 'Unknown'}</h3>

@@ -317,7 +317,7 @@ const StateProvider = ({ children }) => {
     // billing page states 
     const [billingMessage, setBillingMessage] = useState('')
     const [taxRate, setTaxRate] = useState(13)
-
+    const [photoUrl, setPhotoUrl] = useState('')
 
 
 
@@ -373,7 +373,9 @@ const StateProvider = ({ children }) => {
         setPerPhotoCost,
         hasInstructions,
         setHasInstructions,
-        updatedCredit
+        updatedCredit,
+        photoUrl,
+        setPhotoUrl
 
     }
 
