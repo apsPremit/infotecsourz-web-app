@@ -24,8 +24,9 @@ const BackgroundSlide = () => {
 
     return (
         <div className='relative'>
-            <h2 className='text-xl  font-bold mb-5'>Choose a background </h2>
+
             <ImageBox />
+            <h2 className='text-lg  font-bold mb-5'>Choose a background </h2>
             <div className='flex items-center gap-x-10 flex-wrap'>
                 {
                     backgroundOptions.map((item, i) => <RadioButton

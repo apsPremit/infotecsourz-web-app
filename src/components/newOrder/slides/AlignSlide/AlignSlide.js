@@ -58,11 +58,13 @@ const AlignSlide = () => {
     return (
         <div>
 
-            <h2 className='text-xl  font-bold '>Align your photo </h2>
+
             <div className='lg:flex  gap-5 w-full '>
                 <ImageBox />
+                {/* <h2 className='text-lg  font-bold '>Align your photo </h2> */}
                 {/* rightside  */}
-                <div className="w-full  lg:w-1/3 mt-7">
+                <div className="w-full  lg:w-1/3 ">
+                    <h2 className='text-lg mb-5  font-bold '>Align your photo </h2>
                     <div className='flex gap-x-5 items-center'>
                         <TabButton
                             title='Crop'

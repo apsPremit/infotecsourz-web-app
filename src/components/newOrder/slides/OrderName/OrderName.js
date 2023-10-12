@@ -12,10 +12,11 @@ const OrderName = () => {
     return (
 
         <div>
-            <h2 className='text-xl  font-bold mb-5'>Give your photo file name </h2>
+
             <ImageBox />
 
             <div>
+                <h2 className='text-lg  font-bold mb-3'>Give your order name </h2>
                 <input
                     type="text"
                     required

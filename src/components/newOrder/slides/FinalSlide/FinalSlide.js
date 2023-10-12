@@ -45,8 +45,8 @@ const FinalSlide = () => {
 
     return (
         <div>
-            <h2 className='text-xl  font-bold mb-5'>Give a final touch </h2>
             <ImageBox />
+            <h2 className='text-lg  font-bold mb-5'>Give a final touch </h2>
 
             <div className='flex items-center gap-x-10 flex-wrap'>
                 {photoType === 'product' ?

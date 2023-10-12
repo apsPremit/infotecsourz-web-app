@@ -78,7 +78,7 @@ const Sidebar = () => {
                     <li onClick={() => setSidebarOpen(!isSidebarOpen)} >
                         <Link href='/dashboard/new_order' className={`flex gap-x-3 my-3 items-center p-2 cursor-pointer hover:bg-main rounded-lg ${currentRoute === '/dashboard/new_order' ? 'bg-main' : ''}`}>
                             <span className='text-2xl'><BsCartPlus /></span>
-                            <span>New Order</span>
+                            <span>Create  Order</span>
                         </Link>
                     </li>
                     <li onClick={() => setSidebarOpen(!isSidebarOpen)} >

@@ -91,7 +91,7 @@ const ImageBox = () => {
 
     return (
 
-        <div className={`relative w-full lg:w-full mx-auto  border border-shadow rounded-lg min-h[350px] lg:min-h-fit  my-7`}
+        <div className={`relative w-full lg:w-full mx-auto  border border-shadow rounded-lg min-h[350px] lg:min-h-fit  mb-3`}
             style={{
                 backgroundColor: backgroundColor === 'original' ? '' : backgroundColor === 'custom' ? customBackground : backgroundColor,
                 maxHeight: '700px',

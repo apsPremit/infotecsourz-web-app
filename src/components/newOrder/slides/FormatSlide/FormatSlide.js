@@ -18,18 +18,12 @@ const FormatSlide = () => {
 
     return (
         <div>
-            <h2 className='text-xl  font-bold mb-5'>Select Image format </h2>
+
 
             <ImageBox />
+            <h2 className='text-lg  font-bold mb-5'>Select Image format </h2>
             <div className='flex items-center gap-x-10'>
-                {/* {
-                    formatOptions.map((item, i) => <RadioButton
-                        key={i}
-                        event={() => handleSingleValueChange(setFormats, item.value, !formats[item.value])}
-                        label={item.label}
-                        isChecked={formats[item.value]}
-                    />)
-                } */}
+
                 {
                     formatOptions.map((item, i) => <CheckButton
                         key={i}
