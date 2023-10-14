@@ -305,7 +305,7 @@ const StateProvider = ({ children }) => {
     const { userData, setUserData, user } = UserAuth()
     const [updatedCredit, setUpdatedCredit] = useState(0);
 
-    console.log('updated credit', updatedCredit)
+
 
     useEffect(() => {
 
