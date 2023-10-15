@@ -24,8 +24,13 @@ const UploadField = ({ uploadedImages, setUploadedImages, orderId, setOrderId, s
     const handleImageUpload = async (e) => {
         setUploading(true)
         // generate order id 
-        const newId = generateOrderId()
-        setOrderId(newId)
+        if (!orderId) {
+            // Generate a new order ID if it's null or empty
+            const newId = generateOrderId();
+            setOrderId(newId);
+        }
+
+
 
         const selectedFiles = e.target.files;
 
@@ -64,9 +69,11 @@ const UploadField = ({ uploadedImages, setUploadedImages, orderId, setOrderId, s
         // upload image to server 
         try {
 
-            const res = await axios.post(`${baseUrl}/image?folderName=${newId}&bucketName=${process.env.NEXT_PUBLIC_USER_UPLOAD_IMAGE_BUCKET}`, formData, config)
+            const res = await axios.post(`${baseUrl}/image?folderName=${orderId}&bucketName=${process.env.NEXT_PUBLIC_USER_UPLOAD_IMAGE_BUCKET}`, formData, config)
+
             const data = await res.data
-            setUploadedImages(data?.urls || [])
+            const newUploadedImages = [...uploadedImages, ...data.urls]
+            setUploadedImages(newUploadedImages || [])
             setUploading(false)
 
         } catch (error) {

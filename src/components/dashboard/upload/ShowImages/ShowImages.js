@@ -14,7 +14,8 @@ const ShowImages = ({ uploadedImages, selectedImages, setSelectedImages, totalFi
             <div className='flex justify-between'>
                 <h3 className='font-bold text-lg'>Uploaded Files</h3>
                 <p className='text-sm'>
-                    {selectedImages.length || 0} Photos - {totalFileSize} MB
+                    {/* {selectedImages.length || 0} Photos - {totalFileSize} MB */}
+                    {uploadedImages.length || 0} Photos
                 </p>
             </div>
             <hr className='  bg-shadow my-3' />
