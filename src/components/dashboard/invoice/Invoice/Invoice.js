@@ -53,7 +53,7 @@ const Invoice = () => {
                 <div ref={componentPDF} className="w-full lg:w-3/4 mx-auto   bg-white border rounded-lg">
 
                     {/* Card */}
-                    <div className=" p-16 ">
+                    <div className="p-5 md:p-16 ">
                         {/* Grid */}
                         <div className="">
                             <div>
@@ -227,7 +227,7 @@ const Invoice = () => {
                                         <p>${discount?.toFixed(2)}</p>
                                     </div>
                                 </div>
-                                <div className='bg-main py-1.5 text-white font-bold text-lg flex items-center justify-between px-5 mt-5'>
+                                <div className='grandtotal-asset relative bg-main py-1.5 text-white font-bold text-md md:text-lg flex items-center justify-between px-5 mt-5'>
                                     <h3 className=' mr-5'>Grand total</h3>
                                     <h3>${grandTotal?.toFixed(2)}</h3>
                                 </div>
