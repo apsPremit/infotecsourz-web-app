@@ -7,6 +7,7 @@ import { useParams } from 'next/navigation';
 import axios from 'axios';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import moment from 'moment';
+import './invoice.css'
 
 
 
@@ -52,7 +53,7 @@ const Invoice = () => {
                 <div ref={componentPDF} className="w-full lg:w-3/4 mx-auto   bg-white border rounded-lg">
 
                     {/* Card */}
-                    <div className=" px-14 py-10 dark:bg-gray-800">
+                    <div className=" p-16 ">
                         {/* Grid */}
                         <div className="">
                             <div>
@@ -64,9 +65,9 @@ const Invoice = () => {
                                 />
                                 <address className="mt-2  text-sm not-italic text-gray-800 dark:text-gray-200">
                                     199 DB Road,
-
-                                    Gaibandha5700,
-
+                                    <br />
+                                    Gaibandha-5700,
+                                    <br />
                                     Bangladesh
 
                                 </address>
@@ -76,14 +77,15 @@ const Invoice = () => {
 
 
                         <div className="my-5 relative">
-                            <h2 className="text-2xl md:text-2xl font-semibold uppercase text-gray-800 dark:text-gray-200">
+                            <h2 className="invoice-asset text-2xl md:text-2xl font-semibold uppercase text-gray-800 dark:text-gray-200">
                                 Invoice
                             </h2>
+
                         </div>
 
                         <div >
                             <p className='uppercase text-sm font-bold'>to</p>
-                            <div className='grid grid-cols-1 md:grid-cols-2 items-center'>
+                            <div className='grid grid-cols-1 md:grid-cols-2 '>
                                 <div>
 
                                     <p className='uppercase font-bold text-lg'>{customerName}</p>
@@ -115,26 +117,26 @@ const Invoice = () => {
                             <div className="-m-1.5 overflow-x-auto">
                                 <div className="p-1.5 min-w-full inline-block align-middle">
                                     <div className="overflow-hidden">
-                                        <table className="min-w-full divide-y divide-gray-200 my-10 ">
+                                        <table className="min-w-full divide-y divide-gray-200 my-5 ">
                                             <thead>
-                                                <tr className='border-t-2 border-b-2 border-t-gray-400  '>
-                                                    <th scope="col" className="px-6 py-1 text-start text-sm font-bold whitespace-nowrap"
+                                                <tr className='border-t-2 border-b-2 border-b-gray-400 border-t-gray-400  '>
+                                                    <th scope="col" className="px-6 py-2 text-start text-sm font-bold whitespace-nowrap"
                                                     >
                                                         No
                                                     </th>
-                                                    <th scope="col" className="px-6 py-1 text-start text-sm font-bold whitespace-nowrap"
+                                                    <th scope="col" className="px-6 py-2 text-start text-sm font-bold whitespace-nowrap"
                                                     >
                                                         Description
                                                     </th>
-                                                    <th scope="col" className="px-6 py-1 text-start text-sm font-bold whitespace-nowrap"
+                                                    <th scope="col" className="px-6 py-2 text-start text-sm font-bold whitespace-nowrap"
                                                     >
                                                         QTY
                                                     </th>
-                                                    <th scope="col" className="px-6 py-1 text-start text-sm font-bold whitespace-nowrap "
+                                                    <th scope="col" className="px-6 py-2 text-start text-sm font-bold whitespace-nowrap "
                                                     >
                                                         Price
                                                     </th>
-                                                    <th scope="col" className="px-6 py-1 text-start text-sm font-bold whitespace-nowrap "
+                                                    <th scope="col" className="px-6 py-2 text-start text-sm font-bold whitespace-nowrap "
                                                     >
                                                         Total
                                                     </th>
@@ -143,7 +145,7 @@ const Invoice = () => {
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-gray-200 dark:divide-gray-700 ">
-                                                <tr className='border-b '>
+                                                <tr className='border-b-2 border-b-gray-400'>
                                                     <td className="px-6 py-2 whitespace-nowrap text-sm text-start ">
                                                         1
                                                     </td>
@@ -178,7 +180,7 @@ const Invoice = () => {
                         </div>
                         {/* end table  */}
 
-                        <div className='font-bold capitalize grid grid-cols-1 md:grid-cols-2 mt-5 md:mt-0'>
+                        <div className='font-bold capitalize grid grid-cols-1 md:grid-cols-2 mt-5 md:mt-0 gap-8'>
 
                             <div>
                                 <h3 className='font-bold text-sm mb-3'>Payment Method</h3>
@@ -202,6 +204,15 @@ const Invoice = () => {
                                         <span className='text-gray-500 font-medium ml-1'>{swiftCode}</span>
                                     </p>
                                 </div>
+
+
+                                <div>
+                                    <h3 className='font-bold text-sm mt-3 mb-1'>Terms and conditions</h3>
+                                    <p className='text-xs font-normal'>Please send payment within due date. There will be 10% interest charge per month on late payment. </p>
+                                </div>
+
+
+
                             </div>
                             <div>
                                 <div className='flex  justify-start md:justify-end gap-x-20 mt-5 md:mt-0'>
@@ -216,7 +227,7 @@ const Invoice = () => {
                                         <p>${discount?.toFixed(2)}</p>
                                     </div>
                                 </div>
-                                <div className='bg-blue-500 py-1.5 text-white font-bold text-lg flex items-center justify-between px-5 mt-5'>
+                                <div className='bg-main py-1.5 text-white font-bold text-lg flex items-center justify-between px-5 mt-5'>
                                     <h3 className=' mr-5'>Grand total</h3>
                                     <h3>${grandTotal?.toFixed(2)}</h3>
                                 </div>

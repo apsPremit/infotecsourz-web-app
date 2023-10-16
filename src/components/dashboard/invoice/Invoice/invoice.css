@@ -1,0 +1,10 @@
+.invoice-asset::before {
+    content: '';
+    height: 20px;
+    width: 60px;
+    left: -65px;
+    top: 6px;
+
+    background-color: #4318E3;
+    position: absolute;
+}

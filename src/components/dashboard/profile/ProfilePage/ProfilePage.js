@@ -29,6 +29,7 @@ const ProfilePage = () => {
 
 
 
+
     return (
         <div className='lg:px-10'>
 
