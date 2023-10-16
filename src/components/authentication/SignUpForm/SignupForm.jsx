@@ -34,13 +34,13 @@ const SignUpForm = () => {
 
     // submit form ***********
 
-    const onSubmit = ({ email, password, confirm_password, name }) => {
+    const onSubmit = ({ email, password, confirm_password, name, phone }) => {
 
         registerWithEmailAndPassword(email, password)
             .then(() => {
                 profileUpdate({ displayName: name }).
                     then(async (result) => {
-                        const newUser = { name, email }
+                        const newUser = { name, email, phone }
                         saveUser(newUser)
 
 
@@ -108,6 +108,19 @@ const SignUpForm = () => {
                         })}
                     />
                     {errors.email && <p className='text-xs mt-1 text-red-400' role="alert">{errors.email?.message}</p>}
+                </div>
+                {/* ??????????????????phone ****** */}
+                <div className='mb-5'>
+                    <label className='block mb-1 text-sm' htmlFor="phone">Phone</label>
+                    <input type="text"
+                        id='phone'
+                        className=' w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'
+                        {...register("phone", {
+                            required: "Phone is required",
+
+                        })}
+                    />
+                    {errors.phone && <p className='text-xs mt-1 text-red-400' role="alert">{errors.phone?.message}</p>}
                 </div>
 
 
@@ -181,11 +194,11 @@ const SignUpForm = () => {
                     <input disabled={!isAgree} className='bg-main cursor-pointer hover:bg-[#5736ce] disabled:bg-opacity-50 py-3 px-3 text-center text-white font-bold w-full rounded-lg mt-3 mb-5' type="submit" value="Sign Up" />
                 </div>
             </form>
-            <div className="py-6 flex items-center text-gray-400  uppercase before:flex-[1_1_0%] before:border-t before:mr-6 after:flex-[1_1_0%] after:border-t after:ml-6 dark:text-gray-500 before:border-shadow after:border-shadow">Or</div>
+            {/* <div className="py-6 flex items-center text-gray-400  uppercase before:flex-[1_1_0%] before:border-t before:mr-6 after:flex-[1_1_0%] after:border-t after:ml-6 dark:text-gray-500 before:border-shadow after:border-shadow">Or</div> */}
 
             {/* ************** social login ********** */}
 
-            <SocialLogin />
+            {/* <SocialLogin /> */}
 
             <p className='font-semibold text-center'>Already have an account? <Link href='/login' className='text-main'>Login</Link></p>
             <Toaster />

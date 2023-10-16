@@ -115,14 +115,7 @@ const LoginForm = () => {
 
                 {/* ********terms checkbox *******/}
                 <div className='lg:flex items-center justify-center mt-5 px-2'>
-                    {/* <label htmlFor="checkbox  ">
-                        <input
-                            onChange={() => setRemember(!isRemember)}
-                            checked={isRemember}
-                            type="checkbox"
-                            className='mr-2 accent-main' />
-                        <sapn className='text-sm'>Remember Me </sapn>
-                    </label> */}
+
                     <Link href='/password_reset' className='text-main hover:underline'>Forgot Password?</Link>
                 </div>
 
@@ -136,10 +129,10 @@ const LoginForm = () => {
                     <input disabled={loading} className='bg-main hover:bg-[#5736ce] disabled:bg-opacity-50 py-3 px-3 text-center text-white font-bold w-full rounded-lg my-5 cursor-pointer' type="submit" value="Login" />
                 </div>
             </form>
-            <div className="py-6 flex items-center text-gray-400  uppercase before:flex-[1_1_0%] before:border-t before:mr-6 after:flex-[1_1_0%] after:border-t after:ml-6 dark:text-gray-500 before:border-shadow after:border-shadow">Or</div>
+            {/* <div className="py-6 flex items-center text-gray-400  uppercase before:flex-[1_1_0%] before:border-t before:mr-6 after:flex-[1_1_0%] after:border-t after:ml-6 dark:text-gray-500 before:border-shadow after:border-shadow">Or</div> */}
 
             {/* ************** social login ********** */}
-            <SocialLogin />
+            {/* <SocialLogin /> */}
 
             <p className='font-semibold text-center'>Don’t have an account? <Link href='/signup' className='text-main'>Signup</Link></p>
             <Toaster />
