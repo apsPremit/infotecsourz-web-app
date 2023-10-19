@@ -16,20 +16,18 @@ const SinglePackage = ({ plan }) => {
     const { id, package_name, description, price, photos, duration, facilities } = plan || {}
     return (
         <div className={`border-shadow rounded   p-5 shadow relative ${pathName === '/dashboard/package' && selectedPackage?.package_name === package_name ? 'bg-blue-500 text-white' : 'bg-white'}`}>
-            <label className='cursor-pointer' htmlFor={package_name}>
-                <h1 className='font-bold text-lg '>{package_name}</h1>
+            <label className='cursor-pointer ' htmlFor={package_name}>
+                <h1 className='font-bold text-lg capitalize'>{package_name}</h1>
                 <p className=' text-sm my-3'>{description}</p>
                 <div className='flex items-center'>
-                    <div className='flex'>
-                        {
-                            package_name == 'pay as go' ? <div className='flex'>
-                                <h3 className='font-bold'> <span className='mr-2'>AUD</span>${price}</h3>
-                                <span className='text-sm text-neutral'>/{package_name}</span>
-                            </div>
-                                :
-                                <h3>
 
-                                </h3>
+                    <div className='flex'>
+                        {price &&
+                            <div className='flex'>
+                                <h3 className='font-bold'> <span className='mr-2'>AUD</span>${price}</h3>
+
+                            </div>
+
                         }
                     </div>
 

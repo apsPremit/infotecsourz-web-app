@@ -3,15 +3,18 @@ export const packages = [
         "id:": 1,
         "package_name": "Pay as go",
         "description": "Cost will be changed based on your number of photos",
+        "facilities": [
+            'Starts from 0.30 USD'
+        ]
 
     },
 
     {
         "id:": 2,
-        "package_name": "Weakly",
-        "photos": 400,
+        "package_name": "basic",
+        "photos": 300,
         "description": "Cost will be changed based on your number of photos",
-        "price": 500,
+        "price": 900,
         "duration": 1,
         "facilities": [
             "include all facilities and features"
@@ -20,10 +23,10 @@ export const packages = [
 
     {
         "id:": 3,
-        "package_name": "Monthly",
-        "photos": 1200,
+        "package_name": "pro",
+        "photos": 10000,
         "description": "Cost will be changed based on your number of photos",
-        "price": 1000,
+        "price": 3000,
         "duration": 1,
         "facilities": [
 
@@ -34,12 +37,11 @@ export const packages = [
     },
     {
         "id:": 4,
-        "package_name": "Yearly",
-        "photos": 15000,
-        "description": "Cost will be changed based on your number of photos",
-        "price": 10000,
+        "package_name": "enterprise",
+        "description": "Please contact with us at support@infotecsourz.com",
         "duration": 1,
         "facilities": [
+            "unlimited photos",
             "include all facilities and features"
         ]
     }

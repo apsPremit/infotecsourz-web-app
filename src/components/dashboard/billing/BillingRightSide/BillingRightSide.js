@@ -78,10 +78,10 @@ const BillingRightSide = () => {
     return (
         <div className='bg-white rounded p-5 '>
             <h3 className='font-bold text-xl mb-5'> Summary</h3>
-            <div className='flex items-center space-x-3'>
+            {/* <div className='flex items-center space-x-3'>
                 <span className='bg-pink-300 p-2 rounded text-red-800 text-xl'><FaFire /></span>
                 <h3 className='font-bold '>Hot Rate</h3>
-            </div>
+            </div> */}
 
 
             {/* properties  */}
