@@ -4,8 +4,10 @@ import React, { useContext, useState } from 'react';
 import { FaFire } from 'react-icons/fa';
 import { StateContext } from '@/context/StateProvider';
 import { UserAuth } from '@/context/AuthProvider';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { packages } from '@/utils/json/packagePlan';
+import { baseUrl } from '@/utils/functions/baseUrl';
+import toast, { Toaster } from 'react-hot-toast';
 
 const PricingBilling = () => {
     const params = useSearchParams()
@@ -13,7 +15,7 @@ const PricingBilling = () => {
     const [isAgree, setAgree] = useState(false)
     const [isProcessing, setProcessing] = useState(false)
     const { user, userData } = UserAuth()
-
+    const router = useRouter()
     const searchPackage = params.get('package')
     const packageInfo = packages.find(pk => pk.package_name === searchPackage)
     const { package_name, price, photos } = packageInfo || {}
@@ -36,7 +38,8 @@ const PricingBilling = () => {
     ]
 
 
-    const confirmOrder = () => {
+    const confirmOrder = async () => {
+        setProcessing(true)
         const randomNum = Math.floor(Math.random() * 100000000);
         const randomString = String(randomNum).padStart(8, '0');
 
@@ -52,9 +55,29 @@ const PricingBilling = () => {
             taxRate,
             taxTotal,
             grandTotal,
+            credit: photos,
         }
 
-        console.log(orderDetails)
+        try {
+            const res = await fetch(`${baseUrl}/subscription`, {
+                method: 'POST',
+                headers: {
+                    'content-type': "application/json"
+                },
+                body: JSON.stringify(orderDetails)
+            })
+            const data = await res.json()
+            console.log(data)
+            if (data.success) {
+                setProcessing(false)
+                router.push(`/order_success?orderId=${orderDetails?.orderId}`)
+            }
+        } catch (error) {
+            setProcessing(false)
+            console.log(error)
+            toast.error(error?.message || 'internal server error')
+        }
+
 
 
 
@@ -111,6 +134,7 @@ const PricingBilling = () => {
                     </p>
                 </label>
             </div>
+            <Toaster />
         </div>
     );
 };
