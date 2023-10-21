@@ -4,77 +4,63 @@ import React, { useContext, useState } from 'react';
 import { FaFire } from 'react-icons/fa';
 import { StateContext } from '@/context/StateProvider';
 import { UserAuth } from '@/context/AuthProvider';
+import { useSearchParams } from 'next/navigation';
+import { packages } from '@/utils/json/packagePlan';
 
 const PricingBilling = () => {
-    const { uploadedImages, perPhotoCost, photoType, imageQuantityFromUrl, taxRate, selectedPackage, updatedCredit } = useContext(StateContext)
+    const params = useSearchParams()
+    const { taxRate } = useContext(StateContext)
     const [isAgree, setAgree] = useState(false)
     const [isProcessing, setProcessing] = useState(false)
     const { user, userData } = UserAuth()
 
+    const searchPackage = params.get('package')
+    const packageInfo = packages.find(pk => pk.package_name === searchPackage)
+    const { package_name, price, photos } = packageInfo || {}
 
-    let totalPhotos = uploadedImages.length < 1 ? imageQuantityFromUrl : uploadedImages.length
-    let subtotal;
-    let taxTotal;
-    let grandTotal;
-    let remainingCredit;
-
-
-    if (selectedPackage.package_name == 'Pay as go') {
-        subtotal = totalPhotos * perPhotoCost;
-        taxTotal = (taxRate / 100) * subtotal
-        grandTotal = subtotal + taxTotal;
-        remainingCredit = userData?.remainingCredit
-    } else if (selectedPackage.package_name == 'Free Trial') {
-        subtotal = 0
-        taxTotal = 0
-        grandTotal = 0;
-        remainingCredit = userData?.remainingCredit - totalPhotos
-    } else {
-        subtotal = selectedPackage?.price
-        taxTotal = (taxRate / 100) * selectedPackage?.price
-        grandTotal = subtotal + taxTotal;
-        remainingCredit = updatedCredit - totalPhotos
-    }
+    let subTotal = price
+    let taxTotal = price / 100 * taxRate;
+    let grandTotal = subTotal + taxTotal
 
 
-    let billProperties;
 
-    if (selectedPackage.package_name == 'Pay as go') {
-        billProperties = [
-            { title: 'Total Photos', value: totalPhotos },
-            { title: 'Price per product', value: "$" + parseFloat(perPhotoCost).toFixed(2) },
-            { title: 'subTotal', value: "$" + parseFloat(subtotal).toFixed(2) },
-            { title: 'Tax', value: "$" + parseFloat(taxTotal).toFixed(2) },
-            { title: 'Grand Total', value: "$" + parseFloat(grandTotal).toFixed(2) },
+    let billProperties = [
 
-        ]
-    } else if (selectedPackage.package_name == 'Free Trial') {
-        billProperties = [
-            { title: 'Total Photos', value: totalPhotos },
-            { title: 'Package', value: selectedPackage?.package_name },
-            { title: 'Remaining Credit', value: 0 },
-            { title: 'Subtotal', value: "$" + subtotal },
-            { title: 'Tax', value: "$" + taxTotal },
-            { title: 'GrandTotal', value: "$" + grandTotal },
+        { title: 'Package Name', value: package_name },
+        { title: 'Package Credit', value: photos },
+        { title: 'Package Price', value: "$" + price },
+        { title: 'Subtotal', value: "$" + subTotal },
+        { title: 'Tax', value: "$" + taxTotal },
+        { title: 'GrandTotal', value: "$" + grandTotal },
 
-        ]
-    }
-    else {
-        billProperties = [
-
-            { title: 'Package Name', value: selectedPackage?.package_name },
-            { title: 'Total Credit', value: remainingCredit },
-            { title: 'Package Price', value: 10 },
-            { title: 'Subtotal', value: "$" + subtotal },
-            { title: 'Tax', value: "$" + taxTotal },
-            { title: 'GrandTotal', value: "$" + grandTotal },
-
-        ]
-    }
+    ]
 
 
     const confirmOrder = () => {
-        console.log('confirm')
+        const randomNum = Math.floor(Math.random() * 100000000);
+        const randomString = String(randomNum).padStart(8, '0');
+
+
+
+        const orderDetails = {
+            orderId: randomString,
+            orderName: `subscription for ${package_name} package`,
+            name: user?.displayName,
+            email: user?.email,
+            package: package_name,
+            subTotal,
+            taxRate,
+            taxTotal,
+            grandTotal,
+        }
+
+        console.log(orderDetails)
+
+
+
+
+
+
     }
 
 
@@ -89,10 +75,10 @@ const PricingBilling = () => {
 
 
             {/* properties  */}
-            <div className='my-5'>
+            <div className='my-5 '>
                 {
                     billProperties.map((property, index) => <div
-                        className='my-3'
+                        className='my-3 '
                         key={index}
                     >
                         <div className='flex justify-between items-center '>
@@ -111,7 +97,7 @@ const PricingBilling = () => {
                     <p className='px-5 py-2.5 border rounded text-2xl '>$</p>
                 </div>
                 <div>
-                    <h3 className='text-xl font-bold'><span className='mr-1'>$</span> {grandTotal.toFixed(2)} <span>USD</span></h3>
+                    <h3 className='text-xl font-bold'><span className='mr-1'>$</span> {grandTotal?.toFixed(2)} <span>USD</span></h3>
                     <p className='text-neutral'>Cost</p>
                 </div>
             </div>

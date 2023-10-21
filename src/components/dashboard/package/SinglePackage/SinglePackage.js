@@ -59,9 +59,14 @@ const SinglePackage = ({ plan }) => {
                                 <button onClick={() => setSelectedPackage(plan)} className='py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full  '>Get Started</button>
                             </Link>
                             :
-                            <Link href='/dashboard/pricing/billing_info'>
-                                <button onClick={() => setSelectedPackage(plan)} className='py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full  '>Buy Now</button>
-                            </Link>
+                            package_name === 'enterprise' ?
+                                <Link href='/dashboard/support'>
+                                    <button className='py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full  '>Contact Us</button>
+                                </Link>
+                                :
+                                <Link href={`/dashboard/pricing/billing_info?package=${package_name}`}>
+                                    <button onClick={() => setSelectedPackage(plan)} className='py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full  '>Buy Now</button>
+                                </Link>
                     }
                 </div>
 
