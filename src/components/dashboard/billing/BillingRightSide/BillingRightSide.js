@@ -18,36 +18,37 @@ const BillingRightSide = () => {
     let remainingCredit;
 
 
-    if (selectedPackage.package_name == 'Pay as go') {
+    if (selectedPackage.package_name == 'pay as go') {
         subtotal = totalPhotos * perPhotoCost;
         taxTotal = (taxRate / 100) * subtotal
         grandTotal = subtotal + taxTotal;
-        remainingCredit = userData?.remainingCredit
-    } else if (selectedPackage.package_name == 'Free Trial') {
+        remainingCredit = userData?.remainingCredit;
+    } else if (selectedPackage.package_name == 'free trial') {
         subtotal = 0
         taxTotal = 0
         grandTotal = 0;
-        remainingCredit = userData?.remainingCredit - totalPhotos
+        remainingCredit = 0
     } else {
-        subtotal = selectedPackage?.price
-        taxTotal = (taxRate / 100) * selectedPackage?.price
+        subtotal = 0
+        taxTotal = 0
         grandTotal = subtotal + taxTotal;
-        remainingCredit = updatedCredit - totalPhotos
+        remainingCredit = userData?.remainingCredit - totalPhotos
     }
 
 
     let billProperties;
 
-    if (selectedPackage.package_name == 'Pay as go') {
+    if (selectedPackage.package_name == 'pay as go') {
         billProperties = [
             { title: 'Total Photos', value: totalPhotos },
+            { title: 'Package', value: "pay as go" },
             { title: 'Price per product', value: "$" + parseFloat(perPhotoCost).toFixed(2) },
             { title: 'subTotal', value: "$" + parseFloat(subtotal).toFixed(2) },
             { title: 'Tax', value: "$" + parseFloat(taxTotal).toFixed(2) },
             { title: 'Grand Total', value: "$" + parseFloat(grandTotal).toFixed(2) },
 
         ]
-    } else if (selectedPackage.package_name == 'Free Trial') {
+    } else if (selectedPackage.package_name == 'free trial') {
         billProperties = [
             { title: 'Total Photos', value: totalPhotos },
             { title: 'Package', value: selectedPackage?.package_name },
@@ -61,7 +62,7 @@ const BillingRightSide = () => {
     else {
         billProperties = [
             { title: 'Total Photos', value: totalPhotos },
-            { title: 'Package', value: selectedPackage?.package_name },
+            { title: 'Package', value: userData.subscribedPackage },
             { title: 'Remaining Credit', value: remainingCredit },
             { title: 'Subtotal', value: "$" + subtotal },
             { title: 'Tax', value: "$" + taxTotal },
@@ -78,10 +79,7 @@ const BillingRightSide = () => {
     return (
         <div className='bg-white rounded p-5 '>
             <h3 className='font-bold text-xl mb-5'> Summary</h3>
-            {/* <div className='flex items-center space-x-3'>
-                <span className='bg-pink-300 p-2 rounded text-red-800 text-xl'><FaFire /></span>
-                <h3 className='font-bold '>Hot Rate</h3>
-            </div> */}
+
 
 
             {/* properties  */}
