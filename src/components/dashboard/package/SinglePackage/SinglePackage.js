@@ -22,7 +22,6 @@ const SinglePackage = ({ plan }) => {
                     {price && <h3 className='font-bold'> ${price}</h3>}
                 </div>
 
-
                 <hr className='my-3' />
 
                 <div className='min-h-[520px]'>
