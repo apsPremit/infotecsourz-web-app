@@ -2,7 +2,16 @@ import SignUpForm from '@/components/authentication/SignUpForm/SignupForm';
 import styles from '@/app/styles.module.css'
 import Image from 'next/image';
 import loginLogo from '../../../../public/images/others/cake logo.png'
+
+export const metadata = {
+    title: "signup || infotecsourz app",
+    description: "$20 Free Credit Photo Retouching App"
+}
+
+
 const SignUp = () => {
+
+
     return (
 
         <div className='lg:grid grid-cols-2 min-h-screen  mx-auto '>

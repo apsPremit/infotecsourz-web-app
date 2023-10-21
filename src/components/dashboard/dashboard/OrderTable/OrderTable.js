@@ -15,6 +15,7 @@ const OrderTable = () => {
     const [loading, setLoading] = useState(true)
     const [orders, setOrders] = useState([])
 
+
     const { user, loading: userLoading, userData } = UserAuth()
 
     // useEffect(() => { window.location.reload() }, [])
@@ -28,6 +29,12 @@ const OrderTable = () => {
                 setLoading(false)
             })
             .catch(err => { setLoading(false) })
+
+
+
+
+
+
 
     }, [user])
 
@@ -50,6 +57,10 @@ const OrderTable = () => {
                                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap"
                                                 >
                                                     Order
+                                                </th>
+                                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap"
+                                                >
+                                                    Order Name
                                                 </th>
                                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap"
                                                 >

@@ -15,6 +15,7 @@ const PricingBilling = () => {
     const [isAgree, setAgree] = useState(false)
     const [isProcessing, setProcessing] = useState(false)
     const { user, userData } = UserAuth()
+    console.log("userData", userData)
     const router = useRouter()
     const searchPackage = params.get('package')
     const packageInfo = packages.find(pk => pk.package_name === searchPackage)
@@ -56,7 +57,9 @@ const PricingBilling = () => {
             taxTotal,
             grandTotal,
             credit: photos,
+            address: userData?.address || 'unavailable'
         }
+
 
         try {
             const res = await fetch(`${baseUrl}/subscription`, {

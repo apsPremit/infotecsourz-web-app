@@ -11,7 +11,7 @@ const poppins = Poppins({
 export const metadata = {
 
   title: 'InfotecSourz',
-  description: 'Transform your business with digital branding.',
+  description: 'Virtual photo retouching app',
 
 }
 

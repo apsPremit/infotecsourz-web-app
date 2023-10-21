@@ -49,6 +49,9 @@ const OrderRow = ({ order }) => {
             <td className="px-6 py-4 whitespace-nowrap text-sm  text-blue-500 ">
                 {orderId}
             </td>
+            <td className="px-6 py-4 whitespace-nowrap text-sm  text-blue-500 ">
+                {orderName}
+            </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm   text-black ">
                 {
                     status === 'delivered' && (deliveredFileUrl ? <Link target='_blank' href={deliveredFileUrl}><button className='text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded'>Download</button></Link>

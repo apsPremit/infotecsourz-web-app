@@ -150,7 +150,7 @@ const Invoice = () => {
                                                         1
                                                     </td>
                                                     <td className="px-6 py-2 whitespace-nowrap text-sm text-start ">
-                                                        <span className='font-bold mb-3 block'> {orderName} </span>
+                                                        <span className='font-bold mb-3 block whitespace-break-spaces'> {orderName} </span>
                                                         <p className='flex flex-wrap'>
                                                             {
                                                                 additional?.map((item, index) => <span
