@@ -13,7 +13,7 @@ const SpecificationsRightSide = () => {
 
 
     const fields = [
-        { label: 'File Name', value: orderName, type: 'text' },
+        { label: 'Order Name', value: orderName, type: 'text' },
         { label: 'Owner', value: user?.displayName, type: 'text' },
         { label: 'Product Uploaded', value: imageQuantityFromUrl > 0 ? imageQuantityFromUrl : uploadedImages.length, type: 'text' },
         { label: 'Created', value: moment(new Date()).format('MMM Do YY'), type: 'text' },
