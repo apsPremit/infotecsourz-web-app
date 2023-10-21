@@ -13,27 +13,26 @@ const SinglePackage = ({ plan }) => {
     const pathName = usePathname()
 
 
-    const { id, package_name, description, price, photos, duration, facilities } = plan || {}
+    const { id, package_name, price, photos, spec, facilities } = plan || {}
     return (
         <div className={`border-shadow rounded   p-5 shadow relative ${pathName === '/dashboard/package' && selectedPackage?.package_name === package_name ? 'bg-blue-500 text-white' : 'bg-white'}`}>
             <label className='cursor-pointer ' htmlFor={package_name}>
-                <h1 className='font-bold text-lg capitalize'>{package_name}</h1>
-                <p className=' text-sm my-3'>{description}</p>
-                <div className='flex items-center'>
-
-                    <div className='flex'>
-                        {price &&
-                            <div className='flex'>
-                                <h3 className='font-bold'> <span className='mr-2'>AUD</span>${price}</h3>
-
-                            </div>
-
-                        }
-                    </div>
-
+                <div className='min-h-[52px]'>
+                    <h1 className='font-bold text-2xl capitalize'>{package_name}</h1>
+                    {price && <h3 className='font-bold'> ${price}</h3>}
                 </div>
+
+
                 <hr className='my-3' />
-                <div className='min-h-[70px]'>
+
+                <div className='min-h-[520px]'>
+                    <ul className='mb-5'>
+                        {
+                            spec?.map((sp, index) => <li className='list-inside list-disc' key={index}>{sp}</li>)
+                        }
+                    </ul>
+
+
 
                     {
                         photos && <p className='gap-x-2 flex items-center my-2'>
@@ -41,6 +40,7 @@ const SinglePackage = ({ plan }) => {
                             <span>{photos} Photos </span>
                         </p>
                     }
+
 
                     {
                         facilities && facilities.map((facility, index) =>
