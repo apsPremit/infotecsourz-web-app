@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import BtnFreeTrial from '../BtnFreeTrial/BtnFreeTrial';
+
 import { UserAuth } from '@/context/AuthProvider';
 import { BsImageAlt } from 'react-icons/bs';
 
