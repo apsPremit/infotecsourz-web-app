@@ -9,11 +9,7 @@ const ImageUploadInputField = ({ setFileUrl, isUploading, selectedImages }) => {
     const handleFileUrl = (e) => {
         e.preventDefault()
         // generate order id 
-        const generatedOrderId = generateOrderId()
-        setOrderId(generatedOrderId)
-        if (generatedOrderId) {
-            toast.success('link added')
-        }
+        console.log('order id', orderId)
 
 
         const url = e.target.fileURL.value

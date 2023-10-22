@@ -4,9 +4,6 @@ import React from 'react';
 
 const SubscribedPackage = () => {
     const { userData } = UserAuth()
-    console.log('u', userData)
-
-
 
     return (
         <div className='grid grid-cols-1 mg:grid-cols-2 lg:grid-cols-3 mb-5 text-white  '>
