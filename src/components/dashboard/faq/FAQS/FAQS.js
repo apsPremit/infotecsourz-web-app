@@ -5,28 +5,36 @@ import { ChevronUpIcon } from '@heroicons/react/20/solid'
 const FAQS = () => {
     const faqs = [
         {
-            title: 'How to start ?',
-            description: 'Just signup and upload file with instruction on Upload section in dashboard'
+            title: 'How To Create An Order ?',
+            description: 'Just signup and select services you required. Then upload file with instruction on Upload section in dashboard.'
         },
         {
-            title: 'What are the photos that you edit ?',
-            description: 'We edit and retouch all types of  photos. For example- Electronics product, Food Items, Apparel, Cosmetics, machinery/parts, farming equipment, and more.'
+            title: 'Do You Offer A Free Trial ?',
+            description: 'We have $20 free trial credit. You can try our service for free. No credit card required!'
         },
         {
-            title: 'Can I get fast price quote ?',
-            description: 'Yes, we offer fast quote service on any  photo editing request. You will get response within 30 minutes . Request Quote Now.'
+            title: 'What Services Do You Offer ?',
+            description: 'We are Offering Product photo Retouching, Model Photo Retouching, Clipping Path, Background removal and many more.'
         },
         {
-            title: "How long the photo editing will take?",
-            description: "The general turnaround is 24-72 hours for up to 1000 photos. However depending on urgency, we encourage our customers to get in touch with us directly for faster turnarounds."
+            title: "How Do I Pay ?",
+            description: "We work now you can pay later. We will send you an invoice at the end of every project."
         },
         {
-            title: "Can I share photos via Dropbox, Google Drive, Wetransfer",
-            description: "Yes you can share photos through Dropbox, Wetransfer, Google drive to our E-mail: contact@infotecsourz.com"
+            title: "What Is The Turn Around Time",
+            description: "Our normal turnaround time is 12-24 hours."
         },
         {
-            title: "What if I don't like the editing photos?",
-            description: "You will get revisions for each photos. It's free of cos"
+            title: "How Can I Share My Photos ?",
+            description: "You can signup and upload your files to our secured server or you can attach your file link."
+        },
+        {
+            title: "What Is The Pricing Per Image",
+            description: "Our Stating price is $0.30/photo for more details please visit our pricing page."
+        },
+        {
+            title: "Do You Have Any Revision?",
+            description: "Yes, Of course. If you do not like retouching style you can always ask for revisions. We will do it without any extra charege."
         },
     ]
 
