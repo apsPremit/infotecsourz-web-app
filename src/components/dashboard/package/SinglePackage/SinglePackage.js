@@ -11,10 +11,10 @@ import { UserAuth } from '@/context/AuthProvider';
 const SinglePackage = ({ plan }) => {
     const { setSelectedPackage, selectedPackage } = useContext(StateContext)
     const { userData } = UserAuth()
-    console.log('user data', userData)
+
 
     const pathName = usePathname()
-    console.log(selectedPackage)
+
 
     const { id, package_name, price, photos, spec, facilities } = plan || {}
     return (

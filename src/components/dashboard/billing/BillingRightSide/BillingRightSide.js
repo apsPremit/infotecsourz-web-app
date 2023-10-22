@@ -12,9 +12,9 @@ const BillingRightSide = () => {
 
 
     let totalPhotos = uploadedImages.length < 1 ? imageQuantityFromUrl : uploadedImages.length
-    let subtotal = totalPhotos * perPhotoCost;
-    let taxTotal = (taxRate / 100) * subtotal
-    let grandTotal = subtotal + taxTotal;
+    let subTotal = totalPhotos * perPhotoCost;
+    let taxTotal = (taxRate / 100) * subTotal
+    let grandTotal = subTotal + taxTotal;
     let remainingCredit = userData?.remainingCredit - totalPhotos;
 
 
@@ -29,7 +29,7 @@ const BillingRightSide = () => {
         { title: 'Package', value: selectedPackage.package_name || userData?.subscribedPackage },
         { title: 'Price per product', value: "$" + parseFloat(perPhotoCost).toFixed(2) },
         { title: 'Remaining Credit', value: remainingCredit },
-        { title: 'subTotal', value: "$" + parseFloat(subtotal).toFixed(2) },
+        { title: 'subtotal', value: "$" + parseFloat(subTotal).toFixed(2) },
         { title: 'Tax', value: "$" + parseFloat(taxTotal).toFixed(2) },
         { title: 'Grand Total', value: "$" + parseFloat(grandTotal).toFixed(2) },
     ]
@@ -98,7 +98,7 @@ const BillingRightSide = () => {
 
             {/* billing btn and process  */}
             <BillingProcess
-                subtotal={subtotal}
+                subTotal={subTotal}
                 taxTotal={taxTotal}
                 perPhotoCost={perPhotoCost}
                 grandTotal={grandTotal}
