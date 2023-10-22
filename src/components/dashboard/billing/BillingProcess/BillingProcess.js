@@ -40,6 +40,22 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
 
 
     const confirmOrder = async () => {
+
+        // if (totalPhotos > userData?.remainingCredit) {
+        //     return toast((ts) => (
+        //         <div className='flex items-start'>
+        //             <div className='flex-1 mr-2'>
+        //                 <span className='block'>You Have not require credit</span>
+        //                 <Link className='underline text-main' href='/dashboard/pricing'>Go To Pricing</Link>
+        //             </div>
+        //             <button className=' w-8 h-8 bg-red-400 text-white rounded-full text-xs' onClick={() => toast.dismiss(ts.id)}>
+        //                 x
+        //             </button>
+        //         </div>
+        //     ));
+        // }
+
+
         setProcessing(true)
         const orderDetails = {
             orderId: orderId,
@@ -66,6 +82,7 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
 
         try {
             const result = await saveOrder(orderDetails)
+
             if (result.success) {
                 toast.success('order success')
                 setProcessing(false)
@@ -73,7 +90,8 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
                 // router.reload()
             }
         } catch (error) {
-            toast.error('something wrong')
+
+            toast.error(error?.response?.data?.message || 'order not acceptable')
             setProcessing(false)
         }
 

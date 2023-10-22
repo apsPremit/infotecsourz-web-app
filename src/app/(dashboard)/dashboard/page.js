@@ -35,7 +35,7 @@ const page = () => {
                         <p className='font-bold  text-lg'>Create New Order</p>
                         <h3 className='text  text-[#9f9f9f] text-sm'>Let start your photo retouching project!</h3>
                         <Link href='/dashboard/new_order'>
-                            <button className='px-3 py-1.5 mt-3 bg-main text-white rounded hover:bg-mainHover'>Get Started</button>
+                            <button className='px-3 py-1.5 mt-3 bg-main text-white rounded hover:bg-mainHover'>Create New Order</button>
                         </Link>
                     </div>
                 </div>

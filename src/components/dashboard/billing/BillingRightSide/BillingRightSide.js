@@ -21,6 +21,8 @@ const BillingRightSide = () => {
     if (selectedPackage.package_name == 'pay as go') {
         remainingCredit = userData?.remainingCredit;
 
+    } else if (selectedPackage.package_name == 'free trial') {
+        remainingCredit = 0
     }
 
 
