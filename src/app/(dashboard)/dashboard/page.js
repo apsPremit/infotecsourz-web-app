@@ -67,7 +67,7 @@ const page = () => {
                         </p>
                     </div>
                     <div className='mt-3'>
-                        <p className='font-bold  text-lg'>$30</p>
+                        <p className='font-bold  text-lg'>$20</p>
                         <h3 className='text  text-[#9f9f9f] text-sm'>Get $20 for Free trial!</h3>
                         <BtnFreeTrial />
                     </div>

@@ -3,15 +3,18 @@ import { StateContext } from '@/context/StateProvider';
 import React, { useContext } from 'react';
 import { IoMdCheckmark } from "react-icons/io";
 import PackageCheckbox from './PackageCheckbox/PackageCheckbox';
-import { usePathname } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { UserAuth } from '@/context/AuthProvider';
 
 
 const SinglePackage = ({ plan }) => {
     const { setSelectedPackage, selectedPackage } = useContext(StateContext)
+    const { userData } = UserAuth()
+    console.log('user data', userData)
 
     const pathName = usePathname()
-
+    console.log(selectedPackage)
 
     const { id, package_name, price, photos, spec, facilities } = plan || {}
     return (
@@ -54,23 +57,23 @@ const SinglePackage = ({ plan }) => {
                     {
                         pathName === '/dashboard/pricing' &&
                             package_name == 'free trial' || package_name == 'pay as go' ?
-                            <Link href='/dashboard/new_order'>
-                                <button onClick={() => setSelectedPackage(plan)} className='py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full  '>Get Started</button>
+                            <Link href='/dashboard/new_order' className={`${pathName === '/dashboard/package' && 'hidden'}`}>
+                                <button className="py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full">Get Started</button>
                             </Link>
                             :
                             package_name === 'enterprise' ?
-                                <Link href='/dashboard/support'>
+                                <Link href='/dashboard/support' className={`${pathName === '/dashboard/package' && 'hidden'}`}>
                                     <button className='py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full  '>Contact Us</button>
                                 </Link>
                                 :
-                                <Link href={`/dashboard/pricing/billing_info?package=${package_name}`}>
-                                    <button onClick={() => setSelectedPackage(plan)} className='py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full  '>Buy Now</button>
+                                <Link href={`/dashboard/pricing/billing_info?package=${package_name}`} className={`${pathName === '/dashboard/package' && 'hidden'}`}>
+                                    <button className='py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full  '>Buy Now</button>
                                 </Link>
                     }
                 </div>
 
                 {
-                    pathName === '/dashboard/package' && <PackageCheckbox isChecked={package_name === selectedPackage?.package_name} plan={plan} />
+                    pathName === '/dashboard/package' && <PackageCheckbox isChecked={package_name === package_name === selectedPackage?.package_name} plan={plan} />
                 }
 
             </label >
