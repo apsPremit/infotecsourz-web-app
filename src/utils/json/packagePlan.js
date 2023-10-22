@@ -1,6 +1,6 @@
 export const packages = [
     {
-        "id:": 1,
+        "id": 1,
         "package_name": "free trial",
         "price": 20,
         "spec": [
@@ -20,7 +20,7 @@ export const packages = [
 
     },
     {
-        "id:": 2,
+        "id": 2,
         "package_name": "pay as go",
         "title": "Starting at $0.30*",
         "spec": [
@@ -44,7 +44,7 @@ export const packages = [
     },
 
     {
-        "id:": 3,
+        "id": 3,
         "package_name": "standard",
         "price": 200,
         "photos": 100,
@@ -72,7 +72,7 @@ export const packages = [
     },
 
     {
-        "id:": 4,
+        "id": 4,
         "package_name": "premium",
         "price": 500,
         "photos": 300,
@@ -100,7 +100,7 @@ export const packages = [
     },
 
     {
-        "id:": 5,
+        "id": 5,
         "package_name": "weakly pack",
         "photos": 500,
         "price": 800,
@@ -127,7 +127,7 @@ export const packages = [
 
     },
     {
-        "id:": 6,
+        "id": 6,
         "package_name": "monthly pack",
         "photos": 1000,
         "price": 1500,
@@ -154,7 +154,7 @@ export const packages = [
 
     },
     {
-        "id:": 7,
+        "id": 7,
         "package_name": "enterprise",
         "price": 1500,
         "spec": [

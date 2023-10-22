@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import React, { useContext, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
-const BillingProcess = ({ subtotal, perPhotoCost, grandTotal, taxTotal, remainingCredit }) => {
+const BillingProcess = ({ subtotal, perPhotoCost, grandTotal, taxTotal, remainingCredit, totalPhotos }) => {
 
     const router = useRouter()
     const [isAgree, setAgree] = useState(false)
@@ -17,7 +17,6 @@ const BillingProcess = ({ subtotal, perPhotoCost, grandTotal, taxTotal, remainin
 
     const {
         uploadedImages,
-        imageQuantityFromUrl,
         photoType,
         selectedPackage,
         orderId,
@@ -49,21 +48,21 @@ const BillingProcess = ({ subtotal, perPhotoCost, grandTotal, taxTotal, remainin
             email: user?.email,
             photoType,
             package: selectedPackage?.package_name,
-            photoQuantity: imageQuantityFromUrl || uploadedImages.length,
+            photoQuantity: parseInt(totalPhotos),
             perPhotoCost,
-            subTotal: selectedPackage === 'free trial' ? 0 : subtotal,
-            taxRate: selectedPackage === 'free trial' ? 0 : taxRate,
-            taxTotal: selectedPackage === 'free trial' ? 0 : taxTotal,
-            grandTotal: selectedPackage === "free trial" ? 0 : grandTotal,
+            subtotal,
+            taxRate,
+            taxTotal,
+            grandTotal,
             remainingCredit,
             productDetailsDescription,
             fileUrl,
             photoRequirements,
             returnTime,
-            address: "unavailable",
+            address: userData.address,
             hasInstructions: hasInstructions
         }
-
+        console.log(orderDetails)
 
         try {
             const result = await saveOrder(orderDetails)

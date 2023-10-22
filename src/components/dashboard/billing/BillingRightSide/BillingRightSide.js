@@ -12,64 +12,50 @@ const BillingRightSide = () => {
 
 
     let totalPhotos = uploadedImages.length < 1 ? imageQuantityFromUrl : uploadedImages.length
-    let subtotal;
-    let taxTotal;
-    let grandTotal;
-    let remainingCredit;
+    let subtotal = totalPhotos * perPhotoCost;
+    let taxTotal = (taxRate / 100) * subtotal
+    let grandTotal = subtotal + taxTotal;
+    let remainingCredit = userData?.remainingCredit - totalPhotos;
 
 
     if (selectedPackage.package_name == 'pay as go') {
-        subtotal = totalPhotos * perPhotoCost;
-        taxTotal = (taxRate / 100) * subtotal
-        grandTotal = subtotal + taxTotal;
         remainingCredit = userData?.remainingCredit;
-    } else if (selectedPackage.package_name == 'free trial') {
-        subtotal = 0
-        taxTotal = 0
-        grandTotal = 0;
-        remainingCredit = 0
-    } else {
-        subtotal = 0
-        taxTotal = 0
-        grandTotal = subtotal + taxTotal;
-        remainingCredit = userData?.remainingCredit - totalPhotos
+
     }
 
 
-    let billProperties;
+    let billProperties = [
+        { title: 'Total Photos', value: totalPhotos },
+        { title: 'Package', value: selectedPackage.package_name || userData?.subscribedPackage },
+        { title: 'Price per product', value: "$" + parseFloat(perPhotoCost).toFixed(2) },
+        { title: 'Remaining Credit', value: remainingCredit },
+        { title: 'subTotal', value: "$" + parseFloat(subtotal).toFixed(2) },
+        { title: 'Tax', value: "$" + parseFloat(taxTotal).toFixed(2) },
+        { title: 'Grand Total', value: "$" + parseFloat(grandTotal).toFixed(2) },
+    ]
 
-    if (selectedPackage.package_name == 'pay as go') {
-        billProperties = [
-            { title: 'Total Photos', value: totalPhotos },
-            { title: 'Package', value: "pay as go" },
-            { title: 'Price per product', value: "$" + parseFloat(perPhotoCost).toFixed(2) },
-            { title: 'subTotal', value: "$" + parseFloat(subtotal).toFixed(2) },
-            { title: 'Tax', value: "$" + parseFloat(taxTotal).toFixed(2) },
-            { title: 'Grand Total', value: "$" + parseFloat(grandTotal).toFixed(2) },
+    // } else if (selectedPackage.package_name == 'free trial') {
+    //     billProperties = [
+    //         { title: 'Total Photos', value: totalPhotos },
+    //         { title: 'Package', value: selectedPackage?.package_name },
+    //         { title: 'Remaining Credit', value: 0 },
+    //         { title: 'Subtotal', value: "$" + subtotal },
+    //         { title: 'Tax', value: "$" + taxTotal },
+    //         { title: 'GrandTotal', value: "$" + grandTotal },
 
-        ]
-    } else if (selectedPackage.package_name == 'free trial') {
-        billProperties = [
-            { title: 'Total Photos', value: totalPhotos },
-            { title: 'Package', value: selectedPackage?.package_name },
-            { title: 'Remaining Credit', value: 0 },
-            { title: 'Subtotal', value: "$" + subtotal },
-            { title: 'Tax', value: "$" + taxTotal },
-            { title: 'GrandTotal', value: "$" + grandTotal },
+    //     ]
+    // }
+    // else {
+    //     billProperties = [
+    //         { title: 'Total Photos', value: totalPhotos },
+    //         { title: 'Package', value: userData.subscribedPackage },
+    //         { title: 'Remaining Credit', value: remainingCredit },
+    //         { title: 'Subtotal', value: "$" + subtotal },
+    //         { title: 'Tax', value: "$" + taxTotal },
+    //         { title: 'GrandTotal', value: "$" + grandTotal },
 
-        ]
-    }
-    else {
-        billProperties = [
-            { title: 'Total Photos', value: totalPhotos },
-            { title: 'Package', value: userData.subscribedPackage },
-            { title: 'Remaining Credit', value: remainingCredit },
-            { title: 'Subtotal', value: "$" + subtotal },
-            { title: 'Tax', value: "$" + taxTotal },
-            { title: 'GrandTotal', value: "$" + grandTotal },
-
-        ]
-    }
+    //     ]
+    // }
 
 
 
@@ -117,6 +103,7 @@ const BillingRightSide = () => {
                 perPhotoCost={perPhotoCost}
                 grandTotal={grandTotal}
                 remainingCredit={remainingCredit}
+                totalPhotos={totalPhotos}
             />
 
         </div>

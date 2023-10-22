@@ -1,12 +1,39 @@
+"use client"
 import { getPlan } from '@/utils/functions/getPlan';
 import React, { useContext } from 'react';
 import { packages } from '@/utils/json/packagePlan';
 import SinglePackage from '@/components/dashboard/package/SinglePackage/SinglePackage';
 import Link from 'next/link';
-import StateProvider from '@/context/StateProvider';
+import StateProvider, { StateContext } from '@/context/StateProvider';
+import { UserAuth } from '@/context/AuthProvider';
+import { redirect, useRouter } from 'next/navigation';
+import toast, { Toaster } from 'react-hot-toast';
 
-const Plan = async () => {
+const Plan = () => {
+    const { selectedPackage } = useContext(StateContext)
+    console.log('selec', selectedPackage)
+    const { userData } = UserAuth()
+    const router = useRouter()
+    const handleProceed = () => {
 
+        if ((selectedPackage?.package_name == 'pay as go') || (selectedPackage.package_name == userData?.subscribedPackage)) {
+            router.push('/dashboard/billing')
+        }
+        else {
+            toast((t) => (
+                <div className='flex items-start'>
+                    <div className='flex-1'>
+                        <span className='block'>Please Upgrade your plan or choose Pay as Go</span>
+                        <Link className='underline text-main' href='/dashboard/pricing'>Go To Pricing</Link>
+                    </div>
+                    <button className=' w-8 h-8 bg-red-400 text-white rounded-full text-xs' onClick={() => toast.dismiss(t.id)}>
+                        x
+                    </button>
+                </div>
+            ));
+        }
+
+    }
 
     return (
         <div>
@@ -19,10 +46,11 @@ const Plan = async () => {
                 }
             </div>
             <div className='flex  justify-center mt-10 mb-5'>
-                <Link href='/dashboard/billing'>
-                    <button className='text-white px-3.5 py-2 bg-main hover:bg-mainHover rounded flex '>Proceed
-                    </button></Link>
+
+                <button onClick={handleProceed} className='text-white px-3.5 py-2 bg-main hover:bg-mainHover rounded flex '>Proceed
+                </button>
             </div>
+            <Toaster />
         </div>
     );
 };
