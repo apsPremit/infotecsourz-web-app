@@ -11,7 +11,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const Plan = () => {
     const { selectedPackage } = useContext(StateContext)
-    console.log('selec', selectedPackage)
+
     const { userData } = UserAuth()
     const router = useRouter()
     const handleProceed = () => {
