@@ -13,11 +13,12 @@ import saveUser from '@/utils/functions/saveUser';
 import toast, { Toaster } from 'react-hot-toast';
 import getUserData from '@/utils/functions/getUserData';
 import { ImSpinner2 } from 'react-icons/im';
+import { baseUrl } from '@/utils/functions/baseUrl';
 
 
 const SignUpForm = () => {
     const router = useRouter()
-    const { user, registerWithEmailAndPassword, profileUpdate, loading, setLoading } = UserAuth()
+    const { user, registerWithEmailAndPassword, profileUpdate, loading, setLoading, setUserData } = UserAuth()
     const [isAgree, setAgree] = useState(false)
     const search = useSearchParams()
     const { replace } = useRouter()
@@ -40,18 +41,33 @@ const SignUpForm = () => {
             .then(() => {
                 profileUpdate({ displayName: name }).
                     then(async (result) => {
-                        const newUser = { name, email, phone, address }
+                        const newUser = { name, email, address }
 
-                        saveUser(newUser)
+                        try {
+                            const res = await fetch(`${baseUrl}/user`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(newUser)
+                            })
+                            const data = await res.json()
+                            if (data?.data) {
+                                setUserData(data?.data)
+
+                                // create JWT
+                                const token = await createJWT({ email })
+                                Cookies.set('access-token', token?.accessToken, { expires: 2 })
+
+                                setLoading(false)
+                                router.push('/dashboard')
+                            }
+
+                        } catch (error) {
+                            setError('please try to login with correct credentials')
+                        }
 
 
-                        // create JWT
-                        const token = await createJWT({ email })
-                        Cookies.set('access-token', token?.accessToken, { expires: 2 })
-
-
-                        setLoading(false)
-                        router.push('/dashboard')
 
                     })
                     .catch(err => {
@@ -128,7 +144,7 @@ const SignUpForm = () => {
 
 
                 {/* ??????????????????phone ****** */}
-                <div className='mb-5'>
+                {/* <div className='mb-5'>
                     <label className='block mb-1 text-sm' htmlFor="phone">Phone</label>
                     <input type="text"
                         id='phone'
@@ -139,7 +155,7 @@ const SignUpForm = () => {
                         })}
                     />
                     {errors.phone && <p className='text-xs mt-1 text-red-400' role="alert">{errors.phone?.message}</p>}
-                </div>
+                </div> */}
 
 
 

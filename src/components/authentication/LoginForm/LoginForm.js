@@ -12,11 +12,12 @@ import Cookies from 'js-cookie';
 import toast, { Toaster } from 'react-hot-toast';
 import getUserData from '@/utils/functions/getUserData';
 import { ImSpinner2 } from 'react-icons/im';
+import { baseUrl } from '@/utils/functions/baseUrl';
 
 const LoginForm = () => {
     const search = useSearchParams()
     const router = useRouter()
-    const { loginWthEmailAndPassword, user, loading, setLoading } = UserAuth()
+    const { loginWthEmailAndPassword, user, loading, setLoading, setUserData } = UserAuth()
     const [isRemember, setRemember] = useState(false)
     const [loginLoading, setLoginLoading] = useState(false)
     const [error, setError] = useState('')
@@ -31,7 +32,7 @@ const LoginForm = () => {
 
 
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
 
         setLoginLoading(true)
         const { email, password } = data || {}
@@ -42,11 +43,20 @@ const LoginForm = () => {
                 const token = await createJWT({ email })
                 console.log('token', token)
                 Cookies.set('access-token', token?.accessToken, { expires: 2 })
+                try {
+                    const res = await fetch(`${baseUrl}/user/${email}`)
+                    const data = await res.json()
+                    if (data?.data) {
+                        router.replace('/dashboard')
+                        setLoginLoading(false)
+                        setUserData(data?.data)
+                    }
+                } catch (error) {
+                    setError('please try to login with correct credentials')
+                    setLoading(false)
+                }
 
 
-                router.replace('/dashboard')
-                setLoginLoading(false)
-                setLoading(false)
             })
             .catch(err => {
                 setLoginLoading(false)
@@ -95,7 +105,7 @@ const LoginForm = () => {
                 <div className='mb-5'>
                     <label className='block mb-1 text-sm' htmlFor="loginPassword">Password</label>
                     <input type="password"
-                        id='loginEmail'
+                        id='loginPassword'
                         className=' w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'
                         {...register("password", {
                             required: "Password is required",
