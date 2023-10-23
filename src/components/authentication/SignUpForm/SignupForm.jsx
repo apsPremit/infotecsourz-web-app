@@ -34,13 +34,14 @@ const SignUpForm = () => {
 
     // submit form ***********
 
-    const onSubmit = ({ email, password, confirm_password, name, phone }) => {
+    const onSubmit = ({ email, password, confirm_password, name, phone, address }) => {
 
         registerWithEmailAndPassword(email, password)
             .then(() => {
                 profileUpdate({ displayName: name }).
                     then(async (result) => {
-                        const newUser = { name, email, phone }
+                        const newUser = { name, email, phone, address }
+
                         saveUser(newUser)
 
 
@@ -55,7 +56,7 @@ const SignUpForm = () => {
                     })
                     .catch(err => {
                         setLoading(false)
-                        setError(err?.code.split('/')[1]?.replace('-', ' '))
+                        setError(err?.code?.split('/')[1]?.replace('-', ' '))
                     })
             })
             .catch(err => {
@@ -95,9 +96,9 @@ const SignUpForm = () => {
 
                 {/* ??????????????????email ****** */}
                 <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="email">Email</label>
+                    <label className='block mb-1 text-sm' htmlFor="signupEmail">Email</label>
                     <input type="email"
-                        id='email'
+                        id='signupEmail'
                         className=' w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'
                         {...register("email", {
                             required: "Email is required",
@@ -109,6 +110,23 @@ const SignUpForm = () => {
                     />
                     {errors.email && <p className='text-xs mt-1 text-red-400' role="alert">{errors.email?.message}</p>}
                 </div>
+                {/* address  */}
+                <div className='mb-5'>
+                    <label className='block mb-1 text-sm' htmlFor="address">Address</label>
+                    <input type="text"
+                        id='address'
+                        className=' w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'
+                        {...register("address", {
+                            required: "Address is required",
+
+                        })}
+                    />
+                    {errors.address && <p className='text-xs mt-1 text-red-400' role="alert">{errors.address?.message}</p>}
+                </div>
+
+
+
+
                 {/* ??????????????????phone ****** */}
                 <div className='mb-5'>
                     <label className='block mb-1 text-sm' htmlFor="phone">Phone</label>

@@ -5,15 +5,20 @@ import generateOrderId from "@/utils/functions/generateOrderId";
 import imageUploader from "@/utils/functions/imageUploader";
 import axios from "axios";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsUpload } from "react-icons/bs";
 
 
 const UploadField = ({ uploadedImages, setUploadedImages, orderId, setOrderId, setUploadProgress, selectedImages, setSelectedImages, setUploading, totalFileSize, setTotalFileSize }) => {
 
+    useEffect(() => {
+        const randomNum = Math.floor(Math.random() * 100000000);
+        const randomString = String(randomNum).padStart(8, '0');
+        setOrderId(randomString)
+    }, [])
 
     const { user } = UserAuth()
-    const generateOrderid = () => {
+    const generateOrderId = async () => {
         const randomNum = Math.floor(Math.random() * 100000000);
         const randomString = String(randomNum).padStart(8, '0');
         return randomString
@@ -24,11 +29,6 @@ const UploadField = ({ uploadedImages, setUploadedImages, orderId, setOrderId, s
     const handleImageUpload = async (e) => {
         setUploading(true)
         // generate order id 
-        if (!orderId) {
-            // Generate a new order ID if it's null or empty
-            const newId = generateOrderId();
-            setOrderId(newId);
-        }
 
 
 

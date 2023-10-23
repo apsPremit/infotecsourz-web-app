@@ -16,7 +16,8 @@ const Plan = () => {
     const router = useRouter()
     const handleProceed = () => {
 
-        if ((selectedPackage?.package_name == 'pay as go') || (selectedPackage.package_name == userData?.subscribedPackage) || (userData?.subscribedPackage === 'free trial')) {
+
+        if ((selectedPackage?.package_name == 'pay as go') || (selectedPackage.package_name == userData?.subscribedPackage)) {
             router.push('/dashboard/billing')
         }
         else {
