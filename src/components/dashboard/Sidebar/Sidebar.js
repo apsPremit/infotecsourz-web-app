@@ -48,7 +48,7 @@ const Sidebar = () => {
     const { isSidebarOpen, setSidebarOpen } = useContext(StateContext)
 
     return (
-        <div className={` h-screen  z-20 lg:p-5  pt-8 fixed duration-300 lg:w-52 ${isSidebarOpen ? 'w-1/2  ' : 'w-0 lg'}`} style={{
+        <div className={` h-screen  z-20 lg:p-5  pt-8 fixed duration-300 lg:w-52 ${isSidebarOpen ? 'w-3/4  ' : 'w-0 lg'}`} style={{
             background: 'linear-gradient(175deg, #0E1A45 0.02%, #4A01A9 100.02%)'
         }}>
 
@@ -67,7 +67,7 @@ const Sidebar = () => {
 
 
             <div className={`flex px-5  h-full text-white lg:px-0 flex-col duration-300 ${isSidebarOpen ? 'translate-x-0 ' : '-translate-x-52 lg:translate-x-0'}`}>
-                <ul className='pt-6 text-white flex-1'>
+                <ul className='pt-6 text-white lg:flex-1'>
 
                     <li onClick={() => setSidebarOpen(!isSidebarOpen)} >
                         <Link href='/dashboard' className={`flex gap-x-3 my-3 items-center p-2 cursor-pointer hover:bg-main rounded-lg ${currentRoute === '/dashboard' ? 'bg-main' : ''}`}>

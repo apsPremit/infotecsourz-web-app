@@ -13,7 +13,7 @@ const DashboardHeader = () => {
         <div className='flex justify-between items-center py-5 '>
             <div className='flex items-center'>
                 <button onClick={() => setSidebarOpen(!isSidebarOpen)} className='text-xl mr-3 lg:hidden'> <RxHamburgerMenu /></button>
-                <h2 className='text-2xl font-bold'>New Order</h2>
+                <h2 className='lg:text-2xl font-bold'>New Order</h2>
             </div>
             <button onClick={newOrderHandler} className='text-white bg-main px-3 py-2 rounded-lg'>Create new Order</button>
         </div>
