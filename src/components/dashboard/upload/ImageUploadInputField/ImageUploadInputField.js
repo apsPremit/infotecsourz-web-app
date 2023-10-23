@@ -9,7 +9,7 @@ const ImageUploadInputField = ({ setFileUrl, isUploading, selectedImages }) => {
     const handleFileUrl = (e) => {
         e.preventDefault()
         // generate order id 
-        console.log('order id', orderId)
+
 
 
         const url = e.target.fileURL.value
