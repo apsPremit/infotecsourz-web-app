@@ -18,8 +18,9 @@ import { baseUrl } from '@/utils/functions/baseUrl';
 
 const SignUpForm = () => {
     const router = useRouter()
-    const { user, registerWithEmailAndPassword, profileUpdate, loading, setLoading, setUserData } = UserAuth()
+    const { user, registerWithEmailAndPassword, profileUpdate, setUserData } = UserAuth()
     const [isAgree, setAgree] = useState(false)
+    const [loading, setLoading] = useState(false)
     const search = useSearchParams()
     const { replace } = useRouter()
     const [error, setError] = useState('')
@@ -36,7 +37,8 @@ const SignUpForm = () => {
     // submit form ***********
 
     const onSubmit = ({ email, password, confirm_password, name, phone, address }) => {
-
+        setError('')
+        setLoading(true)
         registerWithEmailAndPassword(email, password)
             .then(() => {
                 profileUpdate({ displayName: name }).
@@ -59,11 +61,13 @@ const SignUpForm = () => {
                                 const token = await createJWT({ email })
                                 Cookies.set('access-token', token?.accessToken, { expires: 2 })
 
-                                setLoading(false)
+
                                 router.push('/dashboard')
+                                setLoading(false)
                             }
 
                         } catch (error) {
+                            setLoading(false)
                             setError('please try to login with correct credentials')
                         }
 

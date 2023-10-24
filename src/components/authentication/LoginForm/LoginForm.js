@@ -17,9 +17,9 @@ import { baseUrl } from '@/utils/functions/baseUrl';
 const LoginForm = () => {
     const search = useSearchParams()
     const router = useRouter()
-    const { loginWthEmailAndPassword, user, loading, setLoading, setUserData } = UserAuth()
+    const { loginWthEmailAndPassword, user, setUserData } = UserAuth()
+    const [loading, setLoading] = useState(false)
     const [isRemember, setRemember] = useState(false)
-    const [loginLoading, setLoginLoading] = useState(false)
     const [error, setError] = useState('')
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
@@ -33,8 +33,8 @@ const LoginForm = () => {
 
 
     const onSubmit = async (data) => {
-
-        setLoginLoading(true)
+        setError('')
+        setLoading(true)
         const { email, password } = data || {}
 
         loginWthEmailAndPassword(email, password)
@@ -46,11 +46,16 @@ const LoginForm = () => {
                 try {
                     const res = await fetch(`${baseUrl}/user/${email}`)
                     const data = await res.json()
+                    console.log('login data', data)
                     if (data?.data) {
-                        router.replace('/dashboard')
-                        setLoginLoading(false)
+
                         setUserData(data?.data)
+                        router.replace('/dashboard')
+                        setLoading(false)
+
                     }
+                    setLoading(false)
+                    setError('please try to login with correct credentials')
                 } catch (error) {
                     setError('please try to login with correct credentials')
                     setLoading(false)
@@ -59,7 +64,6 @@ const LoginForm = () => {
 
             })
             .catch(err => {
-                setLoginLoading(false)
                 setLoading(false)
                 setError(err?.code?.split('/')[1]?.replace('-', ' '))
             })
