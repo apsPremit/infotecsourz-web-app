@@ -1,9 +1,23 @@
 "use client"
 import { UserAuth } from '@/context/AuthProvider';
-import React from 'react';
+import { baseUrl } from '@/utils/functions/baseUrl';
+import React, { useEffect, useState } from 'react';
 
 const SubscribedPackage = () => {
-    const { userData } = UserAuth()
+    const { user } = UserAuth()
+    const [userData, setUserData] = useState({})
+    useEffect(() => {
+        if (user?.email) {
+            fetch(`${baseUrl}/user/${user?.email}`)
+                .then(res => res.json())
+                .then(data => setUserData(data?.data))
+                .catch(error => {
+                    setUserData({})
+
+                })
+        }
+
+    }, [user])
 
     return (
         <div className='grid grid-cols-1 mg:grid-cols-2 lg:grid-cols-3 mb-5 text-white  '>

@@ -30,13 +30,7 @@ const OrderTable = () => {
             })
             .catch(err => { setLoading(false) })
 
-
-
-
-
-
-
-    }, [user])
+    }, [user, userData])
 
 
 

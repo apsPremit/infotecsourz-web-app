@@ -22,7 +22,7 @@ const FormatSlide = () => {
 
             <ImageBox />
             <h2 className='text-lg  font-bold mb-5'>Select Image format </h2>
-            <div className='flex items-center gap-x-10'>
+            <div className='flex items-center gap-x-10 flex-wrap'>
 
                 {
                     formatOptions.map((item, i) => <CheckButton

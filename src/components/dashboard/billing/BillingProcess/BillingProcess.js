@@ -78,7 +78,7 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
             address: userData.address,
             hasInstructions: hasInstructions
         }
-        console.log('details', orderDetails)
+
 
         try {
             const result = await saveOrder(orderDetails)

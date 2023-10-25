@@ -42,7 +42,7 @@ const SignUpForm = () => {
         setLoading(true)
         try {
             const registerResult = await registerWithEmailAndPassword(email, password)
-            console.log('register', registerResult)
+
             const updateResult = await profileUpdate({ displayName: name })
             const newUser = { name, email }
             try {
@@ -70,7 +70,7 @@ const SignUpForm = () => {
             } catch (error) {
                 setLoading(false)
                 Cookies.remove('access-token')
-                console.log('db error', error)
+
                 userDelete()
             }
 
@@ -80,7 +80,7 @@ const SignUpForm = () => {
         } catch (error) {
             Cookies.remove('access-token')
             setError(error?.code?.split('/')[1]?.replace('-', ' '))
-            console.log(error?.code)
+
 
         }
 
@@ -281,15 +281,16 @@ const SignUpForm = () => {
                         onChange={() => setAgree(!isAgree)}
                         checked={isAgree}
                         type="checkbox"
-                        className='mr-2 ' />
-                    <sapn className='text-sm'>I accept <Link target='_blank' href='https://www.infotecsourz.com/terms-and-conditions/' className='text-main hover:underline'>Terms & Conditions</Link></sapn>
+                        className='mr-2 '
+                    />
+                    <span className='text-sm'>I accept <Link target='_blank' href='https://www.infotecsourz.com/terms-and-conditions/' className='text-main hover:underline'>Terms & Conditions</Link></span>
                 </label>
                 {
                     error && <p className='text-sm text-center text-red-500'>{error}</p>
                 }
-                {/* {
+                {
                     loading && <div className='flex items-center justify-center text-xl text-main'><ImSpinner2 className='animate-spin' /></div>
-                } */}
+                }
                 <div>
                     <input disabled={!isAgree} className='bg-main cursor-pointer hover:bg-[#5736ce] disabled:bg-opacity-50 py-3 px-3 text-center text-white font-bold w-full rounded-lg mt-3 mb-5' type="submit" value="Sign Up" />
                 </div>

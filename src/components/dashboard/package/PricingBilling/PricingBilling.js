@@ -15,7 +15,7 @@ const PricingBilling = () => {
     const [isAgree, setAgree] = useState(false)
     const [isProcessing, setProcessing] = useState(false)
     const { user, userData } = UserAuth()
-    console.log("userData", userData)
+
     const router = useRouter()
     const searchPackage = params.get('package')
     const packageInfo = packages.find(pk => pk.package_name === searchPackage)
@@ -70,14 +70,14 @@ const PricingBilling = () => {
                 body: JSON.stringify(orderDetails)
             })
             const data = await res.json()
-            console.log(data)
+
             if (data.success) {
                 setProcessing(false)
                 router.push(`/order_success?orderId=${orderDetails?.orderId}`)
             }
         } catch (error) {
             setProcessing(false)
-            console.log(error)
+
             toast.error(error?.message || 'internal server error')
         }
 

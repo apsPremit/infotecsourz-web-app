@@ -17,11 +17,11 @@ const ProfilePage = () => {
     useEffect(() => {
         axios.get(`${baseUrl}/profile_photo/${user?.email}`)
             .then(res => {
-                console.log('result', res.data)
+
                 setPhotoUrl(res?.data)
             })
             .catch(error => {
-                console.log(error)
+
             })
     }, [user])
 
@@ -33,13 +33,13 @@ const ProfilePage = () => {
     return (
         <div className='lg:px-10'>
 
-            <div className='flex space-x-5 p-5 bg-white rounded mb-5'>
+            <div className='md:flex space-x-5 p-5 bg-white rounded mb-5 '>
                 <Image
                     src={photoUrl || user?.photoUrl || defaultProfileImage}
                     height={150}
                     width={150}
                     alt='profile photo'
-                    className='border '
+                    className='border w-full mb-3'
                     style={{ maxHeight: '150px' }}
                 />
                 <div>
@@ -63,23 +63,23 @@ const ProfilePage = () => {
             <div className='p-5 bg-white rounded mb-5'>
                 <h3 className='text-xl  mb-5'>Contact Information</h3>
 
-                <div className='flex justify-between mb-2'>
+                <div className='md:flex justify-between mb-2'>
                     <p className='text-main'>Name</p>
                     <p>{name || user?.displayName || "Unknown"}</p>
                 </div>
-                <div className='flex justify-between mb-2'>
+                <div className='md:flex justify-between mb-2'>
                     <p className='text-main'>Email Address</p>
                     <p>{email || user?.email}</p>
                 </div>
-                <div className='flex justify-between mb-2'>
+                <div className='md:flex justify-between mb-2'>
                     <p className='text-main'>Phone Number</p>
                     <p>{phone}</p>
                 </div>
-                <div className='flex justify-between mb-2'>
+                <div className='md:flex justify-between mb-2'>
                     <p className='text-main'>Address</p>
                     <p>{address}</p>
                 </div>
-                <div className='flex justify-between mb-2'>
+                <div className='md:flex justify-between mb-2'>
                     <p className='text-main'>Company Name</p>
                     <p>{companyName}</p>
                 </div>

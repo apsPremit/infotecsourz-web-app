@@ -31,7 +31,7 @@ const Invoice = () => {
 
 
     const { orderId, customerName, customerAddress, orderName, discount, paymentStatus, photoRequirements, subTotal, grandTotal, taxTotal, date, dueDate, taxRate, paypalAccountNumber, swiftCode, bankAccountName, bankAccountNumber, bankAddress, bankName } = invoiceData || {}
-    console.log(invoiceData)
+   
 
     const { additional } = photoRequirements || {}
     const generatePdf = useReactToPrint({
@@ -40,7 +40,7 @@ const Invoice = () => {
     })
 
 
-    console.log(invoiceData)
+   
 
 
     return (

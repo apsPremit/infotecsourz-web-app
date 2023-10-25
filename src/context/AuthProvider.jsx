@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
                 .then(data => setUserData(data?.data))
                 .catch(error => {
                     setUserData({})
-                    console.log('user data error', error?.message)
+
                 })
         }
 
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
     // email password login 
 
     const loginWthEmailAndPassword = async (email, password) => {
-        console.log(email, password)
+
         setLoading(true)
         return await signInWithEmailAndPassword(auth, email, password)
     }

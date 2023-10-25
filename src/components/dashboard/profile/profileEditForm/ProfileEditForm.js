@@ -24,7 +24,7 @@ const ProfileEditForm = ({ details }) => {
                 setPhotoUrl(res?.data)
             })
             .catch(error => {
-                console.log(error)
+
             })
     }, [user])
 
@@ -55,7 +55,7 @@ const ProfileEditForm = ({ details }) => {
             toast.dismiss(loadingToast)
             toast.remove(loadingToast)
         } catch (error) {
-            console.log(error)
+
             toast.error('something wrong')
             toast.dismiss(loadingToast)
             toast.remove(loadingToast)

@@ -8,7 +8,7 @@ const sendSupportMessage = async (messageData) => {
         const data = await res.data
         return data
     } catch (error) {
-        console.log(error)
+
     }
 };
 

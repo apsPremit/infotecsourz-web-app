@@ -57,7 +57,7 @@ const SpecificationsLeftSide = () => {
                     htmlFor="instructions"
                     className={`flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer ${hasInstructions ? 'bg-blue-500 text-white hover:bg-blue-500' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'} `}
                 >
-                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <div className="flex flex-col items-center justify-center pt-5 pb-6 px-3 text-center lg:text-start">
                         <span className="text-2xl mb-3">
                             <BsUpload />
                         </span>

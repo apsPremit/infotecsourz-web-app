@@ -39,7 +39,7 @@ const LoginForm = () => {
 
         try {
             const loginResult = await loginWthEmailAndPassword(email, password)
-            console.log('login result', loginResult)
+
 
             try {
                 const res = await fetch(`${baseUrl}/authentication/login/${email}`, { cache: 'no-store' })
@@ -60,7 +60,7 @@ const LoginForm = () => {
                 }
             } catch (error) {
                 setLoading(false)
-                console.log(error?.error || "server error")
+                setError(error?.error || "server error")
 
             }
 
