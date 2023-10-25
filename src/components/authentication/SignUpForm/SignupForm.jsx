@@ -18,9 +18,10 @@ import { baseUrl } from '@/utils/functions/baseUrl';
 
 const SignUpForm = () => {
     const router = useRouter()
-    const { user, registerWithEmailAndPassword, profileUpdate, loading, setLoading, setUserData } = UserAuth()
+    const { user, userData, registerWithEmailAndPassword, profileUpdate, setUserData, userDelete } = UserAuth()
     const [isAgree, setAgree] = useState(false)
     const search = useSearchParams()
+    const [loading, setLoading] = useState(false)
     const { replace } = useRouter()
     const [error, setError] = useState('')
     const { register, handleSubmit, control, watch, formState: { errors } } = useForm({
@@ -35,50 +36,114 @@ const SignUpForm = () => {
 
     // submit form ***********
 
-    const onSubmit = ({ email, password, confirm_password, name, phone, address }) => {
+    const onSubmit = async ({ email, password, confirm_password, name, phone, address }) => {
+        setError('')
+        setLoading(true)
+        try {
+            const registerResult = await registerWithEmailAndPassword(email, password)
+            console.log('register', registerResult)
+            const updateResult = await profileUpdate({ displayName: name })
+            const newUser = { name, email }
+            try {
+                const res = await fetch(`${baseUrl}/authentication/signup`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newUser)
+                })
+                const data = await res.json()
 
-        registerWithEmailAndPassword(email, password)
-            .then(() => {
-                profileUpdate({ displayName: name }).
-                    then(async (result) => {
-                        const newUser = { name, email, address }
+                if (data?.error) {
+                    setLoading(false)
+                    return setError(data?.error)
+                }
 
-                        try {
-                            const res = await fetch(`${baseUrl}/user`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(newUser)
-                            })
-                            const data = await res.json()
-                            if (data?.data) {
-                                setUserData(data?.data)
+                if (data?.token) {
+                    Cookies.set('access-token', data?.token, { expires: 2 })
+                    setUserData(data?.data)
+                    replace('/dashboard')
+                    setLoading(false)
+                }
 
-                                // create JWT
-                                const token = await createJWT({ email })
-                                Cookies.set('access-token', token?.accessToken, { expires: 2 })
-
-                                setLoading(false)
-                                router.push('/dashboard')
-                            }
-
-                        } catch (error) {
-                            setError('please try to login with correct credentials')
-                        }
-
-
-
-                    })
-                    .catch(err => {
-                        setLoading(false)
-                        setError(err?.code?.split('/')[1]?.replace('-', ' '))
-                    })
-            })
-            .catch(err => {
+            } catch (error) {
                 setLoading(false)
-                setError(err?.code?.split('/')[1]?.replace('-', ' '))
-            })
+                Cookies.remove('access-token')
+                console.log('db error', error)
+                userDelete()
+            }
+
+
+
+
+        } catch (error) {
+            Cookies.remove('access-token')
+            setError(error?.code?.split('/')[1]?.replace('-', ' '))
+            console.log(error?.code)
+
+        }
+
+
+
+
+        // registerWithEmailAndPassword(email, password)
+        //     .then((result) => {
+        //         console.log('ur', result)
+        //         profileUpdate({ displayName: name }).
+        //             then(async (result) => {
+        //                 console.log('u', result)
+        //                 const newUser = { name, email, address }
+
+        //                 try {
+        //                     const res = await fetch(`${baseUrl}/user`, {
+        //                         method: 'POST',
+        //                         headers: {
+        //                             'Content-Type': 'application/json',
+        //                         },
+        //                         body: JSON.stringify(newUser)
+        //                     })
+        //                     const data = await res.json()
+        //                     if (data?.data) {
+        //                         setUserData(data?.data)
+
+        //                         // create JWT
+        //                         const res = await fetch(`${baseUrl}/jwt`, {
+        //                             method: 'POST',
+        //                             headers: {
+        //                                 'Content-Type': 'application/json',
+
+        //                             },
+        //                             body: JSON.stringify(payload)
+        //                         })
+        //                         const data = await res.json()
+        //                         console.log('token', data)
+        //                         Cookies.set('access-token', token?.accessToken, { expires: 2 })
+
+        //                         setLoading(false)
+        //                         router.push('/dashboard')
+        //                     }
+
+        //                 } catch (error) {
+        //                     console.log('er', error)
+        //                     setError('please try to login with correct credentials')
+        //                 }
+
+
+
+        //             })
+        //             .catch(err => {
+        //                 setLoading(false)
+        //                 setError(err?.code?.split('/')[1]?.replace('-', ' '))
+        //             })
+        //     })
+        //     .catch(err => {
+        //         setLoading(false)
+        //         setError(err?.code?.split('/')[1]?.replace('-', ' '))
+        //     })
+
+
+
+
     }
 
 
@@ -221,9 +286,9 @@ const SignUpForm = () => {
                 {
                     error && <p className='text-sm text-center text-red-500'>{error}</p>
                 }
-                {
+                {/* {
                     loading && <div className='flex items-center justify-center text-xl text-main'><ImSpinner2 className='animate-spin' /></div>
-                }
+                } */}
                 <div>
                     <input disabled={!isAgree} className='bg-main cursor-pointer hover:bg-[#5736ce] disabled:bg-opacity-50 py-3 px-3 text-center text-white font-bold w-full rounded-lg mt-3 mb-5' type="submit" value="Sign Up" />
                 </div>

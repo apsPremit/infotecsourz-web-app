@@ -16,10 +16,10 @@ import { baseUrl } from '@/utils/functions/baseUrl';
 
 const LoginForm = () => {
     const search = useSearchParams()
-    const router = useRouter()
-    const { loginWthEmailAndPassword, user, loading, setLoading, setUserData } = UserAuth()
+    const { replace } = useRouter()
+    const { loginWthEmailAndPassword, user, setUserData, logOut } = UserAuth()
     const [isRemember, setRemember] = useState(false)
-    const [loginLoading, setLoginLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
@@ -33,36 +33,70 @@ const LoginForm = () => {
 
 
     const onSubmit = async (data) => {
-
-        setLoginLoading(true)
+        setError('')
+        setLoading(true)
         const { email, password } = data || {}
 
-        loginWthEmailAndPassword(email, password)
-            .then(async result => {
-                // set token 
-                const token = await createJWT({ email })
-                console.log('token', token)
-                Cookies.set('access-token', token?.accessToken, { expires: 2 })
-                try {
-                    const res = await fetch(`${baseUrl}/user/${email}`)
-                    const data = await res.json()
-                    if (data?.data) {
-                        router.replace('/dashboard')
-                        setLoginLoading(false)
-                        setUserData(data?.data)
-                    }
-                } catch (error) {
-                    setError('please try to login with correct credentials')
+        try {
+            const loginResult = await loginWthEmailAndPassword(email, password)
+            console.log('login result', loginResult)
+
+            try {
+                const res = await fetch(`${baseUrl}/authentication/login/${email}`, { cache: 'no-store' })
+                const data = await res.json()
+
+
+                if (data?.error) {
                     setLoading(false)
+                    setError(data?.error)
+                    logOut()
                 }
 
+                if (data?.token) {
+                    Cookies.set('access-token', data?.token, { expires: 2 })
+                    setUserData(data?.data)
+                    replace('/dashboard')
 
-            })
-            .catch(err => {
-                setLoginLoading(false)
+                }
+            } catch (error) {
                 setLoading(false)
-                setError(err?.code?.split('/')[1]?.replace('-', ' '))
-            })
+                console.log(error?.error || "server error")
+
+            }
+
+
+        } catch (error) {
+            setLoading(false)
+            setError(error?.code?.split('/')[1]?.replace('-', ' '))
+        }
+
+
+        // loginWthEmailAndPassword(email, password)
+        //     .then(async result => {
+        //         // set token 
+        //         const token = await createJWT({ email })
+        //         console.log('token', token)
+        //         Cookies.set('access-token', token?.accessToken, { expires: 2 })
+        //         try {
+        //             const res = await fetch(`${baseUrl}/user/${email}`)
+        //             const data = await res.json()
+        //             if (data?.data) {
+        //                 router.replace('/dashboard')
+        //                 setLoading(false)
+        //                 setUserData(data?.data)
+        //             }
+        //         } catch (error) {
+        //             setError('please try to login with correct credentials')
+        //             setLoading(false)
+        //         }
+
+
+        //     })
+        //     .catch(err => {
+        //         setLoading(false)
+        //         setLoading(false)
+        //         setError(err?.code?.split('/')[1]?.replace('-', ' '))
+        //     })
     }
 
 

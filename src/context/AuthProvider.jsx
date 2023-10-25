@@ -1,6 +1,6 @@
 "use client"
 import { createContext, useContext, useEffect, useState } from "react";
-import { GoogleAuthProvider, OAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { GoogleAuthProvider, OAuthProvider, createUserWithEmailAndPassword, deleteUser, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from "../utils/firebase/firebase.config";
 import { ImSpinner2 } from "react-icons/im";
 import getUserData from "@/utils/functions/getUserData";
@@ -21,24 +21,27 @@ export const AuthProvider = ({ children }) => {
             fetch(`${baseUrl}/user/${user?.email}`)
                 .then(res => res.json())
                 .then(data => setUserData(data?.data))
-                .catch(error => console.log('user data error', error))
+                .catch(error => {
+                    setUserData({})
+                    console.log('user data error', error?.message)
+                })
         }
 
-    }, [user])
+    }, [user, userData])
 
 
     // email password register 
-    const registerWithEmailAndPassword = (email, password) => {
+    const registerWithEmailAndPassword = async (email, password) => {
         setLoading(true)
-        return createUserWithEmailAndPassword(auth, email, password)
+        return await createUserWithEmailAndPassword(auth, email, password)
     }
 
     // email password login 
 
-    const loginWthEmailAndPassword = (email, password) => {
-
+    const loginWthEmailAndPassword = async (email, password) => {
+        console.log(email, password)
         setLoading(true)
-        return signInWithEmailAndPassword(auth, email, password)
+        return await signInWithEmailAndPassword(auth, email, password)
     }
 
     // google login 
@@ -60,9 +63,11 @@ export const AuthProvider = ({ children }) => {
         return signOut(auth)
     }
 
+
     const profileUpdate = async (updateUser = {}) => {
+
         setLoading(true);
-        await updateProfile(auth.currentUser, updateUser);
+        return await updateProfile(auth.currentUser, updateUser);
         setUser((preUser) => ({ ...preUser, ...updateUser }));
 
     };
@@ -72,6 +77,10 @@ export const AuthProvider = ({ children }) => {
         setUser((preUser) => ({ ...preUser, ...updateUser }));
 
     };
+
+    const userDelete = () => {
+        return deleteUser(auth.currentUser)
+    }
 
     const passwordReset = (email) => {
         return sendPasswordResetEmail(auth, email)
@@ -91,7 +100,8 @@ export const AuthProvider = ({ children }) => {
         passwordUpdate,
         passwordReset,
         userData,
-        setUserData
+        setUserData,
+        userDelete
     }
 
     useEffect(() => {
