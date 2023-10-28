@@ -18,13 +18,15 @@ const page = async () => {
     try {
 
         if (user) {
-            const res = await fetch(`${baseUrl}/user/${user?.email}`)
+            const res = await fetch(`${baseUrl}/user/${user?.email}`, { cache: 'no-store' })
             const { data } = await res.json()
             userData = data
         }
     } catch (error) {
         console.log(error)
     }
+
+    console.log(userData)
 
 
     return (
