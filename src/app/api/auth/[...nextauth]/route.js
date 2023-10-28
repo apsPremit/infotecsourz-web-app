@@ -56,10 +56,10 @@ export const nextOption = {
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
-        maxAge: 1 * 60,
+        maxAge: 5 * 60,
     },
     jwt: {
-        maxAge: 1 * 60,
+        maxAge: 5 * 60,
 
     },
     // cookies: {

@@ -3,8 +3,7 @@ import { UserAuth } from '@/context/AuthProvider';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import React, { useEffect, useState } from 'react';
 
-const SubscribedPackage = ({ userData }) => {
-    console.log('user data', userData)
+const SubscribedPackage = ({ user, userData }) => {
     // const [userData, setUserData] = useState({})
     // useEffect(() => {
     //     if (user?.email) {
