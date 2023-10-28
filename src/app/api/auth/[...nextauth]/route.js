@@ -34,7 +34,7 @@ export const nextOption = {
                     body: JSON.stringify({ email, password })
                 })
                 const { data } = await res.json()
-                console.log(data)
+                console.log('data from route', data)
 
 
                 if (data) {

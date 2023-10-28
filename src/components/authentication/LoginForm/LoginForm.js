@@ -45,7 +45,7 @@ const LoginForm = () => {
             callbackUrl: '/dashboard',
             redirect: true,
         })
-
+        setLoading(false)
 
         // try {
         //     const loginResult = await loginWthEmailAndPassword(email, password)

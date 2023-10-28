@@ -51,16 +51,18 @@ const SignUpForm = () => {
 
             const data = await res.json()
             if (data?.error) {
+                setLoading(false)
                 return setError(data?.error)
             }
 
             if (data?.message) {
                 router.replace(`/login?message=${data?.message}`)
+                setLoading(false)
             }
 
 
         } catch (error) {
-
+            setLoading(false)
         }
 
 
