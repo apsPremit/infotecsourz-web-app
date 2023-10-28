@@ -23,7 +23,7 @@ import { BsCartPlus } from "react-icons/bs";
 import { BiUserCircle } from "react-icons/bi";
 import { IoMdPaperPlane } from "react-icons/io";
 import { FaQuestion } from "react-icons/fa6";
-
+import { signOut, useSession } from 'next-auth/react'
 
 
 const Sidebar = () => {
@@ -37,13 +37,13 @@ const Sidebar = () => {
     }, [])
 
     const handleLogOut = async () => {
-        await logOut()
-        Cookies.remove('access-token')
-        router.push('/login')
-        setUserData({})
+        signOut({
+            callbackUrl: '/login',
+            redirect: true
+        })
     }
 
-
+    const session = useSession()
 
     const { isSidebarOpen, setSidebarOpen } = useContext(StateContext)
 
@@ -112,7 +112,7 @@ const Sidebar = () => {
                 </ul>
 
                 {
-                    (user?.email || accessToken) && <ul className='text-white mb-10'>
+                    session && <ul className='text-white mb-10'>
                         <li
 
 

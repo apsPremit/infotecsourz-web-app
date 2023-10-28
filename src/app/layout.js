@@ -2,6 +2,7 @@ import { AuthProvider } from '@/context/AuthProvider'
 
 import './globals.css'
 import { Poppins } from 'next/font/google'
+import NextAuthProvider from '@/context/NextAuthProvider'
 
 
 const poppins = Poppins({
@@ -19,13 +20,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <AuthProvider>
-          <main className='max-w-screen-2xl mx-auto'>
-            {children}
+        <NextAuthProvider>
+          <AuthProvider>
+            <main className='max-w-screen-2xl mx-auto'>
+              {children}
 
-          </main>
+            </main>
 
-        </AuthProvider>
+          </AuthProvider>
+        </NextAuthProvider>
       </body>
     </html>
   )
