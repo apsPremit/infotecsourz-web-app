@@ -42,10 +42,11 @@ const Sidebar = () => {
             redirect: true
         })
     }
+    const { isSidebarOpen, setSidebarOpen } = useContext(StateContext)
 
     const session = useSession()
 
-    const { isSidebarOpen, setSidebarOpen } = useContext(StateContext)
+
 
     return (
         <div className={` h-screen  z-20 lg:p-5  pt-8 fixed duration-300 lg:w-52 ${isSidebarOpen ? 'w-3/4  ' : 'w-0 lg'}`} style={{
@@ -112,7 +113,7 @@ const Sidebar = () => {
                 </ul>
 
                 {
-                    session && <ul className='text-white mb-10'>
+                    session?.data?.user?.email && <ul className='text-white mb-10'>
                         <li
 
 
