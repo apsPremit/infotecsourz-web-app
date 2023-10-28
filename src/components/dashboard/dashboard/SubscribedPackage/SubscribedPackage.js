@@ -3,21 +3,21 @@ import { UserAuth } from '@/context/AuthProvider';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import React, { useEffect, useState } from 'react';
 
-const SubscribedPackage = () => {
-    const { user } = UserAuth()
-    const [userData, setUserData] = useState({})
-    useEffect(() => {
-        if (user?.email) {
-            fetch(`${baseUrl}/user/${user?.email}`)
-                .then(res => res.json())
-                .then(data => setUserData(data?.data))
-                .catch(error => {
-                    setUserData({})
+const SubscribedPackage = ({ userData }) => {
+    console.log('user data', userData)
+    // const [userData, setUserData] = useState({})
+    // useEffect(() => {
+    //     if (user?.email) {
+    //         fetch(`${baseUrl}/user/${user?.email}`)
+    //             .then(res => res.json())
+    //             .then(data => setUserData(data?.data))
+    //             .catch(error => {
+    //                 setUserData({})
 
-                })
-        }
+    //             })
+    //     }
 
-    }, [user])
+    // }, [user])
 
     return (
         <div className='grid grid-cols-1 mg:grid-cols-2 lg:grid-cols-3 mb-5 text-white  '>

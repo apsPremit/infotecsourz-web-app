@@ -6,10 +6,17 @@ import Link from 'next/link';
 import OrderTable from '@/components/dashboard/dashboard/OrderTable/OrderTable';
 import SubscribedPackage from '@/components/dashboard/dashboard/SubscribedPackage/SubscribedPackage';
 import FreeTrialBox from '@/components/dashboard/dashboard/FreeTrialBox/FreeTrialBox';
+import { getServerSession } from 'next-auth/next';
+import { nextOption } from '@/app/api/auth/[...nextauth]/route';
+import { baseUrl } from '@/utils/functions/baseUrl';
+// import { nextOption } from './api/auth/[...nextauth]/route';
 
 
-
-const page = () => {
+const page = async () => {
+    const { user } = await getServerSession(nextOption)
+    const res = await fetch(`${baseUrl}/user/${user?.email}`)
+    const { data } = await res.json()
+    console.log('data', data)
 
 
     return (
@@ -18,7 +25,7 @@ const page = () => {
 
 
 
-            <SubscribedPackage />
+            <SubscribedPackage userData={data} />
 
             <div className='lg:grid grid-cols-3  mx-auto lg:gap-5 space-y-5 lg:space-y-0'>
 

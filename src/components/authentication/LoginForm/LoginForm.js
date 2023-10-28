@@ -13,6 +13,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import getUserData from '@/utils/functions/getUserData';
 import { ImSpinner2 } from 'react-icons/im';
 import { baseUrl } from '@/utils/functions/baseUrl';
+import { signIn } from 'next-auth/react'
 
 const LoginForm = () => {
     const search = useSearchParams()
@@ -37,38 +38,46 @@ const LoginForm = () => {
         setLoading(true)
         const { email, password } = data || {}
 
-        try {
-            const loginResult = await loginWthEmailAndPassword(email, password)
+        const res = await signIn('credentials', {
+            email,
+            password,
+            callbackUrl: '/dashboard',
+            redirect: true,
+        })
 
 
-            try {
-                const res = await fetch(`${baseUrl}/authentication/login/${email}`, { cache: 'no-store' })
-                const data = await res.json()
+        // try {
+        //     const loginResult = await loginWthEmailAndPassword(email, password)
 
 
-                if (data?.error) {
-                    setLoading(false)
-                    setError(data?.error)
-                    logOut()
-                }
-
-                if (data?.token) {
-                    Cookies.set('access-token', data?.token, { expires: 2 })
-                    setUserData(data?.data)
-                    replace('/dashboard')
-
-                }
-            } catch (error) {
-                setLoading(false)
-                setError(error?.error || "server error")
-
-            }
+        //     try {
+        //         const res = await fetch(`${baseUrl}/authentication/login/${email}`, { cache: 'no-store' })
+        //         const data = await res.json()
 
 
-        } catch (error) {
-            setLoading(false)
-            setError(error?.code?.split('/')[1]?.replace('-', ' '))
-        }
+        //         if (data?.error) {
+        //             setLoading(false)
+        //             setError(data?.error)
+        //             logOut()
+        //         }
+
+        //         if (data?.token) {
+        //             Cookies.set('access-token', data?.token, { expires: 2 })
+        //             setUserData(data?.data)
+        //             replace('/dashboard')
+
+        //         }
+        //     } catch (error) {
+        //         setLoading(false)
+        //         setError(error?.error || "server error")
+
+        //     }
+
+
+        // } catch (error) {
+        //     setLoading(false)
+        //     setError(error?.code?.split('/')[1]?.replace('-', ' '))
+        // }
 
 
         // loginWthEmailAndPassword(email, password)
