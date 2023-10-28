@@ -1,4 +1,5 @@
 
+import { baseUrl } from "@/utils/functions/baseUrl";
 import NextAuth from "next-auth/next"
 import CredentialsProvider from "next-auth/providers/credentials"
 // import JWT from 'jsonwebtoken'
@@ -7,7 +8,7 @@ export const nextOption = {
 
     pages: {
         signIn: '/login',
-        // error: '/login'
+        error: '/login'
     },
 
 
@@ -25,22 +26,18 @@ export const nextOption = {
 
 
 
-                // const res = await fetch('http://localhost:5000/login', {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-type': 'application/json'
-                //     },
-                //     body: JSON.stringify({ email, password })
-                // })
-                // const { data } = await res.json()
-                // console.log('d', data)
-                const data = { name: 'habibur rahman', email: 'va.habibur@gmail.com', image: 'https://www.youtube.com/', password: '1234' }
-
-                const isMatch = email === data.email;
-                console.log(isMatch)
+                const res = await fetch(`${baseUrl}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                })
+                const { data } = await res.json()
+                console.log(data)
 
 
-                if (isMatch) {
+                if (data) {
                     console.log(data)
                     return data
                 }
@@ -56,10 +53,10 @@ export const nextOption = {
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
-        maxAge: 5 * 60,
+        maxAge: 24 * 60 * 60,
     },
     jwt: {
-        maxAge: 5 * 60,
+        maxAge: 24 * 60 * 60,
 
     },
     // cookies: {

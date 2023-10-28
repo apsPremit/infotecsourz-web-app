@@ -18,12 +18,11 @@ import { baseUrl } from '@/utils/functions/baseUrl';
 
 const SignUpForm = () => {
     const router = useRouter()
+
     const { user, userData, registerWithEmailAndPassword, profileUpdate, setUserData, userDelete } = UserAuth()
     const [isAgree, setAgree] = useState(false)
-
     const search = useSearchParams()
     const [loading, setLoading] = useState(false)
-    const { replace } = useRouter()
     const [error, setError] = useState('')
     const { register, handleSubmit, control, watch, formState: { errors } } = useForm({
         defaultValues: {
@@ -40,49 +39,78 @@ const SignUpForm = () => {
     const onSubmit = async ({ email, password, confirm_password, name, phone, address }) => {
         setError('')
         setLoading(true)
+
         try {
-            const registerResult = await registerWithEmailAndPassword(email, password)
+            const res = await fetch(`${baseUrl}/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ name, phone, address, email, password: confirm_password })
+            })
 
-            const updateResult = await profileUpdate({ displayName: name })
-            const newUser = { name, email }
-            try {
-                const res = await fetch(`${baseUrl}/authentication/signup`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(newUser)
-                })
-                const data = await res.json()
+            const data = await res.json()
+            if (data?.error) {
+                return setError(data?.error)
+            }
 
-                if (data?.error) {
-                    setLoading(false)
-                    return setError(data?.error)
-                }
-
-                if (data?.token) {
-                    Cookies.set('access-token', data?.token, { expires: 2 })
-                    setUserData(data?.data)
-                    replace('/dashboard')
-                    setLoading(false)
-                }
-
-            } catch (error) {
-                setLoading(false)
-                Cookies.remove('access-token')
-
-                userDelete()
+            if (data?.message) {
+                router.replace(`/login?message=${data?.message}`)
             }
 
 
-
-
         } catch (error) {
-            Cookies.remove('access-token')
-            setError(error?.code?.split('/')[1]?.replace('-', ' '))
-
 
         }
+
+
+
+
+
+
+        // try {
+        //     const registerResult = await registerWithEmailAndPassword(email, password)
+
+        //     const updateResult = await profileUpdate({ displayName: name })
+        //     const newUser = { name, email }
+        //     try {
+        //         const res = await fetch(`${baseUrl}/authentication/signup`, {
+        //             method: 'POST',
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //             },
+        //             body: JSON.stringify(newUser)
+        //         })
+        //         const data = await res.json()
+
+        //         if (data?.error) {
+        //             setLoading(false)
+        //             return setError(data?.error)
+        //         }
+
+        //         if (data?.token) {
+        //             Cookies.set('access-token', data?.token, { expires: 2 })
+        //             setUserData(data?.data)
+        //             replace('/dashboard')
+        //             setLoading(false)
+        //         }
+
+        //     } catch (error) {
+        //         setLoading(false)
+        //         Cookies.remove('access-token')
+
+        //         userDelete()
+        //     }
+
+
+
+
+        // } catch (error) {
+        //     Cookies.remove('access-token')
+        //     setError(error?.code?.split('/')[1]?.replace('-', ' '))
+
+
+        // }
 
 
 

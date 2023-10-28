@@ -17,6 +17,7 @@ import { signIn } from 'next-auth/react'
 
 const LoginForm = () => {
     const search = useSearchParams()
+    const registerMessage = search.get('message')
     const { replace } = useRouter()
     const { loginWthEmailAndPassword, user, setUserData, logOut } = UserAuth()
     const [isRemember, setRemember] = useState(false)
@@ -120,7 +121,13 @@ const LoginForm = () => {
                 width={56}
                 height={50}
             />
-            <h2 className='text-3xl my-4'>Hey, hello</h2>
+            {
+                registerMessage ? <div className='p-3 rounded border bg-green-500 text-white my-3'>
+                    <p>{registerMessage}</p>
+                </div>
+                    :
+                    <h2 className='text-3xl my-4'>Hey, hello</h2>
+            }
             <p className='text-sm mb-3'>Enter the information you entered wrile registering.</p>
             <form onSubmit={handleSubmit(onSubmit)} action="">
 

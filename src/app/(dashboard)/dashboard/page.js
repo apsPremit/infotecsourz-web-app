@@ -13,12 +13,12 @@ import { baseUrl } from '@/utils/functions/baseUrl';
 
 
 const page = async () => {
-    const { user } = await getServerSession(nextOption)
+    const session = await getServerSession(nextOption)
     let userData;
     try {
 
-        if (user) {
-            const res = await fetch(`${baseUrl}/user/${user?.email}`, { cache: 'no-store' })
+        if (session?.user) {
+            const res = await fetch(`${baseUrl}/user/${session?.user?.email}`, { cache: 'no-store' })
             const { data } = await res.json()
             userData = data
         }
@@ -26,7 +26,7 @@ const page = async () => {
         console.log(error)
     }
 
-    console.log(userData)
+
 
 
     return (
@@ -35,7 +35,7 @@ const page = async () => {
 
 
 
-            <SubscribedPackage user={user} userData={userData} />
+            <SubscribedPackage user={session?.user} userData={userData} />
 
             <div className='lg:grid grid-cols-3  mx-auto lg:gap-5 space-y-5 lg:space-y-0'>
 
