@@ -1,21 +1,47 @@
 "use client"
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import logo from '@/assets/images/logo.png'
 import Link from 'next/link';
 import { UserAuth } from '@/context/AuthProvider';
+import { baseUrl } from '@/utils/functions/baseUrl';
+import toast, { Toaster } from 'react-hot-toast';
+import { ImSpinner2 } from 'react-icons/im';
 
 
 const ResetForm = () => {
     const { passwordReset } = UserAuth()
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, reset, handleSubmit, formState: { errors } } = useForm();
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
+    const onSubmit = async ({ email }) => {
+        setError('')
+        setLoading(true)
+        try {
 
-    const onSubmit = ({ email }) => {
-        passwordReset(email)
-            .then(result => alert('sent rest email'))
-            .catch(error => console.log('password reset error', error))
+            const res = await fetch(`${baseUrl}/auth/send_reset_email`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': "application/json"
+                },
+                body: JSON.stringify({ email })
+            })
+            const data = await res.json()
+            if (data?.error) {
+                setLoading(false)
+                reset()
+                return setError(data?.error)
+            }
+            setLoading(false)
+            toast.success(data?.message)
+
+        } catch (error) {
+            setLoading(false)
+            reset()
+            setError('server error')
+        }
     }
 
     return (
@@ -48,14 +74,22 @@ const ResetForm = () => {
                     />
                     {errors.email && <p className='text-xs mt-1 text-red-400' role="alert">{errors.email?.message}</p>}
                 </div>
+                {
+                    error && <p className='text-sm text-red-500 my-2 text-center'>{error}</p>
+                }
+                {
+                    loading && <div className='flex items-center justify-center text-xl text-main'><ImSpinner2 className='animate-spin' /></div>
+                }
+
                 <div>
-                    <input className='bg-main hover:bg-[#5736ce] disabled:bg-opacity-50 py-3 px-3 text-center text-white font-bold w-full rounded-lg my-5' type="submit" value="Send Reset Email" />
+                    <input disabled={loading} className='bg-main cursor-pointer hover:bg-[#5736ce] disabled:bg-opacity-50 py-3 px-3 text-center text-white font-bold w-full rounded-lg my-5' type="submit" value="Send Reset Email" />
                 </div>
             </form>
 
 
             <div className="py-6 flex items-center text-gray-400  uppercase before:flex-[1_1_0%] before:border-t before:mr-6 after:flex-[1_1_0%] after:border-t after:ml-6 dark:text-gray-500 before:border-shadow after:border-shadow">Or</div>
             <p className='text-center font-semibold'>Try another way for <Link className='text-main' href="/login">Login</Link></p>
+            <Toaster />
         </div>
     );
 };

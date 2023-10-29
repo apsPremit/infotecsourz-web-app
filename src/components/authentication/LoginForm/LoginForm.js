@@ -46,66 +46,7 @@ const LoginForm = () => {
         })
         setLoading(false)
 
-        // try {
-        //     const loginResult = await loginWthEmailAndPassword(email, password)
 
-
-        //     try {
-        //         const res = await fetch(`${baseUrl}/authentication/login/${email}`, { cache: 'no-store' })
-        //         const data = await res.json()
-
-
-        //         if (data?.error) {
-        //             setLoading(false)
-        //             setError(data?.error)
-        //             logOut()
-        //         }
-
-        //         if (data?.token) {
-        //             Cookies.set('access-token', data?.token, { expires: 2 })
-        //             setUserData(data?.data)
-        //             replace('/dashboard')
-
-        //         }
-        //     } catch (error) {
-        //         setLoading(false)
-        //         setError(error?.error || "server error")
-
-        //     }
-
-
-        // } catch (error) {
-        //     setLoading(false)
-        //     setError(error?.code?.split('/')[1]?.replace('-', ' '))
-        // }
-
-
-        // loginWthEmailAndPassword(email, password)
-        //     .then(async result => {
-        //         // set token 
-        //         const token = await createJWT({ email })
-        //         console.log('token', token)
-        //         Cookies.set('access-token', token?.accessToken, { expires: 2 })
-        //         try {
-        //             const res = await fetch(`${baseUrl}/user/${email}`)
-        //             const data = await res.json()
-        //             if (data?.data) {
-        //                 router.replace('/dashboard')
-        //                 setLoading(false)
-        //                 setUserData(data?.data)
-        //             }
-        //         } catch (error) {
-        //             setError('please try to login with correct credentials')
-        //             setLoading(false)
-        //         }
-
-
-        //     })
-        //     .catch(err => {
-        //         setLoading(false)
-        //         setLoading(false)
-        //         setError(err?.code?.split('/')[1]?.replace('-', ' '))
-        //     })
     }
 
 
