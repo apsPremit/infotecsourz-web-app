@@ -19,7 +19,6 @@ const LoginForm = () => {
     const search = useSearchParams()
     const registerMessage = search.get('message')
     const { replace } = useRouter()
-    const { loginWthEmailAndPassword, user, setUserData, logOut } = UserAuth()
     const [isRemember, setRemember] = useState(false)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')

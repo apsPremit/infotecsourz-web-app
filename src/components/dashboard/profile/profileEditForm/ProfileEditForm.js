@@ -12,21 +12,21 @@ import { baseUrl } from '@/utils/functions/baseUrl';
 import { StateContext } from '@/context/StateProvider';
 
 
-const ProfileEditForm = ({ details }) => {
+const ProfileEditForm = () => {
     const { photoUrl, setPhotoUrl } = useContext(StateContext)
-    const { userData, user, setUserData } = UserAuth()
+    const { userData, setUserData } = UserAuth()
     const [photoUploading, setPhotoUploading] = useState(false)
 
 
     useEffect(() => {
-        axios.get(`${baseUrl}/profile_photo/${user?.email}`)
+        axios.get(`${baseUrl}/profile_photo/${userData?.email}`)
             .then(res => {
                 setPhotoUrl(res?.data)
             })
             .catch(error => {
 
             })
-    }, [user])
+    }, [userData])
 
     const { name, email, imageUrl, address, companyName, phone } = userData || {}
 
@@ -49,7 +49,7 @@ const ProfileEditForm = ({ details }) => {
         formData.append('photo', file)
 
         try {
-            const res = await axios.post(`${baseUrl}/profile_photo/${user?.email}`, formData)
+            const res = await axios.post(`${baseUrl}/profile_photo/${userData.email}`, formData)
             const data = res?.data
             setPhotoUrl(data?.url)
             toast.dismiss(loadingToast)
@@ -70,14 +70,14 @@ const ProfileEditForm = ({ details }) => {
     const onSubmit = async (data) => {
         const { email, name, phone, address, companyName } = data
         const updateData = {
-            name: name || userData?.name || user?.displayName,
+            name: name || userData?.name,
             email: userData?.email,
             phone,
             address,
             companyName
         }
         try {
-            const updatedData = await updateProfile(email || user?.email, updateData)
+            const updatedData = await updateProfile(email || userData?.email, updateData)
             if (updatedData) {
                 setUserData(updateData?.data)
                 toast.success('your profile update successful')
@@ -103,7 +103,7 @@ const ProfileEditForm = ({ details }) => {
                     <div className='relative overflow-hidden'>
                         <label htmlFor='changeProfileImage' className='bg-red-300 w-full cursor-pointer '>
                             <Image
-                                src={photoUrl || user?.photoUrl || defaultProfileImage}
+                                src={userData?.image || defaultProfileImage}
                                 height={200}
                                 width={200}
                                 alt='profile photo'

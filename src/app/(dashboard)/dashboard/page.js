@@ -9,7 +9,7 @@ import FreeTrialBox from '@/components/dashboard/dashboard/FreeTrialBox/FreeTria
 import { getServerSession } from 'next-auth/next';
 import { nextOption } from '@/app/api/auth/[...nextauth]/route';
 import { baseUrl } from '@/utils/functions/baseUrl';
-// import { nextOption } from './api/auth/[...nextauth]/route';
+
 
 
 const page = async () => {

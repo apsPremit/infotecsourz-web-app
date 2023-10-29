@@ -28,14 +28,6 @@ import { signOut, useSession } from 'next-auth/react'
 
 const Sidebar = () => {
     const currentRoute = usePathname()
-    const router = useRouter()
-    const { logOut, user, setUserData } = UserAuth()
-    const [accessToken, setAccessToken] = useState('')
-    useEffect(() => {
-        const token = Cookies.get('access-token')
-        setAccessToken(token)
-    }, [])
-
     const handleLogOut = async () => {
         signOut({
             callbackUrl: '/login',

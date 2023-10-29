@@ -8,7 +8,7 @@ import { UserAuth } from '@/context/AuthProvider';
 const BillingRightSide = () => {
     const { uploadedImages, perPhotoCost, photoType, imageQuantityFromUrl, taxRate, selectedPackage, updatedCredit } = useContext(StateContext)
 
-    const { user, userData } = UserAuth()
+    const { userData } = UserAuth()
 
 
     let totalPhotos = uploadedImages.length < 1 ? imageQuantityFromUrl : uploadedImages.length

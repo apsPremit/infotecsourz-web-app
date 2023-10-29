@@ -33,13 +33,13 @@ export const nextOption = {
                     },
                     body: JSON.stringify({ email, password })
                 })
-                const { data } = await res.json()
+                const data = await res.json()
                 console.log('data from route', data)
 
 
-                if (data) {
-                    console.log(data)
-                    return data
+                if (data?.data) {
+
+                    return data?.data
                 }
                 return null
 

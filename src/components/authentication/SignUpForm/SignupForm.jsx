@@ -18,8 +18,6 @@ import { baseUrl } from '@/utils/functions/baseUrl';
 
 const SignUpForm = () => {
     const router = useRouter()
-
-    const { user, userData, registerWithEmailAndPassword, profileUpdate, setUserData, userDelete } = UserAuth()
     const [isAgree, setAgree] = useState(false)
     const search = useSearchParams()
     const [loading, setLoading] = useState(false)

@@ -12,20 +12,9 @@ import { FaFire } from "react-icons/fa";
 const Billing = () => {
 
 
-
-
-
-
-
-
     return (
         <div className='lg:px-10 flex justify-center'>
 
-
-            {/* left side  */}
-            {/* <BillingLeftSide /> */}
-
-            {/* right side  */}
             <div className='lg:w-1/2 mx-auto'>
                 <BillingRightSide />
             </div>

@@ -6,7 +6,7 @@ import React from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 const SupportForm = () => {
-    const { user } = UserAuth()
+    const { userData } = UserAuth()
 
     const sendMessage = async (e) => {
         e.preventDefault()
@@ -14,7 +14,7 @@ const SupportForm = () => {
         const subject = form.subject.value;
         const message = form.message.value;
         const phone = form.phone.value;
-        const messageData = { email: user?.email, subject, message, phone }
+        const messageData = { email: userData?.email, subject, message, phone }
         try {
             const sendResult = await sendSupportMessage(messageData)
 
@@ -48,7 +48,7 @@ const SupportForm = () => {
                         </label>
                         <input
                             type="email"
-                            defaultValue={user?.email}
+                            defaultValue={userData?.email}
                             id="email"
                             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
                             placeholder="name@flowbite.com"

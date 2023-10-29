@@ -31,7 +31,7 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
     } = useContext(StateContext)
 
 
-    const { user, userData } = UserAuth()
+    const { userData } = UserAuth()
 
 
 
@@ -60,8 +60,8 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
         const orderDetails = {
             orderId: orderId,
             orderName: orderName,
-            name: user?.displayName,
-            email: user?.email,
+            name: userData?.name,
+            email: userData?.email,
             photoType,
             package: selectedPackage?.package_name,
             photoQuantity: parseInt(totalPhotos),

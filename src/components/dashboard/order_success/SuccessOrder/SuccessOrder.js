@@ -4,11 +4,8 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 
-
-
 const SuccessOrder = () => {
     const search = useSearchParams()
-    const router = useRouter()
     const orderId = search.get('orderId')
 
     const handleNavigate = () => {
