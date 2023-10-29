@@ -14,7 +14,7 @@ const PricingBilling = () => {
     const { taxRate } = useContext(StateContext)
     const [isAgree, setAgree] = useState(false)
     const [isProcessing, setProcessing] = useState(false)
-    const { user, userData } = UserAuth()
+    const { userData } = UserAuth()
 
     const router = useRouter()
     const searchPackage = params.get('package')
@@ -49,8 +49,8 @@ const PricingBilling = () => {
         const orderDetails = {
             orderId: randomString,
             orderName: `subscription for ${package_name} package`,
-            name: user?.displayName,
-            email: user?.email,
+            name: userData?.name,
+            email: userData?.email,
             package: package_name,
             subTotal,
             taxRate,
@@ -71,13 +71,13 @@ const PricingBilling = () => {
             })
             const data = await res.json()
 
-            if (data.success) {
+            if (data?.success) {
                 setProcessing(false)
                 router.push(`/order_success?orderId=${orderDetails?.orderId}`)
             }
+            setProcessing(false)
         } catch (error) {
             setProcessing(false)
-
             toast.error(error?.message || 'internal server error')
         }
 

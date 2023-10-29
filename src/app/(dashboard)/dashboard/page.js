@@ -7,35 +7,19 @@ import OrderTable from '@/components/dashboard/dashboard/OrderTable/OrderTable';
 import SubscribedPackage from '@/components/dashboard/dashboard/SubscribedPackage/SubscribedPackage';
 import FreeTrialBox from '@/components/dashboard/dashboard/FreeTrialBox/FreeTrialBox';
 import { getServerSession } from 'next-auth/next';
-import { nextOption } from '@/app/api/auth/[...nextauth]/route';
 import { baseUrl } from '@/utils/functions/baseUrl';
+import { nextOption } from '@/app/api/auth/[...nextauth]/route';
 
 
 
-const page = async () => {
-    const session = await getServerSession(nextOption)
-    let userData;
-    try {
-
-        if (session?.user) {
-            const res = await fetch(`${baseUrl}/user/${session?.user?.email}`, { cache: 'no-store' })
-            const { data } = await res.json()
-            userData = data
-        }
-    } catch (error) {
-        console.log(error)
-    }
-
+const page = () => {
 
 
 
     return (
         <div className='lg:p-10  bg-[#F5F5F5] '>
 
-
-
-
-            <SubscribedPackage user={session?.user} userData={userData} />
+            <SubscribedPackage />
 
             <div className='lg:grid grid-cols-3  mx-auto lg:gap-5 space-y-5 lg:space-y-0'>
 

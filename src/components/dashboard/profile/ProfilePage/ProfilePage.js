@@ -42,10 +42,10 @@ const ProfilePage = () => {
                     height={150}
                     width={150}
                     alt='profile photo'
-                    className='border w-full md:w-auto mb-3'
-                    style={{ maxHeight: '150px' }}
+                    className='border w-full h-[250px]   lg:h-[150px]  md:w-auto mb-3'
+
                 />
-                <div>
+                <div className=''>
                     <h3 className='text-3xl mb-1'>{name}</h3>
                     <p className='mb-1 text-main font-bold ml-1'>{email}</p>
                     <div className='flex items-center mb-3'>

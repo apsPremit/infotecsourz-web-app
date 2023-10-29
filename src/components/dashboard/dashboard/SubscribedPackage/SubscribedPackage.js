@@ -3,7 +3,8 @@ import { UserAuth } from '@/context/AuthProvider';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import React, { useEffect, useState } from 'react';
 
-const SubscribedPackage = ({ user, userData }) => {
+const SubscribedPackage = () => {
+    const { userData } = UserAuth()
 
 
     return (

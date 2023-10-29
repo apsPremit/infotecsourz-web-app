@@ -10,13 +10,13 @@ import { packages } from '@/utils/json/packagePlan'
 const PackageBillingInfo = () => {
     const params = useSearchParams();
     const searchPackage = params.get('package')
-    const { user } = UserAuth()
+    const { userData } = UserAuth()
     const packageInfo = packages.find(pk => pk.package_name === searchPackage)
     const { package_name, price, photos } = packageInfo || {}
 
     const fields = [
-        { label: 'Name', value: user?.displayName, type: 'text' },
-        { label: 'Email', value: user?.email, type: 'text' },
+        { label: 'Name', value: userData?.name, type: 'text' },
+        { label: 'Email', value: userData?.email, type: 'text' },
         { label: 'Package name', value: package_name, type: 'text' },
         { label: 'Price', value: price, type: 'number' },
         { label: 'Credit', value: photos, type: 'number' },

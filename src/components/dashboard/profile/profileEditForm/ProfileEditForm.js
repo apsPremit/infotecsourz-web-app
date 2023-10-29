@@ -99,7 +99,7 @@ const ProfileEditForm = () => {
             <div className='p-5 bg-white rounded '>
                 <h3 className='text-xl  mb-5'>Basic Information</h3>
 
-                <div className='flex justify-center my-5 '>
+                <div className='flex  justify-center my-5 '>
                     <div className='relative overflow-hidden'>
                         <label htmlFor='changeProfileImage' className='bg-red-300 w-full cursor-pointer '>
                             <Image
@@ -136,17 +136,17 @@ const ProfileEditForm = () => {
 
                 <div className='bg-white p-5 rounded mb-5'>
                     <h3 className='text-xl  mb-5'>Contact Information</h3>
-                    <div className='flex justify-between my-3 '>
+                    <div className='lg:flex justify-between my-3 '>
                         <p className='text-main'>Name</p>
                         <input
                             defaultValue={name} {...register("name")}
                             name='name'
                             type="text"
-                            className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main'
+                            className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main w-full lg:w-auto'
                         />
                     </div>
 
-                    <div className='flex justify-between my-3 '>
+                    <div className='lg:flex justify-between my-3 '>
                         <p className='text-main'>Email Address</p>
                         <input
                             readOnly
@@ -154,42 +154,42 @@ const ProfileEditForm = () => {
                             defaultValue={email} {...register("email")}
                             name='email'
                             type="email"
-                            className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main'
+                            className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main w-full lg:w-auto'
                         />
                     </div>
 
-                    <div className='flex justify-between my-3 '>
+                    <div className='lg:flex justify-between my-3 '>
                         <p className='text-main'>Phone Number</p>
                         <input
                             defaultValue={phone} {...register("phone")}
                             name='phone'
                             type="number"
-                            className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main'
+                            className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main w-full lg:w-auto'
                         />
                     </div>
 
-                    <div className='flex justify-between my-3 '>
+                    <div className='lg:flex justify-between my-3 '>
                         <p className='text-main'>Company Name</p>
                         <input
                             defaultValue={companyName} {...register("companyName")}
                             name='companyName'
                             type="text"
-                            className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main'
+                            className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main w-full lg:w-auto'
                         />
                     </div>
 
-                    <div className='flex justify-between my-3 '>
+                    <div className='lg:flex justify-between my-3 '>
                         <p className='text-main'>Address</p>
                         <input
                             defaultValue={address} {...register("address")}
                             name='address'
                             type="text"
-                            className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main'
+                            className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main w-full lg:w-auto'
                         />
                     </div>
 
 
-                    <div className='flex justify-center mt-10'>
+                    <div className='lg:flex justify-center mt-10'>
                         <button type='submit' className='px-3 py-1.5 bg-main text-white rounded'>Update</button>
                     </div>
                 </div>

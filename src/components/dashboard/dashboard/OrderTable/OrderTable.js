@@ -16,13 +16,13 @@ const OrderTable = () => {
     const [orders, setOrders] = useState([])
 
 
-    const { user, loading: userLoading, userData } = UserAuth()
+    const { userData } = UserAuth()
 
     // useEffect(() => { window.location.reload() }, [])
 
     useEffect(() => {
         setLoading(false)
-        axios.get(`${baseUrl}/order/${user?.email}`)
+        axios.get(`${baseUrl}/order/${userData?.email}`)
             .then(res => {
 
                 setOrders(res.data)
@@ -30,7 +30,7 @@ const OrderTable = () => {
             })
             .catch(err => { setLoading(false) })
 
-    }, [user, userData])
+    }, [userData])
 
 
 
