@@ -9,6 +9,7 @@ import FreeTrialBox from '@/components/dashboard/dashboard/FreeTrialBox/FreeTria
 import { getServerSession } from 'next-auth/next';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import { nextOption } from '@/app/api/auth/[...nextauth]/route';
+import { redirect } from 'next/dist/server/api-utils';
 
 
 

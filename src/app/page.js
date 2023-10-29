@@ -1,10 +1,12 @@
 
 
 import { UserAuth } from '@/context/AuthProvider';
+import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import React from 'react';
+import { nextOption } from './api/auth/[...nextauth]/route';
 
-const Home = () => {
+const Home = async () => {
   redirect('/dashboard')
 
   return (
