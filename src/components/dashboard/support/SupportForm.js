@@ -2,13 +2,16 @@
 import { UserAuth } from '@/context/AuthProvider';
 import sendSupportMessage from '@/utils/functions/sendSupportMessage';
 
-import React from 'react';
+import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { ImSpinner2 } from 'react-icons/im';
 
 const SupportForm = () => {
     const { userData } = UserAuth()
+    const [loading, setLoading] = useState(false)
 
     const sendMessage = async (e) => {
+        setLoading(true)
         e.preventDefault()
         const form = e.target;
         const subject = form.subject.value;
@@ -17,13 +20,18 @@ const SupportForm = () => {
         const messageData = { email: userData?.email, subject, message, phone }
         try {
             const sendResult = await sendSupportMessage(messageData)
-
-            if (sendResult.success) {
-                toast.success('message sent')
-                form.reset()
+            if (sendResult?.error) {
+                setLoading(false)
+                return toast.error(sendResult?.error)
+            }
+            if (sendResult?.message) {
+                toast.success(sendResult?.message)
+                setLoading(false)
+                return form.reset()
             }
         } catch (error) {
-            alert('unknown error')
+            setLoading(false)
+            console.log(error?.error)
         }
 
     }
@@ -64,6 +72,7 @@ const SupportForm = () => {
                             Your Phone Number
                         </label>
                         <input
+                            defaultValue={userData?.name}
                             type="text"
                             id="phone"
                             name='phone'
@@ -111,7 +120,9 @@ const SupportForm = () => {
 
                         />
                     </div>
-
+                    {
+                        loading && <div className='flex items-center lg:ml-5 justify-start text-xl text-main'><ImSpinner2 className='animate-spin' /></div>
+                    }
 
                     <button type='submit' className='bg-main px-3 py-2.5 text-white hover:bg-mainHover rounded '>Send Message</button>
                 </form>
