@@ -7,14 +7,17 @@ import OrderTable from '@/components/dashboard/dashboard/OrderTable/OrderTable';
 import SubscribedPackage from '@/components/dashboard/dashboard/SubscribedPackage/SubscribedPackage';
 import FreeTrialBox from '@/components/dashboard/dashboard/FreeTrialBox/FreeTrialBox';
 import { getServerSession } from 'next-auth/next';
-import { baseUrl } from '@/utils/functions/baseUrl';
 import { nextOption } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/dist/server/api-utils';
 
 
 
-const page = () => {
-
+const page = async () => {
+    const session = await getServerSession(nextOption)
+    console.log('session', session)
+    if (!session) {
+        redirect('/login')
+    }
 
 
     return (
