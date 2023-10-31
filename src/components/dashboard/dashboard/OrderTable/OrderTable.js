@@ -11,29 +11,8 @@ import { ImSpinner2 } from "react-icons/im";
 
 
 
-const OrderTable = () => {
-    const [loading, setLoading] = useState(true)
-    const [orders, setOrders] = useState([])
-
-
-    const { userData } = UserAuth()
-
-    // useEffect(() => { window.location.reload() }, [])
-
-    useEffect(() => {
-        setLoading(false)
-        axios.get(`${baseUrl}/order/${userData?.email}`)
-            .then(res => {
-
-                setOrders(res.data)
-                setLoading(false)
-            })
-            .catch(err => { setLoading(false) })
-
-    }, [userData])
-
-
-
+const OrderTable = ({ orders }) => {
+    const [loading, setLoading] = useState(false)
 
     return (
         <div>

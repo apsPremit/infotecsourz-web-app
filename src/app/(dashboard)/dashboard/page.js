@@ -22,6 +22,8 @@ const page = async () => {
     const res = await fetch(`${baseUrl}/user/${session?.user?.email}`)
     const data = await res.json()
 
+    const orderRes = await fetch(`${baseUrl}/order/${session?.user?.email}`)
+    const orderData = await orderRes.json()
 
     return (
         <div className='lg:p-10  bg-[#F5F5F5] '>
@@ -69,7 +71,7 @@ const page = async () => {
             <h3 className='bg-white p-5 w-full my-5 font-bold text-lg'>Recent Orders</h3>
 
             {/* table  */}
-            <OrderTable />
+            <OrderTable orders={orderData} />
 
             {/* notification  */}
 
