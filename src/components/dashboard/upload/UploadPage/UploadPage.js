@@ -8,14 +8,53 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { StateContext } from '@/context/StateProvider';
 import './UploadPage.css'
+import NotificationModal from '../NotificationModal/NotificationModal';
+import { UserAuth } from '@/context/AuthProvider';
+import SubscribedPackage from '../../dashboard/SubscribedPackage/SubscribedPackage';
 
 const UploadPage = () => {
-    const { totalFileSize, setTotalFileSize, uploadedImages, setUploadedImages, imageQuantityFromUrl, setFileUrl, orderId, setOrderId } = useContext(StateContext)
+    const { totalFileSize, setTotalFileSize, uploadedImages, setUploadedImages, imageQuantityFromUrl, setFileUrl, orderId, setOrderId, perPhotoCost, selectedPackage } = useContext(StateContext)
     const [selectedImages, setSelectedImages] = useState([]);
     const [uploadProgress, setUploadProgress] = useState(0)
     const [isUploading, setUploading] = useState(false)
+    const [isOpen, setOpen] = useState(false)
+    const { userData } = UserAuth()
 
     const router = useRouter()
+    console.log('select from upload', selectedPackage)
+    const handleProceed = () => {
+        let totalPhotos = uploadedImages.length < 1 ? imageQuantityFromUrl : uploadedImages.length
+        let subTotal = totalPhotos * perPhotoCost;
+
+
+        if (userData?.subscribedPackage === 'pay as go' || selectedPackage?.package_name === 'pay as go') {
+            return router.push('/dashboard/specifications')
+        }
+
+        if (userData?.subscribedPackage === 'free trial') {
+            if (subTotal > userData?.remainingBalance) {
+                return setOpen(true)
+            } else {
+
+                return router.push('/dashboard/specifications')
+            }
+        }
+
+        if ((userData?.subscribedPackage !== 'free trial') || (selectedPackage?.package_name !== 'pay as go')) {
+            if (totalPhotos > userData?.remainingCredit) {
+                return setOpen(true)
+            } else {
+                return router.push('/dashboard/specifications')
+            }
+        }
+
+
+
+
+
+        return router.push('/dashboard/specifications')
+    }
+
 
 
 
@@ -74,7 +113,7 @@ const UploadPage = () => {
 
                         <button
                             disabled={!uploadedImages.length > 0 && !imageQuantityFromUrl > 0}
-                            onClick={() => router.push('/dashboard/specifications')}
+                            onClick={handleProceed}
                             className='text-white px-3.5 py-2 bg-main hover:bg-mainHover rounded  flex disabled:bg-mainHover disabled:cursor-not-allowed'> {
                                 isUploading ? 'Loading..' : "Proceed"
                             }
@@ -83,7 +122,7 @@ const UploadPage = () => {
                 </div>
             </div>
 
-
+            <NotificationModal isOpen={isOpen} setIsOpen={setOpen} />
         </div>
 
 

@@ -4,7 +4,8 @@ import React, { useContext, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 const ImageUploadInputField = ({ setFileUrl, isUploading, selectedImages }) => {
-    const { uploadedImages, imageQuantityFromUrl, setImageQuantityFromUrl, setOrderId, orderId } = useContext(StateContext)
+    const { uploadedImages, imageQuantityFromUrl, fileUrl, setImageQuantityFromUrl, setOrderId, orderId } = useContext(StateContext)
+
 
     const handleFileUrl = (e) => {
         e.preventDefault()
@@ -19,6 +20,7 @@ const ImageUploadInputField = ({ setFileUrl, isUploading, selectedImages }) => {
 
     }
 
+
     return (
         <div >
             <h3 className='text-gray-500 text-lg mb-3'>Put file url from Drive, Dropbox or anywhere</h3>
@@ -26,6 +28,7 @@ const ImageUploadInputField = ({ setFileUrl, isUploading, selectedImages }) => {
                 onSubmit={handleFileUrl}
                 className=' space-y-3'>
                 <input
+                    defaultValue={fileUrl}
                     required
                     type="url"
                     disabled={uploadedImages.length >= 1}
@@ -34,6 +37,7 @@ const ImageUploadInputField = ({ setFileUrl, isUploading, selectedImages }) => {
                     className='border  border-shadow w-full px-3 py-2 rounded outline-0 focus:border-main'
                 />
                 <input
+                    defaultValue={imageQuantityFromUrl}
                     required
                     disabled={uploadedImages?.length >= 1}
                     type='number'

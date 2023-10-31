@@ -24,6 +24,7 @@ export const nextOption = {
             async authorize(credentials, req) {
                 const { email, password } = credentials;
 
+
                 if (credentials) {
 
                     return {
@@ -50,6 +51,9 @@ export const nextOption = {
         maxAge: 24 * 60 * 60,
 
     },
+
+
+
     // cookies: {
     //     sessionToken: {
     //         name: `session-token`,

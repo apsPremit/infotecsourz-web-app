@@ -12,8 +12,18 @@ const SinglePackage = ({ plan }) => {
     const { setSelectedPackage, selectedPackage } = useContext(StateContext)
     const { userData } = UserAuth()
 
+    console.log(selectedPackage)
 
     const pathName = usePathname()
+
+    const handlePackageSelect = (plan) => {
+        if (plan?.package_name === 'pay as go') {
+            setSelectedPackage(plan)
+        }
+
+    }
+
+
 
 
     const { id, package_name, price, photos, spec, facilities } = plan || {}
@@ -58,7 +68,7 @@ const SinglePackage = ({ plan }) => {
                         pathName === '/dashboard/pricing' &&
                             package_name == 'free trial' || package_name == 'pay as go' ?
                             <Link href='/dashboard/new_order' className={`${pathName === '/dashboard/package' && 'hidden'}`}>
-                                <button className="py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full">Get Started</button>
+                                <button onClick={() => handlePackageSelect(plan)} className="py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full">Get Started</button>
                             </Link>
                             :
                             package_name === 'enterprise' ?

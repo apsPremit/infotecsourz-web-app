@@ -31,7 +31,7 @@ const SpecificationsRightSide = () => {
     ]
 
     const handleProceed = () => {
-        router.push('/dashboard/package')
+        router.push('/dashboard/billing')
     }
 
     const handleReturnTime = (e) => {

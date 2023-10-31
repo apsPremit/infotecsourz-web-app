@@ -51,6 +51,8 @@ const LoginForm = () => {
                 setLoading(false)
                 return setError(data?.error)
             }
+            const setCookie = await fetch('http://localhost:5500/set-cookie')
+
 
             await signIn('credentials', {
                 email,
