@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 const SubscribedPackage = ({ userData }) => {
     // const { userData } = UserAuth()
-    console.log('from p', userData)
+
 
 
     return (

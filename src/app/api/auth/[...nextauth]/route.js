@@ -24,22 +24,13 @@ export const nextOption = {
             async authorize(credentials, req) {
                 const { email, password } = credentials;
 
+                if (credentials) {
 
-
-                const res = await fetch(`${baseUrl}/auth/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({ email, password })
-                })
-                const data = await res.json()
-                console.log('data from route', data)
-
-
-                if (data?.data) {
-
-                    return data?.data
+                    return {
+                        name: credentials?.name,
+                        email: credentials?.email,
+                        image: credentials?.image
+                    }
                 }
                 return null
 

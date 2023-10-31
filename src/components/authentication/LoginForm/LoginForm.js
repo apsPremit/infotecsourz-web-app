@@ -38,13 +38,40 @@ const LoginForm = () => {
         setLoading(true)
         const { email, password } = data || {}
 
-        const res = await signIn('credentials', {
-            email,
-            password,
-            callbackUrl: '/dashboard',
-            redirect: true,
-        })
-        setLoading(false)
+        try {
+            const res = await fetch(`${baseUrl}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            })
+            const data = await res.json()
+            if (data?.error) {
+                setLoading(false)
+                return setError(data?.error)
+            }
+
+            await signIn('credentials', {
+                email,
+                password,
+                callbackUrl: '/dashboard',
+                redirect: true,
+            })
+            setLoading(false)
+
+        } catch (error) {
+            setLoading(false)
+            setError(error?.error)
+        }
+
+        // await signIn('credentials', {
+        //     email,
+        //     password,
+        //     callbackUrl: '/dashboard',
+        //     redirect: true,
+        // })
+        // setLoading(false)
 
 
     }
