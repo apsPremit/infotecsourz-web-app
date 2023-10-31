@@ -6,7 +6,6 @@ import { nextOption } from './api/auth/[...nextauth]/route';
 
 const Home = async () => {
   const session = await getServerSession(nextOption)
-  console.log('session', session)
   if (!session) {
     redirect('/login')
   }

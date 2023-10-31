@@ -9,27 +9,30 @@ import FreeTrialBox from '@/components/dashboard/dashboard/FreeTrialBox/FreeTria
 import { getServerSession } from 'next-auth/next';
 import { nextOption } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/dist/server/api-utils';
+import { baseUrl } from '@/utils/functions/baseUrl';
 
 
 
 const page = async () => {
     const session = await getServerSession(nextOption)
-    console.log('session', session)
     if (!session) {
-        redirect('/login')
+        return redirect('/login')
     }
+
+    const res = await fetch(`${baseUrl}/user/${session?.user?.email}`)
+    const data = await res.json()
 
 
     return (
         <div className='lg:p-10  bg-[#F5F5F5] '>
 
-            <SubscribedPackage />
+            <SubscribedPackage userData={data?.data} />
 
             <div className='lg:grid grid-cols-3  mx-auto lg:gap-5 space-y-5 lg:space-y-0'>
 
 
 
-                <FreeTrialBox />
+                <FreeTrialBox userData={data?.data} />
                 <div className='border border-shadow p-5 rounded bg-white'>
                     <div className=''>
                         <p className='p-1.5 w-8 h-8 flex justify-center items-center bg-orange-200 text-orange-500 text-xl border border-red-20 rounded-full'>

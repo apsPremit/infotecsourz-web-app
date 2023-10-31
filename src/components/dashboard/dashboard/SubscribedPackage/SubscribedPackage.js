@@ -3,8 +3,9 @@ import { UserAuth } from '@/context/AuthProvider';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import React, { useEffect, useState } from 'react';
 
-const SubscribedPackage = () => {
-    const { userData } = UserAuth()
+const SubscribedPackage = ({ userData }) => {
+    // const { userData } = UserAuth()
+    console.log('from p', userData)
 
 
     return (
