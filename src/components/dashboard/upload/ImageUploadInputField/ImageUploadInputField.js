@@ -23,10 +23,11 @@ const ImageUploadInputField = ({ setFileUrl, isUploading, selectedImages }) => {
 
     return (
         <div >
-            <h3 className='text-gray-500 text-lg mb-3'>Put file url from Drive, Dropbox or anywhere</h3>
+            <h3 className='text-gray-500 text-lg mb-3'>Add Google Drive, Dropbox, WeTransfer, FTP or any link </h3>
             <form
                 onSubmit={handleFileUrl}
                 className=' space-y-3'>
+
                 <input
                     defaultValue={fileUrl}
                     required
@@ -36,6 +37,7 @@ const ImageUploadInputField = ({ setFileUrl, isUploading, selectedImages }) => {
                     placeholder='File Url'
                     className='border  border-shadow w-full px-3 py-2 rounded outline-0 focus:border-main'
                 />
+
                 <input
                     defaultValue={imageQuantityFromUrl}
                     required
