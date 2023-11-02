@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useContext, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainingCredit, totalPhotos }) => {
 
@@ -26,7 +27,8 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
         orderName,
         taxRate,
         returnTime,
-        hasInstructions
+        hasInstructions,
+        paymentMethod,
 
     } = useContext(StateContext)
 
@@ -40,21 +42,10 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
 
 
     const confirmOrder = async () => {
-
-        // if (totalPhotos > userData?.remainingCredit) {
-        //     return toast((ts) => (
-        //         <div className='flex items-start'>
-        //             <div className='flex-1 mr-2'>
-        //                 <span className='block'>You Have not require credit</span>
-        //                 <Link className='underline text-main' href='/dashboard/pricing'>Go To Pricing</Link>
-        //             </div>
-        //             <button className=' w-8 h-8 bg-red-400 text-white rounded-full text-xs' onClick={() => toast.dismiss(ts.id)}>
-        //                 x
-        //             </button>
-        //         </div>
-        //     ));
-        // }
-
+        console.log('method', paymentMethod)
+        if (!paymentMethod) {
+            return Swal.fire('please select payment method')
+        }
 
         setProcessing(true)
         const orderDetails = {
@@ -76,7 +67,8 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
             photoRequirements,
             returnTime,
             address: userData.address,
-            hasInstructions: hasInstructions
+            hasInstructions: hasInstructions,
+            paymentMethod
         }
 
 
@@ -84,14 +76,20 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
             const result = await saveOrder(orderDetails)
 
             if (result.success) {
-                toast.success('order success')
+                Swal.fire({
+                    icon: 'success',
+                    text: "Order success"
+                })
                 setProcessing(false)
                 router.push(`/order_success?orderId=${result?.data?.orderId}`)
                 // router.reload()
             }
         } catch (error) {
 
-            toast.error(error?.response?.data?.message || 'order not acceptable')
+            Swal.fire({
+                icon: 'warning',
+                html: `<p>${error?.response?.data?.message || 'order not acceptable'}</p>`
+            })
             setProcessing(false)
         }
 
@@ -107,9 +105,8 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
 
             {/* terms and conditions */}
             <label htmlFor="agree_terms" className='flex items-start gap-x-4 px-2 mt-3 cursor-pointer'>
-                <input onChange={() => setAgree(!isAgree)} id='agree_terms' checked={isAgree} type="checkbox" className='scale-150 mt-2' />
-                <p className='text-justify text-sm'>I have read and accept Stratis Privacy Policy, including that Stratis may email and SMS me about the services it provides. By providing a contact number, I invite Stratis or its Trusted Partners to call me during the call centre opening hours to discuss the potential purchase of a car insurance policy.
-                </p>
+                <input onChange={() => setAgree(!isAgree)} id='agree_terms' checked={isAgree} type="checkbox" className='scale-125 mt-1' />
+                <p className='text-sm'>I accept <Link target='_blank' href='https://www.infotecsourz.com/terms-and-conditions/' className='text-main hover:underline'>Terms & Conditions</Link></p>
             </label>
             {/* <Modal isOpen={isOpen} setIsOpen={setIsOpen} /> */}
             <Toaster />

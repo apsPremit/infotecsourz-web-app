@@ -1,63 +1,58 @@
 "use client"
 import { UserAuth } from '@/context/AuthProvider';
 import { StateContext } from '@/context/StateProvider';
+import Image from 'next/image';
 import React, { useContext, useState } from 'react';
-
+import paymentMethods from '../../../../../public/images/others/payment_methods.png'
+import bank_transfer from '../../../../../public/images/others/bank_transfer.png'
 
 const BillingLeftSide = () => {
     const { user } = UserAuth()
-    const { setBillingMessage } = useContext(StateContext)
-
-
-    const fields = [
-        { label: 'First Name', value: user?.displayName.split(' ')[0] || user?.displayName, type: 'text' },
-        { label: 'Last Name', value: user?.displayName.split(' ')[1] || user?.displayName, type: 'text' },
-        { label: 'Mobile Number', value: user?.phone || '', type: 'text' },
-        { label: 'Email Address', value: user?.email, type: 'email' },
-
-
-    ]
-
-
+    const { setBillingMessage, paymentMethod, setPaymentMethod } = useContext(StateContext)
 
 
     return (
         <div className='bg-white p-5 rounded'>
-            <div>
-                <h3 className='font-bold text-xl mb-3'>Personal Details</h3>
-                <p className=''>Enter your details and a we will proceed to assist you with your order.</p>
-            </div>
-            {/* input fields  */}
+            <h3 className='font-bold text-xl mb-3'>You’re almost there! Complete your order</h3>
+            <h3 className='mt-5 mb-2'>Select Payment method</h3>
 
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-5 mt-3'>
-                {
-                    fields.map((field, index) => <div
-                        key={index}
-                    >
-                        <label>
-                            <span className='text-[#9d9c9c] text-sm mb-4 ml-1'>{field?.label}</span>
-                            <input
-                                type={field?.type}
-                                defaultValue={field?.value}
-                                className='border border-shadow w-full px-3 py-1.5 rounded outline-0 focus:rounded focus:border-main disabled:cursor-not-allowed'
-                                disabled={field?.value !== ''}
-                            />
-                        </label>
-                    </div>)
-                }
 
-            </div>
-
-            {/* message section  */}
-            <div className='w-full my-10'>
-                <label>
-                    <span className='text-[#9d9c9c] text-sm mb-4 ml-1'>Message</span>
-                    <textarea
-                        name="" id=""
-                        rows={5}
-                        onBlur={(e) => setBillingMessage(e.target.value)}
-                        className='border border-shadow outline-0 w-full px-5 py-3 focus:border-main focus:rounded'
-                    ></textarea>
+            <div className=''>
+                <label htmlFor='paypal_credit' className='border px-3 py-2 rounded grid grid-cols-2 items-center courser-pointer mb-5'>
+                    <div className='flex items-center gap-2 font-bold'>
+                        <input
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                            value='paypal / credit card'
+                            id='paypal_credit'
+                            type="radio"
+                            className='accent-main w-4 h-4'
+                            checked={paymentMethod === 'paypal / credit card'}
+                        />
+                        <p className='whitespace-nowrap'>Paypal / Credit Card</p>
+                    </div>
+                    <Image
+                        alt='payment methods'
+                        src={paymentMethods}
+                        width={200}
+                    />
+                </label>
+                <label htmlFor='bank_transfer' className='border px-3 py-2 rounded grid grid-cols-2 items-center courser-pointer'>
+                    <div className='flex items-center  gap-2 font-bold'>
+                        <input
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                            value='bank transfer'
+                            id='bank_transfer'
+                            type="radio"
+                            className='accent-main w-4 h-4'
+                            checked={paymentMethod === 'bank transfer'}
+                        />
+                        <p className='whitespace-nowrap'>Bank Transfer</p>
+                    </div>
+                    <Image
+                        alt='payment methods'
+                        src={bank_transfer}
+                        height={45}
+                    />
                 </label>
             </div>
 

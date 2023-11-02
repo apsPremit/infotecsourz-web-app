@@ -12,9 +12,11 @@ const Billing = () => {
 
 
     return (
-        <div className='lg:px-10 flex justify-center'>
-
-            <div className='lg:w-1/2 mx-auto'>
+        <div className='lg:px-10 grid grid-cols-2 gap-x-5'>
+            <div>
+                <BillingLeftSide />
+            </div>
+            <div className=''>
                 <BillingRightSide />
             </div>
 
