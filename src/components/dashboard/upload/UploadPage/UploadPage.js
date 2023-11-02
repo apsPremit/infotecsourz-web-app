@@ -23,36 +23,8 @@ const UploadPage = () => {
     const router = useRouter()
     console.log('select from upload', selectedPackage)
     const handleProceed = () => {
-        let totalPhotos = uploadedImages.length < 1 ? imageQuantityFromUrl : uploadedImages.length
-        let subTotal = totalPhotos * perPhotoCost;
 
-
-        if (userData?.subscribedPackage === 'pay as go' || selectedPackage?.package_name === 'pay as go') {
-            return router.push('/dashboard/specifications')
-        }
-
-        if (userData?.subscribedPackage === 'free trial') {
-            if (subTotal > userData?.remainingBalance) {
-                return setOpen(true)
-            } else {
-
-                return router.push('/dashboard/specifications')
-            }
-        }
-
-        if ((userData?.subscribedPackage !== 'free trial') || (selectedPackage?.package_name !== 'pay as go')) {
-            if (totalPhotos > userData?.remainingCredit) {
-                return setOpen(true)
-            } else {
-                return router.push('/dashboard/specifications')
-            }
-        }
-
-
-
-
-
-        return router.push('/dashboard/specifications')
+        router.push('/dashboard/specifications')
     }
 
 

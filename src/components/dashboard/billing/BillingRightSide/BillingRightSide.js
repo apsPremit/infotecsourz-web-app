@@ -15,14 +15,15 @@ const BillingRightSide = () => {
     let subTotal = totalPhotos * perPhotoCost;
     let taxTotal = (taxRate / 100) * subTotal
     let grandTotal = subTotal + taxTotal;
-    let remainingCredit = userData?.remainingCredit - totalPhotos;
+    let remainingCredit;
 
-
-    if (selectedPackage.package_name == 'pay as go') {
+    console.log(userData)
+    if (selectedPackage.package_name == 'pay as go' || userData?.subscribedPackage === 'pay as go') {
         remainingCredit = userData?.remainingCredit;
 
-    } else if (selectedPackage.package_name == 'free trial') {
-        remainingCredit = 0
+    }
+    else {
+        remainingCredit = userData?.remainingCredit - totalPhotos;
     }
 
 
@@ -30,34 +31,11 @@ const BillingRightSide = () => {
         { title: 'Total Photos', value: totalPhotos },
         { title: 'Package', value: selectedPackage.package_name || userData?.subscribedPackage },
         { title: 'Price per product', value: "$" + parseFloat(perPhotoCost).toFixed(2) },
-        { title: 'Remaining Credit', value: remainingCredit },
         { title: 'subtotal', value: "$" + parseFloat(subTotal).toFixed(2) },
         { title: 'Tax', value: "$" + parseFloat(taxTotal).toFixed(2) },
         { title: 'Grand Total', value: "$" + parseFloat(grandTotal).toFixed(2) },
     ]
 
-    // } else if (selectedPackage.package_name == 'free trial') {
-    //     billProperties = [
-    //         { title: 'Total Photos', value: totalPhotos },
-    //         { title: 'Package', value: selectedPackage?.package_name },
-    //         { title: 'Remaining Credit', value: 0 },
-    //         { title: 'Subtotal', value: "$" + subtotal },
-    //         { title: 'Tax', value: "$" + taxTotal },
-    //         { title: 'GrandTotal', value: "$" + grandTotal },
-
-    //     ]
-    // }
-    // else {
-    //     billProperties = [
-    //         { title: 'Total Photos', value: totalPhotos },
-    //         { title: 'Package', value: userData.subscribedPackage },
-    //         { title: 'Remaining Credit', value: remainingCredit },
-    //         { title: 'Subtotal', value: "$" + subtotal },
-    //         { title: 'Tax', value: "$" + taxTotal },
-    //         { title: 'GrandTotal', value: "$" + grandTotal },
-
-    //     ]
-    // }
 
 
 

@@ -74,7 +74,7 @@ const OrderRow = ({ order }) => {
                 </span>
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm   text-black  ">
-                {moment(createdAt).format("MMM Do YY")}
+                {moment(createdAt).format("MMM Do YY, h:mm:ss a")}
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm   text-black  ">
                 {returnTime && returnTime + " Hours"}

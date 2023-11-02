@@ -54,7 +54,7 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
             name: userData?.name,
             email: userData?.email,
             photoType,
-            package: selectedPackage?.package_name,
+            package: selectedPackage?.package_name || userData?.subscribedPackage,
             photoQuantity: parseInt(totalPhotos),
             perPhotoCost,
             subTotal,
@@ -75,20 +75,26 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
         try {
             const result = await saveOrder(orderDetails)
 
-            if (result.success) {
+            if (result?.error) {
                 Swal.fire({
-                    icon: 'success',
-                    text: "Order success"
+                    icon: 'warning',
+                    html: `<p>${error?.response?.data?.error || 'order not acceptable'}</p>`
                 })
-                setProcessing(false)
-                router.push(`/order_success?orderId=${result?.data?.orderId}`)
-                // router.reload()
             }
-        } catch (error) {
 
             Swal.fire({
+                icon: 'success',
+                text: "Order success"
+            })
+            setProcessing(false)
+            router.push(`/order_success?orderId=${orderId}`)
+            // router.reload()
+
+
+        } catch (error) {
+            Swal.fire({
                 icon: 'warning',
-                html: `<p>${error?.response?.data?.message || 'order not acceptable'}</p>`
+                html: `<p>${error?.response?.data?.error || 'order not acceptable'}</p>`
             })
             setProcessing(false)
         }
