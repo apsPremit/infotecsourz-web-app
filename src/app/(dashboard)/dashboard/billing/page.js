@@ -12,7 +12,7 @@ const Billing = () => {
 
 
     return (
-        <div className='lg:px-10 grid grid-cols-2 gap-x-5'>
+        <div className='lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-x-5'>
             <div>
                 <BillingLeftSide />
             </div>
