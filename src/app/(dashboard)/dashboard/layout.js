@@ -7,7 +7,6 @@ const layout = ({ children }) => {
     return (
         <StateProvider>
             <div className='flex '>
-
                 <Sidebar />
                 <div className='w-full    bg-dashboard_background '>
                     <div className='lg:ml-52 px-5 bg-white'>

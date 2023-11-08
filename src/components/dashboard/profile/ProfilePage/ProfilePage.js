@@ -15,23 +15,8 @@ import { useSession } from 'next-auth/react';
 const ProfilePage = () => {
     const { photoUrl, setPhotoUrl } = useContext(StateContext)
     const { userData } = UserAuth()
-    console.log('user data from profile', userData)
-
-    useEffect(() => {
-        axios.get(`${baseUrl}/profile_photo/${userData?.email}`)
-            .then(res => {
-
-                setPhotoUrl(res?.data)
-            })
-            .catch(error => {
-
-            })
-    }, [userData])
 
     const { name, email, image, phone, companyName, address } = userData || {}
-
-
-
 
     return (
         <div className='lg:px-10 '>

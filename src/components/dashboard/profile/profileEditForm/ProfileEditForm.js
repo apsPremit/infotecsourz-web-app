@@ -13,26 +13,11 @@ import { StateContext } from '@/context/StateProvider';
 
 
 const ProfileEditForm = () => {
-    const { photoUrl, setPhotoUrl } = useContext(StateContext)
     const { userData, setUserData } = UserAuth()
     const [photoUploading, setPhotoUploading] = useState(false)
 
 
-    useEffect(() => {
-        axios.get(`${baseUrl}/profile_photo/${userData?.email}`)
-            .then(res => {
-                setPhotoUrl(res?.data)
-            })
-            .catch(error => {
-
-            })
-    }, [userData])
-
-    const { name, email, imageUrl, address, companyName, phone } = userData || {}
-
-
-
-
+    const { name, email, image, address, companyName, phone } = userData || {}
 
 
     const {
@@ -49,13 +34,18 @@ const ProfileEditForm = () => {
         formData.append('photo', file)
 
         try {
-            const res = await axios.post(`${baseUrl}/profile_photo/${userData.email}`, formData)
-            const data = res?.data
-            setPhotoUrl(data?.url)
+            const res = await axios.put(`${baseUrl}/user/update_profile_image/${userData.email}`, formData)
+            const data = res?.data;
+            if (data?.error) {
+                toast.error('something wrong')
+            }
+            setUserData(data?.user)
             toast.dismiss(loadingToast)
             toast.remove(loadingToast)
-        } catch (error) {
 
+
+        } catch (error) {
+            console.log(error)
             toast.error('something wrong')
             toast.dismiss(loadingToast)
             toast.remove(loadingToast)
@@ -108,7 +98,7 @@ const ProfileEditForm = () => {
                                 width={200}
                                 alt='profile photo'
                                 className='rounded-2xl border'
-                                style={{ maxHeight: '200px' }}
+                                style={{ height: '200px', }}
                             />
 
                             <input
