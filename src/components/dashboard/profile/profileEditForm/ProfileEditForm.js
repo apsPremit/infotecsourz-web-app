@@ -63,13 +63,15 @@ const ProfileEditForm = () => {
             name: name || userData?.name,
             email: userData?.email,
             phone,
-            address,
-            companyName
+            address
         }
+
+        console.log('input', updateData)
         try {
             const updatedData = await updateProfile(email || userData?.email, updateData)
+            console.log(updateData)
             if (updatedData) {
-                setUserData(updateData?.data)
+                setUserData(updateData)
                 toast.success('your profile update successful')
             }
         } catch (error) {
@@ -154,16 +156,6 @@ const ProfileEditForm = () => {
                             defaultValue={phone} {...register("phone")}
                             name='phone'
                             type="number"
-                            className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main w-full lg:w-auto'
-                        />
-                    </div>
-
-                    <div className='lg:flex justify-between my-3 '>
-                        <p className='text-main'>Company Name</p>
-                        <input
-                            defaultValue={companyName} {...register("companyName")}
-                            name='companyName'
-                            type="text"
                             className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main w-full lg:w-auto'
                         />
                     </div>

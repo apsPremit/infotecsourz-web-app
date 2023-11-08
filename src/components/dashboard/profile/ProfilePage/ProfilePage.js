@@ -16,7 +16,7 @@ const ProfilePage = () => {
     const { photoUrl, setPhotoUrl } = useContext(StateContext)
     const { userData } = UserAuth()
 
-    const { name, email, image, phone, companyName, address } = userData || {}
+    const { name, email, image, phone, address } = userData || {}
 
     return (
         <div className='lg:px-10 '>
@@ -28,6 +28,7 @@ const ProfilePage = () => {
                     width={150}
                     alt='profile photo'
                     className='border w-full h-[250px]   lg:h-[150px]  md:w-auto mb-3'
+                    style={{ maxWidth: '150px', objectFit: 'contain' }}
 
                 />
                 <div className=''>
@@ -66,10 +67,6 @@ const ProfilePage = () => {
                 <div className='md:flex justify-between mb-2'>
                     <p className='text-main'>Address</p>
                     <p>{address}</p>
-                </div>
-                <div className='md:flex justify-between mb-2'>
-                    <p className='text-main'>Company Name</p>
-                    <p>{companyName}</p>
                 </div>
 
 
