@@ -10,6 +10,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import { StateContext } from '@/context/StateProvider';
+import PasswordChangeForm from '../PasswordChangeForm/PasswordChangeForm';
 
 
 const ProfileEditForm = () => {
@@ -177,6 +178,7 @@ const ProfileEditForm = () => {
                 </div>
 
             </form>
+            <PasswordChangeForm />
             <Toaster />
         </div>
 
