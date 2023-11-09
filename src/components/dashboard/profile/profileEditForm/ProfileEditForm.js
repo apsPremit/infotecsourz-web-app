@@ -18,7 +18,7 @@ const ProfileEditForm = () => {
     const [photoUploading, setPhotoUploading] = useState(false)
 
 
-    const { name, email, image, address, companyName, phone } = userData || {}
+    const { name, email, address, phone } = userData || {}
 
 
     const {
@@ -56,23 +56,20 @@ const ProfileEditForm = () => {
     }
 
 
-
-
     const onSubmit = async (data) => {
-        const { email, name, phone, address, companyName } = data
         const updateData = {
-            name: name || userData?.name,
+            name: data?.name || userData?.name,
             email: userData?.email,
-            phone,
-            address
+            phone: data?.phone || phone,
+            address: data?.address || address
         }
 
-        console.log('input', updateData)
+
         try {
             const updatedData = await updateProfile(email || userData?.email, updateData)
-            console.log(updateData)
+            console.log('updated', updatedData)
             if (updatedData) {
-                setUserData(updateData)
+                setUserData(updatedData?.data)
                 toast.success('your profile update successful')
             }
         } catch (error) {
@@ -156,7 +153,7 @@ const ProfileEditForm = () => {
                         <input
                             defaultValue={phone} {...register("phone")}
                             name='phone'
-                            type="number"
+                            type="tel"
                             className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main w-full lg:w-auto'
                         />
                     </div>

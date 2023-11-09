@@ -1,16 +1,14 @@
 "use client"
 import React, { useContext, useState } from 'react';
 import UploadField from '../UploadField/UploadField';
-import UploadStatusContainer from '../UploadStatusContainer/UploadStatusContainer';
 import ImageUploadInputField from '../ImageUploadInputField/ImageUploadInputField';
 import ShowImages from '../ShowImages/ShowImages';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { StateContext } from '@/context/StateProvider';
 import './UploadPage.css'
 import NotificationModal from '../NotificationModal/NotificationModal';
 import { UserAuth } from '@/context/AuthProvider';
-import SubscribedPackage from '../../dashboard/SubscribedPackage/SubscribedPackage';
+
 
 const UploadPage = () => {
     const { totalFileSize, setTotalFileSize, uploadedImages, setUploadedImages, imageQuantityFromUrl, setFileUrl, orderId, setOrderId, perPhotoCost, selectedPackage } = useContext(StateContext)
@@ -18,10 +16,7 @@ const UploadPage = () => {
     const [uploadProgress, setUploadProgress] = useState(0)
     const [isUploading, setUploading] = useState(false)
     const [isOpen, setOpen] = useState(false)
-    const { userData } = UserAuth()
-
     const router = useRouter()
-    console.log('select from upload', selectedPackage)
     const handleProceed = () => {
 
         router.push('/dashboard/specifications')

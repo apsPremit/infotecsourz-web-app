@@ -140,9 +140,7 @@ const SignUpForm = () => {
                     <PhoneInput
                         country={'us'}
                         onChange={(value, countryData) => {
-                            const onlyPhone = value.split(countryData.dialCode)[1] || ''
-                            const phoneWithCode = countryData.dialCode + "~" + onlyPhone;
-                            setPhoneNumber(phoneWithCode)
+                            setPhoneNumber(value)
                         }}
 
                         containerClass='w-full'
