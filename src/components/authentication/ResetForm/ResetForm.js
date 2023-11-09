@@ -60,7 +60,7 @@ const ResetForm = () => {
             <form onSubmit={handleSubmit(onSubmit)} action="">
                 {/* ??????????????????email ****** */}
                 <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="otp_email">Email</label>
+                    <label className='block mb-1 text-sm' htmlFor="otp_email">Email<span className='text-red-500'>*</span></label>
                     <input type="email"
                         id='otp_email'
                         className=' w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'

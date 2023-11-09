@@ -51,6 +51,7 @@ const LoginForm = () => {
                 setLoading(false)
                 return setError(data?.error)
             }
+            console.log('data', data)
 
             await signIn('credentials', {
                 email,
@@ -65,13 +66,6 @@ const LoginForm = () => {
             setError(error?.error)
         }
 
-        // await signIn('credentials', {
-        //     email,
-        //     password,
-        //     callbackUrl: '/dashboard',
-        //     redirect: true,
-        // })
-        // setLoading(false)
 
 
     }
@@ -101,7 +95,7 @@ const LoginForm = () => {
 
                 {/* ??????????????????email ****** */}
                 <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="loginEmail">Email</label>
+                    <label className='block mb-1 text-sm' htmlFor="loginEmail">Email<span className='text-red-500'>*</span></label>
                     <input type="email"
                         id='loginEmail'
                         className=' w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'
@@ -120,7 +114,7 @@ const LoginForm = () => {
 
                 {/* *******password********************* */}
                 <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="loginPassword">Password</label>
+                    <label className='block mb-1 text-sm' htmlFor="loginPassword">Password<span className='text-red-500'>*</span></label>
                     <input type="password"
                         id='loginPassword'
                         className=' w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'

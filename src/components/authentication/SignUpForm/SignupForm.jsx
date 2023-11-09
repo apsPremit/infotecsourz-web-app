@@ -14,7 +14,9 @@ import toast, { Toaster } from 'react-hot-toast';
 import getUserData from '@/utils/functions/getUserData';
 import { ImSpinner2 } from 'react-icons/im';
 import { baseUrl } from '@/utils/functions/baseUrl';
-
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import './SignupForm.css'
 
 const SignUpForm = () => {
     const router = useRouter()
@@ -22,6 +24,8 @@ const SignUpForm = () => {
     const search = useSearchParams()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [phoneError, setPhoneError] = useState('')
     const { register, handleSubmit, control, watch, formState: { errors } } = useForm({
         defaultValues: {
             name: '',
@@ -32,10 +36,17 @@ const SignUpForm = () => {
     });
     const password = watch("password", "");
 
+
+
     // submit form ***********
 
     const onSubmit = async ({ email, password, confirm_password, name, phone, address }) => {
         setError('')
+        console.log(phoneNumber)
+        if (!phoneNumber) {
+            console.log(phone)
+            return setPhoneError('Phone number is required')
+        }
         setLoading(true)
 
         try {
@@ -44,7 +55,7 @@ const SignUpForm = () => {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify({ name, phone, address, email, password: confirm_password })
+                body: JSON.stringify({ name, phone, address, email, password: confirm_password, phone: phoneNumber })
             })
 
             const data = await res.json()
@@ -69,9 +80,6 @@ const SignUpForm = () => {
     }
 
 
-
-
-
     return (
 
         <div className=' py-12 px-5 lg:px-24'>
@@ -87,7 +95,7 @@ const SignUpForm = () => {
 
                 {/* full name  */}
                 <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="emailField">Full Name</label>
+                    <label className='block mb-1 text-sm' htmlFor="emailField">Full Name<span className='text-red-500'>*</span></label>
                     <input type="text"
                         id='emailField'
                         className='w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'
@@ -99,7 +107,7 @@ const SignUpForm = () => {
 
                 {/* ??????????????????email ****** */}
                 <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="signupEmail">Email</label>
+                    <label className='block mb-1 text-sm' htmlFor="signupEmail">Email <span className='text-red-500'>*</span></label>
                     <input type="email"
                         id='signupEmail'
                         className=' w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'
@@ -115,7 +123,7 @@ const SignUpForm = () => {
                 </div>
                 {/* address  */}
                 <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="address">Address</label>
+                    <label className='block mb-1 text-sm' htmlFor="address">Address<span className='text-red-500'>*</span></label>
                     <input type="text"
                         id='address'
                         className=' w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'
@@ -127,28 +135,26 @@ const SignUpForm = () => {
                     {errors.address && <p className='text-xs mt-1 text-red-400' role="alert">{errors.address?.message}</p>}
                 </div>
 
+                <div className='mb-5'>
+                    <label className='block mb-1 text-sm' htmlFor="">Phone <span className='text-red-500'>*</span></label>
+                    <PhoneInput
+                        country={'us'}
+                        onChange={(value, countryData) => {
+                            const onlyPhone = value.split(countryData.dialCode)[1] || ''
+                            const phoneWithCode = countryData.dialCode + "~" + onlyPhone;
+                            setPhoneNumber(phoneWithCode)
+                        }}
 
-
-
-                {/* ??????????????????phone ****** */}
-                {/* <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="phone">Phone</label>
-                    <input type="text"
-                        id='phone'
-                        className=' w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'
-                        {...register("phone", {
-                            required: "Phone is required",
-
-                        })}
+                        containerClass='w-full'
+                        inputClass='py-5'
                     />
-                    {errors.phone && <p className='text-xs mt-1 text-red-400' role="alert">{errors.phone?.message}</p>}
-                </div> */}
-
+                    {phoneError && <p className='text-xs mt-1 text-red-400' role="alert">Phone is required</p>}
+                </div>
 
 
                 {/* *******password********************* */}
                 <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="password">Password</label>
+                    <label className='block mb-1 text-sm' htmlFor="password">Password<span className='text-red-500'>*</span></label>
 
                     <Controller
                         name='password'
@@ -174,7 +180,7 @@ const SignUpForm = () => {
 
                 {/* ************confirm password *************/}
                 <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="confirmPassword">Confirm Password</label>
+                    <label className='block mb-1 text-sm' htmlFor="confirmPassword">Confirm Password<span className='text-red-500'>*</span></label>
 
                     <Controller
                         name='confirm_password'

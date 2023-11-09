@@ -69,7 +69,7 @@ const NewPasswordForm = () => {
 
                 {/* *******new_password********************* */}
                 <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="new_password">New Password</label>
+                    <label className='block mb-1 text-sm' htmlFor="new_password">New Password<span className='text-red-500'>*</span></label>
 
                     <Controller
                         name='new_password'
@@ -95,7 +95,7 @@ const NewPasswordForm = () => {
 
                 {/* ************confirm new password *************/}
                 <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="confirm_new_password">Confirm new Password</label>
+                    <label className='block mb-1 text-sm' htmlFor="confirm_new_password">Confirm new Password<span className='text-red-500'>*</span></label>
 
                     <Controller
                         name='confirm_new_password'

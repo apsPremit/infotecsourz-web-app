@@ -64,7 +64,7 @@ const PasswordChangeForm = () => {
 
 
                     <div className='lg:flex justify-between my-3 '>
-                        <p className='text-main'>Old Password</p>
+                        <p className='text-main'>Old Password<span className='text-red-500'>*</span></p>
                         <div>
                             <input
                                 {...register("oldPassword", { required: 'Old Password is required' })}
@@ -81,7 +81,7 @@ const PasswordChangeForm = () => {
                     {/* new password  */}
 
                     <div className='lg:flex justify-between my-3 '>
-                        <p className='text-main'>New Password</p>
+                        <p className='text-main'>New Password<span className='text-red-500'>*</span></p>
 
                         <div>
                             <Controller
@@ -111,7 +111,7 @@ const PasswordChangeForm = () => {
 
                     {/* ************confirm password *************/}
                     <div className='lg:flex justify-between my-3 '>
-                        <p className='text-main'>Confirm Password</p>
+                        <p className='text-main'>Confirm Password<span className='text-red-500'>*</span></p>
                         <div>
 
                             <Controller
