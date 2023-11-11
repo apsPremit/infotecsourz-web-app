@@ -68,7 +68,7 @@ const SinglePackage = ({ plan }) => {
                         pathName === '/dashboard/pricing' &&
                             package_name == 'free trial' || package_name == 'pay as go' ?
                             <Link href='/dashboard/new_order' className={`${pathName === '/dashboard/package' && 'hidden'}`}>
-                                <button onClick={() => handlePackageSelect(plan)} className="py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full">Get Started</button>
+                                <button onClick={() => handlePackageSelect(plan)} disabled={package_name === 'free trial' && userData?.subscribedPackage !== 'free trial'} className="py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full disabled:bg-blue-200">Get Started</button>
                             </Link>
                             :
                             package_name === 'enterprise' ?

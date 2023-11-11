@@ -37,10 +37,6 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
 
 
 
-
-
-
-
     const confirmOrder = async () => {
         console.log('method', paymentMethod)
         if (!paymentMethod) {
@@ -61,7 +57,6 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
             taxRate,
             taxTotal,
             grandTotal,
-            remainingCredit,
             productDetailsDescription,
             fileUrl,
             photoRequirements,
@@ -92,6 +87,7 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
 
 
         } catch (error) {
+            console.log(error)
             Swal.fire({
                 icon: 'warning',
                 html: `<p>${error?.response?.data?.error || 'order not acceptable'}</p>`

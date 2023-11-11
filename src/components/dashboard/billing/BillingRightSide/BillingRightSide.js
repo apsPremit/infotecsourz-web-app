@@ -15,16 +15,10 @@ const BillingRightSide = () => {
     let subTotal = totalPhotos * perPhotoCost;
     let taxTotal = (taxRate / 100) * subTotal
     let grandTotal = subTotal + taxTotal;
-    let remainingCredit;
+
 
     console.log(userData)
-    if (selectedPackage.package_name == 'pay as go' || userData?.subscribedPackage === 'pay as go') {
-        remainingCredit = userData?.remainingCredit;
 
-    }
-    else {
-        remainingCredit = userData?.remainingCredit - totalPhotos;
-    }
 
 
     let billProperties = [
@@ -82,7 +76,6 @@ const BillingRightSide = () => {
                 taxTotal={taxTotal}
                 perPhotoCost={perPhotoCost}
                 grandTotal={grandTotal}
-                remainingCredit={remainingCredit}
                 totalPhotos={totalPhotos}
             />
 
