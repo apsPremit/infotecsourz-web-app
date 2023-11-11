@@ -5,7 +5,7 @@ import SocialLogin from '@/components/authentication/SocialLogin/SocialLogin';
 import logo from '@/assets/images/logo.png'
 import { UserAuth } from '@/context/AuthProvider';
 import { Controller, useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import createJWT from '@/utils/functions/createJWT';
 import Cookies from 'js-cookie';
@@ -17,6 +17,8 @@ import { baseUrl } from '@/utils/functions/baseUrl';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import './SignupForm.css'
+import { signIn } from 'next-auth/react';
+
 
 const SignUpForm = () => {
     const router = useRouter()
@@ -26,6 +28,7 @@ const SignUpForm = () => {
     const [error, setError] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [phoneError, setPhoneError] = useState('')
+    const [countries, setCountries] = useState([])
     const { register, handleSubmit, control, watch, formState: { errors } } = useForm({
         defaultValues: {
             name: '',
@@ -36,43 +39,52 @@ const SignUpForm = () => {
     });
     const password = watch("password", "");
 
+    useEffect(() => {
+        fetch('https://raw.githubusercontent.com/apsPremit/country-code/main/country.json')
+            .then(res => res.json())
+            .then(data => {
+                setCountries(data)
+            })
+    }, [])
 
 
     // submit form ***********
 
-    const onSubmit = async ({ email, password, confirm_password, name, phone, address }) => {
+    const onSubmit = async ({ email, password, confirm_password, name, country, company }) => {
         setError('')
-        console.log(phoneNumber)
-        if (!phoneNumber) {
-            console.log(phone)
-            return setPhoneError('Phone number is required')
-        }
-        setLoading(true)
+        console.log({ name, email, confirm_password, country, company })
+        // setLoading(true)
 
-        try {
-            const res = await fetch(`${baseUrl}/auth/register`, {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                body: JSON.stringify({ name, phone, address, email, password: confirm_password, phone: phoneNumber })
-            })
+        // try {
+        //     const res = await fetch(`${baseUrl}/auth/register`, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-type': 'application/json'
+        //         },
+        //         body: JSON.stringify({ name, email, password: confirm_password, country, company })
+        //     })
 
-            const data = await res.json()
-            if (data?.error) {
-                setLoading(false)
-                return setError(data?.error)
-            }
+        //     const data = await res.json()
+        //     if (data?.error) {
+        //         setLoading(false)
+        //         return setError(data?.error)
+        //     }
 
-            if (data?.message) {
-                router.replace(`/login?message=${data?.message}`)
-                setLoading(false)
-            }
+        //     if (data?.message) {
+        //         // router.replace(`/login?message=${data?.message}`)
+        //         await signIn('credentials', {
+        //             email,
+        //             password,
+        //             callbackUrl: '/dashboard',
+        //             redirect: true,
+        //         })
+        //         setLoading(false)
+        //     }
 
 
-        } catch (error) {
-            setLoading(false)
-        }
+        // } catch (error) {
+        //     setLoading(false)
+        // }
 
 
 
@@ -121,21 +133,9 @@ const SignUpForm = () => {
                     />
                     {errors.email && <p className='text-xs mt-1 text-red-400' role="alert">{errors.email?.message}</p>}
                 </div>
-                {/* address  */}
-                <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="address">Address<span className='text-red-500'>*</span></label>
-                    <input type="text"
-                        id='address'
-                        className=' w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'
-                        {...register("address", {
-                            required: "Address is required",
 
-                        })}
-                    />
-                    {errors.address && <p className='text-xs mt-1 text-red-400' role="alert">{errors.address?.message}</p>}
-                </div>
 
-                <div className='mb-5'>
+                {/* <div className='mb-5'>
                     <label className='block mb-1 text-sm' htmlFor="">Phone <span className='text-red-500'>*</span></label>
                     <PhoneInput
                         country={'us'}
@@ -147,7 +147,7 @@ const SignUpForm = () => {
                         inputClass='py-5'
                     />
                     {phoneError && <p className='text-xs mt-1 text-red-400' role="alert">Phone is required</p>}
-                </div>
+                </div> */}
 
 
                 {/* *******password********************* */}
@@ -200,6 +200,35 @@ const SignUpForm = () => {
                 </div>
 
 
+                {/* Country  */}
+                <div className='mb-5'>
+                    <label className='block mb-1 text-sm' htmlFor="country">Country</label>
+                    <select {...register('country')} defaultValue='' name="country" id="country" className='w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'>
+                        <option value="">Select your Country</option>
+                        {
+                            countries[0]?.map(country => <option
+                                key={country?.code}
+                                value={country?.name}
+                            >
+                                {country?.name}
+                            </option>)
+                        }
+                    </select>
+
+                </div>
+
+                {/* company  */}
+                <div className='mb-5'>
+                    <label className='block mb-1 text-sm' htmlFor="company">Company</label>
+                    <input type="text"
+                        id='company'
+                        className='w-full  border rounded-md outline-0 border-shadow py-2 px-3 focus:border-main'
+                        {...register("company")}
+                    />
+                </div>
+
+
+
                 {/* ********terms checkbox *******/}
                 <label htmlFor="checkbox" className='my-4 accent-main'>
                     <input
@@ -220,9 +249,7 @@ const SignUpForm = () => {
                     <input disabled={!isAgree} className='bg-main cursor-pointer hover:bg-[#5736ce] disabled:bg-opacity-50 py-3 px-3 text-center text-white font-bold w-full rounded-lg mt-3 mb-5' type="submit" value="Sign Up" />
                 </div>
             </form>
-            {/* <div className="py-6 flex items-center text-gray-400  uppercase before:flex-[1_1_0%] before:border-t before:mr-6 after:flex-[1_1_0%] after:border-t after:ml-6 dark:text-gray-500 before:border-shadow after:border-shadow">Or</div> */}
 
-            {/* ************** social login ********** */}
 
             {/* <SocialLogin /> */}
 
