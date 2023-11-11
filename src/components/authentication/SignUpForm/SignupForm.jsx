@@ -53,38 +53,38 @@ const SignUpForm = () => {
     const onSubmit = async ({ email, password, confirm_password, name, country, company }) => {
         setError('')
         console.log({ name, email, confirm_password, country, company })
-        // setLoading(true)
+        setLoading(true)
 
-        // try {
-        //     const res = await fetch(`${baseUrl}/auth/register`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-type': 'application/json'
-        //         },
-        //         body: JSON.stringify({ name, email, password: confirm_password, country, company })
-        //     })
+        try {
+            const res = await fetch(`${baseUrl}/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ name, email, password: confirm_password, country, company })
+            })
 
-        //     const data = await res.json()
-        //     if (data?.error) {
-        //         setLoading(false)
-        //         return setError(data?.error)
-        //     }
+            const data = await res.json()
+            if (data?.error) {
+                setLoading(false)
+                return setError(data?.error)
+            }
 
-        //     if (data?.message) {
-        //         // router.replace(`/login?message=${data?.message}`)
-        //         await signIn('credentials', {
-        //             email,
-        //             password,
-        //             callbackUrl: '/dashboard',
-        //             redirect: true,
-        //         })
-        //         setLoading(false)
-        //     }
+            if (data?.message) {
+                // router.replace(`/login?message=${data?.message}`)
+                await signIn('credentials', {
+                    email,
+                    password,
+                    callbackUrl: '/dashboard',
+                    redirect: true,
+                })
+                setLoading(false)
+            }
 
 
-        // } catch (error) {
-        //     setLoading(false)
-        // }
+        } catch (error) {
+            setLoading(false)
+        }
 
 
 
