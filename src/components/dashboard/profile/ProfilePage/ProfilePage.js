@@ -16,7 +16,7 @@ const ProfilePage = () => {
     const { photoUrl, setPhotoUrl } = useContext(StateContext)
     const { userData } = UserAuth()
 
-    const { name, email, image, phone, address } = userData || {}
+    const { name, email, image, country, company } = userData || {}
 
     return (
         <div className='lg:px-10 '>
@@ -27,17 +27,19 @@ const ProfilePage = () => {
                     height={150}
                     width={150}
                     alt='profile photo'
-                    className='border w-full h-[250px]   lg:h-[150px]  md:w-auto mb-3'
-                    style={{ maxWidth: '150px', objectFit: 'contain' }}
+                    className='border w-full h-[250px]   lg:h-[150px]  md:w-auto mb-3 rounded'
+                    style={{ maxWidth: '150px', objectFit: 'fill' }}
 
                 />
                 <div className=''>
                     <h3 className='text-3xl mb-1'>{name}</h3>
                     <p className='mb-1 text-main font-bold ml-1'>{email}</p>
-                    <div className='flex items-center mb-3'>
-                        <span className='text-main font-bold mr-2'><IoLocationOutline size={20} /></span>
-                        <p>{address}</p>
-                    </div>
+                    {
+                        country && <div className='flex items-center mb-3'>
+                            <span className='text-main font-bold mr-2'><IoLocationOutline size={20} /></span>
+                            <p>{country}</p>
+                        </div>
+                    }
 
                     <div>
                         <Link href='/dashboard/profile/edit'>
@@ -60,15 +62,15 @@ const ProfilePage = () => {
                     <p className='text-main'>Email Address</p>
                     <p>{email}</p>
                 </div>
-                <div className='md:flex justify-between mb-2'>
-                    <p className='text-main'>Phone Number</p>
-                    <p>{phone}</p>
-                </div>
-                <div className='md:flex justify-between mb-2'>
-                    <p className='text-main'>Address</p>
-                    <p>{address}</p>
-                </div>
 
+                <div className='md:flex justify-between mb-2'>
+                    <p className='text-main'>Country</p>
+                    <p>{country}</p>
+                </div>
+                <div className='md:flex justify-between mb-2'>
+                    <p className='text-main'>Company Name</p>
+                    <p>{company}</p>
+                </div>
 
             </div>
 

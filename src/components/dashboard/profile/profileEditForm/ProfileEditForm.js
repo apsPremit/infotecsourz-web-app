@@ -18,7 +18,7 @@ const ProfileEditForm = () => {
     const [photoUploading, setPhotoUploading] = useState(false)
 
 
-    const { name, email, address, phone } = userData || {}
+    const { name, email, country, company } = userData || {}
 
 
     const {
@@ -57,11 +57,12 @@ const ProfileEditForm = () => {
 
 
     const onSubmit = async (data) => {
+        console.log('dt', data)
         const updateData = {
-            name: data?.name || userData?.name,
-            email: userData?.email,
-            phone: data?.phone || phone,
-            address: data?.address || address
+            name: data?.name || name,
+            email: email,
+            country: data?.country || country,
+            company: data?.company || company
         }
 
 
@@ -149,20 +150,21 @@ const ProfileEditForm = () => {
                     </div>
 
                     <div className='lg:flex justify-between my-3 '>
-                        <p className='text-main'>Phone Number</p>
+                        <p className='text-main'>Country</p>
                         <input
-                            defaultValue={phone} {...register("phone")}
-                            name='phone'
-                            type="tel"
+                            defaultValue={country}
+                            {...register("country")}
+                            name='country'
+                            type="text"
                             className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main w-full lg:w-auto'
                         />
                     </div>
 
                     <div className='lg:flex justify-between my-3 '>
-                        <p className='text-main'>Address</p>
+                        <p className='text-main'>Company</p>
                         <input
-                            defaultValue={address} {...register("address")}
-                            name='address'
+                            defaultValue={company} {...register("company")}
+                            name='company'
                             type="text"
                             className='border border-shadow px-3 py-1.5 rounded outline-0 focus:border-main w-full lg:w-auto'
                         />
