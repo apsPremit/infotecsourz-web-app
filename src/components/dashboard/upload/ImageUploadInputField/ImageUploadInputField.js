@@ -15,7 +15,7 @@ const ImageUploadInputField = ({ setFileUrl, isUploading, selectedImages }) => {
 
         const url = e.target.fileURL.value
         const imageQuantity = e.target.imageQuantity.value
-        console.log(typeof (imageQuantity))
+
         setFileUrl(url)
         setImageQuantityFromUrl(imageQuantity)
 

@@ -52,7 +52,7 @@ const SignUpForm = () => {
 
     const onSubmit = async ({ email, password, confirm_password, name, country, company }) => {
         setError('')
-        console.log({ name, email, confirm_password, country, company })
+
         setLoading(true)
 
         try {

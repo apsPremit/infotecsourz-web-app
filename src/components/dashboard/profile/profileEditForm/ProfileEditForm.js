@@ -57,7 +57,7 @@ const ProfileEditForm = () => {
 
 
     const onSubmit = async (data) => {
-        console.log('dt', data)
+
         const updateData = {
             name: data?.name || name,
             email: email,
@@ -68,7 +68,7 @@ const ProfileEditForm = () => {
 
         try {
             const updatedData = await updateProfile(email || userData?.email, updateData)
-            console.log('updated', updatedData)
+
             if (updatedData) {
                 setUserData(updatedData?.data)
                 toast.success('your profile update successful')

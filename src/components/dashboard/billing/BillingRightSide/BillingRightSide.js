@@ -17,7 +17,7 @@ const BillingRightSide = () => {
     let grandTotal = subTotal + taxTotal;
 
 
-    console.log(userData)
+
 
 
 

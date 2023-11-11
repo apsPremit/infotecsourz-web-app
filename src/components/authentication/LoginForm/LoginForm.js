@@ -51,7 +51,7 @@ const LoginForm = () => {
                 setLoading(false)
                 return setError(data?.error)
             }
-            console.log('data', data)
+
 
             await signIn('credentials', {
                 email,

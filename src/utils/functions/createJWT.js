@@ -13,7 +13,7 @@ const createJWT = async (payload) => {
             body: JSON.stringify(payload)
         })
         const data = await res.json()
-        console.log('token', data)
+
 
         return data
 

@@ -12,7 +12,7 @@ const SinglePackage = ({ plan }) => {
     const { setSelectedPackage, selectedPackage } = useContext(StateContext)
     const { userData } = UserAuth()
 
-    console.log(selectedPackage)
+
 
     const pathName = usePathname()
 
