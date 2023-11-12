@@ -47,11 +47,11 @@ const SpecificationsLeftSide = () => {
     return (
         <div>
             <div>
-                <h3 className='font-bold text-xl mb-3'>Product Details</h3>
+                <h3 className='font-bold text-xl mb-3'>Review Order</h3>
                 <p className=''>Check your product details that you’ve uploaded just now, and if you think any details is incorrect you are free to make these details perfect.</p>
             </div>
             <div className='mt-8'>
-                <h3 className='mb-2 text-md font-bold'>Upload Your special Instruction or sample</h3>
+                <h3 className='mb-3 text-md font-bold'>Upload Your special Instruction or sample</h3>
                 <label
 
                     htmlFor="instructions"

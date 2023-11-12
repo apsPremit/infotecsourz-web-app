@@ -47,11 +47,11 @@ const SpecificationsRightSide = () => {
                         key={index}
                     >
                         <label>
-                            <span className='text-[#9d9c9c] text-sm mb-4 ml-1'>{field?.label}</span>
+                            <span className='text-black text-sm mb-4 ml-1'>{field?.label}</span>
                             <input
                                 type={field?.type}
                                 value={field?.value}
-                                className='border border-shadow w-full px-3 py-1.5 rounded outline-0 focus:rounded focus:border-main cursor-not-allowed'
+                                className='border border-shadow text-[#9d9c9c] w-full px-3 py-1.5 rounded outline-0 focus:rounded focus:border-main cursor-not-allowed'
                                 disabled
                             />
                         </label>
@@ -61,8 +61,10 @@ const SpecificationsRightSide = () => {
             </div>
 
             <label>
-                <span className='text-[#9d9c9c] text-sm mt-4 mb-1 ml-1 block'>Return Time</span>
-                <select onChange={handleReturnTime} name="" id="" className='w-full border border-shadow px-3 py-1.5 rounded'>
+                <span className='text-black text-sm mt-4 mb-1 ml-1 block'>Select Turn Around Time
+                    <span className='text-red-500'>*</span>
+                </span>
+                <select onChange={handleReturnTime} name="" id="" className='w-full border border-shadow text-[#9d9c9c] px-3 py-1.5 rounded'>
                     {
                         returnTimeOptions.map((item, index) => <option
                             key={index} value={item?.value}
@@ -80,12 +82,12 @@ const SpecificationsRightSide = () => {
             {/* text area  */}
             <div className='w-full my-10'>
                 <label>
-                    <span className='text-[#9d9c9c] text-sm mb-4 ml-1'>Description</span>
+                    <span className='text-black text-sm mb-4 ml-1'>Detail Instruction</span>
                     <textarea
                         name="" id=""
                         onBlur={(e) => setProductDetailsDescription(e.target.value)}
                         rows={5}
-                        className='border border-shadow outline-0 w-full px-5 py-3 focus:border-main focus:rounded'
+                        className='border border-shadow text-[#9d9c9c] outline-0 w-full px-5 py-3 focus:border-main focus:rounded'
                     ></textarea>
                 </label>
             </div>
