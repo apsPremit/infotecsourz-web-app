@@ -37,7 +37,7 @@ const OrderTable = ({ orders }) => {
                                                 </th>
                                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap"
                                                 >
-                                                    Images
+                                                    Ready File
                                                 </th>
                                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap"
                                                 >
