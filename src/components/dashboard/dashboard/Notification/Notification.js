@@ -13,6 +13,7 @@ import { RiNotification2Line } from 'react-icons/ri'
 
 export default function Notification() {
     const { userData } = UserAuth()
+
     const [notifications, setNotifications] = useState([])
 
     useEffect(() => {
@@ -22,7 +23,7 @@ export default function Notification() {
             .catch(error => {
                 console.log('notification', error.message)
             })
-    }, [])
+    }, [userData])
 
 
     return (
