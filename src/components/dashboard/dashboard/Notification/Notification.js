@@ -1,14 +1,30 @@
 "use client"
+import { UserAuth } from '@/context/AuthProvider'
+import { baseUrl } from '@/utils/functions/baseUrl'
 import { Popover, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import moment from 'moment'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { BiTime } from 'react-icons/bi'
 import { RiNotification2Line } from 'react-icons/ri'
 
 
 
+
 export default function Notification() {
+    const { userData } = UserAuth()
+    const [notifications, setNotifications] = useState([])
+
+    useEffect(() => {
+        fetch(`${baseUrl}/notification/premgaibandha@gmail.com`)
+            .then(res => res.json())
+            .then(result => setNotifications(result?.data))
+            .catch(error => {
+                console.log('notification', error.message)
+            })
+    }, [])
+
+
     return (
         <div className="">
             <Popover className="relative">
@@ -22,10 +38,11 @@ export default function Notification() {
                                 className="relative outline-none cursor-pointer"
                             >
                                 <RiNotification2Line size={25} />
-                                <span className="sr-only">Notifications</span>
-                                <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">
-                                    1
-                                </div>
+                                {
+                                    notifications?.length > 0 && <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">
+                                        {notifications?.length}
+                                    </div>
+                                }
                             </label>
 
                         </Popover.Button>
@@ -41,22 +58,30 @@ export default function Notification() {
                             <Popover.Panel className="absolute mt-4 z-10 bg-white w-[350px]  md:w-[400px]  right-0 px-4 sm:px-0 ">
                                 <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
 
-                                    <div className=" p-4 ">
-                                        <div className=" p-2 rounded border-b">
-                                            <span className="block text-md font-bold text-gray-600">
-                                                Your order <span className='underline text-black'>#52555</span> is Delivered
-                                            </span>
+                                    <div className='p-4'>
+                                        {
+                                            notifications.length > 0 ?
+                                                notifications?.map(not =>
+                                                    <div key={not?._id} className=" p-2 rounded border-b">
+                                                        <span className="block text-md font-bold text-gray-600">
+                                                            Your order <span className='underline text-black'>#{not?.orderId}</span> is {not?.orderStatus}
+                                                        </span>
 
-                                            <span className='text-xs mt-1 text-gray-500 flex items-center gap-x-1'>
-                                                <span><BiTime /></span>
-                                                {
-                                                    moment('2023-11-11T09:07:54.850+00:00').calendar()
-                                                }
+                                                        <span className='text-xs mt-1 text-gray-500 flex items-center gap-x-1'>
+                                                            <span><BiTime /></span>
+                                                            {
+                                                                moment(not?.createdAt).calendar()
+                                                            }
 
-                                            </span>
-                                        </div>
+                                                        </span>
+                                                    </div>
+                                                )
+
+                                                :
+                                                <span>You Have no Notification</span>
+
+                                        }
                                     </div>
-
 
                                 </div>
                             </Popover.Panel>
