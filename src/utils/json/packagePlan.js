@@ -156,7 +156,7 @@ export const packages = [
     {
         "id": 7,
         "package_name": "enterprise",
-        "price": 1500,
+
         "spec": [
             "No Credit Card Required*",
             "Easy Payment",
