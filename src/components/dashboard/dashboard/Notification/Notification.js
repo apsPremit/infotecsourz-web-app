@@ -16,7 +16,7 @@ export default function Notification() {
     const [notifications, setNotifications] = useState([])
 
     useEffect(() => {
-        fetch(`${baseUrl}/notification/premgaibandha@gmail.com`)
+        fetch(`${baseUrl}/notification/${userData?.email}`)
             .then(res => res.json())
             .then(result => setNotifications(result?.data))
             .catch(error => {
