@@ -9,10 +9,8 @@ import { UserAuth } from '@/context/AuthProvider';
 import { redirect, useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 
-export const metadata = {
-    title: "Pricing | Infotecsourz",
-    description: "Photo Retouching App"
-}
+
+
 const Plan = () => {
     const { selectedPackage } = useContext(StateContext)
 

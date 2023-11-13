@@ -47,15 +47,18 @@ const Sidebar = () => {
 
 
             <div className={`flex px-5 lg:px-0 relative lg:block items-center ${isSidebarOpen ? 'translate-x-0 ' : '-translate-x-52 lg:translate-x-0'}`}>
-                <Image
-                    src={dashboardLogo}
-                    alt='logo'
-                    width={250}
-                    height={40}
+                <Link href='/dashboard'>
+                    <Image
+                        src={dashboardLogo}
+                        alt='logo'
+                        width={300}
+                        height={50}
+                        className='max-w-[120%]'
 
-                />
+                    />
+                </Link>
 
-                <button className='absolute top-2 right-4' onClick={() => setSidebarOpen(!isSidebarOpen)}> <RxCross1 className='lg:hidden duration-300 cursor-pointer text-white' /></button>
+                <button className='absolute top-4 right-4' onClick={() => setSidebarOpen(!isSidebarOpen)}> <RxCross1 className='lg:hidden duration-300 cursor-pointer text-white' /></button>
             </div>
 
 

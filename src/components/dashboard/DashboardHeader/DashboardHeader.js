@@ -2,6 +2,7 @@
 import { StateContext } from '@/context/StateProvider';
 import React, { useContext } from 'react';
 import { RxHamburgerMenu } from "react-icons/rx";
+import Notification from '../dashboard/Notification/Notification';
 const DashboardHeader = () => {
     const { isSidebarOpen, setSidebarOpen } = useContext(StateContext)
     const newOrderHandler = () => {
@@ -15,7 +16,11 @@ const DashboardHeader = () => {
                 <button onClick={() => setSidebarOpen(!isSidebarOpen)} className='text-xl mr-3 lg:hidden'> <RxHamburgerMenu /></button>
                 <h2 className='text-sm lg:text-2xl font-bold'>New Order</h2>
             </div>
-            <button onClick={newOrderHandler} className='text-sm text-white bg-main px-3 py-2 rounded-lg'>Create new Order</button>
+
+            <div className='flex items-center gap-2 flex-nowrap'>
+                <button onClick={newOrderHandler} className='text-sm text-white bg-main px-3 py-2 rounded-lg'>Create new Order</button>
+                <Notification />
+            </div>
         </div>
     );
 };
