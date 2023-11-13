@@ -1,7 +1,10 @@
 import SpecificationsLeftSide from "@/components/dashboard/specifications/SpecificationsLeftSide/SpecificationsLeftSide";
 import SpecificationsRightSide from "@/components/dashboard/specifications/SpecificationsRightSide/SpecificationsRightSide";
 
-
+export const metadata = {
+    title: "Order Specification | Infotecsourz",
+    description: "Photo Retouching App"
+}
 
 const Specifications = () => {
 

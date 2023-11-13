@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
-
+export const metadata = {
+    title: "Not Found | Infotecsourz",
+    description: "Photo Retouching App"
+}
 const notFound = () => {
     return (
         <div>

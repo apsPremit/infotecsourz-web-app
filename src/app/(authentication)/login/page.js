@@ -6,6 +6,10 @@ import React from 'react';
 import styles from '@/app/styles.module.css'
 import Image from 'next/image';
 
+export const metadata = {
+    title: "Login | Infotecsourz",
+    description: "$20 Free Credit Photo Retouching App"
+}
 const Login = () => {
     return (
         <div>

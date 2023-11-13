@@ -5,7 +5,10 @@ import Link from 'next/link';
 import React from 'react';
 import { FaFire } from "react-icons/fa";
 
-
+export const metadata = {
+    title: "Billing | Infotecsourz",
+    description: "Photo Retouching App"
+}
 
 
 const Billing = () => {

@@ -4,6 +4,11 @@ import Plan from '../package/page';
 
 import { packages } from '@/utils/json/packagePlan';
 import SinglePackage from '@/components/dashboard/package/SinglePackage/SinglePackage';
+
+export const metadata = {
+    title: "Billing Info | Infotecsourz",
+    description: "Photo Retouching App"
+}
 const Pricing = () => {
 
     return (

@@ -4,9 +4,10 @@ import Image from 'next/image';
 import loginLogo from '../../../../public/images/others/cake logo.png'
 
 export const metadata = {
-    title: "signup || infotecsourz app",
+    title: "Signup | Infotecsourz",
     description: "$20 Free Credit Photo Retouching App"
 }
+
 
 
 const SignUp = () => {

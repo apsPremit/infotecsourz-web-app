@@ -11,7 +11,10 @@ import { nextOption } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/dist/server/api-utils';
 import { baseUrl } from '@/utils/functions/baseUrl';
 
-
+export const metadata = {
+    title: "Dashboard | Infotecsourz",
+    description: "Photo Retouching App"
+}
 
 const page = async () => {
     const session = await getServerSession(nextOption)

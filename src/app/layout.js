@@ -11,8 +11,8 @@ const poppins = Poppins({
 })
 export const metadata = {
 
-  title: 'InfotecSourz',
-  description: 'Virtual photo retouching app',
+  title: 'Virtual Photo Retouching Service for Business - Infotecsourz',
+  description: 'Virtual photo retouching service partner that you get from home. Our best product retouching &amp; model photo editing services are pixel perfect',
 
 }
 

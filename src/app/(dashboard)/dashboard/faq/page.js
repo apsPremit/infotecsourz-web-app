@@ -2,7 +2,10 @@ import FAQS from '@/components/dashboard/faq/FAQS/FAQS'
 import React from 'react';
 import faq from '../../../../../public/images/others/faq.png'
 import Image from 'next/image';
-
+export const metadata = {
+    title: "FAQ | Infotecsourz",
+    description: "Photo Retouching App"
+}
 const page = () => {
     return (
         <div className='lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-5 rounded p-5 mt-5 bg-white'>
