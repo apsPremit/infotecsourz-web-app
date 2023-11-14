@@ -34,7 +34,7 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
 
 
     const { userData } = UserAuth()
-
+    console.log('user', userData)
 
 
     const confirmOrder = async () => {
@@ -49,6 +49,7 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
             orderName: orderName,
             name: userData?.name,
             email: userData?.email,
+            country: userData.country,
             photoType,
             package: selectedPackage?.package_name || userData?.subscribedPackage,
             photoQuantity: parseInt(totalPhotos),
@@ -61,7 +62,6 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
             fileUrl,
             photoRequirements,
             returnTime,
-            address: userData.address,
             hasInstructions: hasInstructions,
             paymentMethod
         }
