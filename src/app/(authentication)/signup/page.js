@@ -1,8 +1,7 @@
 import SignUpForm from '@/components/authentication/SignUpForm/SignupForm';
 import styles from '@/app/styles.module.css'
 import Image from 'next/image';
-import loginLogo from '../../../../public/images/others/cake logo.png'
-import logoWhite from '../../../../public/images/others/logoWhite.png'
+import infotecsourzLogo from '../../../../public/images/others/infotecsorzLogo.png'
 
 export const metadata = {
     title: "Signup | Infotecsourz",
@@ -22,7 +21,7 @@ const SignUp = () => {
 
 
                     <Image
-                        src={logoWhite}
+                        src={infotecsourzLogo}
                         height={600}
                         width={600}
                         fil="true"

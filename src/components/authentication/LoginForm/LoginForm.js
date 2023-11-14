@@ -17,7 +17,7 @@ const LoginForm = () => {
     const [isRemember, setRemember] = useState(false)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
-    const { register, handleSubmit, control, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset, control, formState: { errors } } = useForm({
         defaultValues: {
             full_name: '',
             email: '',
@@ -43,11 +43,12 @@ const LoginForm = () => {
             })
             const data = await res.json()
             if (data?.error) {
+                reset()
                 setLoading(false)
                 return setError(data?.error)
             }
 
-
+            reset()
             await signIn('credentials', {
                 email,
                 password,

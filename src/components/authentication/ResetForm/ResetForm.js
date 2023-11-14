@@ -35,6 +35,7 @@ const ResetForm = () => {
                 return setError(data?.error)
             }
             setLoading(false)
+            reset()
             toast.success(data?.message)
 
         } catch (error) {

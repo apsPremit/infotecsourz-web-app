@@ -1,8 +1,6 @@
 
 import LoginForm from '@/components/authentication/LoginForm/LoginForm';
-import logo from '@/assets/images/logo.png';
-import loginLogo from '../../../../public/images/others/cake logo.png'
-import logoWhite from '../../../../public/images/others/logoWhite.png'
+import infotecsourzLogo from '../../../../public/images/others/infotecsorzLogo.png'
 import React from 'react';
 import styles from '@/app/styles.module.css'
 import Image from 'next/image';
@@ -19,7 +17,7 @@ const Login = () => {
                     <div className=' fill rounded-2xl bg-opacity-80  p-20 mx-20 relative'>
 
                         <Image
-                            src={logoWhite}
+                            src={infotecsourzLogo}
                             height={600}
                             width={600}
                             fil="true"
@@ -28,7 +26,7 @@ const Login = () => {
                             className=''
 
                         />
-                        <p className=' text-xl text-white mt-5 text-center '>Best photo retouching solution for business.</p>
+                        <p className=' text-xl text-white mt-5 text-center '>Virtual Photo Retouching Studio.</p>
                     </div>
                 </div>
 
