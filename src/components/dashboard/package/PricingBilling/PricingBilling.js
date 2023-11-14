@@ -66,7 +66,7 @@ const PricingBilling = () => {
             taxTotal,
             grandTotal,
             credit: photos,
-            address: userData?.address || 'unavailable',
+            country: userData?.country || '',
             paymentMethod,
         }
 
