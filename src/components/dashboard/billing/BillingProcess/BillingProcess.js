@@ -14,7 +14,7 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
     const router = useRouter()
     const [isAgree, setAgree] = useState(false)
     const [isProcessing, setProcessing] = useState(false)
-
+    const { userData } = UserAuth()
 
     const {
         uploadedImages,
@@ -33,12 +33,7 @@ const BillingProcess = ({ subTotal, perPhotoCost, grandTotal, taxTotal, remainin
     } = useContext(StateContext)
 
 
-    const { userData } = UserAuth()
-    console.log('user', userData)
-
-
     const confirmOrder = async () => {
-        console.log('method', paymentMethod)
         if (!paymentMethod) {
             return Swal.fire('please select payment method')
         }

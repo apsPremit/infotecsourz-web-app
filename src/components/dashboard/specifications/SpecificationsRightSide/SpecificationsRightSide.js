@@ -84,6 +84,7 @@ const SpecificationsRightSide = () => {
                 <label>
                     <span className='text-black text-sm mb-4 ml-1'>Detail Instruction</span>
                     <textarea
+                        defaultValue={productDetailsDescription}
                         name="" id=""
                         onBlur={(e) => setProductDetailsDescription(e.target.value)}
                         rows={5}

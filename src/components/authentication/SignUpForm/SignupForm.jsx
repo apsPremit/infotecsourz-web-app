@@ -1,20 +1,14 @@
 "use client"
 import Image from 'next/image';
 import Link from 'next/link';
-import SocialLogin from '@/components/authentication/SocialLogin/SocialLogin';
 import logo from '@/assets/images/logo.png'
 import { UserAuth } from '@/context/AuthProvider';
 import { Controller, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import createJWT from '@/utils/functions/createJWT';
-import Cookies from 'js-cookie';
-import saveUser from '@/utils/functions/saveUser';
 import toast, { Toaster } from 'react-hot-toast';
-import getUserData from '@/utils/functions/getUserData';
 import { ImSpinner2 } from 'react-icons/im';
 import { baseUrl } from '@/utils/functions/baseUrl';
-import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import './SignupForm.css'
 import { signIn } from 'next-auth/react';
@@ -26,8 +20,6 @@ const SignUpForm = () => {
     const search = useSearchParams()
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
-    const [phoneError, setPhoneError] = useState('')
     const [countries, setCountries] = useState([])
     const { register, handleSubmit, control, watch, formState: { errors } } = useForm({
         defaultValues: {
@@ -135,21 +127,6 @@ const SignUpForm = () => {
                 </div>
 
 
-                {/* <div className='mb-5'>
-                    <label className='block mb-1 text-sm' htmlFor="">Phone <span className='text-red-500'>*</span></label>
-                    <PhoneInput
-                        country={'us'}
-                        onChange={(value, countryData) => {
-                            setPhoneNumber(value)
-                        }}
-
-                        containerClass='w-full'
-                        inputClass='py-5'
-                    />
-                    {phoneError && <p className='text-xs mt-1 text-red-400' role="alert">Phone is required</p>}
-                </div> */}
-
-
                 {/* *******password********************* */}
                 <div className='mb-5'>
                     <label className='block mb-1 text-sm' htmlFor="password">Password<span className='text-red-500'>*</span></label>
@@ -251,7 +228,7 @@ const SignUpForm = () => {
             </form>
 
 
-            {/* <SocialLogin /> */}
+
 
             <p className='font-semibold text-center'>Already have an account? <Link href='/login' className='text-main'>Login</Link></p>
             <Toaster />

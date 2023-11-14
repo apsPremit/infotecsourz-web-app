@@ -1,5 +1,4 @@
 "use client"
-import { getPlan } from '@/utils/functions/getPlan';
 import React, { useContext } from 'react';
 import { packages } from '@/utils/json/packagePlan';
 import SinglePackage from '@/components/dashboard/package/SinglePackage/SinglePackage';

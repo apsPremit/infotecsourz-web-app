@@ -1,11 +1,5 @@
 "use client"
-import { UserAuth } from '@/context/AuthProvider';
-import { baseUrl } from '@/utils/functions/baseUrl';
-import getOrders from '@/utils/functions/getOrders';
-import axios from 'axios';
-// import getOrders from '@/utils/functions/getOrders';
-import React, { useEffect, useState } from 'react';
-import { RxDotFilled } from 'react-icons/rx';
+import React, { useState } from 'react';
 import OrderRow from '../OrderRow/OrderRow';
 import { ImSpinner2 } from "react-icons/im";
 

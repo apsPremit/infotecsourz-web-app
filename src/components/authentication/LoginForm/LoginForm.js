@@ -1,16 +1,11 @@
 "use client"
 import Image from 'next/image';
 import Link from 'next/link';
-import SocialLogin from '@/components/authentication/SocialLogin/SocialLogin';
-import { UserAuth } from '@/context/AuthProvider';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import logo from '@/assets/images/logo.png';
 import { useRouter, useSearchParams } from 'next/navigation';
-import createJWT from '@/utils/functions/createJWT';
-import Cookies from 'js-cookie';
 import toast, { Toaster } from 'react-hot-toast';
-import getUserData from '@/utils/functions/getUserData';
 import { ImSpinner2 } from 'react-icons/im';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import { signIn } from 'next-auth/react'
@@ -150,10 +145,9 @@ const LoginForm = () => {
                     <input disabled={loading} className='bg-main hover:bg-[#5736ce] disabled:bg-opacity-50 py-3 px-3 text-center text-white font-bold w-full rounded-lg my-5 cursor-pointer' type="submit" value="Login" />
                 </div>
             </form>
-            {/* <div className="py-6 flex items-center text-gray-400  uppercase before:flex-[1_1_0%] before:border-t before:mr-6 after:flex-[1_1_0%] after:border-t after:ml-6 dark:text-gray-500 before:border-shadow after:border-shadow">Or</div> */}
 
-            {/* ************** social login ********** */}
-            {/* <SocialLogin /> */}
+
+
 
             <p className='font-semibold text-center'>Don’t have an account? <Link href='/signup' className='text-main'>Signup</Link></p>
             <Toaster />

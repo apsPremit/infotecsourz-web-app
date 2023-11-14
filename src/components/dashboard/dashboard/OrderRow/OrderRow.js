@@ -1,6 +1,5 @@
 "use client"
 import { baseUrl } from '@/utils/functions/baseUrl';
-import downloadImage from '@/utils/functions/downloadImage';
 import axios from 'axios';
 import moment from 'moment';
 import { redirect } from 'next/dist/server/api-utils';

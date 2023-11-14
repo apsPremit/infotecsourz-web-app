@@ -1,20 +1,21 @@
 "use client"
 import { UserAuth } from "@/context/AuthProvider";
 import { baseUrl } from "@/utils/functions/baseUrl";
-import generateOrderId from "@/utils/functions/generateOrderId";
-import imageUploader from "@/utils/functions/imageUploader";
 import axios from "axios";
 
 import { useEffect, useState } from "react";
 import { BsUpload } from "react-icons/bs";
 
 
-const UploadField = ({ uploadedImages, setUploadedImages, orderId, setOrderId, setUploadProgress, selectedImages, setSelectedImages, setUploading, totalFileSize, setTotalFileSize }) => {
+const UploadField = ({ uploadedImages, setUploadedImages, orderId, setOrderId, setUploadProgress, setSelectedImages, setUploading, setTotalFileSize }) => {
 
     useEffect(() => {
-        const randomNum = Math.floor(Math.random() * 100000000);
-        const randomString = String(randomNum).padStart(8, '0');
-        setOrderId(randomString)
+        if (orderId === '') {
+            const randomNum = Math.floor(Math.random() * 100000000);
+            const randomString = String(randomNum).padStart(8, '0');
+            setOrderId(randomString)
+        }
+
     }, [])
 
     const { user } = UserAuth()

@@ -1,5 +1,4 @@
 import { StateContext } from '@/context/StateProvider';
-import generateOrderId from '@/utils/functions/generateOrderId';
 import React, { useContext, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 

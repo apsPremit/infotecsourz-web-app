@@ -19,7 +19,7 @@ const DashboardHeader = () => {
 
             <div className='flex items-center gap-2 flex-nowrap'>
                 <button onClick={newOrderHandler} className='text-sm text-white bg-main px-3 py-2 rounded-lg'>Create new Order</button>
-                <Notification />
+                {/* <Notification /> */}
             </div>
         </div>
     );
