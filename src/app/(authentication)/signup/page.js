@@ -18,7 +18,7 @@ const SignUp = () => {
 
         <div className='lg:grid grid-cols-2 min-h-screen  mx-auto '>
             <div className={`hidden lg:flex justify-center items-center ${styles.bg_image}`}>
-                <div className=' fill rounded-2xl bg-opacity-80  p-20 mx-20 relative '>
+                <div className=' fill rounded-2xl bg-opacity-80  p-20 mx-20  fixed top-64'>
 
 
                     <Image
@@ -27,7 +27,7 @@ const SignUp = () => {
                         width={600}
                         fil="true"
                         alt="brand logo"
-                        style={{ maxWidth: '140%', marginLeft: '-70px' }}
+                        style={{ maxWidth: '140%', marginLeft: '-70px', marginTop: '-200px' }}
 
                     />
                     <p className=' text-xl mt-5 text-center text-white '>Virtual Photo Retouching Studio</p>

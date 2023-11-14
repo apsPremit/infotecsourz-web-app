@@ -24,8 +24,8 @@ const Login = () => {
                             width={600}
                             fil="true"
                             alt="brand logo"
-                            style={{ maxWidth: '140%', marginLeft: '-70px', marginTop: '-200px' }}
-                            className='absolute top-20'
+                            style={{ maxWidth: '140%', marginLeft: '-70px' }}
+                            className=''
 
                         />
                         <p className=' text-xl text-white mt-5 text-center '>Best photo retouching solution for business.</p>
