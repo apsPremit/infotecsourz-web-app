@@ -1,5 +1,4 @@
 import React from "react";
-// import { packages } from "@/utils/json/packagePlan";
 import SinglePackage from "@/components/dashboard/package/SinglePackage/SinglePackage";
 import { baseUrl } from "@/utils/functions/baseUrl";
 

@@ -3,7 +3,7 @@ import { StateContext } from "@/context/StateProvider";
 import React, { useContext } from "react";
 import { IoMdCheckmark } from "react-icons/io";
 import PackageCheckbox from "./PackageCheckbox/PackageCheckbox";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { UserAuth } from "@/context/AuthProvider";
 
@@ -19,20 +19,18 @@ const SinglePackage = ({ plan }) => {
     }
   };
 
-  const { id, package_name, price, photos, spec, facilities } = plan || {};
+  const { _id, package_name, price, photos, spec, facilities, highLight } =
+    plan || {};
   return (
-    <div
-      className={`border-shadow rounded   p-5 shadow relative ${
-        pathName === "/dashboard/package" &&
-        selectedPackage?.package_name === package_name
-          ? "bg-blue-500 text-white"
-          : "bg-white"
-      }`}
-    >
+    <div className="border-shadow rounded   p-5 shadow relative">
       <label className="cursor-pointer " htmlFor={package_name}>
         <div className="min-h-[52px]">
           <h1 className="font-bold text-2xl capitalize">{package_name}</h1>
-          {price && <h3 className="font-bold"> ${price}</h3>}
+          {highLight && (
+            <h3 className="font-semibold mt-3 capitalize">{highLight}</h3>
+          )}
+          {package_name === "free trial" ||
+            (price && <h3 className="font-bold mt-3 text-lg">${price}</h3>)}
         </div>
 
         <hr className="my-3" />
@@ -49,15 +47,7 @@ const SinglePackage = ({ plan }) => {
           {photos && (
             <p className="gap-x-2 flex items-center my-2">
               <span className="text-sm">
-                {" "}
-                <IoMdCheckmark
-                  color={
-                    pathName === "/dashboard/package" &&
-                    selectedPackage?.package_name === package_name
-                      ? "white"
-                      : "green"
-                  }
-                />
+                <IoMdCheckmark color={"green"} />
               </span>
               <span>{photos} Photos </span>
             </p>
@@ -67,24 +57,14 @@ const SinglePackage = ({ plan }) => {
             facilities.map((facility, index) => (
               <p key={index} className="gap-x-2 flex items-center my-2">
                 <span className="text-sm">
-                  {" "}
-                  <IoMdCheckmark
-                    color={
-                      pathName === "/dashboard/package" &&
-                      selectedPackage?.package_name === package_name
-                        ? "white"
-                        : "green"
-                    }
-                  />
+                  <IoMdCheckmark color={"green"} />
                 </span>
                 <span>{facility}</span>
               </p>
             ))}
         </div>
         <div className="">
-          {(pathName === "/dashboard/pricing" &&
-            package_name == "free trial") ||
-          package_name == "pay as go" ? (
+          {package_name == "free trial" || package_name == "pay as go" ? (
             <Link
               href="/dashboard/new_order"
               className={`${pathName === "/dashboard/package" && "hidden"}`}
@@ -101,10 +81,7 @@ const SinglePackage = ({ plan }) => {
               </button>
             </Link>
           ) : package_name === "enterprise" ? (
-            <Link
-              href="/dashboard/support"
-              className={`${pathName === "/dashboard/package" && "hidden"}`}
-            >
+            <Link href="/dashboard/support">
               <button className="py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full  ">
                 Contact Us
               </button>
@@ -112,7 +89,6 @@ const SinglePackage = ({ plan }) => {
           ) : (
             <Link
               href={`/dashboard/pricing/billing_info?package=${package_name}`}
-              className={`${pathName === "/dashboard/package" && "hidden"}`}
             >
               <button className="py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full  ">
                 Buy Now
@@ -120,15 +96,6 @@ const SinglePackage = ({ plan }) => {
             </Link>
           )}
         </div>
-
-        {pathName === "/dashboard/package" && (
-          <PackageCheckbox
-            isChecked={
-              (package_name === package_name) === selectedPackage?.package_name
-            }
-            plan={plan}
-          />
-        )}
       </label>
     </div>
   );
