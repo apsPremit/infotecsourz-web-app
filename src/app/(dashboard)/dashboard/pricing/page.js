@@ -6,10 +6,10 @@ export const metadata = {
   title: "Billing Info | Infotecsourz",
   description: "Photo Retouching App",
 };
-const Pricing = async () => {
+const Pricing = async (props) => {
   const getPackage = async () => {
     try {
-      const res = await fetch(`${baseUrl}/package`);
+      const res = await fetch(`${baseUrl}/package`, { cache: "no-store" });
       const data = await res.json();
       return data?.data;
     } catch (error) {

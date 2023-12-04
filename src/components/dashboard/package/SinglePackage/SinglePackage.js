@@ -2,7 +2,6 @@
 import { StateContext } from "@/context/StateProvider";
 import React, { useContext } from "react";
 import { IoMdCheckmark } from "react-icons/io";
-import PackageCheckbox from "./PackageCheckbox/PackageCheckbox";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { UserAuth } from "@/context/AuthProvider";
@@ -19,8 +18,16 @@ const SinglePackage = ({ plan }) => {
     }
   };
 
-  const { _id, package_name, price, photos, spec, facilities, highLight } =
-    plan || {};
+  const {
+    packageId,
+    package_name,
+    price,
+    photos,
+    spec,
+    facilities,
+    highLight,
+  } = plan || {};
+
   return (
     <div className="border-shadow rounded   p-5 shadow relative">
       <label className="cursor-pointer " htmlFor={package_name}>
@@ -87,9 +94,7 @@ const SinglePackage = ({ plan }) => {
               </button>
             </Link>
           ) : (
-            <Link
-              href={`/dashboard/pricing/billing_info?package=${package_name}`}
-            >
+            <Link href={`/dashboard/pricing/billing_info?package=${packageId}`}>
               <button className="py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full  ">
                 Buy Now
               </button>
