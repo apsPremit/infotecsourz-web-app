@@ -25,7 +25,6 @@ const Billing = async (props) => {
 
   return (
     <div className="min-h-screen">
-      <h1>Billing</h1>
       <PricingBilling pack={pack} />
     </div>
   );
