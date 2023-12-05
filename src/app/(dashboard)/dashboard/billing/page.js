@@ -1,5 +1,3 @@
-import BillingLeftSide from "@/components/dashboard/billing/BillingLeftSide/BillingLeftSide";
-import BillingProcess from "@/components/dashboard/billing/BillingProcess/BillingProcess";
 import BillingRightSide from "@/components/dashboard/billing/BillingRightSide/BillingRightSide";
 import Link from "next/link";
 import React from "react";
@@ -12,10 +10,8 @@ export const metadata = {
 
 const Billing = () => {
   return (
-    <div className="lg:px-10 grid grid-cols-1 lg:grid-cols-2 gap-x-5">
-      <div>
-        <BillingLeftSide />
-      </div>
+    <div className="lg:px-10 w-full md:w-3/4 lg:w-1/2 mx-auto">
+      <div>{/* <BillingLeftSide /> */}</div>
       <div className="">
         <BillingRightSide />
       </div>

@@ -9,7 +9,7 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 
 const PricingBilling = ({ pack }) => {
-  const { taxRate } = useContext(StateContext);
+  const { taxRate, setOrderDetails } = useContext(StateContext);
   const [isAgree, setAgree] = useState(false);
   const [isProcessing, setProcessing] = useState(false);
   const { userData } = UserAuth();
@@ -50,32 +50,7 @@ const PricingBilling = ({ pack }) => {
   };
 
   const confirmOrder = async () => {
-    // router.push({ pathname: "/dashboard/pricing/billing/payment" });
-    // router.push("/dashboard/pricing/billing/payment", {
-    //   query: {
-    //     search: "shoes",
-    //     category: "men",
-    //   },
-    // });
-    // setProcessing(true);
-    // try {
-    //   const res = await fetch(`${baseUrl}/subscription`, {
-    //     method: "POST",
-    //     headers: {
-    //       "content-type": "application/json",
-    //     },
-    //     body: JSON.stringify(orderDetails),
-    //   });
-    //   const data = await res.json();
-    //   if (data?.success) {
-    //     setProcessing(false);
-    //     router.push(`/order_success?orderId=${orderDetails?.orderId}`);
-    //   }
-    //   setProcessing(false);
-    // } catch (error) {
-    //   setProcessing(false);
-    //   toast.error(error?.message || "internal server error");
-    // }
+    setOrderDetails(orderDetails);
   };
 
   return (
@@ -112,14 +87,7 @@ const PricingBilling = ({ pack }) => {
 
         {/* billing btn and process  */}
         <div>
-          <Link
-            href={{
-              pathname: "/dashboard/pricing/billing/payment",
-              query: {
-                ...orderDetails,
-              },
-            }}
-          >
+          <Link href="/dashboard/pricing/billing/payment">
             <button
               disabled={!isAgree || isProcessing}
               onClick={confirmOrder}

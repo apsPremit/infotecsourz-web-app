@@ -2,7 +2,7 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const initialOptions = {
-  clientId: process.env.NEXT_PUBLIC_PAYPAL_SB_API_KEY,
+  clientId: process.env.NEXT_PUBLIC_PAYPAL_API_KEY,
   currency: "USD",
   intent: "capture",
 };
