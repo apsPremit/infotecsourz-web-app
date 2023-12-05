@@ -1,8 +1,7 @@
 "use client";
-import Modal from "@/components/shared/Modal/Modal";
 import { UserAuth } from "@/context/AuthProvider";
-import StateProvider, { StateContext } from "@/context/StateProvider";
-import saveOrder from "@/utils/functions/saveOrder";
+import { StateContext } from "@/context/StateProvider";
+import { baseUrl } from "@/utils/functions/baseUrl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
@@ -20,6 +19,7 @@ const BillingProcess = ({
   const router = useRouter();
   const [isAgree, setAgree] = useState(false);
   const { userData } = UserAuth();
+  const [processing, setProcessing] = useState(false);
 
   const {
     uploadedImages,
@@ -37,66 +37,114 @@ const BillingProcess = ({
     setOrderDetails,
   } = useContext(StateContext);
 
+  const orderDetails = {
+    orderId: orderId,
+    orderName: orderName,
+    name: userData?.name,
+    email: userData?.email,
+    country: userData.country,
+    photoType,
+    package: selectedPackage?.package_name || userData?.subscribedPackage,
+    photoQuantity: parseInt(totalPhotos),
+    perPhotoCost,
+    subTotal,
+    taxRate,
+    taxTotal,
+    grandTotal,
+    productDetailsDescription,
+    fileUrl,
+    photoRequirements,
+    returnTime,
+    hasInstructions: hasInstructions,
+    paymentMethod,
+  };
+
+  const placeOrder = async () => {
+    setProcessing(true);
+    const orderData = { ...orderDetails, paymentStatus: "paid" };
+    try {
+      const res = await fetch(`${baseUrl}/order`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (res.ok) {
+        setProcessing(false);
+        router.push(`/order_success?orderId=${orderData?.orderId}`);
+      }
+    } catch (error) {
+      setProcessing(false);
+      Swal.fire({
+        title: "something went wrong ",
+        icon: "error",
+      });
+    }
+  };
+
+  const calculateExtraPrice = () => {
+    if (orderDetails?.package === "free trial") {
+      const extra = grandTotal - userData?.remainingBalance;
+      return extra;
+    } else {
+      const extraPhoto =
+        orderDetails?.photoQuantity - userData?.remainingCredit;
+      const extraPrice = extraPhoto * perPhotoCost + orderDetails?.taxTotal;
+      return extraPrice;
+    }
+  };
+
+  const showModal = (extraPrice) => {
+    Swal.fire({
+      icon: "error",
+      title: "You have not require credit",
+      html: `<p>You don't have enough credit. You can update your package if you want or you can complete the order by paying <strong className="text-green-500 font-bold">$${extraPrice?.toFixed(
+        2
+      )}</strong>.</p>`,
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Pay Now",
+      denyButtonText: `Upgrade Package`,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setOrderDetails(orderDetails);
+        router.push(`/dashboard/billing/payment?ex=${extraPrice}`);
+      } else if (result.isDenied) {
+        router.push("/dashboard/pricing");
+      }
+    });
+  };
   const confirmOrder = async () => {
-    const orderDetails = {
-      orderId: orderId,
-      orderName: orderName,
-      name: userData?.name,
-      email: userData?.email,
-      country: userData.country,
-      photoType,
-      package: selectedPackage?.package_name || userData?.subscribedPackage,
-      photoQuantity: parseInt(totalPhotos),
-      perPhotoCost,
-      subTotal,
-      taxRate,
-      taxTotal,
-      grandTotal,
-      productDetailsDescription,
-      fileUrl,
-      photoRequirements,
-      returnTime,
-      hasInstructions: hasInstructions,
-      paymentMethod,
-    };
-    setOrderDetails(orderDetails);
-    router.push("/dashboard/billing/payment");
-    // try {
-    //     const result = await saveOrder(orderDetails)
-
-    //     if (result?.error) {
-    //         Swal.fire({
-    //             icon: 'warning',
-    //             html: `<p>${error?.response?.data?.error || 'order not acceptable'}</p>`
-    //         })
-    //     }
-
-    //     Swal.fire({
-    //         icon: 'success',
-    //         text: "Order success"
-    //     })
-    //     setProcessing(false)
-    //     router.push(`/order_success?orderId=${orderId}`)
-    //     // router.reload()
-
-    // } catch (error) {
-    //     console.log(error)
-    //     Swal.fire({
-    //         icon: 'warning',
-    //         html: `<p>${error?.response?.data?.error || 'order not acceptable'}</p>`
-    //     })
-    //     setProcessing(false)
-    // }
+    const pack = orderDetails.package;
+    if (pack === "free trial") {
+      if (grandTotal > userData?.remainingBalance) {
+        const extraPrice = calculateExtraPrice();
+        showModal(extraPrice);
+      } else {
+        await placeOrder();
+      }
+    } else if (pack === "pay as go") {
+      await placeOrder();
+    } else {
+      if (orderDetails?.photoQuantity > userData?.remainingCredit) {
+        const extraPrice = calculateExtraPrice();
+        showModal(extraPrice);
+      } else {
+        await placeOrder();
+      }
+    }
   };
 
   return (
     <div>
       <button
-        disabled={!isAgree}
+        disabled={!isAgree || processing}
         onClick={confirmOrder}
         className="w-full text-center text-white disabled:bg-blue-300 disabled:cursor-not-allowed bg-blue-500 rounded-lg py-3 text-lg hover:bg-blue-400 cursor-pointer"
       >
-        ConfirmOrder
+        {processing ? "Processing..." : " ConfirmOrder"}
       </button>
 
       {/* terms and conditions */}

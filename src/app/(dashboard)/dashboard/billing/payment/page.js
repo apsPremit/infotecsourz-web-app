@@ -4,7 +4,7 @@ import React from "react";
 const OrderPayment = () => {
   return (
     <div>
-      <Payment path={"subscription"} />
+      <Payment path={"order"} />
     </div>
   );
 };

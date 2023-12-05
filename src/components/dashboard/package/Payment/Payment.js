@@ -2,12 +2,11 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useRouter, useSearchParams } from "next/navigation";
 import { baseUrl } from "@/utils/functions/baseUrl";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { StateContext } from "@/context/StateProvider";
 
 const Payment = ({ path }) => {
   const { orderDetails } = useContext(StateContext);
-  console.log("order details", orderDetails);
   const router = useRouter();
 
   const createOrder = async (data) => {
@@ -56,12 +55,10 @@ const Payment = ({ path }) => {
               },
               body: JSON.stringify(oderData),
             });
-            console.log("res", res.json());
             if (res.ok) {
               router.push(`/order_success?orderId=${orderDetails?.orderId}`);
             }
           } catch (error) {
-            console.log("redfdf", error);
             Swal.fire({
               title: "something went wrong ",
               icon: "error",
