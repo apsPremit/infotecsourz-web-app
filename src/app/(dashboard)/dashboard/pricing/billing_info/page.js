@@ -7,9 +7,7 @@ const PricingBillingInfo = async (props) => {
 
   const getPackage = async () => {
     try {
-      const res = await fetch(`${baseUrl}/package/${packageId}`, {
-        cache: "no-store",
-      });
+      const res = await fetch(`${baseUrl}/package/${packageId}`);
       const result = await res.json();
       return result?.data;
     } catch (error) {

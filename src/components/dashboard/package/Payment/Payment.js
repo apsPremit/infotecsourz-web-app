@@ -42,6 +42,7 @@ const Payment = ({ path }) => {
       .then(async (response) => {
         if (response.ok) {
           const paymentResponse = await response.json();
+          console.log("payment response", paymentResponse);
           const oderData = {
             ...orderDetails,
             paymentStatus: "paid",

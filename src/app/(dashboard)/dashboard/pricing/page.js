@@ -9,7 +9,7 @@ export const metadata = {
 const Pricing = async (props) => {
   const getPackage = async () => {
     try {
-      const res = await fetch(`${baseUrl}/package`, { cache: "no-store" });
+      const res = await fetch(`${baseUrl}/package`);
       const data = await res.json();
       return data?.data;
     } catch (error) {

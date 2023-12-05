@@ -40,7 +40,7 @@ const PackageBillingInfo = ({ pack }) => {
 
       {/* btn proceed  */}
       <div className="flex justify-center mt-5">
-        <Link href={`/dashboard/pricing/billing?package=${pack.packageId}`}>
+        <Link href={`/dashboard/pricing/billing?package=${pack?.packageId}`}>
           <button className="text-white px-3.5 py-2 bg-main hover:bg-mainHover rounded flex disabled:cursor-not-allowed disabled:bg-mainHover">
             Proceed
           </button>
