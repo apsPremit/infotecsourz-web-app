@@ -4,10 +4,24 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { baseUrl } from "@/utils/functions/baseUrl";
 import { useContext, useState } from "react";
 import { StateContext } from "@/context/StateProvider";
+import { ImSpinner2 } from "react-icons/im";
 
 const Payment = ({ path }) => {
   const { orderDetails } = useContext(StateContext);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const formatBillingDetails = (obj) => {
+    const fullName = obj?.purchase_units?.[0]?.shipping?.name?.full_name || "";
+    const addressArray = [];
+    const addressObj = obj?.purchase_units?.[0]?.shipping?.address;
+    for (const key in addressObj) {
+      const value = addressObj[key];
+      addressArray?.push(value);
+    }
+    const billingAddress = addressArray?.toString() || "";
+    return { fullName, billingAddress };
+  };
 
   const createOrder = async (data) => {
     return fetch(`${baseUrl}/payment/create-payment-order`, {
@@ -42,26 +56,34 @@ const Payment = ({ path }) => {
       .then(async (response) => {
         if (response.ok) {
           const paymentResponse = await response.json();
-          console.log("payment response", paymentResponse);
-          const oderData = {
+          const details = formatBillingDetails(paymentResponse);
+          const paymentDetails = {
+            transactionId: paymentResponse?.id || "",
+            fullName: details?.fullName,
+            billingAddress: details?.billingAddress,
+          };
+          const orderData = {
             ...orderDetails,
             paymentStatus: "paid",
             transactionId: paymentResponse.id,
           };
           try {
+            setLoading(true);
             const res = await fetch(`${baseUrl}/${path}`, {
               method: "POST",
               headers: {
                 "Content-type": "application/json",
               },
-              body: JSON.stringify(oderData),
+              body: JSON.stringify({ orderData, paymentDetails }),
             });
             if (res.ok) {
+              setLoading(false);
               router.push(`/order_success?orderId=${orderDetails?.orderId}`);
             }
           } catch (error) {
+            setLoading(false);
             Swal.fire({
-              title: "something went wrong ",
+              title: "something went wrong please contact to support",
               icon: "error",
             });
           }
@@ -80,6 +102,11 @@ const Payment = ({ path }) => {
 
   return (
     <div className="h-screen  mt-10 lg:mt-20 ">
+      {loading && (
+        <div className="flex items-center justify-center text-xl text-main mb-5">
+          <ImSpinner2 size={35} className="animate-spin" />
+        </div>
+      )}
       <div className="border w-full md:w-2/5  mx-auto bg-white p-10 rounded shadow-lg">
         <PayPalButtons
           style={{
