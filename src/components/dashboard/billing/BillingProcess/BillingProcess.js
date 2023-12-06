@@ -70,7 +70,7 @@ const BillingProcess = ({
         },
         body: JSON.stringify({
           orderData,
-          paymentDetails: userData?.paymentDetails,
+          paymentDetails: userData?.paymentDetails || {},
         }),
       });
 
@@ -79,6 +79,7 @@ const BillingProcess = ({
         router.push(`/order_success?orderId=${orderData?.orderId}`);
       }
     } catch (error) {
+      console.log("error", error);
       setProcessing(false);
       Swal.fire({
         title: "something went wrong ",
