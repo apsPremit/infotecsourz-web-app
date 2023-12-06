@@ -5,6 +5,7 @@ import { baseUrl } from "@/utils/functions/baseUrl";
 import { useContext, useState } from "react";
 import { StateContext } from "@/context/StateProvider";
 import { ImSpinner2 } from "react-icons/im";
+import Swal from "sweetalert2";
 
 const Payment = ({ path }) => {
   const { orderDetails } = useContext(StateContext);
@@ -81,6 +82,7 @@ const Payment = ({ path }) => {
               router.push(`/order_success?orderId=${orderDetails?.orderId}`);
             }
           } catch (error) {
+            console.log(error);
             setLoading(false);
             Swal.fire({
               title: "something went wrong please contact to support",
@@ -93,6 +95,7 @@ const Payment = ({ path }) => {
   };
 
   const handleError = (err) => {
+    console.log(err);
     Swal.fire({
       title: "something went wrong on payment process",
       text: `${err?.message || ""}`,
@@ -107,7 +110,11 @@ const Payment = ({ path }) => {
           <ImSpinner2 size={35} className="animate-spin" />
         </div>
       )}
-      <div className="border w-full md:w-2/5  mx-auto bg-white p-10 rounded shadow-lg">
+      <div
+        className={`border w-full md:w-2/5  mx-auto bg-white p-10 rounded shadow-lg ${
+          loading ? "hidden" : ""
+        }`}
+      >
         <PayPalButtons
           style={{
             label: "checkout",

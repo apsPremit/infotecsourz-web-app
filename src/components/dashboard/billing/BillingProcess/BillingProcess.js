@@ -68,7 +68,10 @@ const BillingProcess = ({
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify(orderData),
+        body: JSON.stringify({
+          orderData,
+          paymentDetails: userData?.paymentDetails,
+        }),
       });
 
       if (res.ok) {
