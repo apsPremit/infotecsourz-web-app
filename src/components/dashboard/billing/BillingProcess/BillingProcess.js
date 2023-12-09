@@ -74,10 +74,12 @@ const BillingProcess = ({
         }),
       });
 
-      if (res.ok) {
+      if (!res.ok) {
         setProcessing(false);
-        router.push(`/order_success?orderId=${orderData?.orderId}`);
+        throw new Error("something went wrong");
       }
+      setProcessing(false);
+      router.push(`/order_success?orderId=${orderData?.orderId}`);
     } catch (error) {
       console.log("error", error);
       setProcessing(false);
@@ -90,21 +92,25 @@ const BillingProcess = ({
 
   const calculateExtraPrice = () => {
     if (orderDetails?.package === "free trial") {
-      const extra = grandTotal - userData?.remainingBalance;
-      return extra;
+      const extraSubtotal = grandTotal - userData?.remainingBalance;
+      const extraTax = (extraSubtotal * taxRate) / 100;
+      const extraGrandTotal = extraSubtotal + extraTax;
+      return { extraSubtotal, extraSubtotal, extraGrandTotal };
     } else {
       const extraPhoto =
         orderDetails?.photoQuantity - userData?.remainingCredit;
-      const extraPrice = extraPhoto * perPhotoCost + orderDetails?.taxTotal;
-      return extraPrice;
+      const extraSubtotal = extraPhoto * perPhotoCost;
+      const extraTax = (extraSubtotal * taxRate) / 100;
+      const extraGrandTotal = extraSubtotal + extraTax;
+      return { extraSubtotal, extraTax, extraGrandTotal };
     }
   };
 
-  const showModal = (extraPrice) => {
+  const showModal = ({ extraSubtotal, extraTax, extraGrandTotal }) => {
     Swal.fire({
       icon: "error",
       title: "You have not require credit",
-      html: `<p>You don't have enough credit. You can update your package if you want or you can complete the order by paying <strong className="text-green-500 font-bold">$${extraPrice?.toFixed(
+      html: `<p>You don't have enough credit. You can update your package if you want or you can complete the order by paying <strong className="text-green-500 font-bold">$${extraGrandTotal?.toFixed(
         2
       )}</strong>.</p>`,
       showDenyButton: true,
@@ -113,8 +119,15 @@ const BillingProcess = ({
       denyButtonText: `Upgrade Package`,
     }).then(async (result) => {
       if (result.isConfirmed) {
-        setOrderDetails(orderDetails);
-        router.push(`/dashboard/billing/payment?ex=${extraPrice}`);
+        const orderData = {
+          ...orderDetails,
+          taxTotal: orderDetails?.taxTotal + extraTax,
+          subTotal: orderDetails?.subTotal + extraSubtotal,
+          grandTotal: orderDetails?.grandTotal + extraGrandTotal,
+        };
+
+        setOrderDetails(orderData);
+        router.push(`/dashboard/billing/payment?p=${extraGrandTotal}`);
       } else if (result.isDenied) {
         router.push("/dashboard/pricing");
       }
@@ -130,11 +143,14 @@ const BillingProcess = ({
         await placeOrder();
       }
     } else if (pack === "pay as go") {
-      await placeOrder();
+      setOrderDetails(orderDetails);
+      return router.push(
+        `/dashboard/billing/payment?p=${orderDetails?.grandTotal}`
+      );
     } else {
       if (orderDetails?.photoQuantity > userData?.remainingCredit) {
-        const extraPrice = calculateExtraPrice();
-        showModal(extraPrice);
+        const extraPrices = calculateExtraPrice();
+        showModal(extraPrices);
       } else {
         await placeOrder();
       }

@@ -7,7 +7,7 @@ import { StateContext } from "@/context/StateProvider";
 import { ImSpinner2 } from "react-icons/im";
 import Swal from "sweetalert2";
 
-const Payment = ({ path }) => {
+const Payment = ({ path, price }) => {
   const { orderDetails } = useContext(StateContext);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -35,7 +35,7 @@ const Payment = ({ path }) => {
       body: JSON.stringify({
         cart: {
           description: orderDetails?.orderId,
-          cost: orderDetails?.grandTotal?.toFixed(2),
+          cost: price?.toFixed(2),
         },
       }),
     })
@@ -63,11 +63,13 @@ const Payment = ({ path }) => {
             fullName: details?.fullName,
             billingAddress: details?.billingAddress,
           };
+          console.log("payment details", paymentDetails);
           const orderData = {
             ...orderDetails,
             paymentStatus: "paid",
             transactionId: paymentResponse.id,
           };
+          console.log("order data", orderData);
           try {
             setLoading(true);
             const res = await fetch(`${baseUrl}/${path}`, {
@@ -77,10 +79,12 @@ const Payment = ({ path }) => {
               },
               body: JSON.stringify({ orderData, paymentDetails }),
             });
-            if (res.ok) {
+            if (!res.ok) {
               setLoading(false);
-              router.push(`/order_success?orderId=${orderDetails?.orderId}`);
+              throw new Error("some thing went wrong");
             }
+            setLoading(false);
+            router.push(`/order_success?orderId=${orderDetails?.orderId}`);
           } catch (error) {
             console.log(error);
             setLoading(false);

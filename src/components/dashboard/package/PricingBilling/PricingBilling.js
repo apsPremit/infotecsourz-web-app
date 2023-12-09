@@ -87,7 +87,7 @@ const PricingBilling = ({ pack }) => {
 
         {/* billing btn and process  */}
         <div>
-          <Link href="/dashboard/pricing/billing/payment">
+          <Link href={`/dashboard/pricing/billing/payment?p=${price}`}>
             <button
               disabled={!isAgree || isProcessing}
               onClick={confirmOrder}

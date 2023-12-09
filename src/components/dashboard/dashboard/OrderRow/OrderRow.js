@@ -87,16 +87,18 @@ const OrderRow = ({ order }) => {
         ${grandTotal?.toFixed(2)}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm     ">
-        <span
-          className={`flex items-center p-1 bg-green-100 ${
-            status === "denied" ? "text-red-500 bg-red-100" : "text-green-500"
-          }`}
-        >
-          <span className=" text-xl ">
-            <RxDotFilled />
+        {status && (
+          <span
+            className={`flex items-center p-1 bg-green-100 ${
+              status === "denied" ? "text-red-500 bg-red-100" : "text-green-500"
+            }`}
+          >
+            <span className=" text-xl ">
+              <RxDotFilled />
+            </span>
+            <span className="">{status}</span>
           </span>
-          <span className="">{status}</span>
-        </span>
+        )}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm   text-black  ">
         {moment(createdAt).format("MMM Do YY, h:mm a")}
