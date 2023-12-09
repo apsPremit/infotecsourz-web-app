@@ -17,7 +17,6 @@ const Billing = async (props) => {
       return result?.data;
     } catch (error) {
       console.log(error);
-      throw new Error(error.message || "something went wrong");
     }
   };
 

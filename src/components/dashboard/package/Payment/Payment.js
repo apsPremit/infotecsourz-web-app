@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 
 const Payment = ({ path, price }) => {
   const { orderDetails } = useContext(StateContext);
+  console.log("order details", orderDetails);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
