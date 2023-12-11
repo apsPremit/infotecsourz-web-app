@@ -92,25 +92,36 @@ const BillingProcess = ({
 
   const calculateExtraPrice = () => {
     if (orderDetails?.package === "free trial") {
-      const extraSubtotal = grandTotal - userData?.remainingBalance;
-      const extraTax = (extraSubtotal * taxRate) / 100;
-      const extraGrandTotal = extraSubtotal + extraTax;
-      return { extraSubtotal, extraSubtotal, extraGrandTotal };
+      const extra = grandTotal - userData?.remainingBalance;
+      const extraTax = (extra * taxRate) / 100;
+      const extraCost = extra + extraTax;
+      return { extraCost, extraTax };
+      // const extraSubtotal = grandTotal - userData?.remainingBalance;
+      // const extraTax = (extraSubtotal * taxRate) / 100;
+      // const extraGrandTotal = extraSubtotal + extraTax;
+      // return { extraSubtotal, extraSubtotal, extraGrandTotal };
     } else {
       const extraPhoto =
         orderDetails?.photoQuantity - userData?.remainingCredit;
-      const extraSubtotal = extraPhoto * perPhotoCost;
-      const extraTax = (extraSubtotal * taxRate) / 100;
-      const extraGrandTotal = extraSubtotal + extraTax;
-      return { extraSubtotal, extraTax, extraGrandTotal };
+      const extra = extraPhoto * perPhotoCost;
+      console.log("extra photo", extraPhoto);
+      const extraTax = (extra * taxRate) / 100;
+      const extraCost = extra + extraTax;
+      return { extraCost, extraTax };
+      // const extraPhoto =
+      //   orderDetails?.photoQuantity - userData?.remainingCredit;
+      // const extraSubtotal = extraPhoto * perPhotoCost;
+      // const extraTax = (extraSubtotal * taxRate) / 100;
+      // const extraGrandTotal = extraSubtotal + extraTax;
+      // return { extraSubtotal, extraTax, extraGrandTotal };
     }
   };
 
-  const showModal = ({ extraSubtotal, extraTax, extraGrandTotal }) => {
+  const showModal = (extraCost = 0, extraTax = 0) => {
     Swal.fire({
       icon: "error",
       title: "You have not require credit",
-      html: `<p>You don't have enough credit. You can update your package if you want or you can complete the order by paying <strong className="text-green-500 font-bold">$${extraGrandTotal?.toFixed(
+      html: `<p>You don't have enough credit. You can update your package if you want or you can complete the order by paying <strong className="text-green-500 font-bold">$${extraCost?.toFixed(
         2
       )}</strong>.</p>`,
       showDenyButton: true,
@@ -119,15 +130,21 @@ const BillingProcess = ({
       denyButtonText: `Upgrade Package`,
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const orderData = {
-          ...orderDetails,
-          taxTotal: orderDetails?.taxTotal + extraTax,
-          subTotal: orderDetails?.subTotal + extraSubtotal,
-          grandTotal: orderDetails?.grandTotal + extraGrandTotal,
-        };
+        const orderData = { ...orderDetails };
+        if (orderData?.package === "free trial") {
+          if (userData?.remainingBalance < 1) {
+            orderData.grandTotal = 0;
+          }
+        } else {
+          if (userData?.remainingCredit < 1) {
+            orderData.grandTotal = 0;
+          }
+        }
+        orderData.grandTotal += extraCost;
 
         setOrderDetails(orderData);
-        router.push(`/dashboard/billing/payment?p=${extraGrandTotal}`);
+        console.log("order data", orderData);
+        router.push(`/dashboard/billing/payment?p=${extraCost}`);
       } else if (result.isDenied) {
         router.push("/dashboard/pricing");
       }
@@ -137,8 +154,8 @@ const BillingProcess = ({
     const pack = orderDetails.package;
     if (pack === "free trial") {
       if (grandTotal > userData?.remainingBalance) {
-        const extraPrice = calculateExtraPrice();
-        showModal(extraPrice);
+        const extraPrices = calculateExtraPrice();
+        showModal(extraPrices?.extraCost, extraPrices?.extraTax);
       } else {
         await placeOrder();
       }
@@ -150,7 +167,7 @@ const BillingProcess = ({
     } else {
       if (orderDetails?.photoQuantity > userData?.remainingCredit) {
         const extraPrices = calculateExtraPrice();
-        showModal(extraPrices);
+        showModal(extraPrices?.extraCost, extraPrices?.extraTax);
       } else {
         await placeOrder();
       }
