@@ -6,13 +6,19 @@ export const metadata = {
   title: "Billing Info | Infotecsourz",
   description: "Photo Retouching App",
 };
-const Pricing = async (props) => {
+const Pricing = async () => {
   const getPackage = async () => {
     try {
-      const res = await fetch(`${baseUrl}/package`);
+      const res = await fetch(`${baseUrl}/package`, {
+        cache: "no-store",
+      });
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error(`Failed to fetch data: ${res.statusText}`);
+      }
       return data?.data;
     } catch (error) {
+      console.log(error);
       throw new Error(error.message || "something went wrong");
     }
   };
