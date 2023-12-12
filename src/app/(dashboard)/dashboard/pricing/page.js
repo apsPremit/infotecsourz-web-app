@@ -2,15 +2,15 @@ import React from "react";
 import SinglePackage from "@/components/dashboard/package/SinglePackage/SinglePackage";
 import { baseUrl } from "@/utils/functions/baseUrl";
 // import { baseUrl } from "@/utils/functions/baseUrl";
+// import { baseUrl } from "@/utils/functions/baseUrl";
 
 export const metadata = {
   title: "Billing Info | Infotecsourz",
   description: "Photo Retouching App",
 };
 const Pricing = async () => {
-  const res = await fetch(
-    `https://desktop-app-server-qnhin.ondigitalocean.app/api/v1/package`
-  );
+  console.log("url", `${baseUrl}/package`);
+  const res = await fetch(`${baseUrl}/package`);
   const result = await res.json();
   console.log(result);
   const allPackage = result.data || [];

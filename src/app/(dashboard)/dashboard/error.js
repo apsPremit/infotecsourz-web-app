@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 
 export default function Error({ error, reset }) {
+  console.log("error is", error);
   const router = useRouter();
   return (
     <div className="flex flex-col items-center">

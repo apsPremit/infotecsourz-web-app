@@ -81,7 +81,7 @@ const page = async (props) => {
       </h3>
 
       {/* table  */}
-      <OrderTable orders={orderData?.data} />
+      {orderData.data?.length > 1 && <OrderTable orders={orderData?.data} />}
 
       {/* notification  */}
     </div>
