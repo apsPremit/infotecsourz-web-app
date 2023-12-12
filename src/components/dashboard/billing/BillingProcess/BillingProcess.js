@@ -18,7 +18,7 @@ const BillingProcess = ({
 }) => {
   const router = useRouter();
   const [isAgree, setAgree] = useState(false);
-  const { userData } = UserAuth();
+  const { userData } = UserAuth() || {};
   const [processing, setProcessing] = useState(false);
 
   const {
