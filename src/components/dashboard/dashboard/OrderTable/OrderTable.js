@@ -23,7 +23,7 @@ const OrderTable = () => {
       }
     };
     fetchOrder();
-  }, []);
+  }, [userData]);
   return (
     <div>
       {loading ? (
