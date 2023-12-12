@@ -3,7 +3,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { baseUrl } from "@/utils/functions/baseUrl";
 import { useSession } from "next-auth/react";
 import Loader from "@/components/shared/Loader/Loader";
-
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
