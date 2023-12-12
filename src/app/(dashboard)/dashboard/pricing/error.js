@@ -1,6 +1,7 @@
 "use client";
 
 const Error = ({ error, reset }) => {
+  console.log("errr is", error);
   return (
     <div className="flex flex-col items-center space-y-3 ">
       <h2>Something Went wrong</h2>
