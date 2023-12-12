@@ -7,9 +7,21 @@ export const metadata = {
   description: "Photo Retouching App",
 };
 const Pricing = async () => {
-  const res = await fetch(`${baseUrl}/package`);
-  const data = await res.json();
-  const packages = data.data;
+  const getAllPackage = async () => {
+    try {
+      const res = await fetch(`${baseUrl}/package`);
+      if (!res.ok) {
+        throw new Error(`${res.statusText}`);
+      }
+      const data = await res.json();
+      return data?.data;
+    } catch (error) {
+      console.log("pricing error is", error);
+      throw new Error(error.message || "Something went wrong");
+    }
+  };
+
+  const allPackage = await getAllPackage();
 
   return (
     <div>
@@ -18,7 +30,7 @@ const Pricing = async () => {
       </h1>
       {/* <h1>{error.message}</h1> */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:px-10 mb-10">
-        {packages.map((plan) => (
+        {allPackage?.map((plan) => (
           <SinglePackage key={plan._id} plan={plan} />
         ))}
       </div>
