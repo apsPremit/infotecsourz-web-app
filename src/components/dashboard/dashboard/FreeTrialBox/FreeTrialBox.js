@@ -5,8 +5,8 @@ import { UserAuth } from "@/context/AuthProvider";
 import { BsImageAlt } from "react-icons/bs";
 import Link from "next/link";
 
-const FreeTrialBox = ({ userData }) => {
-  // const { userData } = UserAuth()
+const FreeTrialBox = () => {
+  const { userData } = UserAuth();
   return (
     <>
       {userData?.subscribedPackage === "free trial" && (

@@ -90,7 +90,7 @@ const SignUpForm = () => {
           email,
           password,
           callbackUrl:
-            "/dashboard?message='Congratulations, You got 5 credits free'",
+            "/dashboard/pricing?message='Congratulations, You got 5 credits free'",
           redirect: true,
         });
         setLoading(false);

@@ -1,10 +1,29 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OrderRow from "../OrderRow/OrderRow";
 import { ImSpinner2 } from "react-icons/im";
+import { baseUrl } from "@/utils/functions/baseUrl";
+import { UserAuth } from "@/context/AuthProvider";
 
-const OrderTable = ({ orders }) => {
+const OrderTable = () => {
   const [loading, setLoading] = useState(false);
+  const [orders, setOrders] = useState([]);
+  const { userData } = UserAuth();
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const orderRes = await fetch(`${baseUrl}/order/${userData?.email}`);
+        if (!orderRes.ok) {
+          throw new Error(error?.message || "something went wrong");
+        }
+        const orderData = await orderRes.json();
+        setOrders(orderData?.data);
+      } catch (error) {
+        throw new Error(error?.message || "something went wrong");
+      }
+    };
+    fetchOrder();
+  }, []);
   return (
     <div>
       {loading ? (

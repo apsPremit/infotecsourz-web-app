@@ -22,21 +22,20 @@ const page = async (props) => {
     return redirect("/login");
   }
 
-  const res = await fetch(`${baseUrl}/user/${session?.user?.email}`);
-  const data = await res.json();
+  // const res = await fetch(`${baseUrl}/user/${session?.user?.email}`);
+  // const data = await res.json();
 
-  const orderRes = await fetch(`${baseUrl}/order/${session?.user?.email}`);
-  const orderData = await orderRes.json();
+  // const orderRes = await fetch(`${baseUrl}/order/${session?.user?.email}`);
+  // const orderData = await orderRes.json();
 
   return (
     <div className="lg:p-5  bg-[#F5F5F5] ">
       {props?.searchParams?.message && (
         <Alert message={props?.searchParams?.message} />
       )}
-
-      <SubscribedPackage userData={data?.data} />
+      <SubscribedPackage />
       <div className="lg:grid grid-cols-3  mx-auto lg:gap-5 space-y-5 lg:space-y-0">
-        <FreeTrialBox userData={data?.data} />
+        <FreeTrialBox />
         <div className="border border-shadow p-5 rounded bg-white">
           <div className="">
             <p className="p-1.5 w-8 h-8 flex justify-center items-center bg-orange-200 text-orange-500 text-xl border border-red-20 rounded-full">
@@ -74,15 +73,12 @@ const page = async (props) => {
           </div>
         </div>
       </div>
-
       {/* recent orders  */}
       <h3 className="bg-white p-5 w-full my-5 font-bold text-lg">
         Recent Orders
       </h3>
-
       {/* table  */}
-      {orderData.data?.length > 1 && <OrderTable orders={orderData?.data} />}
-
+      <OrderTable />
       {/* notification  */}
     </div>
   );
