@@ -11,10 +11,12 @@ export const AuthProvider = ({ children }) => {
   const session = useSession();
 
   useEffect(() => {
-    if (!session.status === "loading") {
+    if (session?.data?.user) {
       fetch(`${baseUrl}/user/${session?.data?.user?.email}`)
         .then((res) => res.json())
-        .then((data) => setUserData(data?.data))
+        .then((data) => {
+          setUserData(data?.data);
+        })
         .catch((error) => {
           console.log("error from auth provider", error);
           setUserData({});

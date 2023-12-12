@@ -9,7 +9,6 @@ export const metadata = {
   description: "Photo Retouching App",
 };
 const Pricing = async () => {
-  console.log("url", `${baseUrl}/package`);
   const res = await fetch(`${baseUrl}/package`);
   const result = await res.json();
 

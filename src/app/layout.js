@@ -3,7 +3,6 @@ import { AuthProvider } from "@/context/AuthProvider";
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import NextAuthProvider from "@/context/NextAuthProvider";
-import { PaypalProvider } from "@/context/PaypalProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -21,9 +20,7 @@ export default function RootLayout({ children }) {
       <body className={poppins.className}>
         <NextAuthProvider>
           <AuthProvider>
-            <PaypalProvider>
-              <main className="max-w-screen-2xl mx-auto">{children}</main>
-            </PaypalProvider>
+            <main className="max-w-screen-2xl mx-auto">{children}</main>
           </AuthProvider>
         </NextAuthProvider>
       </body>

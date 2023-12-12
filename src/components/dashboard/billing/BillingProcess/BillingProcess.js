@@ -104,7 +104,7 @@ const BillingProcess = ({
       const extraPhoto =
         orderDetails?.photoQuantity - userData?.remainingCredit;
       const extra = extraPhoto * perPhotoCost;
-      console.log("extra photo", extraPhoto);
+
       const extraTax = (extra * taxRate) / 100;
       const extraCost = extra + extraTax;
       return { extraCost, extraTax };
@@ -143,7 +143,7 @@ const BillingProcess = ({
         orderData.grandTotal += extraCost;
 
         setOrderDetails(orderData);
-        console.log("order data", orderData);
+
         router.push(`/dashboard/billing/payment?p=${extraCost}`);
       } else if (result.isDenied) {
         router.push("/dashboard/pricing");

@@ -70,8 +70,6 @@ const Invoice = () => {
     transactionId,
   } = invoiceData || {};
 
-  console.log("invoice", invoiceData);
-
   const { additional } = photoRequirements || {};
   const generatePdf = useReactToPrint({
     content: () => componentPDF.current,

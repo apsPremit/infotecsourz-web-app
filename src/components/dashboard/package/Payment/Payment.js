@@ -6,10 +6,10 @@ import { useContext, useState } from "react";
 import { StateContext } from "@/context/StateProvider";
 import { ImSpinner2 } from "react-icons/im";
 import Swal from "sweetalert2";
+import { PaypalProvider } from "@/context/PaypalProvider";
 
 const Payment = ({ path, price }) => {
   const { orderDetails } = useContext(StateContext);
-  console.log("order details", orderDetails);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -64,13 +64,11 @@ const Payment = ({ path, price }) => {
             fullName: details?.fullName,
             billingAddress: details?.billingAddress,
           };
-          console.log("payment details", paymentDetails);
           const orderData = {
             ...orderDetails,
             paymentStatus: "paid",
             transactionId: paymentResponse.id,
           };
-          console.log("order data", orderData);
           try {
             setLoading(true);
             const res = await fetch(`${baseUrl}/${path}`, {
@@ -120,14 +118,16 @@ const Payment = ({ path, price }) => {
           loading ? "hidden" : ""
         }`}
       >
-        <PayPalButtons
-          style={{
-            label: "checkout",
-          }}
-          createOrder={(data, actions) => createOrder(data, actions)}
-          onApprove={(data, actions) => onApprove(data, actions)}
-          onError={(err) => handleError(err)}
-        ></PayPalButtons>
+        <PaypalProvider>
+          <PayPalButtons
+            style={{
+              label: "checkout",
+            }}
+            createOrder={(data, actions) => createOrder(data, actions)}
+            onApprove={(data, actions) => onApprove(data, actions)}
+            onError={(err) => handleError(err)}
+          ></PayPalButtons>
+        </PaypalProvider>
       </div>
     </div>
   );
