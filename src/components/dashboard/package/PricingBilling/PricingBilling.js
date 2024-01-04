@@ -7,6 +7,7 @@ import { baseUrl } from "@/utils/functions/baseUrl";
 import toast, { Toaster } from "react-hot-toast";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import subscribeFreeTrial from "@/utils/functions/subscribeFreeTrial";
 
 const PricingBilling = ({ pack }) => {
   const { taxRate, setOrderDetails } = useContext(StateContext);
@@ -49,8 +50,20 @@ const PricingBilling = ({ pack }) => {
     paymentMethod,
   };
 
+  const conformFreeTrial = async () => {};
+
   const confirmOrder = async () => {
+    if (pack?.package_name == "free trial") {
+      const freeTrialResult = await subscribeFreeTrial(orderDetails);
+      if (freeTrialResult.success) {
+        return router.push(
+          `/order_success?orderId=${freeTrialResult?.data?.orderId}&message=Subscription Successful`
+        );
+      }
+      return;
+    }
     setOrderDetails(orderDetails);
+    router.push(`/dashboard/pricing/billing/payment?p=${price}`);
   };
 
   return (
@@ -87,15 +100,15 @@ const PricingBilling = ({ pack }) => {
 
         {/* billing btn and process  */}
         <div>
-          <Link href={`/dashboard/pricing/billing/payment?p=${price}`}>
-            <button
-              disabled={!isAgree || isProcessing}
-              onClick={confirmOrder}
-              className="w-full text-center text-white disabled:bg-blue-300 disabled:cursor-not-allowed bg-blue-500 rounded-lg py-3 text-lg hover:bg-blue-400 cursor-pointer"
-            >
-              {isProcessing ? "Processing..." : "Confirm Order"}
-            </button>
-          </Link>
+          {/* <Link href={`/dashboard/pricing/billing/payment?p=${price}`}> */}
+          <button
+            disabled={!isAgree || isProcessing}
+            onClick={confirmOrder}
+            className="w-full text-center text-white disabled:bg-blue-300 disabled:cursor-not-allowed bg-blue-500 rounded-lg py-3 text-lg hover:bg-blue-400 cursor-pointer"
+          >
+            {isProcessing ? "Processing..." : "Checkout"}
+          </button>
+          {/* </Link> */}
           <label
             htmlFor="agree_terms"
             className="flex items-start gap-x-4 px-2 mt-3 cursor-pointer"

@@ -8,6 +8,7 @@ export const metadata = {
 };
 const Billing = async (props) => {
   const packageId = props?.searchParams?.package;
+
   const getPackage = async () => {
     try {
       const res = await fetch(`${baseUrl}/package/${packageId}`, {

@@ -83,7 +83,9 @@ const Payment = ({ path, price }) => {
               throw new Error("some thing went wrong");
             }
             setLoading(false);
-            router.push(`/order_success?orderId=${orderDetails?.orderId}`);
+            router.push(
+              `/order_success?orderId=${orderDetails?.orderId}&message=Subscription Successful`
+            );
           } catch (error) {
             console.log(error);
             setLoading(false);

@@ -1,5 +1,6 @@
 "use client";
 import { UserAuth } from "@/context/AuthProvider";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const SubscribedPackage = () => {
@@ -12,18 +13,15 @@ const SubscribedPackage = () => {
         <p className="text-lg font-bold my-1 capitalize">
           {userData?.subscribedPackage}
         </p>
-        {userData?.subscribedPackage === "free trial" ? (
+        {userData?.remainingCredit ? (
           <p className="text-sm">
-            Remaining Balance:{" "}
-            <span className="font-bold">
-              ${userData?.remainingBalance?.toFixed(2)}
-            </span>
-          </p>
-        ) : (
-          <p className="text-sm">
-            Remaining Credit:{" "}
+            Remaining Credit:
             <span className="font-bold">{userData?.remainingCredit}</span>
           </p>
+        ) : (
+          <Link href="/dashboard/pricing">
+            <p className="text-sm font-bold hover:underline">Subscribe Now</p>
+          </Link>
         )}
       </div>
     </div>

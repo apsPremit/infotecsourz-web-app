@@ -9,6 +9,8 @@ const SuccessOrder = () => {
   //   const { width, height } = useWindowSize();
   const search = useSearchParams();
   const orderId = search.get("orderId");
+  const message = search.get("message");
+  console.log("message", message);
 
   const handleNavigate = () => {
     window.location.reload();
@@ -25,7 +27,7 @@ const SuccessOrder = () => {
           </h1>
           <h1 className="text-lg"> #{orderId} </h1>
           <h1 className="text-xl lg:text-2xl font-bold mb-5">
-            Order Placed successful!
+            {message ? message : " Order Placed successful!"}
           </h1>
           <p>Thank You</p>
           <button

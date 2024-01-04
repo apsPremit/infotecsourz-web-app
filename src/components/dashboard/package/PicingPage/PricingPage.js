@@ -2,6 +2,7 @@
 import { baseUrl } from "@/utils/functions/baseUrl";
 import React, { useEffect, useState } from "react";
 import SinglePackage from "../SinglePackage/SinglePackage";
+import PricingTable from "@/components/shared/PricingTable/PricingTable";
 
 const PricingPage = () => {
   const [allPackage, setAllPackage] = useState([]);
@@ -28,6 +29,7 @@ const PricingPage = () => {
           <SinglePackage key={plan._id} plan={plan} />
         ))}
       </div>
+      <PricingTable />
     </div>
   );
 };

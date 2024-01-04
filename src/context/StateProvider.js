@@ -315,6 +315,7 @@ const StateProvider = ({ children }) => {
   const [photoUrl, setPhotoUrl] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [orderDetails, setOrderDetails] = useState(null);
+  const [isShowPricingModal, setShowPricingModal] = useState(false);
 
   const states = {
     isSidebarOpen,
@@ -375,6 +376,8 @@ const StateProvider = ({ children }) => {
     setPaymentMethod,
     orderDetails,
     setOrderDetails,
+    isShowPricingModal,
+    setShowPricingModal,
   };
 
   return (
