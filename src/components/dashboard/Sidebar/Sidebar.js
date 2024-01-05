@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 import { BiSupport } from "react-icons/bi";
 import { IoPowerOutline } from "react-icons/io5";
 import { UserAuth } from "@/context/AuthProvider";
-import Cookies from "js-cookie";
+import { CiCreditCard1 } from "react-icons/ci";
 import { useRouter } from "next/navigation";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsCartPlus } from "react-icons/bs";
@@ -121,6 +121,19 @@ const Sidebar = () => {
                 <IoMdPaperPlane />
               </span>
               <span>Pricing</span>
+            </Link>
+          </li>
+          <li onClick={() => setSidebarOpen(!isSidebarOpen)}>
+            <Link
+              href="/dashboard/my_subscriptions"
+              className={`flex gap-x-3 my-3 items-center p-2 cursor-pointer hover:bg-main rounded-lg ${
+                currentRoute === "/dashboard/my_subscriptions" ? "bg-main" : ""
+              }`}
+            >
+              <span className="text-2xl">
+                <CiCreditCard1 />
+              </span>
+              <span className="whitespace-nowrap">My Subscriptions</span>
             </Link>
           </li>
           {/* faq  */}

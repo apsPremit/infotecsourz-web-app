@@ -17,7 +17,7 @@ const PricingBilling = ({ pack }) => {
   const [paymentMethod, setPaymentMethod] = useState(null);
 
   const router = useRouter();
-  const { package_name, price, photos } = pack || {};
+  const { package_name, price, photos, validity } = pack || {};
 
   let subTotal = price;
   let taxTotal = (price / 100) * taxRate;
@@ -41,6 +41,7 @@ const PricingBilling = ({ pack }) => {
     name: userData?.name,
     email: userData?.email,
     package: package_name,
+    validity,
     subTotal,
     taxRate,
     taxTotal,
@@ -48,18 +49,23 @@ const PricingBilling = ({ pack }) => {
     credit: photos,
     country: userData?.country || "",
     paymentMethod,
+    paymentStatus: "paid",
+    status: "approved",
   };
 
-  const conformFreeTrial = async () => {};
+  // const conformFreeTrial = async () => {};
 
   const confirmOrder = async () => {
     if (pack?.package_name == "free trial") {
+      setProcessing(true);
       const freeTrialResult = await subscribeFreeTrial(orderDetails);
       if (freeTrialResult.success) {
+        setProcessing(false);
         return router.push(
           `/order_success?orderId=${freeTrialResult?.data?.orderId}&message=Subscription Successful`
         );
       }
+      setProcessing(false);
       return;
     }
     setOrderDetails(orderDetails);

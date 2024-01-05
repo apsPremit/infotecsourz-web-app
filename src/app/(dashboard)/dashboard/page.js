@@ -15,18 +15,25 @@ export const metadata = {
   title: "Dashboard | Infotecsourz",
   description: "Photo Retouching App",
 };
+const fetchOrders = async (email) => {
+  try {
+    const orderRes = await fetch(`${baseUrl}/order/${email}`);
+    const orderData = await orderRes.json();
+
+    return orderData.data;
+  } catch (error) {
+    console.log("orders fetch error", error);
+  }
+};
 
 const page = async (props) => {
   const session = await getServerSession(nextOption);
   if (!session) {
     return redirect("/login");
   }
-
+  const orders = await fetchOrders(session.user.email);
   // const res = await fetch(`${baseUrl}/user/${session?.user?.email}`);
   // const data = await res.json();
-
-  // const orderRes = await fetch(`${baseUrl}/order/${session?.user?.email}`);
-  // const orderData = await orderRes.json();
 
   return (
     <div className="lg:p-5  bg-[#F5F5F5] ">
@@ -78,7 +85,7 @@ const page = async (props) => {
         Recent Orders
       </h3>
       {/* table  */}
-      <OrderTable />
+      <OrderTable orders={orders} />
       {/* notification  */}
     </div>
   );

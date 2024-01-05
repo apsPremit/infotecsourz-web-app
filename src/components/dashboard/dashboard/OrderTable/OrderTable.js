@@ -1,29 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import OrderRow from "../OrderRow/OrderRow";
 import { ImSpinner2 } from "react-icons/im";
-import { baseUrl } from "@/utils/functions/baseUrl";
-import { UserAuth } from "@/context/AuthProvider";
 
-const OrderTable = () => {
+const OrderTable = ({ orders }) => {
   const [loading, setLoading] = useState(false);
-  const [orders, setOrders] = useState([]);
-  const { userData } = UserAuth();
-  useEffect(() => {
-    const fetchOrder = async () => {
-      try {
-        const orderRes = await fetch(`${baseUrl}/order/${userData?.email}`);
-        if (!orderRes.ok) {
-          throw new Error(error?.message || "something went wrong");
-        }
-        const orderData = await orderRes.json();
-        setOrders(orderData?.data);
-      } catch (error) {
-        throw new Error(error?.message || "something went wrong");
-      }
-    };
-    fetchOrder();
-  }, [userData]);
+
   return (
     <div>
       {loading ? (
@@ -41,57 +23,58 @@ const OrderTable = () => {
                       <tr>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap"
+                          className="px-6 py-3 text-left text-sm font-medium text-black whitespace-nowrap"
                         >
                           Order
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap"
+                          className="px-6 py-3 text-left text-sm font-medium text-black whitespace-nowrap"
                         >
                           Order Name
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap"
+                          className="px-6 py-3 text-left text-sm font-medium text-black whitespace-nowrap"
                         >
                           Ready File
                         </th>
+
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap"
-                        >
-                          Price
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap "
+                          className="px-6 py-3 text-left text-sm font-medium text-black whitespace-nowrap "
                         >
                           Status
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap "
+                          className="px-6 py-3 text-left text-sm font-medium text-black whitespace-nowrap "
                         >
                           Created Date
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap "
+                          className="px-6 py-3 text-left text-sm font-medium text-black whitespace-nowrap "
                         >
                           Return Time
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap "
+                          className="px-6 py-3 text-left text-sm font-medium text-black whitespace-nowrap "
+                        >
+                          Order Details
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-sm font-medium text-black whitespace-nowrap "
                         >
                           Payment Status
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 whitespace-nowrap "
+                          className="px-6 py-3 text-left text-sm font-medium text-black whitespace-nowrap "
                         >
-                          Invoice
+                          Revision Request
                         </th>
                       </tr>
                     </thead>

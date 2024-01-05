@@ -9,7 +9,7 @@ const FreeTrialBox = () => {
   const { userData } = UserAuth();
   return (
     <>
-      {userData?.isAvailable && (
+      {userData?.isAvailableFreeTrial && (
         <div className="border border-shadow p-5 rounded bg-white">
           <div className="">
             <p className="p-1.5 w-8 h-8 flex justify-center items-center bg-green-200 text-green-500 text-xl border border-red-20 rounded-full">
@@ -17,7 +17,7 @@ const FreeTrialBox = () => {
             </p>
           </div>
           <div className="mt-3">
-            <p className="font-bold  text-lg">$5</p>
+            <p className="font-bold  text-lg">3 Credits</p>
             <h3 className="text  text-[#9f9f9f] text-sm">
               Get 3 Credits for Free trial!
             </h3>

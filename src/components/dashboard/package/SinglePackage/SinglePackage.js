@@ -5,6 +5,7 @@ import { IoMdCheckmark } from "react-icons/io";
 import { usePathname, useRouter } from "next/navigation";
 import { UserAuth } from "@/context/AuthProvider";
 import Swal from "sweetalert2";
+import Link from "next/link";
 
 const SinglePackage = ({ plan }) => {
   const { setSelectedPackage, selectedPackage, setShowPricingModal } =
@@ -144,6 +145,12 @@ const SinglePackage = ({ plan }) => {
                   You already have this plan. Choose another plan.
                 </span>
               </div>
+            ) : package_name == "enterprise" ? (
+              <Link href="/dashboard/support">
+                <button className="py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full disabled:bg-blue-200 ">
+                  Contact Us
+                </button>
+              </Link>
             ) : (
               <div className="group relative  flex justify-center">
                 <button
@@ -156,6 +163,8 @@ const SinglePackage = ({ plan }) => {
                 >
                   {package_name == "free trial"
                     ? "Start Free Trial"
+                    : package_name == "pay as go"
+                    ? "Get Started"
                     : "Subscribe"}
                 </button>
                 {package_name === "pay as go" && (

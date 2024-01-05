@@ -46,6 +46,7 @@ const OrderRow = ({ order }) => {
         setDownloading(false);
       })
       .catch((error) => {
+        console.log("download error", error);
         alert("did not find any files");
         setDownloading(false);
       });
@@ -60,61 +61,100 @@ const OrderRow = ({ order }) => {
         {orderName}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm   text-black ">
-        {status === "delivered" &&
-          (deliveredFileUrl ? (
-            <Link target="_blank" href={deliveredFileUrl}>
-              <button className="text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded">
-                Download
+        {/* {status == "delivered" ||
+          (status == "in-revision" &&
+            (deliveredFileUrl ? (
+              <Link target="_blank" href={deliveredFileUrl}>
+                <button className="text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded">
+                  Download
+                </button>
+              </Link>
+            ) : (
+              <button
+                onClick={handleDownload}
+                className="text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded"
+              >
+                {downloading ? (
+                  <span className="flex items-center justify-center  text-xs text-white">
+                    Downloading{" "}
+                    <ImSpinner2 className="animate-spin ml-2 text-white" />
+                  </span>
+                ) : (
+                  "Download"
+                )}
               </button>
-            </Link>
-          ) : (
-            <button
-              onClick={handleDownload}
-              className="text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded"
-            >
-              {downloading ? (
-                <span className="flex items-center justify-center  text-xs text-white">
-                  Downloading{" "}
-                  <ImSpinner2 className="animate-spin ml-2 text-white" />
-                </span>
-              ) : (
-                "Download"
-              )}
-            </button>
-          ))}
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm   text-black font-bold ">
-        ${grandTotal?.toFixed(2)}
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm     ">
-        {status && (
-          <span
-            className={`flex items-center p-1 bg-green-100 ${
-              status === "denied" ? "text-red-500 bg-red-100" : "text-green-500"
-            }`}
+            )))} */}
+
+        {status === "delivered" || status == "in-revision" ? (
+          <button
+            onClick={handleDownload}
+            className="text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded"
           >
-            <span className=" text-xl ">
-              <RxDotFilled />
-            </span>
-            <span className="">{status}</span>
-          </span>
+            {downloading ? (
+              <span className="flex items-center justify-center  text-xs text-white">
+                Downloading{" "}
+                <ImSpinner2 className="animate-spin ml-2 text-white" />
+              </span>
+            ) : (
+              "Download"
+            )}
+          </button>
+        ) : (
+          ""
         )}
       </td>
+
+      <td className="px-6 py-4 whitespace-nowrap text-sm     ">
+        <span
+          className={`flex items-center p-1  ${
+            status === "denied"
+              ? "text-red-500 bg-red-100"
+              : status == "in-revision"
+              ? "text-pink-500  bg-pink-100"
+              : "text-green-500 bg-green-100"
+          }`}
+        >
+          <span className=" text-xl ">
+            <RxDotFilled />
+          </span>
+          <span className="">{status}</span>
+        </span>
+      </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm   text-black  ">
-        {moment(createdAt).format("MMM Do YY, h:mm a")}
+        {moment(createdAt).format("MMM Do YY, h:mm:ss a")}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm   text-black  ">
         {returnTime && returnTime + " Hours"}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm   text-black  ">
-        {paymentStatus}
+        <Link href={`/dashboard/order/${orderId}`} className="hover:underline">
+          View
+        </Link>
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm   text-black  ">
-        {invoiceStatus === "available" && (
+        {paymentStatus}
+      </td>
+      {/* <td className="px-6 py-4 whitespace-nowrap text-sm   text-black  ">
+        {status === "delivered" && (
           <Link className="underline" href={`/dashboard/invoice/${orderId}`}>
-            invoice
+            Invoice
           </Link>
         )}
+      </td> */}
+      <td className="px-6 py-4 whitespace-nowrap text-sm   text-black  ">
+        {status == "in-revision" ? (
+          <p>Request Sent</p>
+        ) : status == "delivered" ? (
+          <Link className="underline" href={`/dashboard/revision/${orderId}`}>
+            Send Request
+          </Link>
+        ) : (
+          ""
+        )}
+
+        {/* <Link className="underline" href={`/dashboard/revision/${orderId}`}>
+            Send Request
+          </Link> */}
       </td>
     </tr>
   );
