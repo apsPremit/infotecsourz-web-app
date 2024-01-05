@@ -89,8 +89,7 @@ const SignUpForm = () => {
         await signIn("credentials", {
           email,
           password,
-          callbackUrl:
-            "/dashboard/pricing?message='Congratulations, You got 5 credits free'",
+          callbackUrl: "/dashboard/plans",
           redirect: true,
         });
         setLoading(false);

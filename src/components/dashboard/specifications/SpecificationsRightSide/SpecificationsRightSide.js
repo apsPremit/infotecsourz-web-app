@@ -1,113 +1,68 @@
 "use client";
 import { UserAuth } from "@/context/AuthProvider";
 import { StateContext } from "@/context/StateProvider";
-import moment from "moment/moment";
-import Link from "next/link";
+import { baseUrl } from "@/utils/functions/baseUrl";
+import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
+import { BsUpload } from "react-icons/bs";
+import { ImSpinner2 } from "react-icons/im";
 
 const SpecificationsRightSide = () => {
   const {
-    orderName,
-    totalFileSize,
     productDetailsDescription,
-    photoType,
+    orderId,
+    hasInstructions,
+    setHasInstructions,
     setProductDetailsDescription,
-    uploadedImages,
-    imageQuantityFromUrl,
-    selectedPackage,
-    setReturnTime,
     returnTime,
-    perPhotoCost,
   } = useContext(StateContext);
+  const [isUploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
   const { userData } = UserAuth();
   const router = useRouter();
-
-  const fields = [
-    { label: "Order Name", value: orderName, type: "text" },
-    { label: "Owner", value: userData?.name, type: "text" },
-    {
-      label: "Product Uploaded",
-      value:
-        imageQuantityFromUrl > 0 ? imageQuantityFromUrl : uploadedImages.length,
-      type: "text",
-    },
-    {
-      label: "Created",
-      value: moment(new Date()).format("MMM Do YY"),
-      type: "text",
-    },
-    { label: "Owned By", value: userData?.name, type: "text" },
-    { label: "Location", value: userData?.email, type: "text" },
-  ];
-
-  const returnTimeOptions = [
-    { label: "Select return time", value: 0, cost: 0 },
-    { label: "12 Hours", value: 12, cost: 1 },
-    { label: "24 Hours", value: 24, cost: 0.8 },
-    { label: "48 Hours", value: 48, cost: 0.5 },
-    { label: "72 Hours", value: 72, cost: 0 },
-  ];
 
   const handleProceed = () => {
     router.push("/dashboard/billing");
   };
 
-  const handleReturnTime = (e) => {
-    setReturnTime(parseInt(e.target.value));
+  const handleInstructionUpload = async (e) => {
+    setUploading(true);
+    const files = e.target.files;
+
+    const selectedFileArray = Array.from(files);
+    const formData = new FormData();
+    selectedFileArray.forEach((file) => formData.append("instructions", file));
+
+    try {
+      const res = await axios.post(
+        `${baseUrl}/instructions?folderName=${orderId}&bucketName=${process.env.NEXT_PUBLIC_SAMPLE_BUCKET}`,
+        formData
+      );
+      const data = await res.data;
+      setUploading(false);
+      if (data.success) {
+        setHasInstructions(true);
+      }
+      toast.success("upload successful");
+    } catch (error) {
+      console.log(error);
+      setUploading(false);
+      toast.error("something wrong");
+    }
+
+    e.target.value = "";
   };
 
   return (
     <div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {fields.map((field, index) => (
-          <div key={index}>
-            <label>
-              <span className="text-black text-sm mb-4 ml-1">
-                {field?.label}
-              </span>
-              <input
-                type={field?.type}
-                value={field?.value}
-                className="border border-shadow text-[#9d9c9c] w-full px-3 py-1.5 rounded outline-0 focus:rounded focus:border-main cursor-not-allowed"
-                disabled
-              />
-            </label>
-          </div>
-        ))}
-      </div>
-
-      <label>
-        <div className="flex justify-between items-center">
-          <span className="text-black text-sm mt-4 mb-1 ml-1 block">
-            Select Turn Around Time
-            <span className="text-red-500 text-lg">*</span>
-          </span>
-          <span className=" text-sm mt-4 mb-1 ml-1 block bg-main text-white px-3">
-            Per Photo Cost:
-            <span className=" text-lg font-bold ml-2 "> ${perPhotoCost}</span>
-          </span>
-        </div>
-        <select
-          required
-          onChange={handleReturnTime}
-          name=""
-          id=""
-          className="w-full border border-shadow text-[#9d9c9c] px-3 py-1.5 rounded"
-        >
-          {returnTimeOptions.map((item, index) => (
-            <option key={index} value={item?.value}>
-              {item?.label}
-            </option>
-          ))}
-        </select>
-      </label>
-
+      <div className=""></div>
       {/* text area  */}
-      <div className="w-full my-10">
+      <div className="w-full mt-6">
         <label>
           <span className="text-black text-sm mb-4 ml-1">
-            Detail Instruction
+            Detail Instruction <span className="text-red-500">*</span>
           </span>
           <textarea
             defaultValue={productDetailsDescription}
@@ -120,8 +75,49 @@ const SpecificationsRightSide = () => {
         </label>
       </div>
 
+      <div className="mt-10">
+        <h3 className="mb-3 text-md font-bold">
+          Upload Your special Instruction or sample
+        </h3>
+        <label
+          htmlFor="instructions"
+          className={`flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer ${
+            hasInstructions
+              ? "bg-blue-500 text-white hover:bg-blue-500"
+              : "bg-gray-50 text-gray-500 hover:bg-gray-100"
+          } `}
+        >
+          <div className="flex flex-col items-center justify-center pt-5 pb-6 px-3 text-center lg:text-start">
+            <span className="text-2xl mb-3">
+              <BsUpload />
+            </span>
+            <p className="mb-2 text-sm  dark:text-gray-400">
+              <span className="font-semibold">
+                Click to upload special instructions or sample
+              </span>
+            </p>
+            <p className="text-xs  dark:text-gray-400">
+              SVG, PNG, JPG, GIF or PDF
+            </p>
+            {isUploading && (
+              <div className="flex items-center justify-center text-xl text-main">
+                <ImSpinner2 className="animate-spin" />
+              </div>
+            )}
+          </div>
+          <input
+            onChange={handleInstructionUpload}
+            id="instructions"
+            type="file"
+            multiple
+            name="instructions"
+            disabled={hasInstructions}
+            className="hidden disabled:cursor-not-allowed"
+          />
+        </label>
+      </div>
       {/* btn proceed  */}
-      <div className="flex  justify-end">
+      <div className="flex mt-5 justify-end">
         <button
           disabled={!returnTime}
           onClick={handleProceed}

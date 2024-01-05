@@ -1,93 +1,89 @@
-"use client"
-import { StateContext } from '@/context/StateProvider';
-import { baseUrl } from '@/utils/functions/baseUrl';
-import axios from 'axios';
-import React, { useContext, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
-import { BsUpload } from 'react-icons/bs';
-import { ImSpinner2 } from 'react-icons/im';
+"use client";
+import { StateContext } from "@/context/StateProvider";
+import moment from "moment";
+import React, { useContext } from "react";
 
 const SpecificationsLeftSide = () => {
-    const { orderId, hasInstructions, setHasInstructions } = useContext(StateContext)
+  const {
+    orderName,
+    uploadedImages,
+    imageQuantityFromUrl,
+    setReturnTime,
+    returnTime,
+  } = useContext(StateContext);
 
-    const [isUploading, setUploading] = useState(false)
-    const [error, setError] = useState('')
+  const fields = [
+    { label: "Order Name", value: orderName, type: "text" },
 
-    const handleInstructionUpload = async (e) => {
-        setUploading(true)
-        const files = e.target.files
+    {
+      label: "Product Uploaded",
+      value:
+        imageQuantityFromUrl > 0 ? imageQuantityFromUrl : uploadedImages.length,
+      type: "text",
+    },
+    {
+      label: "Created",
+      value: moment(new Date()).format("MMM Do YY"),
+      type: "text",
+    },
+  ];
+  const returnTimeOptions = [
+    { label: "Select return time", value: 0, cost: 0 },
+    { label: "12 Hours", value: 12, cost: 1 },
+    { label: "24 Hours", value: 24, cost: 0.8 },
+    { label: "48 Hours", value: 48, cost: 0.5 },
+    { label: "72 Hours", value: 72, cost: 0 },
+  ];
+  const handleReturnTime = (e) => {
+    setReturnTime(parseInt(e.target.value));
+  };
 
-        const selectedFileArray = Array.from(files);
-        const formData = new FormData()
-        selectedFileArray.forEach(file => formData.append('instructions', file))
-
-        try {
-
-            const res = await axios.post(`${baseUrl}/instructions?folderName=${orderId}&bucketName=${process.env.NEXT_PUBLIC_SAMPLE_BUCKET}`, formData)
-            const data = await res.data
-            setUploading(false)
-            if (data.success) {
-                setHasInstructions(true)
-            }
-            toast.success('upload successful')
-        } catch (error) {
-
-            setUploading(false)
-            toast.error('something wrong')
-        }
-
-
-        e.target.value = "";
-
-
-    }
-
-
-
-    return (
-        <div>
-            <div>
-                <h3 className='font-bold text-xl mb-3'>Review Order</h3>
-                <p className=''>Check your product details that you’ve uploaded just now, and if you think any details is incorrect you are free to make these details perfect.</p>
-            </div>
-            <div className='mt-8'>
-                <h3 className='mb-3 text-md font-bold'>Upload Your special Instruction or sample</h3>
-                <label
-
-                    htmlFor="instructions"
-                    className={`flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer ${hasInstructions ? 'bg-blue-500 text-white hover:bg-blue-500' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'} `}
-                >
-                    <div className="flex flex-col items-center justify-center pt-5 pb-6 px-3 text-center lg:text-start">
-                        <span className="text-2xl mb-3">
-                            <BsUpload />
-                        </span>
-                        <p className="mb-2 text-sm  dark:text-gray-400">
-                            <span className="font-semibold">Click to upload special instructions or sample</span>
-                        </p>
-                        <p className="text-xs  dark:text-gray-400">
-                            SVG, PNG, JPG, GIF or PDF
-                        </p>
-                        {
-                            isUploading && <div className='flex items-center justify-center text-xl text-main'><ImSpinner2 className='animate-spin' /></div>
-                        }
-                    </div>
-                    <input
-                        onChange={handleInstructionUpload}
-                        id="instructions"
-                        type="file"
-                        multiple
-                        name="instructions"
-                        disabled={hasInstructions}
-                        className='hidden disabled:cursor-not-allowed'
-
-                    />
-                </label>
-            </div>
-            <Toaster />
-        </div>
-    );
-
-
+  return (
+    <div>
+      <div>
+        <h3 className="font-bold text-xl mb-3">Review Order</h3>
+        <p className="">
+          Check your order details that you’ve uploaded. Make sure all details
+          are perfect.
+        </p>
+      </div>
+      <div className="mt-8">
+        {fields.map((field, index) => (
+          <div className="my-3" key={index}>
+            <label>
+              <span className="text-black text-sm mb-4 ml-1">
+                {field?.label}
+              </span>
+              <input
+                type={field?.type}
+                value={field?.value}
+                className="border border-shadow text-[#9d9c9c] w-full px-3 py-1.5 rounded outline-0 focus:rounded focus:border-main cursor-not-allowed"
+                disabled
+              />
+            </label>
+          </div>
+        ))}
+        <label>
+          <span className="text-black text-sm mt-4 mb-1 ml-1 block">
+            Select Turn Around Time
+            <span className="text-red-500">*</span>
+          </span>
+          <select
+            onChange={handleReturnTime}
+            name=""
+            id=""
+            className="w-full border border-shadow text-[#9d9c9c] px-3 py-1.5 rounded"
+          >
+            {returnTimeOptions.map((item, index) => (
+              <option key={index} value={item?.value}>
+                {item?.label}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+    </div>
+  );
 };
 
 export default SpecificationsLeftSide;
