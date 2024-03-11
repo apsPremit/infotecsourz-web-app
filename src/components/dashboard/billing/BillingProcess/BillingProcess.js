@@ -1,12 +1,12 @@
-"use client";
-import { UserAuth } from "@/context/AuthProvider";
-import { StateContext } from "@/context/StateProvider";
-import { baseUrl } from "@/utils/functions/baseUrl";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useContext, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import Swal from "sweetalert2";
+'use client';
+import { UserAuth } from '@/context/AuthProvider';
+import { StateContext } from '@/context/StateProvider';
+import { baseUrl } from '@/utils/functions/baseUrl';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useContext, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const BillingProcess = ({
   subTotal,
@@ -61,12 +61,12 @@ const BillingProcess = ({
 
   const placeOrder = async () => {
     setProcessing(true);
-    const orderData = { ...orderDetails, paymentStatus: "paid" };
+    const orderData = { ...orderDetails, paymentStatus: 'paid' };
     try {
       const res = await fetch(`${baseUrl}/order`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-type": "application/json",
+          'Content-type': 'application/json',
         },
         body: JSON.stringify({
           orderData,
@@ -77,37 +77,37 @@ const BillingProcess = ({
       if (!res.ok) {
         setProcessing(false);
         console.log(res.statusText);
-        throw new Error("something went wrong");
+        throw new Error('something went wrong');
       }
       setProcessing(false);
       router.push(`/order_success?orderId=${orderData?.orderId}`);
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
       setProcessing(false);
       Swal.fire({
-        title: "something went wrong ",
-        icon: "error",
+        title: 'something went wrong ',
+        icon: 'error',
       });
     }
   };
 
   const showModal = () => {
     Swal.fire({
-      icon: "error",
-      title: "You have not require credit",
+      icon: 'error',
+      title: 'You have not require credit',
       html: `<p>You don't have enough credit. Please upgrade plan.</p>`,
       showCancelButton: true,
-      confirmButtonText: "Upgrade Plan",
+      confirmButtonText: 'Upgrade Plan',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        router.push("/dashboard/pricing?callback=/dashboard/billing");
+        router.push('/dashboard/pricing?callback=/dashboard/billing');
       }
     });
   };
 
   const confirmOrder = async () => {
     const pack = orderDetails.package;
-    if (pack === "pay as go") {
+    if (pack === 'pay as go') {
       setOrderDetails(orderDetails);
       return router.push(
         `/dashboard/billing/payment?p=${orderDetails?.grandTotal}`
@@ -126,29 +126,29 @@ const BillingProcess = ({
       <button
         disabled={!isAgree || processing}
         onClick={confirmOrder}
-        className="w-full text-center text-white disabled:bg-blue-300 disabled:cursor-not-allowed bg-blue-500 rounded-lg py-3 text-lg hover:bg-blue-400 cursor-pointer"
+        className='w-full cursor-pointer rounded-lg bg-blue-500 py-3 text-center text-lg text-white hover:bg-blue-400 disabled:cursor-not-allowed disabled:bg-blue-300'
       >
-        {processing ? "Processing..." : " ConfirmOrder"}
+        {processing ? 'Processing...' : ' ConfirmOrder'}
       </button>
 
       {/* terms and conditions */}
       <label
-        htmlFor="agree_terms"
-        className="flex items-start gap-x-4 px-2 mt-3 cursor-pointer"
+        htmlFor='agree_terms'
+        className='mt-3 flex cursor-pointer items-start gap-x-4 px-2'
       >
         <input
           onChange={() => setAgree(!isAgree)}
-          id="agree_terms"
+          id='agree_terms'
           checked={isAgree}
-          type="checkbox"
-          className="scale-125 mt-1"
+          type='checkbox'
+          className='mt-1 scale-125'
         />
-        <p className="text-sm">
-          I accept{" "}
+        <p className='text-sm'>
+          I accept{' '}
           <Link
-            target="_blank"
-            href="https://www.infotecsourz.com/terms-and-conditions/"
-            className="text-main hover:underline"
+            target='_blank'
+            href='https://www.infotecsourz.com/terms-and-conditions/'
+            className='text-main hover:underline'
           >
             Terms & Conditions
           </Link>

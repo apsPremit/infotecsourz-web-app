@@ -1,44 +1,42 @@
 .verticalLine::before {
-    content: '';
-    position: absolute;
-    width: 2px;
-    height: 115px;
-    border: 1px solid #ddd;
-    right: -32px;
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 115px;
+  border: 1px solid #ddd;
+  right: -32px;
 }
 
-
-
 .verticalLine::after {
-    content: '';
-    position: absolute;
-    width: 2px;
-    height: 115px;
-    border: 1px solid #ddd;
-    right: -32px;
-    bottom: 0;
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 115px;
+  border: 1px solid #ddd;
+  right: -32px;
+  bottom: 0;
 }
 
 .verticalOr::after {
-    content: 'or';
-    position: absolute;
-    right: -42px;
-    top: 115px;
-    font-weight: bold;
-    color: #858484;
-    text-transform: uppercase;
+  content: 'or';
+  position: absolute;
+  right: -42px;
+  top: 115px;
+  font-weight: bold;
+  color: #858484;
+  text-transform: uppercase;
 }
 
-@media (max-width:1025px) {
-    .verticalLine::after {
-        display: none;
-    }
+@media (max-width: 1025px) {
+  .verticalLine::after {
+    display: none;
+  }
 
-    .verticalLine::before {
-        display: none;
-    }
+  .verticalLine::before {
+    display: none;
+  }
 
-    .verticalOr::after {
-        display: none;
-    }
+  .verticalOr::after {
+    display: none;
+  }
 }

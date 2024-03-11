@@ -1,45 +1,43 @@
 .bg_image {
-    background-image: url('../assets/images/bg.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-
+  background-image: url('../assets/images/bg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .active_link {
-    background-color: #4318E3;
+  background-color: #4318e3;
 }
 
 .btn_main {
-    padding: 6px 12px;
-    background-color: #4318E3;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-
+  padding: 6px 12px;
+  background-color: #4318e3;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .btn_main:hover {
-    background-color: #2906a8;
+  background-color: #2906a8;
 }
 
 .btn_main:disabled {
-    cursor: not-allowed;
-    background: #DCDCDE;
-    color: black;
+  cursor: not-allowed;
+  background: #dcdcde;
+  color: black;
 }
 
 .btn_shadow {
-    padding: 6px 12px;
-    background-color: #DCDCDE;
-    border-radius: 4px;
-    cursor: pointer;
+  padding: 6px 12px;
+  background-color: #dcdcde;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .btn_shadow:hover {
-    background-color: #b0b0b2;
+  background-color: #b0b0b2;
 }
 
 .btn_shadow:disabled {
-    cursor: not-allowed;
+  cursor: not-allowed;
 }

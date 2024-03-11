@@ -1,8 +1,8 @@
-"use client";
-import { createContext, useContext, useEffect, useState } from "react";
-import { baseUrl } from "@/utils/functions/baseUrl";
-import { useSession } from "next-auth/react";
-import Loader from "@/components/shared/Loader/Loader";
+'use client';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { baseUrl } from '@/utils/functions/baseUrl';
+import { useSession } from 'next-auth/react';
+import Loader from '@/components/shared/Loader/Loader';
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
@@ -18,15 +18,15 @@ export const AuthProvider = ({ children }) => {
           setUserData(data?.data);
         })
         .catch((error) => {
-          console.log("error from auth provider", error);
+          console.log('error from auth provider', error);
           setUserData({});
         });
     }
   }, [session]);
 
-  if (session.status === "loading") {
+  if (session.status === 'loading') {
     return (
-      <div className="h-screen flex justify-center items-center">
+      <div className='flex h-screen items-center justify-center'>
         <Loader />
       </div>
     );

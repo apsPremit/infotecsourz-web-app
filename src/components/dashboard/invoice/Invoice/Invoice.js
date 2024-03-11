@@ -1,13 +1,13 @@
-"use client";
-import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
-import logoFull from "../../../../../public/images/others/logo-full.png";
-import { useReactToPrint } from "react-to-print";
-import { useParams } from "next/navigation";
-import axios from "axios";
-import { baseUrl } from "@/utils/functions/baseUrl";
-import moment from "moment";
-import "./invoice.css";
+'use client';
+import Image from 'next/image';
+import React, { useEffect, useRef, useState } from 'react';
+import logoFull from '../../../../../public/images/others/logo-full.png';
+import { useReactToPrint } from 'react-to-print';
+import { useParams } from 'next/navigation';
+import axios from 'axios';
+import { baseUrl } from '@/utils/functions/baseUrl';
+import moment from 'moment';
+import './invoice.css';
 
 const Invoice = () => {
   const componentPDF = useRef();
@@ -73,37 +73,37 @@ const Invoice = () => {
   const { additional } = photoRequirements || {};
   const generatePdf = useReactToPrint({
     content: () => componentPDF.current,
-    documentTitle: "invoice",
+    documentTitle: 'invoice',
   });
 
   return (
     <div>
-      <div className="max-w-[85rem]  lg:px-8 mx-auto my-4 sm:my-10 ">
-        <div className="flex justify-end mb-3">
+      <div className='mx-auto  my-4 max-w-[85rem] sm:my-10 lg:px-8 '>
+        <div className='mb-3 flex justify-end'>
           <button
             onClick={generatePdf}
-            className="px-3 py-1.5 bg-main hover:bg-mainHover text-white rounded"
+            className='rounded bg-main px-3 py-1.5 text-white hover:bg-mainHover'
           >
             Print Invoice
           </button>
         </div>
         <div
           ref={componentPDF}
-          className="w-full lg:w-3/4 mx-auto   bg-white border rounded-lg"
+          className='mx-auto w-full rounded-lg   border bg-white lg:w-3/4'
         >
           {/* Card */}
-          <div className="p-5 md:p-16 ">
+          <div className='p-5 md:p-16 '>
             {/* Grid */}
-            <div className="">
+            <div className=''>
               <div>
                 <Image
                   src={logoFull}
                   width={150}
                   height={100}
-                  alt="company logo"
+                  alt='company logo'
                 />
-                <address className="mt-2  text-sm not-italic text-gray-800 dark:text-gray-200">
-                  {invoiceFrom?.split(",")?.map((item, i) => (
+                <address className='dark:text-gray-200  mt-2 text-sm not-italic text-gray-800'>
+                  {invoiceFrom?.split(',')?.map((item, i) => (
                     <span key={i}>
                       {item} <br />
                     </span>
@@ -112,32 +112,32 @@ const Invoice = () => {
               </div>
             </div>
 
-            <div className="my-5 relative">
-              <h2 className="invoice-asset text-2xl md:text-2xl font-semibold uppercase text-gray-800 dark:text-gray-200">
+            <div className='relative my-5'>
+              <h2 className='invoice-asset dark:text-gray-200 text-2xl font-semibold uppercase text-gray-800 md:text-2xl'>
                 Invoice
               </h2>
             </div>
 
             <div>
-              <p className="uppercase text-sm font-bold">to</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-5">
+              <p className='text-sm font-bold uppercase'>to</p>
+              <div className='grid grid-cols-1 gap-y-5 md:grid-cols-2'>
                 <div>
-                  <p className="uppercase font-bold text-lg">{customerName}</p>
-                  <p className="text-sm ">{billingAddress || customerName}</p>
+                  <p className='text-lg font-bold uppercase'>{customerName}</p>
+                  <p className='text-sm '>{billingAddress || customerName}</p>
                 </div>
-                <div className="flex md:justify-end md:gap-x-20">
-                  <div className="capitalize">
-                    <p className="font-bold ">Invoice no:</p>
-                    <p className="font-bold whitespace-nowrap">
+                <div className='flex md:justify-end md:gap-x-20'>
+                  <div className='capitalize'>
+                    <p className='font-bold '>Invoice no:</p>
+                    <p className='whitespace-nowrap font-bold'>
                       Transaction Id:
                     </p>
                     <p>date:</p>
                     <p>status:</p>
                   </div>
                   <div>
-                    <p className="font-bold">{orderId}</p>
-                    <p className="font-bold">{transactionId}</p>
-                    <p>{moment(date).format("D MMMM  YYYY")}</p>
+                    <p className='font-bold'>{orderId}</p>
+                    <p className='font-bold'>{transactionId}</p>
+                    <p>{moment(date).format('D MMMM  YYYY')}</p>
                     <p>{paymentStatus}</p>
                   </div>
                 </div>
@@ -146,59 +146,59 @@ const Invoice = () => {
 
             {/* order description  */}
 
-            <div className="flex flex-col bg-white">
-              <div className="-m-1.5 overflow-x-auto">
-                <div className="p-1.5 min-w-full inline-block align-middle">
-                  <div className="overflow-hidden">
-                    <table className="min-w-full divide-y divide-gray-200 my-5 ">
+            <div className='flex flex-col bg-white'>
+              <div className='-m-1.5 overflow-x-auto'>
+                <div className='inline-block min-w-full p-1.5 align-middle'>
+                  <div className='overflow-hidden'>
+                    <table className='my-5 min-w-full divide-y divide-gray-200 '>
                       <thead>
-                        <tr className="border-t-2 border-b-2 border-b-gray-400 border-t-gray-400  ">
+                        <tr className='border-b-2 border-t-2 border-b-gray-400 border-t-gray-400  '>
                           <th
-                            scope="col"
-                            className="px-6 py-2 text-start text-sm font-bold whitespace-nowrap"
+                            scope='col'
+                            className='whitespace-nowrap px-6 py-2 text-start text-sm font-bold'
                           >
                             No
                           </th>
                           <th
-                            scope="col"
-                            className="px-6 py-2 text-start text-sm font-bold whitespace-nowrap"
+                            scope='col'
+                            className='whitespace-nowrap px-6 py-2 text-start text-sm font-bold'
                           >
                             Description
                           </th>
                           <th
-                            scope="col"
-                            className="px-6 py-2 text-start text-sm font-bold whitespace-nowrap"
+                            scope='col'
+                            className='whitespace-nowrap px-6 py-2 text-start text-sm font-bold'
                           >
                             QTY
                           </th>
                           <th
-                            scope="col"
-                            className="px-6 py-2 text-start text-sm font-bold whitespace-nowrap "
+                            scope='col'
+                            className='whitespace-nowrap px-6 py-2 text-start text-sm font-bold '
                           >
                             Price
                           </th>
                           <th
-                            scope="col"
-                            className="px-6 py-2 text-start text-sm font-bold whitespace-nowrap "
+                            scope='col'
+                            className='whitespace-nowrap px-6 py-2 text-start text-sm font-bold '
                           >
                             Total
                           </th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-gray-200 dark:divide-gray-700 ">
-                        <tr className="border-b-2 border-b-gray-400">
-                          <td className="px-6 py-2 whitespace-nowrap text-sm text-start ">
+                      <tbody className='dark:divide-gray-700 divide-y divide-gray-200 '>
+                        <tr className='border-b-2 border-b-gray-400'>
+                          <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
                             1
                           </td>
-                          <td className="px-6 py-2 whitespace-nowrap text-sm text-start ">
-                            <span className="font-bold mb-3 block whitespace-break-spaces">
-                              {" "}
-                              {orderName}{" "}
+                          <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
+                            <span className='mb-3 block whitespace-break-spaces font-bold'>
+                              {' '}
+                              {orderName}{' '}
                             </span>
-                            <p className="flex flex-wrap">
+                            <p className='flex flex-wrap'>
                               {additional?.map((item, index) => (
                                 <span
-                                  className="after:content-[','] mr-1"
+                                  className="mr-1 after:content-[',']"
                                   key={index}
                                 >
                                   {item}
@@ -206,13 +206,13 @@ const Invoice = () => {
                               ))}
                             </p>
                           </td>
-                          <td className="px-6 py-2 whitespace-nowrap text-sm text-start ">
+                          <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
                             1
                           </td>
-                          <td className="px-6 py-2 whitespace-nowrap text-sm text-start ">
+                          <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
                             ${subTotal?.toFixed(2)}
                           </td>
-                          <td className="px-6 py-2 whitespace-nowrap text-sm text-start ">
+                          <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
                             ${grandTotal?.toFixed(2)}
                           </td>
                         </tr>
@@ -224,7 +224,7 @@ const Invoice = () => {
             </div>
             {/* end table  */}
 
-            <div className="font-bold capitalize grid grid-cols-1 md:grid-cols-2 mt-5 md:mt-0 gap-8">
+            <div className='mt-5 grid grid-cols-1 gap-8 font-bold capitalize md:mt-0 md:grid-cols-2'>
               <div>
                 {/* <div className="space-y-1">
                   <p className="capitalize text-xs font-semibold">
@@ -266,30 +266,30 @@ const Invoice = () => {
                 </div> */}
 
                 <div>
-                  <h3 className="font-bold text-sm mt-3 mb-1">
+                  <h3 className='mb-1 mt-3 text-sm font-bold'>
                     Terms and conditions
                   </h3>
-                  <p className="text-xs font-normal">
+                  <p className='text-xs font-normal'>
                     Please send payment within due date. There will be 10%
                     interest charge per month on late payment.
                   </p>
                 </div>
               </div>
               <div>
-                <div className="flex  justify-start md:justify-end gap-x-20 mt-5 md:mt-0">
-                  <div className="space-y-1.5">
+                <div className='mt-5  flex justify-start gap-x-20 md:mt-0 md:justify-end'>
+                  <div className='space-y-1.5'>
                     <p>sub total:</p>
                     <p>tax</p>
                     <p>discount: </p>
                   </div>
-                  <div className="space-y-1.5">
+                  <div className='space-y-1.5'>
                     <p>${subTotal?.toFixed(2)}</p>
                     <p>${taxTotal?.toFixed(2)}</p>
                     <p>${discount?.toFixed(2)}</p>
                   </div>
                 </div>
-                <div className="grandtotal-asset relative bg-main py-1.5 text-white font-bold text-md md:text-lg flex items-center justify-between px-5 mt-5">
-                  <h3 className=" mr-5">Grand total</h3>
+                <div className='grandtotal-asset text-md relative mt-5 flex items-center justify-between bg-main px-5 py-1.5 font-bold text-white md:text-lg'>
+                  <h3 className=' mr-5'>Grand total</h3>
                   <h3>${grandTotal?.toFixed(2)}</h3>
                 </div>
               </div>

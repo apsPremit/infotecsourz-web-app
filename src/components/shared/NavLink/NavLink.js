@@ -1,7 +1,5 @@
 import React from 'react';
 
-const NavLink = () => {
-
-};
+const NavLink = () => {};
 
 export default NavLink;

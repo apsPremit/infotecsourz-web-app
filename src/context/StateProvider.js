@@ -1,20 +1,20 @@
-"use client";
-import { createContext, useEffect, useState } from "react";
-import { UserAuth } from "./AuthProvider";
+'use client';
+import { createContext, useEffect, useState } from 'react';
+import { UserAuth } from './AuthProvider';
 
 export const StateContext = createContext(null);
 
 const StateProvider = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(1);
-  const [photoType, setPhotoType] = useState("");
+  const [photoType, setPhotoType] = useState('');
   const [selectedPackage, setSelectedPackage] = useState({});
   // fileName
-  const [orderName, setOrderName] = useState("");
+  const [orderName, setOrderName] = useState('');
   // background
-  const [backgroundColor, setBackgroundColor] = useState("");
+  const [backgroundColor, setBackgroundColor] = useState('');
   const [customBackground, setCustomBackground] = useState(
-    backgroundColor === "custom" ? backgroundColor : ""
+    backgroundColor === 'custom' ? backgroundColor : ''
   );
 
   //    *******************set file format **************************************************
@@ -27,14 +27,14 @@ const StateProvider = ({ children }) => {
 
   //    *******************set alignments **************************************************
   const [alignments, setAlignments] = useState({
-    marginOverall: "",
-    marginLeft: "",
-    marginRight: "",
-    marginTop: "",
-    marginBottom: "",
-    ratio: "",
-    horizontalAlignment: "",
-    verticalAlignment: "",
+    marginOverall: '',
+    marginLeft: '',
+    marginRight: '',
+    marginTop: '',
+    marginBottom: '',
+    ratio: '',
+    horizontalAlignment: '',
+    verticalAlignment: '',
   });
 
   //    *******************set final specs alignments **************************************************
@@ -69,7 +69,7 @@ const StateProvider = ({ children }) => {
   //    *******************set options **************************************************
   const [openOptions, setOpenOptions] = useState({
     isOpenColor:
-      backgroundColor === "custom" || backgroundColor.startsWith("#")
+      backgroundColor === 'custom' || backgroundColor.startsWith('#')
         ? true
         : false,
     isOpenCrop: true,
@@ -92,11 +92,11 @@ const StateProvider = ({ children }) => {
   //    if background color is original then set custom background to ''
   useEffect(() => {
     if (
-      backgroundColor === "white" ||
-      backgroundColor == "transparent" ||
-      backgroundColor == "original"
+      backgroundColor === 'white' ||
+      backgroundColor == 'transparent' ||
+      backgroundColor == 'original'
     ) {
-      setCustomBackground("");
+      setCustomBackground('');
     }
   }, [backgroundColor]);
 
@@ -105,9 +105,9 @@ const StateProvider = ({ children }) => {
     if (openOptions.isOriginalAspect) {
       setAlignments((prevState) => ({
         ...prevState,
-        ratio: "",
-        horizontalAlignment: "",
-        verticalAlignment: "",
+        ratio: '',
+        horizontalAlignment: '',
+        verticalAlignment: '',
       }));
     }
   }, [openOptions]);
@@ -118,15 +118,15 @@ const StateProvider = ({ children }) => {
     if (openOptions.isOpenCustomMargin) {
       setAlignments((prevState) => ({
         ...prevState,
-        marginOverall: "",
+        marginOverall: '',
       }));
     } else {
       setAlignments((prevState) => ({
         ...prevState,
-        marginTop: "",
-        marginBottom: "",
-        marginLeft: "",
-        marginRight: "",
+        marginTop: '',
+        marginBottom: '',
+        marginLeft: '',
+        marginRight: '',
       }));
     }
   }, [openOptions]);
@@ -179,8 +179,8 @@ const StateProvider = ({ children }) => {
     resizing: isResizing,
     background:
       customBackground ||
-      backgroundColor === "white" ||
-      backgroundColor === "transparent" ||
+      backgroundColor === 'white' ||
+      backgroundColor === 'transparent' ||
       false,
     masking: productFinalSpecs.masking || false,
     clipping:
@@ -202,8 +202,8 @@ const StateProvider = ({ children }) => {
     resizing: isResizing,
     background:
       customBackground ||
-      backgroundColor === "white" ||
-      backgroundColor === "transparent" ||
+      backgroundColor === 'white' ||
+      backgroundColor === 'transparent' ||
       false,
     masking: modelFinalSpecs.masking || false,
     clipping: modelFinalSpecs.clipping || false,
@@ -247,11 +247,11 @@ const StateProvider = ({ children }) => {
 
   useEffect(() => {
     setPerPhotoCost(
-      selectedPackage.package_name !== "pay as go"
+      selectedPackage.package_name !== 'pay as go'
         ? 0
-        : photoType === "product"
-        ? productTotalCost
-        : modelTotalCost
+        : photoType === 'product'
+          ? productTotalCost
+          : modelTotalCost
     );
   }, [photoType, modelTotalCost, productTotalCost, selectedPackage]);
 
@@ -262,10 +262,10 @@ const StateProvider = ({ children }) => {
   // ***********************************************************************************************
   const selectedFormats = Object.keys(formats).filter((key) => formats[key]);
   const selectedBackground =
-    backgroundColor === "custom" ? customBackground : backgroundColor;
+    backgroundColor === 'custom' ? customBackground : backgroundColor;
   const selectedAlignments = Object.entries(alignments).reduce(
     (accumulator, [key, value]) => {
-      if (value !== "") {
+      if (value !== '') {
         accumulator[key] = value;
       }
       return accumulator;
@@ -286,19 +286,19 @@ const StateProvider = ({ children }) => {
     backgroundColor: selectedBackground,
     selectedAlignments,
     additional:
-      photoType === "model" ? modelAdditionalReq : productAdditionalReq,
+      photoType === 'model' ? modelAdditionalReq : productAdditionalReq,
   };
 
   // file upload states
   const [uploadedImages, setUploadedImages] = useState([]);
   const [totalFileSize, setTotalFileSize] = useState(0);
-  const [orderId, setOrderId] = useState("");
-  const [fileUrl, setFileUrl] = useState("");
+  const [orderId, setOrderId] = useState('');
+  const [fileUrl, setFileUrl] = useState('');
   const [imageQuantityFromUrl, setImageQuantityFromUrl] = useState(0);
 
   // specifications page state
   const [productDetailsDescription, setProductDetailsDescription] =
-    useState("");
+    useState('');
   const [hasInstructions, setHasInstructions] = useState(false);
 
   const { userData, setUserData, user } = UserAuth();
@@ -312,10 +312,10 @@ const StateProvider = ({ children }) => {
   }, [selectedPackage]);
 
   // billing page states
-  const [billingMessage, setBillingMessage] = useState("");
+  const [billingMessage, setBillingMessage] = useState('');
   const [taxRate, setTaxRate] = useState(13);
-  const [photoUrl, setPhotoUrl] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [photoUrl, setPhotoUrl] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('');
   const [orderDetails, setOrderDetails] = useState(null);
   const [isShowPricingModal, setShowPricingModal] = useState(false);
 

@@ -1,31 +1,31 @@
-"use client";
-import React, { useState } from "react";
-import { IoMdCheckmark } from "react-icons/io";
+'use client';
+import React, { useState } from 'react';
+import { IoMdCheckmark } from 'react-icons/io';
 
 const BtnAllFacilities = ({ facilities }) => {
   const [showDetails, setShowDetails] = useState(false);
   return (
     <div>
       <div>
-        <div className="flex  flex-col">
-          <div className="flex justify-start">
+        <div className='flex  flex-col'>
+          <div className='flex justify-start'>
             <button
               onClick={() => setShowDetails(!showDetails)}
-              className="text-blue-500 underline"
+              className='text-blue-500 underline'
             >
               More Features
             </button>
           </div>
-          <div className={`${showDetails ? "" : "hidden"}`}>
-            <ul className="list-inside list-disc ">
+          <div className={`${showDetails ? '' : 'hidden'}`}>
+            <ul className='list-inside list-disc '>
               {facilities?.map((item, i) => (
                 <p
                   key={i}
-                  className="gap-x-2 flex items-center my-2 text-center"
+                  className='my-2 flex items-center gap-x-2 text-center'
                 >
-                  <span className="text-sm">
-                    {" "}
-                    <IoMdCheckmark color={"green"} />
+                  <span className='text-sm'>
+                    {' '}
+                    <IoMdCheckmark color={'green'} />
                   </span>
                   <span>{item}</span>
                 </p>

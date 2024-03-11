@@ -1,15 +1,15 @@
-"use client";
-import { UserAuth } from "@/context/AuthProvider";
-import React from "react";
+'use client';
+import { UserAuth } from '@/context/AuthProvider';
+import React from 'react';
 
-import moment from "moment";
-import Link from "next/link";
+import moment from 'moment';
+import Link from 'next/link';
 
 const PlanBox = ({ subscriptions }) => {
   const { userData } = UserAuth();
   if (!subscriptions) {
     return (
-      <div className="h-screen flex justify-center items-center">
+      <div className='flex h-screen items-center justify-center'>
         <p>Loading...</p>
       </div>
     );
@@ -41,38 +41,38 @@ const PlanBox = ({ subscriptions }) => {
 
   return (
     <div>
-      <h1 className=" text-2xl mb-3 ml-3 text-gray-700 medium  whitespace-nowrap">
+      <h1 className=' medium mb-3 ml-3 whitespace-nowrap text-2xl  text-gray-700'>
         My Plan
       </h1>
-      <div className="bg-white p-10 rounded border">
-        <div className="flex justify-between">
+      <div className='rounded border bg-white p-10'>
+        <div className='flex justify-between'>
           <div>
-            <h3 className="font-bold text-xl text-gray-800 capitalize">
+            <h3 className='text-xl font-bold capitalize text-gray-800'>
               {pack}
-              <span className="bg-blue-500 text-white text-xs ml-5 font-normal p-1.5 rounded-xl">
+              <span className='ml-5 rounded-xl bg-blue-500 p-1.5 text-xs font-normal text-white'>
                 Active
               </span>
             </h3>
-            <p className="text-red-400 mt-3 text-sm">
-              Your subscription will be expire on{" "}
-              {moment(expiration).format("MMM D, YYYY")}
+            <p className='mt-3 text-sm text-red-400'>
+              Your subscription will be expire on{' '}
+              {moment(expiration).format('MMM D, YYYY')}
             </p>
           </div>
           <div>
-            <h3 className="text-lg">
-              <span className="text-main"> ${price || "0"}</span> For{" "}
-              {credit || "0"} Credit
+            <h3 className='text-lg'>
+              <span className='text-main'> ${price || '0'}</span> For{' '}
+              {credit || '0'} Credit
             </h3>
-            <p className="text-sm">Validity {validity} Days</p>
-            <p className="text-sm">
-              Subscribed on {moment(createdAt).format("MMM D, YYYY")}
+            <p className='text-sm'>Validity {validity} Days</p>
+            <p className='text-sm'>
+              Subscribed on {moment(createdAt).format('MMM D, YYYY')}
             </p>
           </div>
         </div>
 
-        <div className="space-x-3 mt-5">
-          <Link href="/dashboard/pricing">
-            <button className="bg-main text-white px-2.5 py-1.5 rounded hover:bg-mainHover">
+        <div className='mt-5 space-x-3'>
+          <Link href='/dashboard/pricing'>
+            <button className='rounded bg-main px-2.5 py-1.5 text-white hover:bg-mainHover'>
               Upgrade Plan
             </button>
           </Link>

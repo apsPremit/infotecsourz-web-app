@@ -14,8 +14,8 @@ module.exports = {
         mainHover: '#633fe8',
         neutral: '#ADACB0',
         dashboard_background: '#F5F5F5',
-      }
+      },
     },
   },
   plugins: [],
-}
+};

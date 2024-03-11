@@ -1,27 +1,27 @@
 .invoice-asset::before {
-    content: '';
-    height: 20px;
-    width: 60px;
-    left: -65px;
-    top: 6px;
+  content: '';
+  height: 20px;
+  width: 60px;
+  left: -65px;
+  top: 6px;
 
-    background-color: #4318E3;
-    position: absolute;
+  background-color: #4318e3;
+  position: absolute;
 }
 
 .grandtotal-asset::before {
-    content: '';
-    height: 40px;
-    width: 65px;
-    right: -64px;
-    top: 0px;
+  content: '';
+  height: 40px;
+  width: 65px;
+  right: -64px;
+  top: 0px;
 
-    background-color: #4318E3;
-    position: absolute;
+  background-color: #4318e3;
+  position: absolute;
 }
 
 @media only screen and (max-width: 779px) {
-    .grandtotal-asset::before {
-        display: none;
-    }
+  .grandtotal-asset::before {
+    display: none;
+  }
 }

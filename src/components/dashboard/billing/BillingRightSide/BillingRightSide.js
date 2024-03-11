@@ -1,9 +1,9 @@
-"use client";
-import { UserAuth } from "@/context/AuthProvider";
-import { StateContext } from "@/context/StateProvider";
-import React, { useContext, useEffect, useState } from "react";
-import BillingProcess from "../BillingProcess/BillingProcess";
-import { baseUrl } from "@/utils/functions/baseUrl";
+'use client';
+import { UserAuth } from '@/context/AuthProvider';
+import { StateContext } from '@/context/StateProvider';
+import React, { useContext, useEffect, useState } from 'react';
+import BillingProcess from '../BillingProcess/BillingProcess';
+import { baseUrl } from '@/utils/functions/baseUrl';
 // import BillingProcess from "../BillingProcess/BillingProcess";
 // import { StateContext } from "../../../../context/StateProvider";
 // import { UserAuth } from "../../../../context/AuthProvider";
@@ -35,11 +35,11 @@ const BillingRightSide = () => {
           throw new Error(res.statusText);
         }
         const result = await res.json();
-        console.log("single pack", result.data);
+        console.log('single pack', result.data);
 
         setPackageInfo(result?.data);
       } catch (error) {
-        throw new Error(error.message || "something went wrong");
+        throw new Error(error.message || 'something went wrong');
       }
     };
     fetchPackage();
@@ -58,50 +58,50 @@ const BillingRightSide = () => {
   const remainingCredit = userData?.remainingCredit - totalPhotos;
 
   let billPropertiesForPayAsGo = [
-    { title: "Total Photos", value: totalPhotos },
-    { title: "Order Name", value: orderName },
+    { title: 'Total Photos', value: totalPhotos },
+    { title: 'Order Name', value: orderName },
     {
-      title: "Package",
+      title: 'Package',
       value: selectedPackage.package_name || userData?.subscribedPackage,
     },
     {
-      title: "Price per product",
-      value: "$" + parseFloat(perPhotoCost).toFixed(2),
+      title: 'Price per product',
+      value: '$' + parseFloat(perPhotoCost).toFixed(2),
     },
-    { title: "Turn Around Time", value: returnTime + " Hours" },
-    { title: "subtotal", value: "$" + parseFloat(subTotal).toFixed(2) },
-    { title: "Tax", value: "$" + parseFloat(taxTotal).toFixed(2) },
-    { title: "Grand Total", value: "$" + parseFloat(grandTotal).toFixed(2) },
+    { title: 'Turn Around Time', value: returnTime + ' Hours' },
+    { title: 'subtotal', value: '$' + parseFloat(subTotal).toFixed(2) },
+    { title: 'Tax', value: '$' + parseFloat(taxTotal).toFixed(2) },
+    { title: 'Grand Total', value: '$' + parseFloat(grandTotal).toFixed(2) },
   ];
 
   let billPropertiesForCreditOrder = [
-    { title: "Order Name", value: orderName },
-    { title: "Total Photos", value: totalPhotos },
-    { title: "Photo Type", value: photoType },
-    { title: "Turn Around Time", value: returnTime + " Hours" },
+    { title: 'Order Name', value: orderName },
+    { title: 'Total Photos', value: totalPhotos },
+    { title: 'Photo Type', value: photoType },
+    { title: 'Turn Around Time', value: returnTime + ' Hours' },
     {
-      title: "Package",
+      title: 'Package',
       value: selectedPackage.package_name || userData?.subscribedPackage,
     },
 
-    { title: "Remaining Credit", value: remainingCredit },
+    { title: 'Remaining Credit', value: remainingCredit },
   ];
 
   const billProperties =
-    selectedPackage.package_name == "pay as go"
+    selectedPackage.package_name == 'pay as go'
       ? billPropertiesForPayAsGo
       : billPropertiesForCreditOrder;
 
   return (
-    <div className="bg-white rounded p-5 ">
-      <h3 className="font-bold text-xl mb-5"> Summary</h3>
+    <div className='rounded bg-white p-5 '>
+      <h3 className='mb-5 text-xl font-bold'> Summary</h3>
 
       {/* properties  */}
-      <div className="my-5">
+      <div className='my-5'>
         {billProperties.map((property, index) => (
-          <div className="my-3" key={index}>
-            <div className="flex justify-between items-center ">
-              <h3 className="text-[#ADACB0]">{property?.title}</h3>
+          <div className='my-3' key={index}>
+            <div className='flex items-center justify-between '>
+              <h3 className='text-[#ADACB0]'>{property?.title}</h3>
               <h3>{property?.value}</h3>
             </div>
           </div>
@@ -109,19 +109,19 @@ const BillingRightSide = () => {
       </div>
 
       {/* Details  */}
-      <div className="flex  flex-col">
-        <div className="flex justify-end">
+      <div className='flex  flex-col'>
+        <div className='flex justify-end'>
           <button
             onClick={() => setShowDetails(!showDetails)}
-            className="text-main underline"
+            className='text-main underline'
           >
             More Details
           </button>
         </div>
-        <div className={`${showDetails ? "" : "hidden"}`}>
-          <ul className="list-inside list-disc">
+        <div className={`${showDetails ? '' : 'hidden'}`}>
+          <ul className='list-inside list-disc'>
             {facilities?.map((item, i) => (
-              <li className="" key={i}>
+              <li className='' key={i}>
                 {item}
               </li>
             ))}
@@ -131,16 +131,16 @@ const BillingRightSide = () => {
       <hr />
 
       {/* price section  */}
-      <div className="flex items-center space-x-3 my-7">
+      <div className='my-7 flex items-center space-x-3'>
         <div>
-          <p className="px-5 py-2.5 border rounded text-2xl ">$</p>
+          <p className='rounded border px-5 py-2.5 text-2xl '>$</p>
         </div>
         <div>
-          <h3 className="text-xl font-bold">
-            <span className="mr-1">$</span> {grandTotal.toFixed(2)}{" "}
+          <h3 className='text-xl font-bold'>
+            <span className='mr-1'>$</span> {grandTotal.toFixed(2)}{' '}
             <span>USD</span>
           </h3>
-          <p className="text-neutral">Cost</p>
+          <p className='text-neutral'>Cost</p>
         </div>
       </div>
 

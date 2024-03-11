@@ -1,11 +1,11 @@
-"use client";
-import { StateContext } from "@/context/StateProvider";
-import React, { useContext, useState } from "react";
-import { IoMdCheckmark } from "react-icons/io";
-import { usePathname, useRouter } from "next/navigation";
-import { UserAuth } from "@/context/AuthProvider";
-import Swal from "sweetalert2";
-import Link from "next/link";
+'use client';
+import { StateContext } from '@/context/StateProvider';
+import React, { useContext, useState } from 'react';
+import { IoMdCheckmark } from 'react-icons/io';
+import { usePathname, useRouter } from 'next/navigation';
+import { UserAuth } from '@/context/AuthProvider';
+import Swal from 'sweetalert2';
+import Link from 'next/link';
 
 const SinglePackage = ({ plan }) => {
   const { setSelectedPackage, selectedPackage, setShowPricingModal } =
@@ -15,21 +15,21 @@ const SinglePackage = ({ plan }) => {
   const pathName = usePathname();
   const [showDetails, setShowDetails] = useState(false);
   const handleNavigation = (plan) => {
-    if (plan?.package_name === "free trial") {
+    if (plan?.package_name === 'free trial') {
       return router.push(`/dashboard/pricing/billing?package=${plan?._id}`);
     }
-    if (package_name === "pay as go") {
+    if (package_name === 'pay as go') {
       setSelectedPackage(plan);
-      return router.push("/dashboard/new_order");
+      return router.push('/dashboard/new_order');
     }
     Swal.fire({
-      title: "Are you sure for subscribe this package?",
+      title: 'Are you sure for subscribe this package?',
       text: `Your current pack will be upgraded and ${plan?.photos} credits will be added to your account. Your remain all credits from previous package will be added to your account automatically`,
-      icon: "warning",
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes Subscribe",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes Subscribe',
     }).then((result) => {
       if (result.isConfirmed) {
         router.push(`/dashboard/pricing/billing?package=${plan?._id}`);
@@ -55,41 +55,41 @@ const SinglePackage = ({ plan }) => {
   } = plan || {};
   return (
     <>
-      <div className={`border-shadow rounded   p-5 shadow relative bg-white`}>
-        <label className="cursor-pointer " htmlFor={package_name}>
-          <div className="min-h-[52px]">
-            <h1 className="font-bold text-2xl capitalize">{package_name}</h1>
+      <div className={`relative rounded   border-shadow bg-white p-5 shadow`}>
+        <label className='cursor-pointer ' htmlFor={package_name}>
+          <div className='min-h-[52px]'>
+            <h1 className='text-2xl font-bold capitalize'>{package_name}</h1>
             {price > 0 && (
-              <h3 className="font-bold">
+              <h3 className='font-bold'>
                 ${price}
-                {type && <span className="">/{type}</span>}
+                {type && <span className=''>/{type}</span>}
               </h3>
             )}
-            {title && <h3 className="font-bold">{title}</h3>}
+            {title && <h3 className='font-bold'>{title}</h3>}
           </div>
 
-          <hr className="my-3" />
+          <hr className='my-3' />
 
-          <div className="min-h-[150px]">
-            <ul className="mb-5">
+          <div className='min-h-[150px]'>
+            <ul className='mb-5'>
               {photos > 0 && (
-                <li className="list-inside list-disc">{photos} Photos</li>
+                <li className='list-inside list-disc'>{photos} Photos</li>
               )}
               {photos > 0 && (
-                <li className="list-inside list-disc">{photos} Credits</li>
+                <li className='list-inside list-disc'>{photos} Credits</li>
               )}
               {validity > 0 && (
-                <li className="list-inside list-disc">
+                <li className='list-inside list-disc'>
                   {validity} Days Validity
                 </li>
               )}
               {price > 0 && (
-                <li className="list-inside list-disc">
+                <li className='list-inside list-disc'>
                   ${getPerCost(price, photos)} price per photo
                 </li>
               )}
               {spec?.map((sp, index) => (
-                <li className="list-inside list-disc" key={index}>
+                <li className='list-inside list-disc' key={index}>
                   {sp}
                 </li>
               ))}
@@ -97,22 +97,22 @@ const SinglePackage = ({ plan }) => {
 
             {/* details  */}
             <div>
-              <div className="flex b flex-col">
-                <div className="flex justify-start">
+              <div className='b flex flex-col'>
+                <div className='flex justify-start'>
                   <button
                     onClick={() => setShowDetails(!showDetails)}
-                    className="text-blue-500 underline"
+                    className='text-blue-500 underline'
                   >
                     More Features
                   </button>
                 </div>
-                <div className={`${showDetails ? "" : "hidden"}`}>
-                  <ul className="list-inside list-disc">
+                <div className={`${showDetails ? '' : 'hidden'}`}>
+                  <ul className='list-inside list-disc'>
                     {facilities?.map((item, i) => (
-                      <p key={i} className="gap-x-2 flex items-center my-2">
-                        <span className="text-sm">
-                          {" "}
-                          <IoMdCheckmark color={"green"} />
+                      <p key={i} className='my-2 flex items-center gap-x-2'>
+                        <span className='text-sm'>
+                          {' '}
+                          <IoMdCheckmark color={'green'} />
                         </span>
                         <span>{item}</span>
                       </p>
@@ -122,10 +122,10 @@ const SinglePackage = ({ plan }) => {
               </div>
             </div>
 
-            {package_name === "pay as go" && (
+            {package_name === 'pay as go' && (
               <button
                 onClick={() => setShowPricingModal(true)}
-                className="gap-x-2 flex items-center my-2 text-main  underline outline-0 border-0"
+                className='my-2 flex items-center gap-x-2 border-0  text-main underline outline-0'
               >
                 About Pricing
               </button>
@@ -134,47 +134,47 @@ const SinglePackage = ({ plan }) => {
 
           <div>
             {package_name === userData?.subscribedPackage ? (
-              <div className="group relative  flex justify-center">
+              <div className='group relative  flex justify-center'>
                 <button
                   disabled
-                  className="py-2 my-5 px-3.5 text-white bg-mainHover rounded w-full  "
+                  className='my-5 w-full rounded bg-mainHover px-3.5 py-2 text-white  '
                 >
                   Current Plan
                 </button>
-                <span className="absolute -top-10 scale-0 transition-all rounded bg-slate-800 p-2 text-xs text-white group-hover:scale-100">
+                <span className='absolute -top-10 scale-0 rounded bg-slate-800 p-2 text-xs text-white transition-all group-hover:scale-100'>
                   You already have this plan. Choose another plan.
                 </span>
               </div>
-            ) : package_name == "enterprise" ? (
-              <Link href="/dashboard/support">
-                <button className="py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full disabled:bg-blue-200 ">
+            ) : package_name == 'enterprise' ? (
+              <Link href='/dashboard/support'>
+                <button className='my-5 w-full rounded bg-blue-500 px-3.5 py-2 text-white hover:bg-blue-600 disabled:bg-blue-200 '>
                   Contact Us
                 </button>
               </Link>
             ) : (
-              <div className="group relative  flex justify-center">
+              <div className='group relative  flex justify-center'>
                 <button
                   disabled={
-                    package_name === "free trial" &&
+                    package_name === 'free trial' &&
                     userData?.isAvailableFreeTrial === false
                   }
                   onClick={() => handleNavigation(plan)}
-                  className="py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full disabled:bg-blue-200 "
+                  className='my-5 w-full rounded bg-blue-500 px-3.5 py-2 text-white hover:bg-blue-600 disabled:bg-blue-200 '
                 >
-                  {package_name == "free trial"
-                    ? "Start Free Trial"
-                    : package_name == "pay as go"
-                    ? "Get Started"
-                    : "Subscribe"}
+                  {package_name == 'free trial'
+                    ? 'Start Free Trial'
+                    : package_name == 'pay as go'
+                      ? 'Get Started'
+                      : 'Subscribe'}
                 </button>
-                {package_name === "pay as go" && (
-                  <span className="absolute -top-10 scale-0 transition-all rounded bg-slate-500 p-2 text-xs text-white group-hover:scale-100">
+                {package_name === 'pay as go' && (
+                  <span className='absolute -top-10 scale-0 rounded bg-slate-500 p-2 text-xs text-white transition-all group-hover:scale-100'>
                     Charge depends on your retouching needs.
                   </span>
                 )}
-                {package_name === "free trial" &&
+                {package_name === 'free trial' &&
                   userData?.isAvailableFreeTrial == false && (
-                    <span className="absolute -top-10 scale-0 transition-all rounded bg-slate-800 p-2 text-xs text-white group-hover:scale-100">
+                    <span className='absolute -top-10 scale-0 rounded bg-slate-800 p-2 text-xs text-white transition-all group-hover:scale-100'>
                       You already used free trial
                     </span>
                   )}

@@ -1,10 +1,10 @@
-"use client";
-import { UserAuth } from "@/context/AuthProvider";
-import { baseUrl } from "@/utils/functions/baseUrl";
-import axios from "axios";
+'use client';
+import { UserAuth } from '@/context/AuthProvider';
+import { baseUrl } from '@/utils/functions/baseUrl';
+import axios from 'axios';
 
-import { useEffect, useState } from "react";
-import { BsUpload } from "react-icons/bs";
+import { useEffect, useState } from 'react';
+import { BsUpload } from 'react-icons/bs';
 
 const UploadField = ({
   uploadedImages,
@@ -17,9 +17,9 @@ const UploadField = ({
   setTotalFileSize,
 }) => {
   useEffect(() => {
-    if (orderId === "") {
+    if (orderId === '') {
       const randomNum = Math.floor(Math.random() * 100000000);
-      const randomString = String(randomNum).padStart(8, "0");
+      const randomString = String(randomNum).padStart(8, '0');
       setOrderId(randomString);
     }
   }, []);
@@ -27,7 +27,7 @@ const UploadField = ({
   const { user } = UserAuth();
   const generateOrderId = async () => {
     const randomNum = Math.floor(Math.random() * 100000000);
-    const randomString = String(randomNum).padStart(8, "0");
+    const randomString = String(randomNum).padStart(8, '0');
     return randomString;
   };
 
@@ -58,7 +58,7 @@ const UploadField = ({
     // create form data
     const formData = new FormData();
 
-    selectedFileArray.forEach((file) => formData.append("files", file));
+    selectedFileArray.forEach((file) => formData.append('files', file));
 
     // get progress
     const config = {
@@ -86,36 +86,36 @@ const UploadField = ({
       setUploading(false);
     }
 
-    e.target.value = "";
+    e.target.value = '';
   };
 
   return (
-    <div className=" ">
+    <div className=' '>
       <label
-        htmlFor="uploadField"
-        className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 "
+        htmlFor='uploadField'
+        className='flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 '
       >
-        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-          <span className="text-2xl mb-3">
+        <div className='flex flex-col items-center justify-center pb-6 pt-5'>
+          <span className='mb-3 text-2xl'>
             <BsUpload />
           </span>
-          <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-            <span className="font-semibold">
+          <p className='dark:text-gray-400 mb-2 text-sm text-gray-500'>
+            <span className='font-semibold'>
               Click to upload file from you computer.
             </span>
           </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+          <p className='dark:text-gray-400 text-xs text-gray-500'>
             SVG, PNG, JPG or GIF
           </p>
         </div>
         <input
           onChange={handleImageUpload}
-          id="uploadField"
-          type="file"
-          name="images"
+          id='uploadField'
+          type='file'
+          name='images'
           multiple
-          accept="image/*"
-          className="hidden"
+          accept='image/*'
+          className='hidden'
         />
       </label>
     </div>

@@ -1,13 +1,13 @@
-import config from "@/config";
-import NextAuth from "next-auth/next";
-import CredentialsProvider from "next-auth/providers/credentials";
+import config from '@/config';
+import NextAuth from 'next-auth/next';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 
   providers: [
     CredentialsProvider({
-      name: "credentials",
+      name: 'credentials',
       credentials: {},
       async authorize(credentials) {
         try {
@@ -15,9 +15,9 @@ export const authOptions = {
           const response = await fetch(
             `${config.api_base_url}/auth/web/login`,
             {
-              method: "POST",
+              method: 'POST',
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
               },
               body: JSON.stringify({
                 email: credentials.email,
@@ -67,7 +67,7 @@ export const authOptions = {
   },
 
   pages: {
-    signIn: "/login",
+    signIn: '/login',
   },
 };
 
