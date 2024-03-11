@@ -6,10 +6,10 @@ import OrderTable from "@/components/dashboard/dashboard/OrderTable/OrderTable";
 import SubscribedPackage from "@/components/dashboard/dashboard/SubscribedPackage/SubscribedPackage";
 import FreeTrialBox from "@/components/dashboard/dashboard/FreeTrialBox/FreeTrialBox";
 import { getServerSession } from "next-auth/next";
-import { nextOption } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/dist/server/api-utils";
 import { baseUrl } from "@/utils/functions/baseUrl";
 import Alert from "@/components/shared/Alert/Alert";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export const metadata = {
   title: "Dashboard | Infotecsourz",
@@ -27,11 +27,13 @@ const fetchOrders = async (email) => {
 };
 
 const page = async (props) => {
-  const session = await getServerSession(nextOption);
+  const session = await getServerSession(authOptions);
+  console.log({ sessionFromPage: session });
   if (!session) {
     return redirect("/login");
   }
-  const orders = await fetchOrders(session.user.email);
+  // const orders = await fetchOrders(session.user.email);
+  const orders = [];
   // const res = await fetch(`${baseUrl}/user/${session?.user?.email}`);
   // const data = await res.json();
 

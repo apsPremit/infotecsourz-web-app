@@ -8,11 +8,11 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import { ImSpinner2 } from "react-icons/im";
-import { baseUrl } from "@/utils/functions/baseUrl";
 import "react-phone-input-2/lib/style.css";
 import "./SignupForm.css";
 import { signIn } from "next-auth/react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import config from "@/config";
 
 const SignUpForm = () => {
   const router = useRouter();
@@ -64,7 +64,7 @@ const SignUpForm = () => {
     setLoading(true);
 
     try {
-      const res = await fetch(`${baseUrl}/auth/register`, {
+      const res = await fetch(`${config.api_base_url}/auth/web/register`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -77,22 +77,21 @@ const SignUpForm = () => {
           company,
         }),
       });
-
-      const data = await res.json();
-      if (data?.error) {
-        setLoading(false);
-        return setError(data?.error);
-      }
-
-      if (data?.message) {
-        // router.replace(`/login?message=${data?.message}`)
-        await signIn("credentials", {
+      const result = await res.json();
+      if (result.success) {
+        const signInResponse = await signIn("credentials", {
           email,
           password,
-          callbackUrl: "/dashboard/plans",
-          redirect: true,
+          redirect: false,
         });
+        if (signInResponse.ok) {
+          router.replace("/dashboard/plans");
+          setLoading(false);
+        }
         setLoading(false);
+      } else {
+        setLoading(false);
+        setError(result.message);
       }
     } catch (error) {
       setLoading(false);
