@@ -8,6 +8,7 @@ const StateProvider = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(1);
   const [photoType, setPhotoType] = useState('');
+  const [isTermsAgreed, setIsTermsAgreed] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState({});
   // fileName
   const [orderName, setOrderName] = useState('');
@@ -250,8 +251,8 @@ const StateProvider = ({ children }) => {
       selectedPackage.package_name !== 'pay as go'
         ? 0
         : photoType === 'product'
-          ? productTotalCost
-          : modelTotalCost
+        ? productTotalCost
+        : modelTotalCost
     );
   }, [photoType, modelTotalCost, productTotalCost, selectedPackage]);
 
@@ -380,6 +381,8 @@ const StateProvider = ({ children }) => {
     setOrderDetails,
     isShowPricingModal,
     setShowPricingModal,
+    isTermsAgreed,
+    setIsTermsAgreed,
   };
 
   return (

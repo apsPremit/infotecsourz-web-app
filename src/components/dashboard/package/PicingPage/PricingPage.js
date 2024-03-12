@@ -3,13 +3,24 @@ import { baseUrl } from '@/utils/functions/baseUrl';
 import React, { useEffect, useState } from 'react';
 import SinglePackage from '../SinglePackage/SinglePackage';
 import PricingTable from '@/components/shared/PricingTable/PricingTable';
+import config from '@/config';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { useSession } from 'next-auth/react';
 
 const PricingPage = () => {
   const [allPackage, setAllPackage] = useState([]);
+  const session = useSession();
+  const user = session.data.user;
+
   useEffect(() => {
     const fetchPackage = async () => {
       try {
-        const res = await fetch(`${baseUrl}/package`);
+        const res = await fetch(`${config.api_base_url}/plans`, {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        });
         if (!res.ok) {
           throw new Error(res.statusText);
         }
@@ -20,7 +31,7 @@ const PricingPage = () => {
       }
     };
     fetchPackage();
-  }, []);
+  }, [user?.accessToken]);
 
   return (
     <div>
