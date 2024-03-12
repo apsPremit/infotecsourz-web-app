@@ -1,5 +1,5 @@
 'use client';
-import { UserAuth } from '@/context/AuthProvider';
+
 import { StateContext } from '@/context/StateProvider';
 import Image from 'next/image';
 import React, { useContext, useState } from 'react';
@@ -7,7 +7,6 @@ import paymentMethods from '../../../../../public/images/others/payment_methods.
 import bank_transfer from '../../../../../public/images/others/bank_transfer.png';
 
 const BillingLeftSide = () => {
-  const { user } = UserAuth();
   const { setBillingMessage, paymentMethod, setPaymentMethod } =
     useContext(StateContext);
 

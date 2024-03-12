@@ -1,5 +1,4 @@
 'use client';
-import { UserAuth } from '@/context/AuthProvider';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import axios from 'axios';
 
@@ -24,7 +23,6 @@ const UploadField = ({
     }
   }, []);
 
-  const { user } = UserAuth();
   const generateOrderId = async () => {
     const randomNum = Math.floor(Math.random() * 100000000);
     const randomString = String(randomNum).padStart(8, '0');

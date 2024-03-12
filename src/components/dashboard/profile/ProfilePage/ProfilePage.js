@@ -1,11 +1,9 @@
 'use client';
-import LogOutBtn from '@/components/shared/LogOutBtn/LogOutBtn';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react';
 import { IoLocationOutline } from 'react-icons/io5';
 import defaultProfileImage from '../../../../../public/images/others/profile.png';
-import { UserAuth } from '@/context/AuthProvider';
 import axios from 'axios';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import { StateContext } from '@/context/StateProvider';
@@ -13,9 +11,10 @@ import { useSession } from 'next-auth/react';
 
 const ProfilePage = () => {
   const { photoUrl, setPhotoUrl } = useContext(StateContext);
-  const { userData } = UserAuth();
+  const session = useSession();
+  const user = session?.data?.user;
 
-  const { name, email, image, country, company } = userData || {};
+  const { name, email, image, country, company } = user || {};
 
   return (
     <div className='lg:px-10 '>
@@ -46,7 +45,6 @@ const ProfilePage = () => {
                 Edit Profile
               </button>
             </Link>
-            {/* <LogOutBtn /> */}
           </div>
         </div>
       </div>

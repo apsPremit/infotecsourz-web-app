@@ -46,11 +46,12 @@ export const authOptions = {
         token.email = user.email;
         token.userId = user.id;
         token.role = user.role;
+        token.able_free_trial = user.able_free_trial;
         token.subscription = user.subscription;
         // token.id = profile.id;
       }
       if (trigger === 'update') {
-        token.subscription = session.user.subscription;
+        token = session.user;
         return token;
       }
       return token;

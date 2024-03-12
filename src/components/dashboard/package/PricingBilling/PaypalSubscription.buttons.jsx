@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { ImSpinner2 } from 'react-icons/im';
 import { StateContext } from '@/context/StateProvider';
-import { UserAuth } from '@/context/AuthProvider';
 import config from '@/config';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -15,10 +14,9 @@ const PaypalSubscriptionButtons = ({ plan_id }) => {
   console.log({ plan_id });
   const { isTermsAgreed, setIsTermsAgreed, taxRate } = useContext(StateContext);
   const [isLoading, setLoading] = useState(true);
-  const { userData } = UserAuth();
   const session = useSession();
   const router = useRouter();
-  const userId = session.data.user.userId;
+  const userId = session?.data?.user?.userId;
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -74,7 +72,11 @@ const PaypalSubscriptionButtons = ({ plan_id }) => {
                 );
                 const result = await response.json();
                 if (result.success) {
-                  await updateSession(result.data);
+                  const sessionData = {
+                    ...result.data,
+                    able_free_trial: false,
+                  };
+                  await updateSession(sessionData);
                   router.replace('/subscription-success');
                 }
               } catch (error) {

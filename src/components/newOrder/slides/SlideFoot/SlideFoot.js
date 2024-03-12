@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import styles from '@/app/styles.module.css';
 import { StateContext } from '@/context/StateProvider';
 import { redirect, useRouter } from 'next/navigation';
-import { UserAuth } from '@/context/AuthProvider';
 import Swal from 'sweetalert2';
+import { useSession } from 'next-auth/react';
 
 const SlideFoot = ({ handlePrev, handleNext, currentSlide }) => {
   const {
@@ -19,13 +19,13 @@ const SlideFoot = ({ handlePrev, handleNext, currentSlide }) => {
     selectedPackage,
   } = useContext(StateContext);
   const router = useRouter();
-  const { userData } = UserAuth();
-
+  const session = useSession();
+  const user = session?.data?.user;
   const goToNextPage = () => {
     if (currentSlide === 6) {
       return router.push('/dashboard/upload');
     }
-    if (!userData?.subscribedPackage || userData?.remainingCredit < 1) {
+    if (!user?.subscription || user?.subscription?.remaining_credit < 1) {
       return Swal.fire({
         title: 'You have no credit, Please upgrade your plan',
         icon: 'warning',

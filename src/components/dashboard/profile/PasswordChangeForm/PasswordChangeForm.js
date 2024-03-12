@@ -1,11 +1,12 @@
-import { UserAuth } from '@/context/AuthProvider';
 import { baseUrl } from '@/utils/functions/baseUrl';
+import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 const PasswordChangeForm = () => {
-  const { userData } = UserAuth();
+  const session = useSession();
+  const user = session?.data?.user;
   const [error, setError] = useState('');
 
   const {
@@ -23,7 +24,7 @@ const PasswordChangeForm = () => {
     setError('');
     try {
       const res = await fetch(
-        `${baseUrl}/auth/change_password/${userData?.email}`,
+        `${baseUrl}/auth/change_password/${user?.email}`,
         {
           method: 'PUT',
           headers: {

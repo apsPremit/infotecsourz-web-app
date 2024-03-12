@@ -2,7 +2,6 @@
 import { StateContext } from '@/context/StateProvider';
 import React, { useContext } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import Notification from '../dashboard/Notification/Notification';
 const DashboardHeader = () => {
   const { isSidebarOpen, setSidebarOpen } = useContext(StateContext);
   const newOrderHandler = () => {
@@ -30,7 +29,6 @@ const DashboardHeader = () => {
         >
           Create new Order
         </button>
-        {/* <Notification /> */}
       </div>
     </div>
   );

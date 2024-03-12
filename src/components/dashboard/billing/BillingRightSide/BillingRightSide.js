@@ -1,13 +1,9 @@
 'use client';
-import { UserAuth } from '@/context/AuthProvider';
 import { StateContext } from '@/context/StateProvider';
 import React, { useContext, useEffect, useState } from 'react';
 import BillingProcess from '../BillingProcess/BillingProcess';
 import { baseUrl } from '@/utils/functions/baseUrl';
-// import BillingProcess from "../BillingProcess/BillingProcess";
-// import { StateContext } from "../../../../context/StateProvider";
-// import { UserAuth } from "../../../../context/AuthProvider";
-// import { packages } from "../../../../utils/json/packagePlan";
+import { useSession } from 'next-auth/react';
 
 const BillingRightSide = () => {
   const {
@@ -23,12 +19,14 @@ const BillingRightSide = () => {
   } = useContext(StateContext);
 
   const [packageInfo, setPackageInfo] = useState({});
+  const session = useSession();
+  const user = session?.data?.user;
   useEffect(() => {
     const fetchPackage = async () => {
       try {
         const res = await fetch(
           `${baseUrl}/package/single/${
-            selectedPackage?.package_name || userData?.subscribedPackage
+            selectedPackage?.package_name || user?.subscription?.id
           }`
         );
         if (!res.ok) {
@@ -43,11 +41,10 @@ const BillingRightSide = () => {
       }
     };
     fetchPackage();
-  }, [selectedPackage]);
+  }, [user?.subscription?.id]);
 
   const [showDetails, setShowDetails] = useState(false);
-  const { userData } = UserAuth();
-  const pack = selectedPackage.package_name || userData?.subscribedPackage;
+  const pack = selectedPackage.package_name || user?.subscription?.plan_name;
   const { package_name, price, photos, facilities } = packageInfo || {};
 
   let totalPhotos =
@@ -55,14 +52,14 @@ const BillingRightSide = () => {
   let subTotal = totalPhotos * perPhotoCost;
   let taxTotal = (taxRate / 100) * subTotal;
   let grandTotal = subTotal + taxTotal;
-  const remainingCredit = userData?.remainingCredit - totalPhotos;
+  const remainingCredit = user?.subscription?.remaining_credit - totalPhotos;
 
   let billPropertiesForPayAsGo = [
     { title: 'Total Photos', value: totalPhotos },
     { title: 'Order Name', value: orderName },
     {
       title: 'Package',
-      value: selectedPackage.package_name || userData?.subscribedPackage,
+      value: selectedPackage.package_name || user?.subscription?.plan_name,
     },
     {
       title: 'Price per product',
@@ -81,7 +78,7 @@ const BillingRightSide = () => {
     { title: 'Turn Around Time', value: returnTime + ' Hours' },
     {
       title: 'Package',
-      value: selectedPackage.package_name || userData?.subscribedPackage,
+      value: selectedPackage.package_name || user?.subscription?.plan_name,
     },
 
     { title: 'Remaining Credit', value: remainingCredit },
@@ -146,6 +143,7 @@ const BillingRightSide = () => {
 
       {/* billing btn and process  */}
       <BillingProcess
+        session={session}
         subTotal={subTotal}
         taxTotal={taxTotal}
         perPhotoCost={perPhotoCost}

@@ -3,14 +3,15 @@ import { StateContext } from '../../../../context/StateProvider';
 import React, { useContext, useState } from 'react';
 import { IoMdCheckmark } from 'react-icons/io';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { UserAuth } from '../../../../context/AuthProvider';
 import Swal from 'sweetalert2';
 import PricingTable from '../../../shared/PricingTable/PricingTable';
+import { useSession } from 'next-auth/react';
 
 const SinglePackage = ({ plan }) => {
   const { setSelectedPackage, selectedPackage } = useContext(StateContext);
   const [isShowPricingModal, setShowPricingModal] = useState(false);
-  const { userData } = UserAuth();
+  const session = useSession();
+  const user = session?.data?.user;
   const router = useRouter();
   const pathName = usePathname();
   const params = useSearchParams();
@@ -156,7 +157,7 @@ const SinglePackage = ({ plan }) => {
           </div>
 
           <div>
-            {(plan_name === userData?.subscription?.plan_name) === plan_name ? (
+            {(plan_name === user?.subscription?.plan_name) === plan_name ? (
               <div className='group relative  flex justify-center'>
                 <button
                   disabled
@@ -173,7 +174,7 @@ const SinglePackage = ({ plan }) => {
                 <button
                   disabled={
                     plan_name === 'free trial' &&
-                    userData?.able_free_trial === false
+                    user?.able_free_trial === false
                   }
                   onClick={() => handleNavigation(plan)}
                   className={`${
@@ -189,7 +190,7 @@ const SinglePackage = ({ plan }) => {
                     Charge depends on your retouching needs.
                   </span>
                 )}
-                {type === 'free' && userData?.able_free_trial === false && (
+                {type === 'free' && user?.able_free_trial === false && (
                   <span className='absolute -top-10 scale-0 transition-all rounded bg-slate-800 p-2 text-xs text-white group-hover:scale-100'>
                     You already used free trial
                   </span>

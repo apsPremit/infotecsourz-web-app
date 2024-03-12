@@ -1,13 +1,14 @@
 'use client';
-import { UserAuth } from '@/context/AuthProvider';
 import sendSupportMessage from '@/utils/functions/sendSupportMessage';
+import { useSession } from 'next-auth/react';
 
 import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { ImSpinner2 } from 'react-icons/im';
 
 const SupportForm = () => {
-  const { userData } = UserAuth();
+  const session = useSession();
+  const user = session?.data?.user;
   const [loading, setLoading] = useState(false);
 
   const sendMessage = async (e) => {
@@ -17,7 +18,7 @@ const SupportForm = () => {
     const subject = form.subject.value;
     const message = form.message.value;
     const phone = form.phone.value;
-    const messageData = { email: userData?.email, subject, message, phone };
+    const messageData = { email: user?.email, subject, message, phone };
     try {
       const sendResult = await sendSupportMessage(messageData);
       if (sendResult?.error) {
@@ -55,7 +56,7 @@ const SupportForm = () => {
             </label>
             <input
               type='email'
-              defaultValue={userData?.email}
+              defaultValue={user?.email}
               id='email'
               className='focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm'
               placeholder='name@flowbite.com'
@@ -71,7 +72,7 @@ const SupportForm = () => {
               Your Phone Number
             </label>
             <input
-              defaultValue={userData?.name}
+              defaultValue={user?.name}
               type='text'
               id='phone'
               name='phone'

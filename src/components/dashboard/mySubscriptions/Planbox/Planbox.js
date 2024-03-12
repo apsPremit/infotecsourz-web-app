@@ -1,12 +1,11 @@
 'use client';
-import { UserAuth } from '@/context/AuthProvider';
+
 import React from 'react';
 
 import moment from 'moment';
 import Link from 'next/link';
 
 const PlanBox = ({ subscriptions }) => {
-  const { userData } = UserAuth();
   if (!subscriptions) {
     return (
       <div className='flex h-screen items-center justify-center'>

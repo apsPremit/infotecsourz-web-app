@@ -1,18 +1,19 @@
 'use client';
-import { UserAuth } from '@/context/AuthProvider';
 import { StateContext } from '@/context/StateProvider';
 import moment from 'moment/moment';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 
 import React, { useContext } from 'react';
 
 const PackageBillingInfo = ({ pack }) => {
-  const { userData } = UserAuth();
+  const session = useSession();
+  const user = session?.data?.user;
   const { package_name, price, photos } = pack || {};
 
   const fields = [
-    { label: 'Name', value: userData?.name, type: 'text' },
-    { label: 'Email', value: userData?.email, type: 'text' },
+    { label: 'Name', value: user?.name, type: 'text' },
+    { label: 'Email', value: user?.email, type: 'text' },
     { label: 'Package name', value: package_name, type: 'text' },
     { label: 'Price', value: price, type: 'number' },
     { label: 'Credit', value: photos, type: 'number' },

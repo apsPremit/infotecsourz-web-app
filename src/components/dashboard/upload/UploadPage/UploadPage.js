@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import { StateContext } from '@/context/StateProvider';
 import './UploadPage.css';
 import NotificationModal from '../NotificationModal/NotificationModal';
-import { UserAuth } from '@/context/AuthProvider';
 
 const UploadPage = () => {
   const {

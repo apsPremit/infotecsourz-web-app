@@ -9,7 +9,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BiSupport } from 'react-icons/bi';
 import { IoPowerOutline } from 'react-icons/io5';
-import { UserAuth } from '@/context/AuthProvider';
 import { CiCreditCard1 } from 'react-icons/ci';
 import { useRouter } from 'next/navigation';
 import { AiOutlineHome } from 'react-icons/ai';
@@ -59,7 +58,6 @@ const Sidebar = () => {
           className='absolute right-4 top-4'
           onClick={() => setSidebarOpen(!isSidebarOpen)}
         >
-          {' '}
           <RxCross1 className='cursor-pointer text-white duration-300 lg:hidden' />
         </button>
       </div>

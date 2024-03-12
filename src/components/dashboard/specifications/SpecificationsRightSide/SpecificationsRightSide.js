@@ -1,5 +1,4 @@
 'use client';
-import { UserAuth } from '@/context/AuthProvider';
 import { StateContext } from '@/context/StateProvider';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import axios from 'axios';
@@ -20,7 +19,6 @@ const SpecificationsRightSide = () => {
   } = useContext(StateContext);
   const [isUploading, setUploading] = useState(false);
   const [error, setError] = useState('');
-  const { userData } = UserAuth();
   const router = useRouter();
 
   const handleProceed = () => {

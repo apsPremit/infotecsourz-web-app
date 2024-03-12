@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import logo from '@/assets/images/logo.png';
-import { UserAuth } from '@/context/AuthProvider';
 import { Controller, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';

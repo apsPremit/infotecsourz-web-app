@@ -32,6 +32,7 @@ const page = async (props) => {
   if (!session) {
     return redirect('/login');
   }
+
   // const orders = await fetchOrders(session.user.email);
   const orders = [];
   // const res = await fetch(`${baseUrl}/user/${session?.user?.email}`);
@@ -42,9 +43,9 @@ const page = async (props) => {
       {props?.searchParams?.message && (
         <Alert message={props?.searchParams?.message} />
       )}
-      <SubscribedPackage />
+      <SubscribedPackage session={session} />
       <div className='mx-auto grid-cols-3  space-y-5 lg:grid lg:gap-5 lg:space-y-0'>
-        <FreeTrialBox />
+        <FreeTrialBox session={session} />
         <div className='rounded border border-shadow bg-white p-5'>
           <div className=''>
             <p className='border-red-20 flex h-8 w-8 items-center justify-center rounded-full border bg-orange-200 p-1.5 text-xl text-orange-500'>
@@ -87,8 +88,7 @@ const page = async (props) => {
         Recent Orders
       </h3>
       {/* table  */}
-      <OrderTable orders={orders} />
-      {/* notification  */}
+      {/* <OrderTable orders={orders} /> */}
     </div>
   );
 };

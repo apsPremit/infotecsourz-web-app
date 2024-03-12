@@ -1,6 +1,6 @@
 'use client';
+import { useSession } from 'next-auth/react';
 import { createContext, useEffect, useState } from 'react';
-import { UserAuth } from './AuthProvider';
 
 export const StateContext = createContext(null);
 
@@ -302,12 +302,13 @@ const StateProvider = ({ children }) => {
     useState('');
   const [hasInstructions, setHasInstructions] = useState(false);
 
-  const { userData, setUserData, user } = UserAuth();
+  const session = useSession();
+  const user = session?.data?.user;
   const [updatedCredit, setUpdatedCredit] = useState(0);
 
   useEffect(() => {
     const newUpdatedCredit =
-      userData?.remainingCredit +
+      user?.subscription?.remaining_credit +
       (selectedPackage.photos ? selectedPackage?.photos : 0);
     setUpdatedCredit(newUpdatedCredit);
   }, [selectedPackage]);

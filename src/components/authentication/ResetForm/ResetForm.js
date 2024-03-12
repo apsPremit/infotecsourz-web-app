@@ -5,13 +5,11 @@ import { useForm } from 'react-hook-form';
 
 import logo from '@/assets/images/logo.png';
 import Link from 'next/link';
-import { UserAuth } from '@/context/AuthProvider';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import toast, { Toaster } from 'react-hot-toast';
 import { ImSpinner2 } from 'react-icons/im';
 
 const ResetForm = () => {
-  const { passwordReset } = UserAuth();
   const {
     register,
     reset,

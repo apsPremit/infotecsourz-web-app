@@ -1,5 +1,3 @@
-import { AuthProvider } from '@/context/AuthProvider';
-
 import './globals.css';
 import { Poppins } from 'next/font/google';
 import NextAuthProvider from '@/context/NextAuthProvider';
@@ -19,9 +17,7 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={poppins.className}>
         <NextAuthProvider>
-          <AuthProvider>
-            <main className='mx-auto max-w-screen-2xl'>{children}</main>
-          </AuthProvider>
+          <main className='mx-auto max-w-screen-2xl'>{children}</main>
         </NextAuthProvider>
       </body>
     </html>

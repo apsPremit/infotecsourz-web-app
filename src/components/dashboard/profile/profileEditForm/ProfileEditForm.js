@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AiOutlineCamera } from 'react-icons/ai';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
-import { UserAuth } from '@/context/AuthProvider';
 import defaultProfileImage from '../../../../../public/images/others/profile.png';
 import updateProfile from '@/utils/functions/updateProfile';
 import toast, { Toaster } from 'react-hot-toast';
@@ -11,12 +10,14 @@ import axios from 'axios';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import { StateContext } from '@/context/StateProvider';
 import PasswordChangeForm from '../PasswordChangeForm/PasswordChangeForm';
+import { useSession } from 'next-auth/react';
 
 const ProfileEditForm = () => {
-  const { userData, setUserData } = UserAuth();
+  const session = useSession();
+  const user = session?.data?.user;
   const [photoUploading, setPhotoUploading] = useState(false);
 
-  const { name, email, country, company } = userData || {};
+  const { name, email, country, company } = user || {};
 
   const {
     register,
@@ -33,14 +34,13 @@ const ProfileEditForm = () => {
 
     try {
       const res = await axios.put(
-        `${baseUrl}/user/update_profile_image/${userData.email}`,
+        `${baseUrl}/user/update_profile_image/${user.email}`,
         formData
       );
       const data = res?.data;
       if (data?.error) {
         toast.error('something wrong');
       }
-      setUserData(data?.user);
       toast.dismiss(loadingToast);
       toast.remove(loadingToast);
     } catch (error) {
@@ -60,13 +60,9 @@ const ProfileEditForm = () => {
     };
 
     try {
-      const updatedData = await updateProfile(
-        email || userData?.email,
-        updateData
-      );
+      const updatedData = await updateProfile(email || user?.email, updateData);
 
       if (updatedData) {
-        setUserData(updatedData?.data);
         toast.success('your profile update successful');
       }
     } catch (error) {
@@ -86,7 +82,7 @@ const ProfileEditForm = () => {
               className='w-full cursor-pointer bg-red-300 '
             >
               <Image
-                src={userData?.image || defaultProfileImage}
+                src={user?.image || defaultProfileImage}
                 height={200}
                 width={200}
                 alt='profile photo'

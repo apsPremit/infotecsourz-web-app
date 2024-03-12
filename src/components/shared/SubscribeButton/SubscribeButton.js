@@ -1,14 +1,16 @@
 'use client';
-import { UserAuth } from '@/context/AuthProvider';
+
+import { useSession } from 'next-auth/react';
 
 export const SubscribeButton = () => {
-  const { userData } = UserAuth();
+  const session = useSession();
+  const user = session?.data?.user;
   return (
     <button
       disabled={
-        userData?.isAvailableFreeTrial === undefined ||
-        userData?.isAvailableFreeTrial == '' ||
-        userData?.isAvailableFreeTrial === false
+        user?.able_free_trial === undefined ||
+        user?.able_free_trial == '' ||
+        user?.able_free_trial === false
       }
       className='mt-5 w-full bg-blue-400 py-2 text-white hover:bg-blue-500 disabled:bg-blue-200 '
     >

@@ -11,7 +11,7 @@ import { useSession } from 'next-auth/react';
 const PricingPage = () => {
   const [allPackage, setAllPackage] = useState([]);
   const session = useSession();
-  const user = session.data.user;
+  const user = session?.data?.user;
 
   useEffect(() => {
     const fetchPackage = async () => {

@@ -8,16 +8,14 @@ import paymentMethods from '../../../../../public/images/others/payment_methods.
 import Swal from 'sweetalert2';
 import { StateContext } from '@/context/StateProvider';
 import PaypalSubscriptionButtons from './PaypalSubscription.buttons';
-import { UserAuth } from '@/context/AuthProvider';
-import useUpdateSession from '@/hook/useUpdateSession';
 import { useSession } from 'next-auth/react';
 const PricingBilling = ({ plan }) => {
   console.log({ plan });
   const { taxRate, isTermsAgreed, setIsTermsAgreed } = useContext(StateContext);
   const [showDetails, setShowDetails] = useState(false);
-  const { userData } = UserAuth();
   const [paymentMethod, setPaymentMethod] = useState('paypal / credit card');
   const { data: session, update } = useSession();
+  const user = session?.user;
 
   const { plan_name, price, credit, facilities, validity, plan_id } =
     plan || {};
@@ -44,8 +42,8 @@ const PricingBilling = ({ plan }) => {
   const orderDetails = {
     orderId: createOrderId(),
     orderName: `subscription for ${plan_name} package`,
-    name: userData?.name,
-    email: userData?.email,
+    name: user?.name,
+    email: user?.email,
     package: plan_name,
     validity,
     subTotal,
@@ -53,7 +51,7 @@ const PricingBilling = ({ plan }) => {
     taxTotal,
     grandTotal,
     credit: credit,
-    country: userData?.country || '',
+    country: user?.country || '',
     paymentMethod,
     paymentStatus: 'unpaid',
   };

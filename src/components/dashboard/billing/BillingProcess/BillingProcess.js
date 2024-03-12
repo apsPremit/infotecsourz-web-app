@@ -1,5 +1,4 @@
 'use client';
-import { UserAuth } from '@/context/AuthProvider';
 import { StateContext } from '@/context/StateProvider';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import Link from 'next/link';
@@ -15,12 +14,12 @@ const BillingProcess = ({
   taxTotal,
   remainingCredit,
   totalPhotos,
+  session,
 }) => {
   const router = useRouter();
   const [isAgree, setAgree] = useState(false);
-  const { userData } = UserAuth() || {};
   const [processing, setProcessing] = useState(false);
-
+  const user = session?.user;
   const {
     uploadedImages,
     photoType,
@@ -40,11 +39,11 @@ const BillingProcess = ({
   const orderDetails = {
     orderId: orderId,
     orderName: orderName,
-    name: userData?.name,
-    email: userData?.email,
-    country: userData.country,
+    name: user?.name,
+    email: user?.email,
+    country: user?.country,
     photoType,
-    package: selectedPackage?.package_name || userData?.subscribedPackage,
+    package: selectedPackage?.package_name || user?.subscription?.plan_name,
     photoQuantity: parseInt(totalPhotos),
     perPhotoCost,
     subTotal,
@@ -70,7 +69,7 @@ const BillingProcess = ({
         },
         body: JSON.stringify({
           orderData,
-          paymentDetails: userData?.paymentDetails || {},
+          paymentDetails: user?.paymentDetails || {},
         }),
       });
 
@@ -113,7 +112,7 @@ const BillingProcess = ({
         `/dashboard/billing/payment?p=${orderDetails?.grandTotal}`
       );
     } else {
-      if (orderDetails?.photoQuantity > userData?.remainingCredit) {
+      if (orderDetails?.photoQuantity > user?.subscription?.remaining_credit) {
         showModal();
       } else {
         await placeOrder();
