@@ -28,7 +28,7 @@ const fetchOrders = async (email) => {
 
 const page = async (props) => {
   const session = await getServerSession(authOptions);
-  console.log({ sessionFromPage: session });
+  console.log({ sessionFromPage: session.user });
   if (!session) {
     return redirect('/login');
   }

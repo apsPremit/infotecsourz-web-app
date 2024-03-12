@@ -39,15 +39,19 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, account, profile, isNewUser }) {
-      //   console.log({ authUser: user });
+    async jwt({ token, user, trigger, profile, isNewUser, session }) {
       if (user) {
         token.accessToken = user.access_token;
         token.name = user.name;
         token.email = user.email;
         token.userId = user.id;
         token.role = user.role;
+        token.subscription = user.subscription;
         // token.id = profile.id;
+      }
+      if (trigger === 'update') {
+        token.subscription = session.user.subscription;
+        return token;
       }
       return token;
     },
@@ -55,11 +59,7 @@ export const authOptions = {
       // Send properties to the client, like an access_token and user id from a provider.
       //   console.log({ token });
       if (token) {
-        session.user.accessToken = token.accessToken;
-        session.user.name = token.name;
-        session.user.email = token.email;
-        session.user.userId = token.userId;
-        session.user.role = token.role;
+        session.user = token;
         // session.user.id = token.id;
       }
       return session;

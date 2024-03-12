@@ -251,8 +251,8 @@ const StateProvider = ({ children }) => {
       selectedPackage.package_name !== 'pay as go'
         ? 0
         : photoType === 'product'
-        ? productTotalCost
-        : modelTotalCost
+          ? productTotalCost
+          : modelTotalCost
     );
   }, [photoType, modelTotalCost, productTotalCost, selectedPackage]);
 

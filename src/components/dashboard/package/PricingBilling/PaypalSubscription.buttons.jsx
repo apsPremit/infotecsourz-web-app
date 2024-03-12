@@ -8,8 +8,10 @@ import { UserAuth } from '@/context/AuthProvider';
 import config from '@/config';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import useUpdateSession from '@/hook/useUpdateSession';
 
 const PaypalSubscriptionButtons = ({ plan_id }) => {
+  const { updateSession } = useUpdateSession();
   console.log({ plan_id });
   const { isTermsAgreed, setIsTermsAgreed, taxRate } = useContext(StateContext);
   const [isLoading, setLoading] = useState(true);
@@ -72,6 +74,7 @@ const PaypalSubscriptionButtons = ({ plan_id }) => {
                 );
                 const result = await response.json();
                 if (result.success) {
+                  await updateSession(result.data);
                   router.replace('/subscription-success');
                 }
               } catch (error) {

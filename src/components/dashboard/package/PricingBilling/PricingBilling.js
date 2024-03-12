@@ -9,16 +9,20 @@ import Swal from 'sweetalert2';
 import { StateContext } from '@/context/StateProvider';
 import PaypalSubscriptionButtons from './PaypalSubscription.buttons';
 import { UserAuth } from '@/context/AuthProvider';
-
+import useUpdateSession from '@/hook/useUpdateSession';
+import { useSession } from 'next-auth/react';
 const PricingBilling = ({ plan }) => {
   console.log({ plan });
   const { taxRate, isTermsAgreed, setIsTermsAgreed } = useContext(StateContext);
   const [showDetails, setShowDetails] = useState(false);
   const { userData } = UserAuth();
   const [paymentMethod, setPaymentMethod] = useState('paypal / credit card');
+  const { data: session, update } = useSession();
 
   const { plan_name, price, credit, facilities, validity, plan_id } =
     plan || {};
+
+  console.log({ session });
 
   let subTotal = price;
   let taxTotal = (price / 100) * taxRate;
@@ -52,6 +56,16 @@ const PricingBilling = ({ plan }) => {
     country: userData?.country || '',
     paymentMethod,
     paymentStatus: 'unpaid',
+  };
+
+  const updateSession = async (newSubscription) => {
+    await update({
+      ...session,
+      user: {
+        ...session.user,
+        subscription: newSubscription,
+      },
+    });
   };
 
   return (
@@ -166,7 +180,10 @@ const PricingBilling = ({ plan }) => {
             {/* paypal payment  */}
 
             <div className='my-10 '>
-              <PaypalSubscriptionButtons plan_id={plan_id} />
+              <PaypalSubscriptionButtons
+                plan_id={plan_id}
+                updateSession={updateSession}
+              />
             </div>
           </div>
         </div>
