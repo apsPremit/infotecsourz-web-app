@@ -311,7 +311,7 @@ const StateProvider = ({ children }) => {
       user?.subscription?.remaining_credit +
       (selectedPackage.photos ? selectedPackage?.photos : 0);
     setUpdatedCredit(newUpdatedCredit);
-  }, [selectedPackage]);
+  }, []);
 
   // billing page states
   const [billingMessage, setBillingMessage] = useState('');

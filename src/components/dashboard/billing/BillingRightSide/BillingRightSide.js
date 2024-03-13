@@ -4,6 +4,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import BillingProcess from '../BillingProcess/BillingProcess';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import { useSession } from 'next-auth/react';
+import config from '@/config';
+import { headers } from '../../../../../next.config';
 
 const BillingRightSide = () => {
   const {
@@ -25,9 +27,12 @@ const BillingRightSide = () => {
     const fetchPackage = async () => {
       try {
         const res = await fetch(
-          `${baseUrl}/package/single/${
-            selectedPackage?.package_name || user?.subscription?.id
-          }`
+          `${config.api_base_url}/plans/${user?.subscription?.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user?.accessToken}`,
+            },
+          }
         );
         if (!res.ok) {
           throw new Error(res.statusText);
