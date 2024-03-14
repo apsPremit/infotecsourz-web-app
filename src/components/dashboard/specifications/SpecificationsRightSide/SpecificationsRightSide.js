@@ -1,7 +1,9 @@
 'use client';
+import config from '@/config';
 import { StateContext } from '@/context/StateProvider';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useContext, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -20,6 +22,8 @@ const SpecificationsRightSide = () => {
   const [isUploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+  const session = useSession();
+  const user = session?.data?.user;
 
   const handleProceed = () => {
     router.push('/dashboard/billing');
@@ -35,10 +39,16 @@ const SpecificationsRightSide = () => {
 
     try {
       const res = await axios.post(
-        `${baseUrl}/instructions?folderName=${orderId}&bucketName=${process.env.NEXT_PUBLIC_SAMPLE_BUCKET}`,
-        formData
+        `${config.api_base_url}/instructions/upload?orderId=${orderId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       );
       const data = await res.data;
+      console.log('upload result', data);
       setUploading(false);
       if (data.success) {
         setHasInstructions(true);

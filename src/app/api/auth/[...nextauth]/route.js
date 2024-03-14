@@ -15,6 +15,7 @@ export const authOptions = {
           const response = await fetch(
             `${config.api_base_url}/auth/web/login`,
             {
+              cache: 'no-store',
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -48,6 +49,7 @@ export const authOptions = {
         token.role = user.role;
         token.able_free_trial = user.able_free_trial;
         token.subscription = user.subscription;
+        console.log('call route');
         // token.id = profile.id;
       }
       if (trigger === 'update') {

@@ -64,6 +64,9 @@ const UploadPage = () => {
       const res = await fetch(`${config.api_base_url}/images/upload`, {
         method: 'POST',
         body: formData,
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
       });
       if (!res.ok) {
         throw new Error(res.statusText);

@@ -7,7 +7,7 @@ export const StateContext = createContext(null);
 const StateProvider = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(1);
-  const [photoType, setPhotoType] = useState('');
+  const [photoType, setPhotoType] = useState(null);
   const [isTermsAgreed, setIsTermsAgreed] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState({});
   // fileName
@@ -28,14 +28,14 @@ const StateProvider = ({ children }) => {
 
   //    *******************set alignments **************************************************
   const [alignments, setAlignments] = useState({
-    marginOverall: '',
-    marginLeft: '',
-    marginRight: '',
-    marginTop: '',
-    marginBottom: '',
-    ratio: '',
-    horizontalAlignment: '',
-    verticalAlignment: '',
+    marginOverall: null,
+    marginLeft: null,
+    marginRight: null,
+    marginTop: null,
+    marginBottom: null,
+    ratio: null,
+    horizontalAlignment: null,
+    verticalAlignment: null,
   });
 
   //    *******************set final specs alignments **************************************************
@@ -97,7 +97,7 @@ const StateProvider = ({ children }) => {
       backgroundColor == 'transparent' ||
       backgroundColor == 'original'
     ) {
-      setCustomBackground('');
+      setCustomBackground(null);
     }
   }, [backgroundColor]);
 
@@ -106,9 +106,9 @@ const StateProvider = ({ children }) => {
     if (openOptions.isOriginalAspect) {
       setAlignments((prevState) => ({
         ...prevState,
-        ratio: '',
-        horizontalAlignment: '',
-        verticalAlignment: '',
+        ratio: null,
+        horizontalAlignment: null,
+        verticalAlignment: null,
       }));
     }
   }, [openOptions]);
@@ -119,15 +119,15 @@ const StateProvider = ({ children }) => {
     if (openOptions.isOpenCustomMargin) {
       setAlignments((prevState) => ({
         ...prevState,
-        marginOverall: '',
+        marginOverall: null,
       }));
     } else {
       setAlignments((prevState) => ({
         ...prevState,
-        marginTop: '',
-        marginBottom: '',
-        marginLeft: '',
-        marginRight: '',
+        marginTop: null,
+        marginBottom: null,
+        marginLeft: null,
+        marginRight: null,
       }));
     }
   }, [openOptions]);
@@ -266,7 +266,7 @@ const StateProvider = ({ children }) => {
     backgroundColor === 'custom' ? customBackground : backgroundColor;
   const selectedAlignments = Object.entries(alignments).reduce(
     (accumulator, [key, value]) => {
-      if (value !== '') {
+      if (value !== null) {
         accumulator[key] = value;
       }
       return accumulator;
@@ -281,11 +281,9 @@ const StateProvider = ({ children }) => {
   );
 
   const photoRequirements = {
-    type: photoType,
-    fileName: orderName,
     formats: [...selectedFormats],
     backgroundColor: selectedBackground,
-    selectedAlignments,
+    alignments,
     additional:
       photoType === 'model' ? modelAdditionalReq : productAdditionalReq,
   };
@@ -293,13 +291,13 @@ const StateProvider = ({ children }) => {
   // file upload states
   const [uploadedImages, setUploadedImages] = useState([]);
   const [totalFileSize, setTotalFileSize] = useState(0);
-  const [orderId, setOrderId] = useState('');
-  const [fileUrl, setFileUrl] = useState('');
+  const [orderId, setOrderId] = useState(null);
+  const [fileUrl, setFileUrl] = useState(null);
   const [imageQuantityFromUrl, setImageQuantityFromUrl] = useState(0);
 
   // specifications page state
   const [productDetailsDescription, setProductDetailsDescription] =
-    useState('');
+    useState(null);
   const [hasInstructions, setHasInstructions] = useState(false);
 
   const session = useSession();
@@ -314,10 +312,10 @@ const StateProvider = ({ children }) => {
   }, []);
 
   // billing page states
-  const [billingMessage, setBillingMessage] = useState('');
+  const [billingMessage, setBillingMessage] = useState(null);
   const [taxRate, setTaxRate] = useState(13);
-  const [photoUrl, setPhotoUrl] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('');
+  const [photoUrl, setPhotoUrl] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState(null);
   const [orderDetails, setOrderDetails] = useState(null);
   const [isShowPricingModal, setShowPricingModal] = useState(false);
 
