@@ -14,15 +14,13 @@ const OrderRow = ({ order }) => {
   const [downloading, setDownloading] = useState(false);
   const {
     _id,
-    orderId,
-    orderName,
-    grandTotal,
+    id,
+    order_name,
     status,
     createdAt,
-    returnTime,
+    turn_around_time,
     paymentStatus,
-    invoiceStatus,
-    deliveredFileUrl,
+    delivered_file_url,
   } = order || {};
 
   const bucketName = process.env.NEXT_PUBLIC_ADMIN_UPLOAD_IMAGE_BUCKET;
@@ -30,7 +28,7 @@ const OrderRow = ({ order }) => {
   const handleDownload = () => {
     setDownloading(true);
     axios
-      .get(`${baseUrl}/image?bucketName=${bucketName}&folderName=${orderId}`, {
+      .get(`${baseUrl}/image?bucketName=${bucketName}&folderName=${id}`, {
         responseType: 'blob',
       })
       .then((res) => {
@@ -39,7 +37,7 @@ const OrderRow = ({ order }) => {
         });
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
-        link.setAttribute('download', `${orderId}.zip`);
+        link.setAttribute('download', `${id}.zip`);
         link.href = url;
         link.click();
         window.URL.revokeObjectURL(url);
@@ -55,35 +53,35 @@ const OrderRow = ({ order }) => {
   return (
     <tr>
       <td className='whitespace-nowrap px-6 py-4 text-sm  text-blue-500 '>
-        {orderId}
+        {id}
       </td>
       <td className='whitespace-nowrap px-6 py-4 text-sm  text-blue-500 '>
-        {orderName}
+        {order_name}
       </td>
       <td className='whitespace-nowrap px-6 py-4 text-sm   text-black '>
-        {/* {status == "delivered" ||
-          (status == "in-revision" &&
-            (deliveredFileUrl ? (
-              <Link target="_blank" href={deliveredFileUrl}>
-                <button className="text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded">
+        {status == 'delivered' ||
+          (status == 'in-revision' &&
+            (delivered_file_url ? (
+              <Link target='_blank' href={delivered_file_url}>
+                <button className='text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded'>
                   Download
                 </button>
               </Link>
             ) : (
               <button
                 onClick={handleDownload}
-                className="text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded"
+                className='text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded'
               >
                 {downloading ? (
-                  <span className="flex items-center justify-center  text-xs text-white">
-                    Downloading{" "}
-                    <ImSpinner2 className="animate-spin ml-2 text-white" />
+                  <span className='flex items-center justify-center  text-xs text-white'>
+                    Downloading{' '}
+                    <ImSpinner2 className='animate-spin ml-2 text-white' />
                   </span>
                 ) : (
-                  "Download"
+                  'Download'
                 )}
               </button>
-            )))} */}
+            )))}
 
         {status === 'delivered' || status == 'in-revision' ? (
           <button
@@ -110,8 +108,8 @@ const OrderRow = ({ order }) => {
             status === 'denied'
               ? 'bg-red-100 text-red-500'
               : status == 'in-revision'
-                ? 'bg-pink-100  text-pink-500'
-                : 'bg-green-100 text-green-500'
+              ? 'bg-pink-100  text-pink-500'
+              : 'bg-green-100 text-green-500'
           }`}
         >
           <span className=' text-xl '>
@@ -124,10 +122,10 @@ const OrderRow = ({ order }) => {
         {moment(createdAt).format('MMM Do YY, h:mm:ss a')}
       </td>
       <td className='whitespace-nowrap px-6 py-4 text-sm   text-black  '>
-        {returnTime && returnTime + ' Hours'}
+        {turn_around_time && turn_around_time + ' Hours'}
       </td>
       <td className='whitespace-nowrap px-6 py-4 text-sm   text-black  '>
-        <Link href={`/dashboard/order/${orderId}`} className='hover:underline'>
+        <Link href={`/dashboard/order/${id}`} className='hover:underline'>
           View
         </Link>
       </td>
@@ -145,7 +143,7 @@ const OrderRow = ({ order }) => {
         {status == 'in-revision' ? (
           <p>Request Sent</p>
         ) : status == 'delivered' ? (
-          <Link className='underline' href={`/dashboard/revision/${orderId}`}>
+          <Link className='underline' href={`/dashboard/revision/${id}`}>
             Send Request
           </Link>
         ) : (

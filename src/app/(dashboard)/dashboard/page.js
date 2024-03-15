@@ -10,16 +10,24 @@ import { redirect } from 'next/dist/server/api-utils';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import Alert from '@/components/shared/Alert/Alert';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import config from '@/config';
 
 export const metadata = {
   title: 'Dashboard | Infotecsourz',
   description: 'Photo Retouching App',
 };
-const fetchOrders = async (email) => {
+const fetchOrders = async (userId, accessToken) => {
   try {
-    const orderRes = await fetch(`${baseUrl}/order/${email}`);
+    const orderRes = await fetch(
+      `${config.api_base_url}/orders/${userId}/orders`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
     const orderData = await orderRes.json();
-
     return orderData.data;
   } catch (error) {
     console.log('orders fetch error', error);
@@ -33,8 +41,11 @@ const page = async (props) => {
     return redirect('/login');
   }
 
-  // const orders = await fetchOrders(session.user.email);
-  const orders = [];
+  const orders = await fetchOrders(
+    session?.user?.userId,
+    session?.user?.accessToken
+  );
+  console.log('orders', orders);
   // const res = await fetch(`${baseUrl}/user/${session?.user?.email}`);
   // const data = await res.json();
 
@@ -88,7 +99,7 @@ const page = async (props) => {
         Recent Orders
       </h3>
       {/* table  */}
-      {/* <OrderTable orders={orders} /> */}
+      <OrderTable orders={orders} />
     </div>
   );
 };

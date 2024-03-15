@@ -25,7 +25,7 @@ const OrderTable = ({ orders }) => {
                           scope='col'
                           className='whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-black'
                         >
-                          Order
+                          #
                         </th>
                         <th
                           scope='col'
@@ -62,7 +62,7 @@ const OrderTable = ({ orders }) => {
                           scope='col'
                           className='whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-black '
                         >
-                          Order Details
+                          Details
                         </th>
                         <th
                           scope='col'

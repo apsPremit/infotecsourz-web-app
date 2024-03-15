@@ -1,10 +1,17 @@
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import config from '@/config';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import moment from 'moment';
+import { getServerSession } from 'next-auth';
 import React from 'react';
 
-const fetchOrder = async (orderId) => {
+const fetchOrder = async (orderId, accessToken) => {
   try {
-    const res = await fetch(`${baseUrl}/order/details/${orderId}`);
+    const res = await fetch(`${config.api_base_url}/orders/${orderId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     const result = await res.json();
     return result;
   } catch (error) {}
@@ -12,7 +19,8 @@ const fetchOrder = async (orderId) => {
 
 const OrderDetails = async ({ params }) => {
   const id = params.id;
-  const orderInfo = await fetchOrder(id);
+  const session = await getServerSession(authOptions);
+  const orderInfo = await fetchOrder(id, session?.user?.accessToken);
 
   const {
     orderName,

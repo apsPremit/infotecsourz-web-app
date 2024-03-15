@@ -11,13 +11,10 @@ import useUpdateSession from '@/hook/useUpdateSession';
 
 const PaypalSubscriptionButtons = ({ plan_id, user }) => {
   const { updateSession } = useUpdateSession();
-  console.log({ plan_id });
   const { isTermsAgreed, setIsTermsAgreed, taxRate } = useContext(StateContext);
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
   const userId = user?.userId;
-  console.log({ user });
-  console.log({ token: user?.accessToken });
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -48,8 +45,6 @@ const PaypalSubscriptionButtons = ({ plan_id, user }) => {
             onApprove={async (data, actions) => {
               try {
                 const subscriptionDetails = await actions.subscription.get();
-                console.log('data ', data);
-                console.log(subscriptionDetails);
                 const apiData = {
                   data: {
                     user: userId,
@@ -60,7 +55,7 @@ const PaypalSubscriptionButtons = ({ plan_id, user }) => {
                   },
                   paypal_data: subscriptionDetails,
                 };
-                console.log('api data=>>>>>>>>', apiData);
+
                 const response = await fetch(
                   `${config.api_base_url}/subscriptions/create-subscription`,
                   {
@@ -79,18 +74,12 @@ const PaypalSubscriptionButtons = ({ plan_id, user }) => {
                     able_free_trial: false,
                   };
                   await updateSession(sessionData);
+                  router.refresh();
                   router.replace('/subscription-success');
                 }
-              } catch (error) {
-                console.log('error', error);
-              }
-              // return actions.subscription
-              //   .get()
-              //   .then((subscriptionDetails) => console.log(subscriptionDetails))
-              //   .catch((error) => console.log("error", error));
+              } catch (error) {}
             }}
             onError={(error) => {
-              console.log(error);
               return toast.error('subscription failed try again');
             }}
           />
