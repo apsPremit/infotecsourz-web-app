@@ -9,14 +9,15 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import useUpdateSession from '@/hook/useUpdateSession';
 
-const PaypalSubscriptionButtons = ({ plan_id }) => {
+const PaypalSubscriptionButtons = ({ plan_id, user }) => {
   const { updateSession } = useUpdateSession();
   console.log({ plan_id });
   const { isTermsAgreed, setIsTermsAgreed, taxRate } = useContext(StateContext);
   const [isLoading, setLoading] = useState(true);
-  const session = useSession();
   const router = useRouter();
-  const userId = session?.data?.user?.userId;
+  const userId = user?.userId;
+  console.log({ user });
+  console.log({ token: user?.accessToken });
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -66,6 +67,7 @@ const PaypalSubscriptionButtons = ({ plan_id }) => {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
+                      authorization: `Bearer ${user?.accessToken}`,
                     },
                     body: JSON.stringify(apiData),
                   }

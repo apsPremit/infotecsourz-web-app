@@ -178,10 +178,7 @@ const PricingBilling = ({ plan }) => {
             {/* paypal payment  */}
 
             <div className='my-10 '>
-              <PaypalSubscriptionButtons
-                plan_id={plan_id}
-                updateSession={updateSession}
-              />
+              <PaypalSubscriptionButtons plan_id={plan_id} user={user} />
             </div>
           </div>
         </div>

@@ -19,7 +19,7 @@ const SinglePackage = ({ plan }) => {
   const [showDetails, setShowDetails] = useState(false);
   const handleNavigation = (plan) => {
     if (plan?.type !== 'paid') {
-      return router.push(`/dashboard/pricing/no-payment?package=${plan?._id}`);
+      return router.push(`/dashboard/pricing/no-payment?plan=${plan?.id}`);
     }
     Swal.fire({
       title: 'Are you sure for subscribe this package?',

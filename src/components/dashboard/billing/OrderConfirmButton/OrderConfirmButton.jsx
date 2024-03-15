@@ -33,7 +33,7 @@ const OrderConfirmButton = ({ agree, setAgree, orderDetails, user }) => {
         throw new Error(result.message);
       }
       router.push(
-        `/order_success?orderId=${result?.data?.id}&&message=order placed successfully`
+        `/order_success?orderId=${result?.data?.order_id}&&message=order placed successfully`
       );
     } catch (error) {
       setLoading(false);
