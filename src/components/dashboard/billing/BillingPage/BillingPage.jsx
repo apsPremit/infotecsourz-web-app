@@ -1,8 +1,11 @@
 'use client';
-import React, { useContext, useState } from 'react';
+import React, { use, useContext, useState } from 'react';
 import { StateContext } from '../../../../context/StateProvider';
 import PaypalCheckoutButtons from '../PaypalCheckoutButtons/PaypalCheckoutButtons';
 import OrderConfirmButton from '../OrderConfirmButton/OrderConfirmButton';
+import Link from 'next/link';
+import Image from 'next/image';
+import paymentMethods from '../../../../../public/images/others/payment_methods.png';
 
 const BillingPage = ({ session }) => {
   const {
@@ -21,11 +24,9 @@ const BillingPage = ({ session }) => {
   } = useContext(StateContext);
 
   const [showDetails, setShowDetails] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('paypal / credit card');
   const user = session?.user;
-
-  console.log({ user });
   const [agree, setAgree] = useState(false);
-  const [loading, setLoading] = useState(false);
   console.log('user data', user?.subscription?.plan_type);
   // const packageInfo = packages.find((pk) => pk.package_name === pack);
   const { plan_name, remaining_credit, price, photos, facilities } =
@@ -100,11 +101,11 @@ const BillingPage = ({ session }) => {
         className={`${
           user?.subscription?.plan_type !== 'pay-as-go'
             ? 'w-full lg:w-1/2 mx-auto '
-            : 'border w-full lg:w-1/2 bg-red-500'
-        }`}
+            : 'grid grid-cols-1 lg:grid-cols-2 gap-5 '
+        } `}
       >
-        <div>
-          <div className='my-5'>
+        <div className='border p-5 rounded-md shadow-md'>
+          <div className=''>
             <h3 className='font-bold text-xl mb-5'> Summary</h3>
             {billProperties.map((property, index) => (
               <div className='my-3' key={index}>
@@ -117,7 +118,7 @@ const BillingPage = ({ session }) => {
           </div>
 
           {/* Details  */}
-          <div className='flex  flex-col'>
+          {/* <div className='flex  flex-col'>
             <div className='flex justify-end'>
               <button
                 onClick={() => setShowDetails(!showDetails)}
@@ -135,11 +136,11 @@ const BillingPage = ({ session }) => {
                 ))}
               </ul>
             </div>
-          </div>
+          </div> */}
           <hr />
 
           {/* price section  */}
-          <div className='flex items-center space-x-3 my-7'>
+          <div className='flex items-center space-x-3 my-5'>
             <div>
               <p className='px-5 py-2.5 border rounded text-2xl '>$</p>
             </div>
@@ -154,17 +155,73 @@ const BillingPage = ({ session }) => {
 
           {user?.subscription?.plan_type !== 'pay-as-go' && (
             <OrderConfirmButton
-              user={user}
               agree={agree}
               setAgree={setAgree}
               orderDetails={orderDetails}
             />
           )}
         </div>
-        {/* billing btn and process  */}{' '}
+        {/* fight side  */}
+        {/* billing btn and process  */}
+        {/* when subscription plan is pay as to the execute this code */}
+
         <div>
           {user?.subscription?.plan_type === 'pay-as-go' && (
-            <PaypalCheckoutButtons orderDetails={orderDetails} />
+            <div className='p-5 border rounded-md shadow-md'>
+              <h3 className='text-xl font-bold mb-5'>Billing</h3>
+              <p className='mt-5 mb-2'>Select Payment method</p>
+              <div className=''>
+                <label
+                  htmlFor='paypal_credit'
+                  className='border px-3 py-2 rounded grid grid-cols-2 items-center courser-pointer mb-5'
+                >
+                  <div className='flex items-center gap-2 font-bold'>
+                    <input
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                      value='paypal / credit card'
+                      id='paypal_credit'
+                      type='radio'
+                      className='accent-main w-4 h-4'
+                      checked={paymentMethod === 'paypal / credit card'}
+                    />
+                    <p className='whitespace-nowrap'>Paypal / Credit Card</p>
+                  </div>
+                  <Image
+                    alt='payment methods'
+                    src={paymentMethods}
+                    width={200}
+                  />
+                </label>
+              </div>
+              <label
+                htmlFor='agree_terms'
+                className='flex items-start gap-x-4 px-2 mt-10 mb-5 cursor-pointer'
+              >
+                <input
+                  onChange={() => setAgree(!agree)}
+                  id='agree_terms'
+                  checked={agree}
+                  type='checkbox'
+                  className='scale-125 mt-1'
+                />
+                <p className='text-sm'>
+                  I accept{' '}
+                  <Link
+                    target='_blank'
+                    href='https://www.infotecsourz.com/terms-and-conditions/'
+                    className='text-main hover:underline'
+                  >
+                    Terms & Conditions
+                  </Link>
+                </p>
+              </label>
+              <div>
+                <PaypalCheckoutButtons
+                  agree={agree}
+                  orderDetails={orderDetails}
+                />
+              </div>
+            </div>
           )}
         </div>
       </div>

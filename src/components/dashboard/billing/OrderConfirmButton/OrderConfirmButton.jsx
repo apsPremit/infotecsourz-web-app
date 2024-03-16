@@ -74,7 +74,7 @@ const OrderConfirmButton = ({ agree, setAgree, orderDetails, user }) => {
         </p>
       </label>
       <button
-        // disabled={!agree || loading}
+        disabled={!agree || loading}
         onClick={() => confirmOrder(orderDetails)}
         className='w-full text-center text-white disabled:bg-blue-300 disabled:cursor-not-allowed bg-blue-500 rounded-lg py-3 text-lg hover:bg-blue-400 cursor-pointer'
       >

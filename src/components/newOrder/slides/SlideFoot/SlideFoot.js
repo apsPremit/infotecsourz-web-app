@@ -25,7 +25,11 @@ const SlideFoot = ({ handlePrev, handleNext, currentSlide }) => {
     if (currentSlide === 6) {
       return router.push('/dashboard/upload');
     }
-    if (!user?.subscription || user?.subscription?.remaining_credit < 1) {
+    if (
+      !user?.subscription ||
+      (user?.subscription?.plan_type !== 'pay-as-go' &&
+        user?.subscription?.remaining_credit < 1)
+    ) {
       return Swal.fire({
         title: 'You have no credit, Please upgrade your plan',
         icon: 'warning',
@@ -44,7 +48,7 @@ const SlideFoot = ({ handlePrev, handleNext, currentSlide }) => {
     <div className='mt-5 flex items-center justify-between'>
       <p
         className={`text-md mt-2 font-bold text-black ${
-          currentSlide === 1 || selectedPackage.package_name !== 'pay as go'
+          currentSlide === 1 || user?.subscription?.plan_type !== 'pay-as-go'
             ? 'opacity-0'
             : ''
         }`}

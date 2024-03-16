@@ -5,8 +5,9 @@ import { StateContext } from '../../../../context/StateProvider';
 import toast, { Toaster } from 'react-hot-toast';
 import Loader from '../../../shared/Loader/Loader';
 import { ImSpinner2 } from 'react-icons/im';
+import Link from 'next/link';
 
-const PaypalCheckoutButtons = ({ orderDetails }) => {
+const PaypalCheckoutButtons = ({ orderDetails, agree }) => {
   console.log(orderDetails);
   let validateData = null;
 
@@ -60,6 +61,8 @@ const PaypalCheckoutButtons = ({ orderDetails }) => {
 
   return (
     <>
+      {/* terms  */}
+
       {isLoading ? (
         <div className='flex items-center justify-center '>
           <ImSpinner2 size={25} className='animate-spin' />
@@ -67,7 +70,7 @@ const PaypalCheckoutButtons = ({ orderDetails }) => {
       ) : (
         <PayPalScriptProvider options={initialOptions}>
           <PayPalButtons
-            // disabled={!isTermsAgreed}
+            disabled={!agree}
             style={{ label: 'checkout' }}
             createOrder={async (data, actions) => {
               const validationResult = await verifyOrder(

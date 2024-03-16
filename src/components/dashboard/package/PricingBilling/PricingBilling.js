@@ -174,7 +174,7 @@ const PricingBilling = ({ plan }) => {
                 </p>
               </label>
             </div>
-            {console.log(isTermsAgreed)}
+
             {/* paypal payment  */}
 
             <div className='my-10 '>
