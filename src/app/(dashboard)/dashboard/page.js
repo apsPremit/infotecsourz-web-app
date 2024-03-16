@@ -28,6 +28,7 @@ const fetchOrders = async (userId, accessToken) => {
       }
     );
     const orderData = await orderRes.json();
+    console.log(orderData);
     return orderData.data;
   } catch (error) {
     console.log('orders fetch error', error);
@@ -99,7 +100,7 @@ const page = async (props) => {
         Recent Orders
       </h3>
       {/* table  */}
-      <OrderTable orders={orders} />
+      {orders?.length > 0 && <OrderTable orders={orders} />}
     </div>
   );
 };

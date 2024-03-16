@@ -9,54 +9,17 @@ import { baseUrl } from '@/utils/functions/baseUrl';
 import moment from 'moment';
 import './invoice.css';
 
-const Invoice = () => {
+const Invoice = ({ invoice }) => {
   const componentPDF = useRef();
-  const { id } = useParams();
-
-  const [invoiceData, setInvoiceData] = useState({});
-
-  useEffect(() => {
-    // setLoading(true)
-    axios
-      .get(`${baseUrl}/invoice/${id}`)
-      .then((res) => {
-        setInvoiceData(res.data);
-        // setLoading(false)
-      })
-      .catch((err) => console.log(err));
-  }, [id]);
-
-  //   invoiceFrom: String,
-  //   date: {
-  //     type: Date,
-  //     default: Date.now(),
-  //   },
-  //   photoRequirements: Object,
-  //   paymentStatus: String,
-  //   subTotal: Number,
-  //   grandTotal: Number,
-  //   taxRate: Number,
-  //   taxTotal: Number,
-  //   orderId: String,
-  //   orderName: String,
-  //   customerName: String,
-  //   customerEmail: String,
-  //   country: String,
-  //   paymentStatus: String,
-  //   discount: {
-  //     type: Number,
-  //     default: 0,
-  //   },
-  //   transactionId: String,
-  //   fullName: String,
-  //   billingAddress: String,
 
   const {
-    invoiceFrom,
-    orderId,
+    user,
+    id,
+    sender,
+    createdAT,
     customerName,
     country,
-    orderName,
+    order_name,
     discount,
     paymentStatus,
     photoRequirements,
@@ -65,10 +28,11 @@ const Invoice = () => {
     taxTotal,
     date,
     taxRate,
-    billingAddress,
+    transaction,
     fullName,
     transactionId,
-  } = invoiceData || {};
+  } = invoice || {};
+  console.log('inv', invoice);
 
   const { additional } = photoRequirements || {};
   const generatePdf = useReactToPrint({
@@ -102,12 +66,10 @@ const Invoice = () => {
                   height={100}
                   alt='company logo'
                 />
-                <address className='dark:text-gray-200  mt-2 text-sm not-italic text-gray-800'>
-                  {invoiceFrom?.split(',')?.map((item, i) => (
-                    <span key={i}>
-                      {item} <br />
-                    </span>
-                  ))}
+                <address className='dark:text-gray-200  mt-2  not-italic text-gray-800'>
+                  <span className='text-md'> {sender?.name}</span>
+                  <br />
+                  <span className='text-sm'>{sender?.address}</span>
                 </address>
               </div>
             </div>
@@ -122,8 +84,8 @@ const Invoice = () => {
               <p className='text-sm font-bold uppercase'>to</p>
               <div className='grid grid-cols-1 gap-y-5 md:grid-cols-2'>
                 <div>
-                  <p className='text-lg font-bold uppercase'>{customerName}</p>
-                  <p className='text-sm '>{billingAddress || customerName}</p>
+                  <p className='text-lg font-bold uppercase'>{user.name}</p>
+                  <p className='text-sm '>{transaction?.shipping_address}</p>
                 </div>
                 <div className='flex md:justify-end md:gap-x-20'>
                   <div className='capitalize'>
@@ -135,10 +97,10 @@ const Invoice = () => {
                     <p>status:</p>
                   </div>
                   <div>
-                    <p className='font-bold'>{orderId}</p>
-                    <p className='font-bold'>{transactionId}</p>
-                    <p>{moment(date).format('D MMMM  YYYY')}</p>
-                    <p>{paymentStatus}</p>
+                    <p className='font-bold'>{id}</p>
+                    <p className='font-bold'>{transaction?.transaction_id}</p>
+                    <p>{moment(createdAT).format('D MMMM  YYYY')}</p>
+                    <p>{transaction?.status}</p>
                   </div>
                 </div>
               </div>
@@ -192,8 +154,7 @@ const Invoice = () => {
                           </td>
                           <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
                             <span className='mb-3 block whitespace-break-spaces font-bold'>
-                              {' '}
-                              {orderName}{' '}
+                              {order_name}
                             </span>
                             <p className='flex flex-wrap'>
                               {additional?.map((item, index) => (
@@ -210,10 +171,10 @@ const Invoice = () => {
                             1
                           </td>
                           <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
-                            ${subTotal?.toFixed(2)}
+                            ${transaction?.subtotal?.toFixed(2)}
                           </td>
                           <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
-                            ${grandTotal?.toFixed(2)}
+                            ${transaction?.total_amount.toFixed(2)}
                           </td>
                         </tr>
                       </tbody>
@@ -226,45 +187,6 @@ const Invoice = () => {
 
             <div className='mt-5 grid grid-cols-1 gap-8 font-bold capitalize md:mt-0 md:grid-cols-2'>
               <div>
-                {/* <div className="space-y-1">
-                  <p className="capitalize text-xs font-semibold">
-                    Paypal payment:
-                    <span className="text-gray-500 font-medium ml-1">
-                      {paypalAccountNumber}
-                    </span>
-                  </p>
-                  <p className="capitalize text-xs font-semibold">
-                    Account Name:
-                    <span className="text-gray-500 font-medium ml-1">
-                      {bankAccountName}
-                    </span>
-                  </p>
-                  <p className="capitalize text-xs font-semibold">
-                    Account Number:
-                    <span className="text-gray-500 font-medium ml-1">
-                      {bankAccountNumber}
-                    </span>
-                  </p>
-                  <p className="capitalize text-xs font-semibold">
-                    Bank Name:
-                    <span className="text-gray-500 font-medium ml-1">
-                      {bankName}
-                    </span>
-                  </p>
-                  <p className="capitalize text-xs font-semibold">
-                    Address:
-                    <span className="text-gray-500 font-medium ml-1">
-                      {bankAddress}
-                    </span>
-                  </p>
-                  <p className="capitalize text-xs font-semibold">
-                    Swift code:
-                    <span className="text-gray-500 font-medium ml-1">
-                      {swiftCode}
-                    </span>
-                  </p>
-                </div> */}
-
                 <div>
                   <h3 className='mb-1 mt-3 text-sm font-bold'>
                     Terms and conditions
@@ -283,14 +205,14 @@ const Invoice = () => {
                     <p>discount: </p>
                   </div>
                   <div className='space-y-1.5'>
-                    <p>${subTotal?.toFixed(2)}</p>
-                    <p>${taxTotal?.toFixed(2)}</p>
-                    <p>${discount?.toFixed(2)}</p>
+                    <p>${transaction?.subtotal?.toFixed(2)}</p>
+                    <p>${transaction?.tax_total?.toFixed(2)}</p>
+                    <p>${transaction?.discount?.toFixed(2)}</p>
                   </div>
                 </div>
                 <div className='grandtotal-asset text-md relative mt-5 flex items-center justify-between bg-main px-5 py-1.5 font-bold text-white md:text-lg'>
                   <h3 className=' mr-5'>Grand total</h3>
-                  <h3>${grandTotal?.toFixed(2)}</h3>
+                  <h3>${transaction?.total_amount?.toFixed(2)}</h3>
                 </div>
               </div>
             </div>

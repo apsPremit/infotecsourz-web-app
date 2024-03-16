@@ -123,15 +123,15 @@ const Sidebar = () => {
           </li>
           <li onClick={() => setSidebarOpen(!isSidebarOpen)}>
             <Link
-              href='/dashboard/my_subscriptions'
+              href='/dashboard/my-billing'
               className={`my-3 flex cursor-pointer items-center gap-x-3 rounded-lg p-2 hover:bg-main ${
-                currentRoute === '/dashboard/my_subscriptions' ? 'bg-main' : ''
+                currentRoute === '/dashboard/my-billing' ? 'bg-main' : ''
               }`}
             >
               <span className='text-2xl'>
                 <CiCreditCard1 />
               </span>
-              <span className='whitespace-nowrap'>My Subscriptions</span>
+              <span className='whitespace-nowrap'>My Billing</span>
             </Link>
           </li>
           {/* faq  */}
