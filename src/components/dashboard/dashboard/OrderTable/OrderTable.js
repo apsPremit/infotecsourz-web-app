@@ -64,17 +64,12 @@ const OrderTable = ({ orders }) => {
                         >
                           Details
                         </th>
+
                         <th
                           scope='col'
                           className='whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-black '
                         >
-                          Payment Status
-                        </th>
-                        <th
-                          scope='col'
-                          className='whitespace-nowrap px-6 py-3 text-left text-sm font-medium text-black '
-                        >
-                          Revision Request
+                          Revision request
                         </th>
                       </tr>
                     </thead>

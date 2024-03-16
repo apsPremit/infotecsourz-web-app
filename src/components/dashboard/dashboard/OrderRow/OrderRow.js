@@ -74,7 +74,7 @@ const OrderRow = ({ order }) => {
               >
                 {downloading ? (
                   <span className='flex items-center justify-center  text-xs text-white'>
-                    Downloading{' '}
+                    Downloading
                     <ImSpinner2 className='animate-spin ml-2 text-white' />
                   </span>
                 ) : (
@@ -82,24 +82,6 @@ const OrderRow = ({ order }) => {
                 )}
               </button>
             )))}
-
-        {status === 'delivered' || status == 'in-revision' ? (
-          <button
-            onClick={handleDownload}
-            className='rounded bg-main px-1.5 py-1 text-xs text-white hover:bg-mainHover'
-          >
-            {downloading ? (
-              <span className='flex items-center justify-center  text-xs text-white'>
-                Downloading{' '}
-                <ImSpinner2 className='ml-2 animate-spin text-white' />
-              </span>
-            ) : (
-              'Download'
-            )}
-          </button>
-        ) : (
-          ''
-        )}
       </td>
 
       <td className='whitespace-nowrap px-6 py-4 text-sm     '>
@@ -129,17 +111,8 @@ const OrderRow = ({ order }) => {
           View
         </Link>
       </td>
-      <td className='whitespace-nowrap px-6 py-4 text-sm   text-black  '>
-        {paymentStatus}
-      </td>
-      {/* <td className="px-6 py-4 whitespace-nowrap text-sm   text-black  ">
-        {status === "delivered" && (
-          <Link className="underline" href={`/dashboard/invoice/${orderId}`}>
-            Invoice
-          </Link>
-        )}
-      </td> */}
-      <td className='whitespace-nowrap px-6 py-4 text-sm   text-black  '>
+
+      <td className='whitespace-nowrap px-6 py-4 text-sm   text-black text-center '>
         {status == 'in-revision' ? (
           <p>Request Sent</p>
         ) : status == 'delivered' ? (
@@ -149,10 +122,6 @@ const OrderRow = ({ order }) => {
         ) : (
           ''
         )}
-
-        {/* <Link className="underline" href={`/dashboard/revision/${orderId}`}>
-            Send Request
-          </Link> */}
       </td>
     </tr>
   );

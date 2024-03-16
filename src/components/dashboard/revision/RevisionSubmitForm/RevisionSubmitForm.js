@@ -1,34 +1,39 @@
 'use client';
+import config from '@/config';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const RevisionForm = ({ details }) => {
-  console.log('details from from', details);
+const RevisionForm = ({ order, user }) => {
   const router = useRouter();
   const handleRevisionSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const description = form.description.value;
+    const details = form.details.value;
     const formData = {
-      orderId: details.orderId,
-      email: details.email,
-      description,
+      order_id: order?.id,
+      user_id: user.userId,
+      details,
     };
+    console.log({ formData });
     try {
-      const response = await fetch(`${baseUrl}/revision`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${config.api_base_url}/revisions/create-revision`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${user.AccessToken}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const result = await response.json();
       console.log('revision result', result);
 
       if (result.success) {
-        router.push(`/dashboard/revision/success?orderId=${details?.orderId}`);
+        router.push(`/dashboard/revision/success?orderId=${order?.id}`);
       }
     } catch (error) {
       console.log(error);
@@ -45,7 +50,7 @@ const RevisionForm = ({ details }) => {
             Email<span className='text-red-500'>*</span>
           </label>
           <input
-            defaultValue={details?.email}
+            defaultValue={user?.email}
             readOnly
             type='email'
             id='loginEmail'
@@ -58,7 +63,7 @@ const RevisionForm = ({ details }) => {
             OrderId<span className='text-red-500'>*</span>
           </label>
           <input
-            defaultValue={details.orderId}
+            defaultValue={order?.id}
             readOnly
             type='text'
             id='orderId'
@@ -75,8 +80,8 @@ const RevisionForm = ({ details }) => {
             Details
           </label>
           <textarea
-            id='description'
-            name='description'
+            id='details'
+            name='details'
             rows={6}
             required
             className='focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm'
