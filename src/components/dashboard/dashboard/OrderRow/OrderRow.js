@@ -90,8 +90,8 @@ const OrderRow = ({ order }) => {
             status === 'denied'
               ? 'bg-red-100 text-red-500'
               : status == 'in-revision'
-              ? 'bg-pink-100  text-pink-500'
-              : 'bg-green-100 text-green-500'
+                ? 'bg-pink-100  text-pink-500'
+                : 'bg-green-100 text-green-500'
           }`}
         >
           <span className=' text-xl '>
