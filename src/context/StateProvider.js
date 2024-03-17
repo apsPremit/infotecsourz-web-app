@@ -251,8 +251,8 @@ const StateProvider = ({ children }) => {
       user?.subscription?.plan_type !== 'pay-as-go'
         ? 0
         : photoType === 'product'
-        ? productTotalCost
-        : modelTotalCost
+          ? productTotalCost
+          : modelTotalCost
     );
   }, [photoType, modelTotalCost, productTotalCost, selectedPackage]);
 

@@ -6,13 +6,14 @@ import toast, { Toaster } from 'react-hot-toast';
 import Loader from '../../../shared/Loader/Loader';
 import { ImSpinner2 } from 'react-icons/im';
 import Link from 'next/link';
+import config from '@/config';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
-const PaypalCheckoutButtons = ({ orderDetails, agree }) => {
-  console.log(orderDetails);
+const PaypalCheckoutButtons = ({ orderDetails, agree, user }) => {
   let validateData = null;
-
-  const { isTermsAgreed, setIsTermsAgreed, taxRate } = useContext(StateContext);
   const [isLoading, setLoading] = useState(true);
+  const router = useRouter();
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -29,12 +30,13 @@ const PaypalCheckoutButtons = ({ orderDetails, agree }) => {
     intent: 'capture',
   };
 
-  const verifyOrder = async (orderDetails, paymentSource) => {
+  const verifyOrder = async (orderDetails, paymentSource, accessToken) => {
     console.log('call verify');
-    const response = await fetch('/api/order/verify', {
+    const response = await fetch(`${config.api_base_url}/orders/verify`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ orderDetails, paymentSource }),
     });
@@ -42,20 +44,26 @@ const PaypalCheckoutButtons = ({ orderDetails, agree }) => {
   };
 
   const createNewOrder = async (orderDetails, paymentDetails) => {
-    console.log('validate data from create new order', validateData);
     try {
-      const response = await fetch('/api/order/create-order/pay-as-go', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ orderDetails, paymentDetails }),
-      });
+      const response = await fetch(
+        `${config.api_base_url}/orders/create-order/pay-as-go`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+          body: JSON.stringify({ orderDetails, paymentDetails }),
+        }
+      );
       const result = await response.json();
-      console.log('result', result);
-      return result;
+      if (!result.success) {
+        return toast.error('something went wrong!');
+      }
+      router.replace(`/order_success?orderId=${result?.data?.id}`);
     } catch (error) {
       console.log('error=', error);
+      return toast.error('something went wrong!');
     }
   };
 
@@ -75,7 +83,8 @@ const PaypalCheckoutButtons = ({ orderDetails, agree }) => {
             createOrder={async (data, actions) => {
               const validationResult = await verifyOrder(
                 orderDetails,
-                data.paymentSource
+                data.paymentSource,
+                user.accessToken
               );
 
               if (!validationResult.ok) {
@@ -100,7 +109,6 @@ const PaypalCheckoutButtons = ({ orderDetails, agree }) => {
             onApprove={async (data, actions) => {
               actions.order.capture();
               const successData = await actions.order.get();
-              console.log('payment successs data=>>>', successData);
               await createNewOrder(validateData, successData);
             }}
             onError={(error) => {

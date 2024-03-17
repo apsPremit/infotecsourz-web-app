@@ -219,6 +219,7 @@ const BillingPage = ({ session }) => {
                 <PaypalCheckoutButtons
                   agree={agree}
                   orderDetails={orderDetails}
+                  user={user}
                 />
               </div>
             </div>
