@@ -4,7 +4,6 @@ import { BsImageAlt } from 'react-icons/bs';
 import Link from 'next/link';
 
 const FreeTrialBox = ({ session }) => {
-  console.log({ session });
   return (
     <>
       {session?.user?.able_free_trial && (

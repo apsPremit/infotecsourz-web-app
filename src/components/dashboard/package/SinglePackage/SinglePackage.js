@@ -12,6 +12,7 @@ const SinglePackage = ({ plan }) => {
   const [isShowPricingModal, setShowPricingModal] = useState(false);
   const session = useSession();
   const user = session?.data?.user;
+  console.log({ user });
   const router = useRouter();
   const pathName = usePathname();
   const params = useSearchParams();

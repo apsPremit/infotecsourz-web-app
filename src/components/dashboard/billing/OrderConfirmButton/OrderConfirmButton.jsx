@@ -13,7 +13,6 @@ const OrderConfirmButton = ({ agree, setAgree, orderDetails }) => {
   const session = useSession();
   const user = session?.data?.user;
   const confirmOrder = async (data) => {
-    console.log({ data });
     try {
       setLoading(true);
       const response = await fetch(

@@ -18,11 +18,8 @@ const PaypalCheckoutButtons = ({ orderDetails, agree, user }) => {
     setLoading(false);
   }, []);
 
-  const paypalClientId =
-    process.env.NODE_ENV === 'development'
-      ? process.env.NEXT_PUBLIC_PAYPAL_SB_API_KEY
-      : process.env.NEXT_PUBLIC_PAYPAL_API_KEY;
-  console.log({ paypalClientId, env: process.env.NODE_ENV });
+  const paypalClientId = config.paypal_client_id;
+
   const initialOptions = {
     clientId: paypalClientId,
     vault: false,

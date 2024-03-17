@@ -11,7 +11,6 @@ export const authOptions = {
       credentials: {},
       async authorize(credentials) {
         try {
-          console.log(config.api_base_url);
           const response = await fetch(
             `${config.api_base_url}/auth/web/login`,
             {
@@ -28,7 +27,7 @@ export const authOptions = {
           );
           if (response.ok) {
             const result = await response.json();
-            console.log({ credentials });
+
             return result.data;
           }
           return null;

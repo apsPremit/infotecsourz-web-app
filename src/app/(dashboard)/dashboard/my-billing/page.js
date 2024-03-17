@@ -39,7 +39,6 @@ const fetchSubscription = async (subscriptionId, accessToken) => {
 
 const MyBilling = async () => {
   const session = await getServerSession(authOptions);
-  console.log({ data: session?.user?.subscription });
   const user = session?.user;
   const transactions = await fetchPaymentHistories(
     user?.userId,

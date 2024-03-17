@@ -10,7 +10,6 @@ import { StateContext } from '@/context/StateProvider';
 import PaypalSubscriptionButtons from './PaypalSubscription.buttons';
 import { useSession } from 'next-auth/react';
 const PricingBilling = ({ plan }) => {
-  console.log({ plan });
   const { taxRate, isTermsAgreed, setIsTermsAgreed } = useContext(StateContext);
   const [showDetails, setShowDetails] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('paypal / credit card');
@@ -19,8 +18,6 @@ const PricingBilling = ({ plan }) => {
 
   const { plan_name, price, credit, facilities, validity, plan_id } =
     plan || {};
-
-  console.log({ session });
 
   let subTotal = price;
   let taxTotal = (price / 100) * taxRate;

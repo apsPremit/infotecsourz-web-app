@@ -28,16 +28,13 @@ const fetchOrders = async (userId, accessToken) => {
       }
     );
     const orderData = await orderRes.json();
-    console.log(orderData);
     return orderData.data;
-  } catch (error) {
-    console.log('orders fetch error', error);
-  }
+  } catch (error) {}
 };
 
 const page = async (props) => {
   const session = await getServerSession(authOptions);
-  console.log({ sessionFromPage: session.user });
+
   if (!session) {
     return redirect('/login');
   }
@@ -46,7 +43,7 @@ const page = async (props) => {
     session?.user?.userId,
     session?.user?.accessToken
   );
-  console.log('orders', orders);
+
   // const res = await fetch(`${baseUrl}/user/${session?.user?.email}`);
   // const data = await res.json();
 

@@ -15,7 +15,7 @@ const RevisionForm = ({ order, user }) => {
       user_id: user.userId,
       details,
     };
-    console.log({ formData });
+
     try {
       const response = await fetch(
         `${config.api_base_url}/revisions/create-revision`,
