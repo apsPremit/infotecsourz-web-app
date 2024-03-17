@@ -39,6 +39,16 @@ const Invoice = ({ invoice }) => {
     content: () => componentPDF.current,
     documentTitle: 'invoice',
   });
+  const formateBillingAddress = (address) => {
+    const arr = address.split(',');
+    return {
+      name: arr[0],
+      street: arr[1],
+      city: arr[2],
+      postal: arr[3],
+      country: arr[4],
+    };
+  };
 
   return (
     <div>
@@ -85,7 +95,34 @@ const Invoice = ({ invoice }) => {
               <div className='grid grid-cols-1 gap-y-5 md:grid-cols-2'>
                 <div>
                   <p className='text-lg font-bold uppercase'>{user.name}</p>
-                  <p className='text-sm '>{transaction?.shipping_address}</p>
+                  {transaction?.shipping_address && (
+                    <p className='text-sm'>
+                      {
+                        formateBillingAddress(transaction?.shipping_address)
+                          .name
+                      }
+                      ,
+                      {
+                        formateBillingAddress(transaction?.shipping_address)
+                          .street
+                      }
+                      <br />
+                      {
+                        formateBillingAddress(transaction?.shipping_address)
+                          .city
+                      }
+                      ,
+                      {
+                        formateBillingAddress(transaction?.shipping_address)
+                          .postal
+                      }
+                      ,
+                      {
+                        formateBillingAddress(transaction?.shipping_address)
+                          .country
+                      }
+                    </p>
+                  )}
                 </div>
                 <div className='flex md:justify-end md:gap-x-20'>
                   <div className='capitalize'>

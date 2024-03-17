@@ -22,7 +22,6 @@ const fetchPaymentHistories = async (userId, accessToken) => {
   } catch (error) {}
 };
 const fetchSubscription = async (subscriptionId, accessToken) => {
-  console.log({ subscriptionId, accessToken });
   try {
     const response = await axios.get(
       `${config.api_base_url}/subscriptions/${subscriptionId}`,
@@ -33,14 +32,14 @@ const fetchSubscription = async (subscriptionId, accessToken) => {
       }
     );
     const result = response.data?.data;
-    console.log('sub result', result);
+
     return result;
   } catch (error) {}
 };
 
 const MyBilling = async () => {
   const session = await getServerSession(authOptions);
-  console.log({ session });
+  console.log({ data: session?.user?.subscription });
   const user = session?.user;
   const transactions = await fetchPaymentHistories(
     user?.userId,

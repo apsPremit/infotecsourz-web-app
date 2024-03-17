@@ -39,13 +39,13 @@ const ProfilePage = () => {
             </div>
           )}
 
-          <div>
+          {/* <div>
             <Link href='/dashboard/profile/edit'>
               <button className='rounded border border-shadow px-3 py-1.5'>
                 Edit Profile
               </button>
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
 

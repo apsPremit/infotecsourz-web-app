@@ -31,7 +31,7 @@ const SlideFoot = ({ handlePrev, handleNext, currentSlide }) => {
         user?.subscription?.remaining_credit < 1)
     ) {
       return Swal.fire({
-        title: 'You have no credit, Please upgrade your plan',
+        title: 'You have no subscription, Please subscription to any plan',
         icon: 'warning',
         confirmButtonText: 'Upgrade',
       }).then((result) => {

@@ -120,7 +120,7 @@ const NoPaymentCheckout = ({ plan, user }) => {
         {/* billing btn and process  */}
         <div>
           <button
-            // disabled={!isTermsAgreed || isProcessing}
+            disabled={!isTermsAgreed || isProcessing}
             onClick={confirmSubscribe}
             className='w-full text-center text-white disabled:bg-blue-300 disabled:cursor-not-allowed bg-blue-500 rounded-lg py-3 text-lg hover:bg-blue-400 cursor-pointer'
           >

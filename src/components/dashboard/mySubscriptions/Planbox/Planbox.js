@@ -6,7 +6,6 @@ import moment from 'moment';
 import Link from 'next/link';
 
 const PlanBox = ({ subscription }) => {
-  console.log({ subscription });
   const {
     plan_name,
     total_credit,

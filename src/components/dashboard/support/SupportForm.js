@@ -1,7 +1,6 @@
 'use client';
-import sendSupportMessage from '@/utils/functions/sendSupportMessage';
+import config from '@/config';
 import { useSession } from 'next-auth/react';
-
 import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { ImSpinner2 } from 'react-icons/im';
@@ -18,31 +17,42 @@ const SupportForm = () => {
     const subject = form.subject.value;
     const message = form.message.value;
     const phone = form.phone.value;
-    const messageData = { email: user?.email, subject, message, phone };
+    const messageData = {
+      user_id: user?.userId,
+      subject,
+      description: message,
+      phone,
+    };
+    console.log(messageData);
     try {
-      const sendResult = await sendSupportMessage(messageData);
-      if (sendResult?.error) {
-        setLoading(false);
-        return toast.error(sendResult?.error);
-      }
-      if (sendResult?.message) {
-        toast.success(sendResult?.message);
-        setLoading(false);
-        return form.reset();
-      }
-    } catch (error) {
+      const supportUrl = `${config.api_base_url}/supports/create-support`;
+      const res = await fetch(supportUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+        body: JSON.stringify(messageData),
+      });
+      if (!res.ok) throw new Error(res.statusText);
+      form.reset();
+      toast.success('request sent');
       setLoading(false);
-      console.log(error?.error);
+    } catch (error) {
+      console.log('er', error);
+      toast.error(error.message);
+      form.reset();
+      setLoading(false);
     }
   };
 
   return (
-    <section className='dark:bg-gray-900 bg-white'>
-      <div className='mx-auto max-w-screen-md px-4 py-8 lg:py-16'>
-        <h2 className='dark:text-white mb-4 text-center text-4xl font-extrabold tracking-tight text-gray-900'>
+    <section className='bg-white dark:bg-gray-900'>
+      <div className='py-8 lg:py-16 px-4 mx-auto max-w-screen-md'>
+        <h2 className='mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white'>
           Contact Us
         </h2>
-        <p className='dark:text-gray-400 mb-8 text-center font-light text-gray-500 sm:text-xl lg:mb-16'>
+        <p className='mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl'>
           Got a technical issue? Want to send feedback about a our services?
           Need details about our Business plan? Let us know.
         </p>
@@ -50,7 +60,7 @@ const SupportForm = () => {
           <div>
             <label
               htmlFor='email'
-              className='dark:text-gray-300 mb-2 block text-sm font-medium text-gray-900'
+              className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'
             >
               Your email
             </label>
@@ -58,7 +68,7 @@ const SupportForm = () => {
               type='email'
               defaultValue={user?.email}
               id='email'
-              className='focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm'
+              className='shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light'
               placeholder='name@flowbite.com'
               required=''
             />
@@ -67,16 +77,15 @@ const SupportForm = () => {
           <div>
             <label
               htmlFor='subject'
-              className='dark:text-gray-300 mb-2 block text-sm font-medium text-gray-900'
+              className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'
             >
               Your Phone Number
             </label>
             <input
-              defaultValue={user?.name}
               type='text'
               id='phone'
               name='phone'
-              className='focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-sm text-gray-900 shadow-sm'
+              className='block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light'
               placeholder='Give you phone number'
               required
             />
@@ -85,7 +94,7 @@ const SupportForm = () => {
           <div>
             <label
               htmlFor='subject'
-              className='dark:text-gray-300 mb-2 block text-sm font-medium text-gray-900'
+              className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'
             >
               Subject
             </label>
@@ -93,7 +102,7 @@ const SupportForm = () => {
               type='text'
               id='subject'
               name='subject'
-              className='focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 text-sm text-gray-900 shadow-sm'
+              className='block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light'
               placeholder='Let us know how we can help you'
               required
             />
@@ -102,7 +111,7 @@ const SupportForm = () => {
           <div className='sm:col-span-2'>
             <label
               htmlFor='message'
-              className='dark:text-gray-400 mb-2 block text-sm font-medium text-gray-900'
+              className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400'
             >
               Your message
             </label>
@@ -110,19 +119,19 @@ const SupportForm = () => {
               id='message'
               name='message'
               rows={6}
-              className='focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm'
+              className='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
               placeholder='Leave a comment...'
             />
           </div>
           {loading && (
-            <div className='flex items-center justify-start text-xl text-main lg:ml-5'>
+            <div className='flex items-center lg:ml-5 justify-start text-xl text-main'>
               <ImSpinner2 className='animate-spin' />
             </div>
           )}
 
           <button
             type='submit'
-            className='rounded bg-main px-3 py-2.5 text-white hover:bg-mainHover '
+            className='bg-main px-3 py-2.5 text-white hover:bg-mainHover rounded '
           >
             Send Message
           </button>
