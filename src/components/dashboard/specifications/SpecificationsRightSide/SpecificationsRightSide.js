@@ -17,6 +17,8 @@ const SpecificationsRightSide = () => {
     hasInstructions,
     setHasInstructions,
     setProductDetailsDescription,
+    instructionSource,
+    setInstructionSource,
     returnTime,
   } = useContext(StateContext);
   const [isUploading, setUploading] = useState(false);
@@ -39,7 +41,7 @@ const SpecificationsRightSide = () => {
 
     try {
       const res = await axios.post(
-        `${config.api_base_url}/instructions/upload?orderId=${orderId}`,
+        `${config.api_base_url}/instructions/upload?orderId=${orderId}&user=${user.userId}`,
         formData,
         {
           headers: {
@@ -47,11 +49,11 @@ const SpecificationsRightSide = () => {
           },
         }
       );
-      const data = await res.data;
-      console.log('upload result', data);
+      const result = await res.data;
+
       setUploading(false);
-      if (data.success) {
-        setHasInstructions(true);
+      if (result.success) {
+        setInstructionSource(result.data.instruction_source);
       }
       toast.success('upload successful');
     } catch (error) {
@@ -90,7 +92,7 @@ const SpecificationsRightSide = () => {
         <label
           htmlFor='instructions'
           className={`flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 ${
-            hasInstructions
+            instructionSource
               ? 'bg-blue-500 text-white hover:bg-blue-500'
               : 'bg-gray-50 text-gray-500 hover:bg-gray-100'
           } `}

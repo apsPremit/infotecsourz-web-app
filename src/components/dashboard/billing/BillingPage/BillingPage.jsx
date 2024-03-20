@@ -6,8 +6,10 @@ import OrderConfirmButton from '../OrderConfirmButton/OrderConfirmButton';
 import Link from 'next/link';
 import Image from 'next/image';
 import paymentMethods from '../../../../../public/images/others/payment_methods.png';
+import { useAuth } from '@/context/AuthProvider';
+import { useSession } from 'next-auth/react';
 
-const BillingPage = ({ session }) => {
+const BillingPage = () => {
   const {
     uploadedImages,
     perPhotoCost,
@@ -16,35 +18,39 @@ const BillingPage = ({ session }) => {
     taxRate,
     productDetailsDescription,
     fileUrl,
+    imageSource,
     orderName,
     returnTime,
-    hasInstructions,
+    instructionSource,
     photoRequirements,
     orderId,
   } = useContext(StateContext);
 
   const [showDetails, setShowDetails] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('paypal / credit card');
-  const user = session?.user;
+  const { userData } = useAuth();
+  const session = useSession();
+  const user = session?.data?.user;
   const [agree, setAgree] = useState(false);
-  console.log('user data', user?.subscription?.plan_type);
+  console.log('user data', userData?.subscription?.plan_type);
   // const packageInfo = packages.find((pk) => pk.package_name === pack);
   const { plan_name, remaining_credit, price, photos, facilities } =
-    user?.subscription || {};
+    userData?.subscription || {};
 
   let totalPhotos =
     uploadedImages.length < 1 ? imageQuantityFromUrl : uploadedImages.length;
   let subTotal = totalPhotos * perPhotoCost;
   let taxTotal = (taxRate / 100) * subTotal;
   let grandTotal = subTotal + taxTotal;
-  const remainingCredit = user?.subscription?.remaining_credit - totalPhotos;
+  const remainingCredit =
+    userData?.subscription?.remaining_credit - totalPhotos;
 
   const orderDetails = {
     id: orderId,
     order_name: orderName,
-    user_id: user.userId,
+    user_id: user?.userId,
     photo_type: photoType,
-    plan: user?.subscription?.plan_name,
+    plan: userData?.subscription?.plan_name,
     photo_quantity: parseInt(totalPhotos),
     per_photo_cost: perPhotoCost,
     subtotal: subTotal,
@@ -52,10 +58,11 @@ const BillingPage = ({ session }) => {
     tax_total: taxTotal,
     grand_total: grandTotal,
     details: productDetailsDescription,
-    file_url: fileUrl,
+    image_url: fileUrl,
+    image_source: imageSource,
     requirements: photoRequirements,
     turn_around_time: returnTime,
-    has_instruction: hasInstructions,
+    instruction_source: instructionSource,
     // payment_method: paymentMethod,
   };
 
@@ -64,7 +71,7 @@ const BillingPage = ({ session }) => {
     { title: 'Order Name', value: orderName },
     {
       title: 'Plan',
-      value: user?.subscription?.plan_name || plan_name,
+      value: userData?.subscription?.plan_name || plan_name,
     },
     {
       title: 'Price per product',
@@ -83,14 +90,14 @@ const BillingPage = ({ session }) => {
     { title: 'Turn Around Time', value: returnTime + ' Hours' },
     {
       title: 'Plan',
-      value: user?.subscription?.plan_name || plan_name,
+      value: userData?.subscription?.plan_name || plan_name,
     },
 
     { title: 'Remaining Credit', value: remaining_credit - totalPhotos },
   ];
 
   const billProperties =
-    user?.subscription?.plan_type === 'pay-as-go'
+    userData?.subscription?.plan_type === 'pay-as-go'
       ? billPropertiesForPayAsGo
       : billPropertiesForCreditOrder;
 
@@ -99,7 +106,7 @@ const BillingPage = ({ session }) => {
       {/* properties  */}
       <div
         className={`${
-          user?.subscription?.plan_type !== 'pay-as-go'
+          userData?.subscription?.plan_type !== 'pay-as-go'
             ? 'w-full lg:w-1/2 mx-auto '
             : 'grid grid-cols-1 lg:grid-cols-2 gap-5 '
         } `}
@@ -153,7 +160,7 @@ const BillingPage = ({ session }) => {
             </div>
           </div>
 
-          {user?.subscription?.plan_type !== 'pay-as-go' && (
+          {userData?.subscription?.plan_type !== 'pay-as-go' && (
             <OrderConfirmButton
               agree={agree}
               setAgree={setAgree}
@@ -166,7 +173,7 @@ const BillingPage = ({ session }) => {
         {/* when subscription plan is pay as to the execute this code */}
 
         <div>
-          {user?.subscription?.plan_type === 'pay-as-go' && (
+          {userData?.subscription?.plan_type === 'pay-as-go' && (
             <div className='p-5 border rounded-md shadow-md'>
               <h3 className='text-xl font-bold mb-5'>Billing</h3>
               <p className='mt-5 mb-2'>Select Payment method</p>
@@ -219,7 +226,7 @@ const BillingPage = ({ session }) => {
                 <PaypalCheckoutButtons
                   agree={agree}
                   orderDetails={orderDetails}
-                  user={user}
+                  userData={userData}
                 />
               </div>
             </div>

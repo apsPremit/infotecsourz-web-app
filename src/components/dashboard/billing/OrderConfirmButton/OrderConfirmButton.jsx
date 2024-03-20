@@ -1,4 +1,5 @@
 import config from '@/config';
+import { useAuth } from '@/context/AuthProvider';
 import useUpdateSession from '@/hook/useUpdateSession';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';

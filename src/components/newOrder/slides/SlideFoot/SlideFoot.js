@@ -4,6 +4,7 @@ import { StateContext } from '@/context/StateProvider';
 import { redirect, useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
 import { useSession } from 'next-auth/react';
+import { useAuth } from '@/context/AuthProvider';
 
 const SlideFoot = ({ handlePrev, handleNext, currentSlide }) => {
   const {
@@ -21,14 +22,15 @@ const SlideFoot = ({ handlePrev, handleNext, currentSlide }) => {
   const router = useRouter();
   const session = useSession();
   const user = session?.data?.user;
+  const { userData } = useAuth();
   const goToNextPage = () => {
     if (currentSlide === 6) {
       return router.push('/dashboard/upload');
     }
     if (
-      !user?.subscription ||
-      (user?.subscription?.plan_type !== 'pay-as-go' &&
-        user?.subscription?.remaining_credit < 1)
+      !userData?.subscription ||
+      (userData?.subscription?.plan_type !== 'pay-as-go' &&
+        userData?.subscription?.remaining_credit < 1)
     ) {
       return Swal.fire({
         title: 'You have no subscription, Please subscription to any plan',
@@ -48,7 +50,8 @@ const SlideFoot = ({ handlePrev, handleNext, currentSlide }) => {
     <div className='mt-5 flex items-center justify-between'>
       <p
         className={`text-md mt-2 font-bold text-black ${
-          currentSlide === 1 || user?.subscription?.plan_type !== 'pay-as-go'
+          currentSlide === 1 ||
+          userData?.subscription?.plan_type !== 'pay-as-go'
             ? 'opacity-0'
             : ''
         }`}

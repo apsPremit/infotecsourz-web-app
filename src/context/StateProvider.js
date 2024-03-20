@@ -1,6 +1,7 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import { createContext, useEffect, useState } from 'react';
+import { useAuth } from './AuthProvider';
 
 export const StateContext = createContext(null);
 
@@ -248,11 +249,11 @@ const StateProvider = ({ children }) => {
 
   useEffect(() => {
     setPerPhotoCost(
-      user?.subscription?.plan_type !== 'pay-as-go'
+      userData?.subscription?.plan_type !== 'pay-as-go'
         ? 0
         : photoType === 'product'
-          ? productTotalCost
-          : modelTotalCost
+        ? productTotalCost
+        : modelTotalCost
     );
   }, [photoType, modelTotalCost, productTotalCost, selectedPackage]);
 
@@ -293,6 +294,8 @@ const StateProvider = ({ children }) => {
   const [totalFileSize, setTotalFileSize] = useState(0);
   const [orderId, setOrderId] = useState(null);
   const [fileUrl, setFileUrl] = useState(null);
+  const [imageSource, setImageSource] = useState(null);
+  const [instructionSource, setInstructionSource] = useState(null);
   const [imageQuantityFromUrl, setImageQuantityFromUrl] = useState(0);
 
   // specifications page state
@@ -300,13 +303,12 @@ const StateProvider = ({ children }) => {
     useState(null);
   const [hasInstructions, setHasInstructions] = useState(false);
 
-  const session = useSession();
-  const user = session?.data?.user;
+  const { userData } = useAuth();
   const [updatedCredit, setUpdatedCredit] = useState(0);
 
   useEffect(() => {
     const newUpdatedCredit =
-      user?.subscription?.remaining_credit +
+      userData?.subscription?.remaining_credit +
       (selectedPackage.photos ? selectedPackage?.photos : 0);
     setUpdatedCredit(newUpdatedCredit);
   }, []);
@@ -355,6 +357,10 @@ const StateProvider = ({ children }) => {
     setTotalFileSize,
     orderId,
     setOrderId,
+    imageSource,
+    setImageSource,
+    instructionSource,
+    setInstructionSource,
     fileUrl,
     setFileUrl,
     productDetailsDescription,

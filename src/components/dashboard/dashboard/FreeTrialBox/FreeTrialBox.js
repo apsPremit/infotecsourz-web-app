@@ -2,11 +2,13 @@
 import React from 'react';
 import { BsImageAlt } from 'react-icons/bs';
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthProvider';
 
 const FreeTrialBox = ({ session }) => {
+  const { userData } = useAuth();
   return (
     <>
-      {session?.user?.able_free_trial && (
+      {userData?.able_free_trial && (
         <div className='rounded border border-shadow bg-white p-5'>
           <div className=''>
             <p className='border-red-20 flex h-8 w-8 items-center justify-center rounded-full border bg-green-200 p-1.5 text-xl text-green-500'>

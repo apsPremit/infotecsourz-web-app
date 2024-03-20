@@ -12,6 +12,8 @@ import ImageUploadInputField from '../ImageUploadInputField/ImageUploadInputFiel
 import ShowImages from '../ShowImages/ShowImages';
 import { StateContext } from '@/context/StateProvider';
 import config from '@/config';
+import toast from 'react-hot-toast';
+import { useAuth } from '@/context/AuthProvider';
 
 const UploadPage = () => {
   const {
@@ -23,6 +25,7 @@ const UploadPage = () => {
     setFileUrl,
     orderId,
     setOrderId,
+    setImageSource,
     perPhotoCost,
     selectedPackage,
   } = useContext(StateContext);
@@ -33,6 +36,7 @@ const UploadPage = () => {
   const [images, setImages] = useState([]);
   const session = useSession();
   const user = session?.data?.user;
+  const { userData } = useAuth();
   const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   const handleProceed = () => {
@@ -48,9 +52,9 @@ const UploadPage = () => {
     if (images.length < 1) return;
 
     if (
-      user?.subscription === null ||
-      (user?.subscription?.plan_type === 'paid' &&
-        user?.subscription?.remaining_credit < images?.length)
+      userData?.subscription === null ||
+      (userData?.subscription?.plan_type === 'paid' &&
+        userData?.subscription?.remaining_credit < images?.length)
     ) {
       return toast.error('you have not require credit please update your plan');
     }
@@ -61,19 +65,24 @@ const UploadPage = () => {
     }
     try {
       setUploading(true);
-      const res = await fetch(`${config.api_base_url}/images/upload`, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      });
+      const res = await fetch(
+        `${config.api_base_url}/images/upload?userId=${user.userId}`,
+        {
+          method: 'POST',
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        }
+      );
       if (!res.ok) {
         throw new Error(res.statusText);
       }
       const result = await res.json();
+      console.log('upload result', result);
       setUploadedImages(result.data.images);
-      setOrderId(result.data.orderId);
+      setOrderId(result.data.order_id);
+      setImageSource(result.data.image_source);
       console.log('result', result);
       setUploading(false);
     } catch (error) {

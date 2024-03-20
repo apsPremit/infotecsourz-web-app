@@ -6,15 +6,13 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2';
 import PricingTable from '../../../shared/PricingTable/PricingTable';
 import { useSession } from 'next-auth/react';
+import { useAuth } from '@/context/AuthProvider';
 
 const SinglePackage = ({ plan }) => {
   const { setSelectedPackage, selectedPackage } = useContext(StateContext);
   const [isShowPricingModal, setShowPricingModal] = useState(false);
-  const session = useSession();
-  const user = session?.data?.user;
-  console.log({ user });
   const router = useRouter();
-  const pathName = usePathname();
+  const { userData } = useAuth();
   const params = useSearchParams();
   const callback = params.get('callback');
   const [showDetails, setShowDetails] = useState(false);
@@ -158,7 +156,7 @@ const SinglePackage = ({ plan }) => {
           </div>
 
           <div>
-            {(plan_name === user?.subscription?.plan_name) === plan_name ? (
+            {(plan_name === userData?.subscription?.plan_name) === plan_name ? (
               <div className='group relative  flex justify-center'>
                 <button
                   disabled
@@ -175,7 +173,7 @@ const SinglePackage = ({ plan }) => {
                 <button
                   disabled={
                     plan_name === 'free trial' &&
-                    user?.able_free_trial === false
+                    userData?.able_free_trial === false
                   }
                   onClick={() => handleNavigation(plan)}
                   className={`${
@@ -191,7 +189,7 @@ const SinglePackage = ({ plan }) => {
                     Charge depends on your retouching needs.
                   </span>
                 )}
-                {type === 'free' && user?.able_free_trial === false && (
+                {type === 'free' && userData?.able_free_trial === false && (
                   <span className='absolute -top-10 scale-0 transition-all rounded bg-slate-800 p-2 text-xs text-white group-hover:scale-100'>
                     You already used free trial
                   </span>

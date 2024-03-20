@@ -1,6 +1,8 @@
 import './globals.css';
 import { Poppins } from 'next/font/google';
 import NextAuthProvider from '@/context/NextAuthProvider';
+import { AuthProvider } from '@/context/AuthProvider';
+import TanStackProvider from '@/context/TanstackProvider';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -17,7 +19,11 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={poppins.className}>
         <NextAuthProvider>
-          <main className='mx-auto max-w-screen-2xl'>{children}</main>
+          <TanStackProvider>
+            <AuthProvider>
+              <main className='mx-auto max-w-screen-2xl'>{children}</main>
+            </AuthProvider>
+          </TanStackProvider>
         </NextAuthProvider>
       </body>
     </html>

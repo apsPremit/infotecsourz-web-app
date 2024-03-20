@@ -10,7 +10,9 @@ import config from '@/config';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-const PaypalCheckoutButtons = ({ orderDetails, agree, user }) => {
+const PaypalCheckoutButtons = ({ orderDetails, agree }) => {
+  const session = useSession();
+  const user = session?.data?.user;
   let validateData = null;
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();

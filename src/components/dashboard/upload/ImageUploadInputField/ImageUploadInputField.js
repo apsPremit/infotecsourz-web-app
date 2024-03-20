@@ -4,10 +4,10 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useSession } from 'next-auth/react';
 import { StateContext } from '@/context/StateProvider';
 import randomGenerator from '@/utils/functions/randomGenerator';
+import { useAuth } from '@/context/AuthProvider';
 
 const ImageUploadInputField = ({ setFileUrl, isUploading, images }) => {
-  const session = useSession();
-  const user = session?.data?.user;
+  const { userData } = useAuth();
 
   const {
     uploadedImages,
@@ -22,16 +22,19 @@ const ImageUploadInputField = ({ setFileUrl, isUploading, images }) => {
   const handleFileUrl = (e) => {
     const generateId = randomGenerator(16);
     e.preventDefault();
-    console.log(user?.subscription?.remaining_credit, setImageQuantityFromUrl);
+    console.log(
+      userData?.subscription?.remaining_credit,
+      setImageQuantityFromUrl
+    );
 
     // generate order id
 
     const url = e.target.fileURL.value;
     const imageQuantity = e.target.imageQuantity.value;
     if (
-      user?.subscription === null ||
-      (user?.subscription?.plan_type === 'paid' &&
-        user?.subscription?.remaining_credit < imageQuantity)
+      userData?.subscription === null ||
+      (userData?.subscription?.plan_type === 'paid' &&
+        userData?.subscription?.remaining_credit < imageQuantity)
     ) {
       return toast.error('you have not require credit please update your plan');
     }
