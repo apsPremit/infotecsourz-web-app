@@ -4,6 +4,7 @@ import SlideFoot from '../SlideFoot/SlideFoot';
 import RadioButton from '@/components/shared/RadioButton/RadioButton';
 import { StateContext } from '@/context/StateProvider';
 import CheckButton from '@/components/shared/CheckButton/CheckButton';
+import SwitchToggle from '@/components/ui/SwitchToggle';
 
 const FormatSlide = () => {
   const { formats, setFormats, handleSingleValueChange } =
@@ -21,10 +22,10 @@ const FormatSlide = () => {
       <h2 className='mb-5  text-lg font-bold'>Select Image format </h2>
       <div className='flex flex-wrap items-center gap-x-10'>
         {formatOptions.map((item, i) => (
-          <CheckButton
+          <SwitchToggle
             key={i}
             isChecked={formats[item.value]}
-            toggleCheckbox={() =>
+            toggler={() =>
               handleSingleValueChange(
                 setFormats,
                 item.value,

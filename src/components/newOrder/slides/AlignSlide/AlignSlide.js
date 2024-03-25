@@ -5,6 +5,7 @@ import SelectField from '@/components/shared/SelectField/SelectField';
 import InputField from '@/components/shared/InputFiled/InputField';
 import TabButton from '@/components/shared/TabButton/TabButton';
 import { StateContext } from '@/context/StateProvider';
+import SwitchToggle from '@/components/ui/SwitchToggle';
 
 const AlignSlide = () => {
   const {
@@ -131,7 +132,7 @@ const AlignSlide = () => {
                 />
               </div>
               <div>
-                <label className='cursor-pointer' htmlFor='kepOriginal'>
+                {/* <label className='cursor-pointer' htmlFor='kepOriginal'>
                   <input
                     id='kepOriginal'
                     onChange={() =>
@@ -146,7 +147,18 @@ const AlignSlide = () => {
                     checked={openOptions.isOriginalAspect}
                   />
                   <span>Keep original aspect ratio</span>
-                </label>
+                </label> */}
+                <SwitchToggle
+                  isChecked={openOptions.isOriginalAspect}
+                  toggler={() =>
+                    handleSingleValueChange(
+                      setOpenOptions,
+                      'isOriginalAspect',
+                      !openOptions.isOriginalAspect
+                    )
+                  }
+                  label='Keep original aspect ratio'
+                />
               </div>
             </div>
           ) : (

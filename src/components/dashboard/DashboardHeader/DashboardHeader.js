@@ -1,4 +1,5 @@
 'use client';
+import SwitchToggle from '@/components/ui/SwitchToggle';
 import { StateContext } from '@/context/StateProvider';
 import React, { useContext } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
@@ -21,7 +22,7 @@ const DashboardHeader = () => {
         </button>
         <h2 className='text-sm font-bold lg:text-2xl'>New Order</h2>
       </div>
-
+      <SwitchToggle />
       <div className='flex flex-nowrap items-center gap-2'>
         <button
           onClick={newOrderHandler}

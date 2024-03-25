@@ -4,6 +4,7 @@ import SlideFoot from '../SlideFoot/SlideFoot';
 import RadioButton from '@/components/shared/RadioButton/RadioButton';
 import { StateContext } from '@/context/StateProvider';
 import CheckButton from '@/components/shared/CheckButton/CheckButton';
+import SwitchToggle from '@/components/ui/SwitchToggle';
 
 const FinalSlide = () => {
   const {
@@ -58,11 +59,11 @@ const FinalSlide = () => {
         {photoType === 'product' ? (
           <div className='grid grid-cols-2  gap-x-2 md:grid-cols-3'>
             {productFinalOptions.map((item, i) => (
-              <CheckButton
+              <SwitchToggle
                 key={i}
                 label={item.title}
                 isChecked={productFinalSpecs[item.value]}
-                toggleCheckbox={() =>
+                toggler={() =>
                   handleSingleValueChange(
                     setProductFinalSpecs,
                     item.value,
@@ -75,11 +76,11 @@ const FinalSlide = () => {
         ) : (
           <div className='grid grid-cols-2 justify-between gap-x-2 md:grid-cols-3 md:justify-evenly  lg:justify-start lg:gap-x-0'>
             {modelFinalOptions.map((item, i) => (
-              <CheckButton
+              <SwitchToggle
                 key={i}
                 label={item.title}
                 isChecked={modelFinalSpecs[item.value]}
-                toggleCheckbox={() =>
+                toggler={() =>
                   handleSingleValueChange(
                     setModelFinalSpecs,
                     item.value,

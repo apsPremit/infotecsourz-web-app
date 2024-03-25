@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
         <NextAuthProvider>
           <TanStackProvider>
             <AuthProvider>
-              <main className='mx-auto max-w-screen-2xl'>{children}</main>
+              <main className='mx-auto '>{children}</main>
             </AuthProvider>
           </TanStackProvider>
         </NextAuthProvider>
