@@ -9,7 +9,7 @@ export const metadata = {
 
 const NewOrder = () => {
   return (
-    <div className='bg-white lg:p-5'>
+    <div className='bg-white lg:p-5 min-h-[calc(100vh-36px)]'>
       {/* <CheckUserData /> */}
       <NewOrderTab />
       <Slider />

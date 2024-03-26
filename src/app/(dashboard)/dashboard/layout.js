@@ -14,7 +14,7 @@ const layout = ({ children }) => {
           <div className='bg-white px-5 border-b'>
             <DashboardHeader />
           </div>
-          <div className='px-5 max-w-[1300px] mx-auto'>{children}</div>
+          <div className='px-5 max-w-[1300px] mx-auto '>{children}</div>
         </div>
       </div>
     </StateProvider>
