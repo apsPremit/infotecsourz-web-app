@@ -21,7 +21,9 @@ export default function RootLayout({ children }) {
         <NextAuthProvider>
           <TanStackProvider>
             <AuthProvider>
-              <main className='mx-auto '>{children}</main>
+              <main className='mx-auto relative' style={{ maxWidth: '2000px' }}>
+                {children}
+              </main>
             </AuthProvider>
           </TanStackProvider>
         </NextAuthProvider>

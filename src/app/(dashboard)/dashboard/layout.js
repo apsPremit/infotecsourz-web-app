@@ -6,13 +6,15 @@ import React from 'react';
 const layout = ({ children }) => {
   return (
     <StateProvider>
-      <div className='flex '>
-        <Sidebar />
-        <div className='w-full    bg-dashboard_background '>
-          <div className='bg-white px-5 lg:ml-52'>
+      <div className='grid grid-cols-12 gap-5  mx-auto'>
+        <div className='col-span-12 lg:col-span-2'>
+          <Sidebar />
+        </div>
+        <div className='w-full mx-auto bg-dashboard_background col-span-12 lg:col-span-10'>
+          <div className='bg-white px-5 border-b'>
             <DashboardHeader />
           </div>
-          <div className='px-2 py-3 lg:ml-52 lg:px-5'>{children}</div>
+          <div className='px-5 max-w-[1300px] mx-auto'>{children}</div>
         </div>
       </div>
     </StateProvider>

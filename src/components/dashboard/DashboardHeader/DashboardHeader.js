@@ -15,14 +15,14 @@ const DashboardHeader = () => {
       <div className='flex items-center'>
         <button
           onClick={() => setSidebarOpen(!isSidebarOpen)}
-          className='mr-3 text-xl lg:hidden'
+          className='text-xl lg:hidden'
         >
           {' '}
           <RxHamburgerMenu />
         </button>
         <h2 className='text-sm font-bold lg:text-2xl'>New Order</h2>
       </div>
-      <SwitchToggle />
+      {/* <SwitchToggle /> */}
       <div className='flex flex-nowrap items-center gap-2'>
         <button
           onClick={newOrderHandler}

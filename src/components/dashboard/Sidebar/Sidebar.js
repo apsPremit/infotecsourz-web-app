@@ -32,18 +32,15 @@ const Sidebar = () => {
 
   return (
     <div
-      className={` fixed  z-[999] h-screen  pt-8 duration-300 lg:w-52 lg:p-5 ${
-        isSidebarOpen ? 'w-3/4  ' : 'lg w-0'
-      }`}
+      className={`sidebar fixed top-0 left-0 h-screen z-50 transform transition-all duration-300 px-3 w-[225px] lg:w-[200px] xl:w-[250px] 2xl:w-[310px] ${
+        isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:-translate-x-0'
+      } lg:block`}
       style={{
         background: 'linear-gradient(175deg, #0E1A45 0.02%, #4A01A9 100.02%)',
+        // width: '232px', // Adjust sidebar width here
       }}
     >
-      <div
-        className={`relative flex items-center px-5 lg:block lg:px-0 ${
-          isSidebarOpen ? 'translate-x-0 ' : '-translate-x-52 lg:translate-x-0'
-        }`}
-      >
+      <div className='flex items-center justify-between px-5 py-3'>
         <Link href='/dashboard'>
           <Image
             src={dashboardLogo}
@@ -53,21 +50,15 @@ const Sidebar = () => {
             className='max-w-[120%]'
           />
         </Link>
-
         <button
-          className='absolute right-4 top-4'
+          className='lg:hidden text-white'
           onClick={() => setSidebarOpen(!isSidebarOpen)}
         >
-          <RxCross1 className='cursor-pointer text-white duration-300 lg:hidden' />
+          <RxCross1 className='cursor-pointer text-white duration-300' />
         </button>
       </div>
-
-      <div
-        className={`flex h-full  flex-col px-5 text-white duration-300 lg:px-0 ${
-          isSidebarOpen ? 'translate-x-0 ' : '-translate-x-52 lg:translate-x-0'
-        }`}
-      >
-        <ul className='pt-6 text-white lg:flex-1'>
+      <div className='overflow-y-auto'>
+        <ul className='pt-6 text-white '>
           <li onClick={() => setSidebarOpen(!isSidebarOpen)}>
             <Link
               href='/dashboard'
@@ -84,7 +75,7 @@ const Sidebar = () => {
           <li onClick={() => setSidebarOpen(!isSidebarOpen)}>
             <Link
               href='/dashboard/new_order'
-              className={`my-3 flex cursor-pointer items-center gap-x-3 rounded-lg p-2 hover:bg-main ${
+              className={`flex gap-x-3 my-3 items-center p-2 cursor-pointer hover:bg-main rounded-lg ${
                 currentRoute === '/dashboard/new_order' ? 'bg-main' : ''
               }`}
             >
@@ -97,7 +88,7 @@ const Sidebar = () => {
           <li onClick={() => setSidebarOpen(!isSidebarOpen)}>
             <Link
               href='/dashboard/profile'
-              className={`my-3 flex cursor-pointer items-center gap-x-3 rounded-lg p-2 hover:bg-main ${
+              className={`flex gap-x-3 my-3 items-center p-2 cursor-pointer hover:bg-main rounded-lg ${
                 currentRoute === '/dashboard/profile' ? 'bg-main' : ''
               }`}
             >
@@ -107,11 +98,10 @@ const Sidebar = () => {
               <span>Profile</span>
             </Link>
           </li>
-          {/* pricing  */}
           <li onClick={() => setSidebarOpen(!isSidebarOpen)}>
             <Link
               href='/dashboard/pricing'
-              className={`my-3 flex cursor-pointer items-center gap-x-3 rounded-lg p-2 hover:bg-main ${
+              className={`flex gap-x-3 my-3 items-center p-2 cursor-pointer hover:bg-main rounded-lg ${
                 currentRoute === '/dashboard/pricing' ? 'bg-main' : ''
               }`}
             >
@@ -163,7 +153,6 @@ const Sidebar = () => {
             </Link>
           </li>
         </ul>
-
         {session?.data?.user?.email && (
           <ul className='mb-10 text-white'>
             <li>
