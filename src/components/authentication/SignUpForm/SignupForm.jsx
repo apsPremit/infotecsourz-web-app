@@ -98,7 +98,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className=' px-5 py-12 lg:px-16'>
+    <div className=' px-5 py-12  h-screen flex items-center justify-center'>
       <div className='rounded border p-5 lg:p-10'>
         <div className='flex flex-col items-center'>
           <Image src={logo} alt='logo' width={56} height={50} />
