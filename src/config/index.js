@@ -10,9 +10,5 @@ const config = {
     mode === 'development'
       ? process.env.NEXT_PUBLIC_PAYPAL_SB_API_KEY
       : process.env.NEXT_PUBLIC_PAYPAL_API_KEY,
-  paypal_client_secret:
-    mode === 'development'
-      ? process.env.PAYPAL_SB_API_SECRET
-      : process.env.PAYPAL_API_SECRET,
 };
 export default config;
