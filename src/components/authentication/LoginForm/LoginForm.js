@@ -69,7 +69,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className=' px-5 h-screen flex items-center justify-center'>
+    <div className='px-5 h-screen pt-10 w-4/5 border'>
       <div className='rounded border p-5 lg:p-10'>
         <div className='flex flex-col items-center'>
           <Image src={logo} alt='logo' width={56} height={50} />

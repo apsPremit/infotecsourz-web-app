@@ -63,7 +63,7 @@ const BillingPage = () => {
     requirements: photoRequirements,
     turn_around_time: returnTime,
     instruction_source: instructionSource,
-    // payment_method: paymentMethod,
+    source: 'web',
   };
 
   let billPropertiesForPayAsGo = [

@@ -283,7 +283,7 @@ const StateProvider = ({ children }) => {
 
   const photoRequirements = {
     formats: [...selectedFormats],
-    backgroundColor: selectedBackground,
+    background_color: selectedBackground,
     alignments,
     additional:
       photoType === 'model' ? modelAdditionalReq : productAdditionalReq,

@@ -50,7 +50,8 @@ const PaypalCheckoutButtons = ({ orderDetails, agree }) => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${user.accessToken}`,
+            Authorization: `Bearer ${user?.accessToken}`,
+            source: 'web',
           },
           body: JSON.stringify({ orderDetails, paymentDetails }),
         }
@@ -83,7 +84,7 @@ const PaypalCheckoutButtons = ({ orderDetails, agree }) => {
               const validationResult = await verifyOrder(
                 orderDetails,
                 data.paymentSource,
-                user.accessToken
+                user?.accessToken
               );
 
               if (!validationResult.ok) {

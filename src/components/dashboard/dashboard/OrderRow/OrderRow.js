@@ -1,7 +1,9 @@
 'use client';
+import config from '@/config';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import axios from 'axios';
 import moment from 'moment';
+import { useSession } from 'next-auth/react';
 import { redirect } from 'next/dist/server/api-utils';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -10,6 +12,8 @@ import { ImSpinner2 } from 'react-icons/im';
 import { RxDotFilled } from 'react-icons/rx';
 
 const OrderRow = ({ order }) => {
+  const session = useSession();
+  const user = session?.data?.user;
   const router = useRouter();
   const [downloading, setDownloading] = useState(false);
   const {
@@ -23,13 +27,12 @@ const OrderRow = ({ order }) => {
     delivered_file_url,
   } = order || {};
 
-  const bucketName = process.env.NEXT_PUBLIC_ADMIN_UPLOAD_IMAGE_BUCKET;
-
   const handleDownload = () => {
     setDownloading(true);
     axios
-      .get(`${baseUrl}/image?bucketName=${bucketName}&folderName=${id}`, {
+      .get(`${config.api_base_url}/images/download?orderId=${id}`, {
         responseType: 'blob',
+        headers: { Authorization: `Bearer ${user?.accessToken}` },
       })
       .then((res) => {
         const blob = new Blob([res.data], {
@@ -59,29 +62,28 @@ const OrderRow = ({ order }) => {
         {order_name}
       </td>
       <td className='whitespace-nowrap px-6 py-4 text-sm   text-black '>
-        {status == 'delivered' ||
-          (status == 'in-revision' &&
-            (delivered_file_url ? (
-              <Link target='_blank' href={delivered_file_url}>
-                <button className='text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded'>
-                  Download
-                </button>
-              </Link>
-            ) : (
-              <button
-                onClick={handleDownload}
-                className='text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded'
-              >
-                {downloading ? (
-                  <span className='flex items-center justify-center  text-xs text-white'>
-                    Downloading
-                    <ImSpinner2 className='animate-spin ml-2 text-white' />
-                  </span>
-                ) : (
-                  'Download'
-                )}
+        {status === 'delivered' &&
+          (delivered_file_url ? (
+            <Link target='_blank' to={delivered_file_url}>
+              <button className='text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded'>
+                Download
               </button>
-            )))}
+            </Link>
+          ) : (
+            <button
+              onClick={handleDownload}
+              className='text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded'
+            >
+              {downloading ? (
+                <span className='flex items-center justify-center  text-xs text-white'>
+                  Downloading
+                  <ImSpinner2 className='animate-spin ml-2 text-white' />
+                </span>
+              ) : (
+                'Download'
+              )}
+            </button>
+          ))}
       </td>
 
       <td className='whitespace-nowrap px-6 py-4 text-sm     '>
