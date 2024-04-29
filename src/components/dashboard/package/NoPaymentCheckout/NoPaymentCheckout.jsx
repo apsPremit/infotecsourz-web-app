@@ -38,25 +38,6 @@ const NoPaymentCheckout = ({ plan, user }) => {
   ];
   // const generatedId = generateOrderId();
   const confirmSubscribe = async () => {
-    const orderDetails = {
-      orderId: randomGenerator(16),
-      orderName: `subscription for ${plan_name} package`,
-      name: user?.name,
-      email: user?.email,
-      package: plan_name,
-      subTotal,
-      taxRate,
-      taxTotal,
-      grandTotal,
-      credit: credit,
-      country: user?.country || '',
-      validity,
-      status: plan_name == 'free trial' ? 'approved' : 'pending',
-      paymentMethod,
-      // shopify_shop: userData?.shopify_shop,
-      // shopify_access_token: userData?.shopify_access_token,
-      // shopifyBillingType: "recurring_application_charge",
-    };
     try {
       setProcessing(true);
       const response = await fetch(

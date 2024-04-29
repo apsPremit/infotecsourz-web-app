@@ -13,6 +13,7 @@ const fetchPlans = async (token) => {
     const res = await fetch(`${config.api_base_url}/plans`, {
       headers: {
         Authorization: `Bearer ${token}`,
+        source: 'web',
       },
     });
     if (!res.ok) {
@@ -27,6 +28,7 @@ const fetchPlans = async (token) => {
 
 const Pricing = async () => {
   const session = await getServerSession(authOptions);
+  console.log({ session });
   const plans = await fetchPlans(session?.user?.accessToken);
   return (
     <div>

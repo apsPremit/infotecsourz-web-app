@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@/context/AuthProvider';
+import Link from 'next/link';
 
 const SubscribedPackage = ({ session }) => {
   const { userData } = useAuth();
@@ -11,13 +12,17 @@ const SubscribedPackage = ({ session }) => {
         <p className='my-1 text-lg font-bold capitalize'>
           {userData?.subscription?.plan_name}
         </p>
-        {userData?.subscription?.remaining_credit > 0 && (
+        {userData?.subscription?.remaining_credit > 0 ? (
           <p className='text-sm'>
             Remaining Credit:
             <span className='font-bold'>
               {userData?.subscription?.remaining_credit}
             </span>
           </p>
+        ) : (
+          <Link href='/dashboard/pricing' className='text-sm'>
+            Subscribe now
+          </Link>
         )}
       </div>
     </div>

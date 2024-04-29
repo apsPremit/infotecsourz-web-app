@@ -1,23 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import BtnAllFacilities from '@/components/shared/BtnAllFacilities/BtnAllFacilities';
-import { SubscribeButton } from '@/components/shared/SubscribeButton/SubscribeButton';
-import { baseUrl } from '@/utils/functions/baseUrl';
-
-const fetchPlan = async (package_name) => {
-  try {
-    const res = await fetch(`${baseUrl}/package/single/${package_name}`);
-    const plan = await res.json();
-    return plan.data;
-  } catch (error) {
-    console.log('fetch failed from plans', error);
-  }
-};
 
 const Plans = async () => {
-  const plan = await fetchPlan('free trial');
-
-  const { facilities } = plan || {};
   return (
     <div className=' mx-auto mb-[120px] w-full lg:w-3/4'>
       <h1 className='text-capitalize mb-5 mt-3 text-center text-3xl font-bold'>
@@ -32,11 +16,11 @@ const Plans = async () => {
               Retouching App – a special gift just for you! your trial is valid
               for 14 days!
             </p>
-            <div className='flex justify-center'>
-              <BtnAllFacilities facilities={facilities} />
-            </div>
-            <Link href={`/dashboard/pricing/billing?package=${plan?._id}`}>
-              <SubscribeButton />
+
+            <Link href={`/dashboard/pricing`}>
+              <button className='mt-5 w-full bg-blue-400 py-2 text-white hover:bg-blue-500 disabled:bg-blue-200 '>
+                Get Free Trial
+              </button>
             </Link>
           </div>
         </div>

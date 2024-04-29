@@ -40,7 +40,7 @@ const LoginForm = () => {
     const { email, password } = data || {};
 
     try {
-      const res = await fetch(`${baseUrl}/auth/login`, {
+      const res = await fetch(`${baseUrl}/auth/web/login`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
