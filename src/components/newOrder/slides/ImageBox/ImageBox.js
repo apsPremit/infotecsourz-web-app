@@ -113,8 +113,8 @@ const ImageBox = () => {
           backgroundColor === 'original'
             ? ''
             : backgroundColor === 'custom'
-            ? customBackground
-            : backgroundColor,
+              ? customBackground
+              : backgroundColor,
         maxHeight: '700px',
         minHeight: '350px',
         aspectRatio: alignments?.ratio,
@@ -124,14 +124,14 @@ const ImageBox = () => {
           alignments.verticalAlignment == 'top'
             ? 'start'
             : alignments.verticalAlignment == 'bottom'
-            ? 'end'
-            : 'center',
+              ? 'end'
+              : 'center',
         alignItems:
           alignments.horizontalAlignment == 'left'
             ? 'start'
             : alignments.horizontalAlignment == 'right'
-            ? 'end'
-            : 'center', // Center horizontally
+              ? 'end'
+              : 'center', // Center horizontally
       }}
     >
       <Image
@@ -140,47 +140,47 @@ const ImageBox = () => {
             ? productUpdatedProperty == 'naturalShadow'
               ? productNaturalShadow
               : productUpdatedProperty == 'reflectionShadow'
-              ? productReflectionShadow
-              : productUpdatedProperty == 'masking'
-              ? productMasking
-              : productUpdatedProperty == 'basicClipping'
-              ? productBasicClipping
-              : productUpdatedProperty == 'multipleClipping'
-              ? productMultipleClipping
-              : productUpdatedProperty == 'colorCorrection'
-              ? productColorCorrection
-              : productUpdatedProperty == 'ghostMannequin'
-              ? productGhostMannequin
-              : productUpdatedProperty == 'productRetouching'
-              ? productRetouching
-              : productUpdatedProperty == 'colorVariant'
-              ? productColorVariant
-              : productImage
+                ? productReflectionShadow
+                : productUpdatedProperty == 'masking'
+                  ? productMasking
+                  : productUpdatedProperty == 'basicClipping'
+                    ? productBasicClipping
+                    : productUpdatedProperty == 'multipleClipping'
+                      ? productMultipleClipping
+                      : productUpdatedProperty == 'colorCorrection'
+                        ? productColorCorrection
+                        : productUpdatedProperty == 'ghostMannequin'
+                          ? productGhostMannequin
+                          : productUpdatedProperty == 'productRetouching'
+                            ? productRetouching
+                            : productUpdatedProperty == 'colorVariant'
+                              ? productColorVariant
+                              : productImage
             : modelUpdatedProperty == 'beautyMakeup'
-            ? modelMakeup
-            : modelUpdatedProperty === 'clothFixing'
-            ? modelClithFixing
-            : modelUpdatedProperty === 'clipping'
-            ? modelClipping
-            : modelUpdatedProperty === 'colorCorrection'
-            ? modelColorCorrection
-            : modelUpdatedProperty === 'bodyShaping'
-            ? modelBodyShaping
-            : modelUpdatedProperty === 'pimplesRemove'
-            ? modelMakeup
-            : modelUpdatedProperty === 'wrinklesRemove'
-            ? modelColorCorrection
-            : modelUpdatedProperty === 'teethRetouching'
-            ? modelTeethAndRedEye
-            : modelUpdatedProperty === 'hairFixing'
-            ? modelMakeup
-            : modelUpdatedProperty === 'redEyeFixing'
-            ? modelTeethAndRedEye
-            : modelUpdatedProperty === 'masking'
-            ? modelMakeup
-            : modelUpdatedProperty === 'default'
-            ? modelImage
-            : modelImage
+              ? modelMakeup
+              : modelUpdatedProperty === 'clothFixing'
+                ? modelClithFixing
+                : modelUpdatedProperty === 'clipping'
+                  ? modelClipping
+                  : modelUpdatedProperty === 'colorCorrection'
+                    ? modelColorCorrection
+                    : modelUpdatedProperty === 'bodyShaping'
+                      ? modelBodyShaping
+                      : modelUpdatedProperty === 'pimplesRemove'
+                        ? modelMakeup
+                        : modelUpdatedProperty === 'wrinklesRemove'
+                          ? modelColorCorrection
+                          : modelUpdatedProperty === 'teethRetouching'
+                            ? modelTeethAndRedEye
+                            : modelUpdatedProperty === 'hairFixing'
+                              ? modelMakeup
+                              : modelUpdatedProperty === 'redEyeFixing'
+                                ? modelTeethAndRedEye
+                                : modelUpdatedProperty === 'masking'
+                                  ? modelMakeup
+                                  : modelUpdatedProperty === 'default'
+                                    ? modelImage
+                                    : modelImage
         }
         alt='item'
         fil='true'
