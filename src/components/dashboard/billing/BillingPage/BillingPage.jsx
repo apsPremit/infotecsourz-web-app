@@ -117,8 +117,13 @@ const BillingPage = () => {
             {billProperties.map((property, index) => (
               <div className='my-3' key={index}>
                 <div className='flex justify-between items-center '>
-                  <h3 className='text-[#ADACB0]'>{property?.title}</h3>
-                  <h3>{property?.value}</h3>
+                  <h3 className='text-[#ADACB0]'>
+                    {property?.title}
+                    {''}
+                  </h3>
+                  <h3>
+                    {property?.value} {''}
+                  </h3>
                 </div>
               </div>
             ))}

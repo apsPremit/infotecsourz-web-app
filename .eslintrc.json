@@ -3,6 +3,7 @@
   "plugins": [],
   "rules": {
     // "prefer-const": "error",
+    // "no-unused-vars": "error",
     // "no-console": "warn",
     "no-undef": "error"
   }

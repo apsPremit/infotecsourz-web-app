@@ -28,6 +28,7 @@ const PaypalCheckoutButtons = ({ orderDetails, agree }) => {
     currency: 'USD',
     intent: 'capture',
   };
+  console.log({ initialOptions });
 
   const verifyOrder = async (orderDetails, paymentSource, accessToken) => {
     console.log('call verify');

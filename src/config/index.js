@@ -8,7 +8,7 @@ const config = {
   next_auth_secret: process.env.NEXT_PUBLIC_NEXT_AUTH_SECRET,
   paypal_client_id:
     mode === 'development'
-      ? process.env.NEXT_PUBLIC_PAYPAL_SB_API_KEY
-      : process.env.NEXT_PUBLIC_PAYPAL_API_KEY,
+      ? process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID_DEVELOPMENT
+      : process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
 };
 export default config;

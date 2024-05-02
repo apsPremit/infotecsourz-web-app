@@ -1,4 +1,4 @@
-import './globals.css';
+import '../globals.css';
 import { Poppins } from 'next/font/google';
 import NextAuthProvider from '@/context/NextAuthProvider';
 import { AuthProvider } from '@/context/AuthProvider';
