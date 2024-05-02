@@ -42,7 +42,7 @@ const FinalSlide = () => {
     {
       id: 10,
       value: 'redEyeFixing',
-      title: 'Eye Retoching / Sunglass reflection remove',
+      title: 'Eye Retoching',
     },
     { id: 11, value: 'teethRetouching', title: 'Teeth retouching' },
     { id: 12, value: 'wrinklesRemove', title: 'Wrinkles remove' },
@@ -74,7 +74,7 @@ const FinalSlide = () => {
             ))}
           </div>
         ) : (
-          <div className='grid grid-cols-2 justify-between gap-x-2 md:grid-cols-3 md:justify-evenly  lg:justify-start lg:gap-x-0'>
+          <div className='grid grid-cols-2 justify-between gap-x-2 md:grid-cols-3 md:justify-between  lg:justify-between lg:gap-x-0'>
             {modelFinalOptions.map((item, i) => (
               <SwitchToggle
                 key={i}

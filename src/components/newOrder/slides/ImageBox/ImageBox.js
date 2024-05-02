@@ -1,24 +1,22 @@
 import Image from 'next/image';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import productImage from '../../../../../public/product/Product Background remove.png';
-import modelImage from '../../../../../public/Model/Model Background remove-min.png';
-import modelMakeup from '../../../../../public/Model/Model Beauty Makeup Retouching-min.png';
-import modelClithFixing from '../../../../../public/Model/Model Clothing Fixing-min.png';
-import modelClipping from '../../../../../public/Model/Model Clipping Path-min.png';
-import modelBodyShaping from '../../../../../public/Model/Model Body shaping-min.png';
-import modelColorCorrection from '../../../../../public/Model/Model Wrinkles Remove-min.png';
-import modelTeethAndRedEye from '../../../../../public/Model/Model Teeth retouching-min.png';
-import productNaturalShadow from '../../../../../public/product/Product Shadow.png';
-import productReflectionShadow from '../../../../../public/product/Product Reflectios.png';
-import productMasking from '../../../../../public/product/Product Masking.png';
-import productBasicClipping from '../../../../../public/product/Product Clipping Path.png';
-import productMultipleClipping from '../../../../../public/product/Product Multipath.png';
-import productColorCorrection from '../../../../../public/product/Product Color Correction _1.png';
-import productGhostMannequin from '../../../../../public/product/Product Background remove.png';
-import productRetouching from '../../../../../public/product/Product Retouching.png';
-import productColorVariant from '../../../../../public/product/Product Color Change.png';
-
-// colorVariant: false
+import productImage from '../../../../assets/images/product/Product retouching.png';
+import modelImage from '../../../../assets/images/model/Noise remove.png';
+import modelMakeup from '../../../../assets/images/model/Beauty Makeup Retouching.png';
+import modelClithFixing from '../../../../assets/images/model/Cloth & Shoe fixing.png';
+import modelClipping from '../../../../assets/images/model/Clipping path.png';
+import modelBodyShaping from '../../../../assets/images/model/Body shaping.png';
+import modelColorCorrection from '../../../../assets/images/model/Color correction.png';
+import modelTeethAndRedEye from '../../../../assets/images/model/Eye Retoching.png';
+import productNaturalShadow from '../../../../assets/images/product/Natural shadow.png';
+import productReflectionShadow from '../../../../assets/images/product/Reflection shadow.png';
+import productMasking from '../../../../assets/images/product/Masking.png';
+import productBasicClipping from '../../../../assets/images/product/clipping path.png';
+import productMultipleClipping from '../../../../assets/images/product/Multiple clipping path.png';
+import productColorCorrection from '../../../../assets/images/product/Color correction.png';
+import productGhostMannequin from '../../../../assets/images/product/Product retouching.png';
+import productRetouching from '../../../../assets/images/product/Product retouching.png';
+import productColorVariant from '../../../../assets/images/product/Color chnaging.png';
 
 import { StateContext } from '@/context/StateProvider';
 
@@ -115,8 +113,8 @@ const ImageBox = () => {
           backgroundColor === 'original'
             ? ''
             : backgroundColor === 'custom'
-              ? customBackground
-              : backgroundColor,
+            ? customBackground
+            : backgroundColor,
         maxHeight: '700px',
         minHeight: '350px',
         aspectRatio: alignments?.ratio,
@@ -126,14 +124,14 @@ const ImageBox = () => {
           alignments.verticalAlignment == 'top'
             ? 'start'
             : alignments.verticalAlignment == 'bottom'
-              ? 'end'
-              : 'center',
+            ? 'end'
+            : 'center',
         alignItems:
           alignments.horizontalAlignment == 'left'
             ? 'start'
             : alignments.horizontalAlignment == 'right'
-              ? 'end'
-              : 'center', // Center horizontally
+            ? 'end'
+            : 'center', // Center horizontally
       }}
     >
       <Image
@@ -142,47 +140,47 @@ const ImageBox = () => {
             ? productUpdatedProperty == 'naturalShadow'
               ? productNaturalShadow
               : productUpdatedProperty == 'reflectionShadow'
-                ? productReflectionShadow
-                : productUpdatedProperty == 'masking'
-                  ? productMasking
-                  : productUpdatedProperty == 'basicClipping'
-                    ? productBasicClipping
-                    : productUpdatedProperty == 'multipleClipping'
-                      ? productMultipleClipping
-                      : productUpdatedProperty == 'colorCorrection'
-                        ? productColorCorrection
-                        : productUpdatedProperty == 'ghostMannequin'
-                          ? productGhostMannequin
-                          : productUpdatedProperty == 'productRetouching'
-                            ? productRetouching
-                            : productUpdatedProperty == 'colorVariant'
-                              ? productColorVariant
-                              : productImage
+              ? productReflectionShadow
+              : productUpdatedProperty == 'masking'
+              ? productMasking
+              : productUpdatedProperty == 'basicClipping'
+              ? productBasicClipping
+              : productUpdatedProperty == 'multipleClipping'
+              ? productMultipleClipping
+              : productUpdatedProperty == 'colorCorrection'
+              ? productColorCorrection
+              : productUpdatedProperty == 'ghostMannequin'
+              ? productGhostMannequin
+              : productUpdatedProperty == 'productRetouching'
+              ? productRetouching
+              : productUpdatedProperty == 'colorVariant'
+              ? productColorVariant
+              : productImage
             : modelUpdatedProperty == 'beautyMakeup'
-              ? modelMakeup
-              : modelUpdatedProperty === 'clothFixing'
-                ? modelClithFixing
-                : modelUpdatedProperty === 'clipping'
-                  ? modelClipping
-                  : modelUpdatedProperty === 'colorCorrection'
-                    ? modelColorCorrection
-                    : modelUpdatedProperty === 'bodyShaping'
-                      ? modelBodyShaping
-                      : modelUpdatedProperty === 'pimplesRemove'
-                        ? modelMakeup
-                        : modelUpdatedProperty === 'wrinklesRemove'
-                          ? modelColorCorrection
-                          : modelUpdatedProperty === 'teethRetouching'
-                            ? modelTeethAndRedEye
-                            : modelUpdatedProperty === 'hairFixing'
-                              ? modelMakeup
-                              : modelUpdatedProperty === 'redEyeFixing'
-                                ? modelTeethAndRedEye
-                                : modelUpdatedProperty === 'masking'
-                                  ? modelMakeup
-                                  : modelUpdatedProperty === 'default'
-                                    ? modelImage
-                                    : modelImage
+            ? modelMakeup
+            : modelUpdatedProperty === 'clothFixing'
+            ? modelClithFixing
+            : modelUpdatedProperty === 'clipping'
+            ? modelClipping
+            : modelUpdatedProperty === 'colorCorrection'
+            ? modelColorCorrection
+            : modelUpdatedProperty === 'bodyShaping'
+            ? modelBodyShaping
+            : modelUpdatedProperty === 'pimplesRemove'
+            ? modelMakeup
+            : modelUpdatedProperty === 'wrinklesRemove'
+            ? modelColorCorrection
+            : modelUpdatedProperty === 'teethRetouching'
+            ? modelTeethAndRedEye
+            : modelUpdatedProperty === 'hairFixing'
+            ? modelMakeup
+            : modelUpdatedProperty === 'redEyeFixing'
+            ? modelTeethAndRedEye
+            : modelUpdatedProperty === 'masking'
+            ? modelMakeup
+            : modelUpdatedProperty === 'default'
+            ? modelImage
+            : modelImage
         }
         alt='item'
         fil='true'
