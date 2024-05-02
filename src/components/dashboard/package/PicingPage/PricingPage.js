@@ -7,6 +7,7 @@ import config from '@/config';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { useSession } from 'next-auth/react';
+import CustomPlan from '../SinglePackage/CustomPlan';
 
 const PricingPage = ({ plans }) => {
   const [allPackage, setAllPackage] = useState([]);
@@ -19,6 +20,7 @@ const PricingPage = ({ plans }) => {
         {plans?.map((plan) => (
           <SinglePackage key={plan._id} plan={plan} />
         ))}
+        {plans?.length > 0 && <CustomPlan facilities={plans[0].facilities} />}
       </div>
       <PricingTable />
     </div>
