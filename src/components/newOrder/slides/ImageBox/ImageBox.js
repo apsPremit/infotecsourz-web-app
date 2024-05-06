@@ -5,7 +5,7 @@ import modelImage from '../../../../assets/images/model/Noise remove.png';
 import modelMakeup from '../../../../assets/images/model/Beauty Makeup Retouching.png';
 import modelClithFixing from '../../../../assets/images/model/Cloth & Shoe fixing.png';
 import modelClipping from '../../../../assets/images/model/Clipping path.png';
-import modelBodyShaping from '../../../../assets/images/model/Body shaping.png';
+import modelBodyShaping from '../../../../assets/images/model/Body shaping copy.png';
 import modelColorCorrection from '../../../../assets/images/model/Color correction.png';
 import modelTeethAndRedEye from '../../../../assets/images/model/Eye Retoching.png';
 import productNaturalShadow from '../../../../assets/images/product/Natural shadow.png';
@@ -134,6 +134,7 @@ const ImageBox = () => {
               : 'center', // Center horizontally
       }}
     >
+      <p className='absolute top-1 right-1 text-sm text-red-500'>sample</p>
       <Image
         src={
           photoType === 'product'
