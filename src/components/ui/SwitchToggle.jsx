@@ -1,10 +1,10 @@
 import { Switch } from '@headlessui/react';
 
 const SwitchToggle = ({ isChecked, toggler, label }) => {
-  const isLongLabel = label.length > 17;
+  const isLongLabel = label?.length > 17;
 
   // Trim label text if it exceeds 15 characters
-  const trimmedLabel = isLongLabel ? label.substring(0, 17) + '...' : label;
+  const trimmedLabel = isLongLabel ? label?.substring(0, 17) + '...' : label;
   return (
     <div className='cursor-pointer'>
       <label className='flex items-center cursor-pointer' htmlFor={label}>
