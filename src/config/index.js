@@ -10,5 +10,6 @@ const config = {
     mode === 'development'
       ? process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID_DEVELOPMENT
       : process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
+  tax_rate: parseFloat(process.env.NEXT_PUBLIC_TAX_RATE),
 };
 export default config;

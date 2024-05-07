@@ -2,6 +2,7 @@
 import { useSession } from 'next-auth/react';
 import { createContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthProvider';
+import config from '@/config';
 
 export const StateContext = createContext(null);
 
@@ -315,7 +316,7 @@ const StateProvider = ({ children }) => {
 
   // billing page states
   const [billingMessage, setBillingMessage] = useState(null);
-  const [taxRate, setTaxRate] = useState(13);
+  const [taxRate, setTaxRate] = useState(config.tax_rate);
   const [photoUrl, setPhotoUrl] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [orderDetails, setOrderDetails] = useState(null);
