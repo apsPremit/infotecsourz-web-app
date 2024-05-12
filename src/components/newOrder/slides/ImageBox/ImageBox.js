@@ -134,7 +134,9 @@ const ImageBox = () => {
               : 'center', // Center horizontally
       }}
     >
-      <p className='absolute top-1 right-1 text-sm text-red-500'>sample</p>
+      <p className='absolute top-1.5 left-1.5 text-sm text-black font-bold'>
+        Preview Sample
+      </p>
       <Image
         src={
           photoType === 'product'

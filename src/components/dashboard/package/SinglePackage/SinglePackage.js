@@ -156,7 +156,7 @@ const SinglePackage = ({ plan }) => {
           </div>
 
           <div>
-            {(plan_name === userData?.subscription?.plan_name) === plan_name ? (
+            {plan_name === userData?.subscription?.plan_name ? (
               <div className='group relative  flex justify-center'>
                 <button
                   disabled
