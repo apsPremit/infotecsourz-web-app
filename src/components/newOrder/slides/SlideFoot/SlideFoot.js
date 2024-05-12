@@ -12,6 +12,7 @@ const SlideFoot = ({ handlePrev, handleNext, currentSlide }) => {
     modelCost,
     orderName,
     formats,
+    platforms,
     backgroundColor,
     alignments,
     openOptions,
@@ -19,12 +20,13 @@ const SlideFoot = ({ handlePrev, handleNext, currentSlide }) => {
     modelTotalCost,
     selectedPackage,
   } = useContext(StateContext);
+
   const router = useRouter();
   const session = useSession();
   const user = session?.data?.user;
   const { userData } = useAuth();
   const goToNextPage = () => {
-    if (currentSlide === 6) {
+    if (currentSlide === 7) {
       return router.push('/dashboard/upload');
     }
     if (
@@ -75,7 +77,9 @@ const SlideFoot = ({ handlePrev, handleNext, currentSlide }) => {
             (currentSlide === 3 &&
               Object.values(formats).every((value) => value === false)) ||
             (currentSlide === 4 && backgroundColor === '') ||
-            (currentSlide == 5 &&
+            (currentSlide === 5 &&
+              Object.values(platforms).every((value) => value === false)) ||
+            (currentSlide == 6 &&
               !(
                 openOptions.isOriginalAspect ||
                 alignments.ratio ||

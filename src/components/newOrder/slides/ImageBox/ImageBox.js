@@ -188,21 +188,21 @@ const ImageBox = () => {
         alt='item'
         fil='true'
         className={`max-h[350px] mx-auto rounded-xl ${
-          (currentSlide === 5 || currentSlide === 6) && 'border border-main'
+          (currentSlide === 6 || currentSlide === 7) && 'border border-main'
         }`}
         height={
-          currentSlide === 5 || (currentSlide === 6 && alignments?.ratio)
+          currentSlide === 6 || (currentSlide === 7 && alignments?.ratio)
             ? 400
             : 0
         }
         width={
-          currentSlide === 5 || (currentSlide === 6 && alignments?.ratio)
+          currentSlide === 6 || (currentSlide === 7 && alignments?.ratio)
             ? 400
             : 0
         }
         style={{
           maxHeight: '350px',
-          position: currentSlide === 5 && 'absolute',
+          position: currentSlide === 6 && 'absolute',
           objectFit: 'contain',
           padding: alignments.marginOverall && alignments.marginOverall + '%',
           paddingTop: alignments.marginTop && alignments.marginTop + '%',

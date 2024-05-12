@@ -27,6 +27,16 @@ const StateProvider = ({ children }) => {
     tiff: false,
     psd: false,
   });
+  //    *******************set file format **************************************************
+  const [platforms, setPlatforms] = useState({
+    amazon: false,
+    shopify: false,
+    bigcommerce: false,
+    ebay: false,
+    etcy: false,
+    woocommerce: false,
+    others: false,
+  });
 
   //    *******************set alignments **************************************************
   const [alignments, setAlignments] = useState({
@@ -134,6 +144,22 @@ const StateProvider = ({ children }) => {
     }
   }, [openOptions]);
 
+  // if platforms is others then other option will be false
+  useEffect(() => {
+    // Check if 'others' is true, then set all other properties to false
+    if (platforms.others) {
+      setPlatforms((prevState) => {
+        const updatedState = { ...prevState };
+        // Set all properties to false except 'others'
+        Object.keys(updatedState).forEach((key) => {
+          if (key !== 'others') {
+            updatedState[key] = false;
+          }
+        });
+        return updatedState;
+      });
+    }
+  }, [platforms.others]);
   // ****************************************************************************************
   // **********************cost calculation ***********************************************
   // **************************************************************************************
@@ -264,6 +290,9 @@ const StateProvider = ({ children }) => {
   //******************************************** */ process requirements***************************
   // ***********************************************************************************************
   const selectedFormats = Object.keys(formats).filter((key) => formats[key]);
+  const selectedPlatforms = Object.keys(platforms).filter(
+    (key) => platforms[key]
+  );
   const selectedBackground =
     backgroundColor === 'custom' ? customBackground : backgroundColor;
   const selectedAlignments = Object.entries(alignments).reduce(
@@ -284,6 +313,7 @@ const StateProvider = ({ children }) => {
 
   const photoRequirements = {
     formats: [...selectedFormats],
+    platforms: [...selectedPlatforms],
     background_color: selectedBackground,
     alignments,
     additional:
@@ -332,6 +362,8 @@ const StateProvider = ({ children }) => {
     orderName,
     setOrderName,
     formats,
+    platforms,
+    setPlatforms,
     setFormats,
     handleSingleValueChange,
     backgroundColor,

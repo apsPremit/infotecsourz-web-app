@@ -15,8 +15,9 @@ const NewOrderTab = () => {
     { id: 2, title: 'Name' },
     { id: 3, title: 'Formats' },
     { id: 4, title: 'Background' },
-    { id: 5, title: 'Cropping & Alignment' },
-    { id: 6, title: 'Final Touch' },
+    { id: 5, title: 'platforms' },
+    { id: 6, title: 'Cropping & Alignment' },
+    { id: 7, title: 'Final Touch' },
   ];
   for (let i = 1; i <= currentSlide; i++) {
     if (!activeTabs.includes(i)) {
@@ -63,6 +64,7 @@ const NewOrderTab = () => {
           {tabData.map((item, index) => (
             <SwiperSlide key={index}>
               <TabButton
+                text_size='xs'
                 id={item?.id}
                 title={item?.title}
                 isActive={activeTabs.includes(item?.id)}

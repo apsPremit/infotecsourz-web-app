@@ -8,6 +8,7 @@ import OrderName from '@/components/newOrder/slides/OrderName/OrderName';
 import SlideFoot from '../slides/SlideFoot/SlideFoot';
 import TypeSlide from '../slides/TypeSlide/TypeSlide';
 import { StateContext } from '@/context/StateProvider';
+import PlatformSlide from '../slides/PlatformSlide/PlatformSlide';
 
 const Slider = () => {
   const { currentSlide, setCurrentSlide } = useContext(StateContext);
@@ -21,14 +22,20 @@ const Slider = () => {
 
   // next button handler
   const handleNext = () => {
-    if (currentSlide < 6) {
+    if (currentSlide < 7) {
       setCurrentSlide(currentSlide + 1);
     }
   };
 
   return (
     <div
-      className={`w-full rounded-xl border-2 border-shadow  ${currentSlide === 1 ? 'lg:w-3/4' : currentSlide === 5 ? ' lg:max-w-[900px]' : 'lg:w-[640px]'} mx-auto mt-10 p-5`}
+      className={`w-full rounded-xl border-2 border-shadow  ${
+        currentSlide === 1
+          ? 'lg:w-3/4'
+          : currentSlide === 6
+            ? ' lg:max-w-[900px]'
+            : 'lg:w-[640px]'
+      } mx-auto mt-10 p-5`}
     >
       {currentSlide === 1 && (
         <TypeSlide handleNext={handleNext} handlePrev={handlePrev} />
@@ -43,9 +50,12 @@ const Slider = () => {
         <BackgroundSlide handleNext={handleNext} handlePrev={handlePrev} />
       )}
       {currentSlide === 5 && (
-        <AlignSlide handleNext={handleNext} handlePrev={handlePrev} />
+        <PlatformSlide handleNext={handleNext} handlePrev={handlePrev} />
       )}
       {currentSlide === 6 && (
+        <AlignSlide handleNext={handleNext} handlePrev={handlePrev} />
+      )}
+      {currentSlide === 7 && (
         <FinalSlide handleNext={handleNext} handlePrev={handlePrev} />
       )}
       <SlideFoot
