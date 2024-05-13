@@ -33,7 +33,6 @@ const BillingPage = () => {
   const user = session?.data?.user;
   const [agree, setAgree] = useState(false);
   console.log('user data', userData?.subscription?.plan_type);
-  // const packageInfo = packages.find((pk) => pk.package_name === pack);
   const { plan_name, remaining_credit, price, photos, facilities } =
     userData?.subscription || {};
 
@@ -117,7 +116,7 @@ const BillingPage = () => {
             {billProperties.map((property, index) => (
               <div className='my-3' key={index}>
                 <div className='flex justify-between items-center '>
-                  <h3 className='text-[#ADACB0]'>
+                  <h3 className='text-black'>
                     {property?.title}
                     {''}
                   </h3>
@@ -129,26 +128,6 @@ const BillingPage = () => {
             ))}
           </div>
 
-          {/* Details  */}
-          {/* <div className='flex  flex-col'>
-            <div className='flex justify-end'>
-              <button
-                onClick={() => setShowDetails(!showDetails)}
-                className='text-main underline'
-              >
-                More Details
-              </button>
-            </div>
-            <div className={`${showDetails ? '' : 'hidden'}`}>
-              <ul className='list-inside list-disc'>
-                {facilities?.map((item, i) => (
-                  <li className='' key={i}>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div> */}
           <hr />
 
           {/* price section  */}

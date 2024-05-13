@@ -1,7 +1,13 @@
 'use client';
+import config from '@/config';
+import { useAuth } from '@/context/AuthProvider';
 import { StateContext } from '@/context/StateProvider';
+import axios from 'axios';
 import moment from 'moment';
-import React, { useContext } from 'react';
+import { useSession } from 'next-auth/react';
+import React, { useContext, useEffect, useState } from 'react';
+import { AiOutlineConsoleSql } from 'react-icons/ai';
+import { headers } from '../../../../../next.config';
 
 const SpecificationsLeftSide = () => {
   const {
@@ -11,6 +17,30 @@ const SpecificationsLeftSide = () => {
     setReturnTime,
     returnTime,
   } = useContext(StateContext);
+
+  const { userData } = useAuth();
+  console.log({ userData });
+  const session = useSession();
+  const accessToken = session?.data?.user?.accessToken;
+  const [plan, setPlan] = useState(null);
+  console.log(plan);
+  const planId = userData?.subscription.plan_id;
+  useEffect(() => {
+    const fetchPlan = async () => {
+      try {
+        const response = await axios.get(
+          `${config.api_base_url}/plans/${planId}`,
+          { headers: { Authorization: `Bearer ${accessToken}` } }
+        );
+        const result = await response.data;
+        console.log(result);
+        setPlan(result.data);
+      } catch (error) {
+        console.log('error', error);
+      }
+    };
+    fetchPlan();
+  }, [planId, accessToken]);
 
   const fields = [
     { label: 'Order Name', value: orderName, type: 'text' },
@@ -29,10 +59,11 @@ const SpecificationsLeftSide = () => {
   ];
   const returnTimeOptions = [
     { label: 'Select return time', value: 0, cost: 0 },
-    { label: '12 Hours', value: 12, cost: 1 },
-    { label: '24 Hours', value: 24, cost: 0.8 },
-    { label: '48 Hours', value: 48, cost: 0.5 },
-    { label: '72 Hours', value: 72, cost: 0 },
+
+    // { label: '12 Hours', value: 12, cost: 1 },
+    // { label: '24 Hours', value: 24, cost: 0.8 },
+    // { label: '48 Hours', value: 48, cost: 0.5 },
+    // { label: '72 Hours', value: 72, cost: 0 },
   ];
   const handleReturnTime = (e) => {
     setReturnTime(parseInt(e.target.value));
@@ -57,7 +88,7 @@ const SpecificationsLeftSide = () => {
               <input
                 type={field?.type}
                 value={field?.value}
-                className='w-full cursor-not-allowed rounded border border-shadow px-3 py-1.5 text-[#9d9c9c] outline-0 focus:rounded focus:border-main'
+                className='w-full cursor-not-allowed rounded border border-shadow px-3 py-1.5  outline-0 focus:rounded focus:border-main'
                 disabled
               />
             </label>
@@ -72,11 +103,12 @@ const SpecificationsLeftSide = () => {
             onChange={handleReturnTime}
             name=''
             id=''
-            className='w-full rounded border border-shadow px-3 py-1.5 text-[#9d9c9c]'
+            className='w-full rounded border border-shadow px-3 py-1.5 '
           >
-            {returnTimeOptions.map((item, index) => (
-              <option key={index} value={item?.value}>
-                {item?.label}
+            <option value=''>Select turn around time</option>
+            {plan?.turn_around_time?.map((item, index) => (
+              <option key={index} value={item}>
+                {`${item} Hours`}
               </option>
             ))}
           </select>

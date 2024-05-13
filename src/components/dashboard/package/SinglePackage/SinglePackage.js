@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import PricingTable from '../../../shared/PricingTable/PricingTable';
 import { useSession } from 'next-auth/react';
 import { useAuth } from '@/context/AuthProvider';
+import Link from 'next/link';
 
 const SinglePackage = ({ plan }) => {
   const { setSelectedPackage, selectedPackage } = useContext(StateContext);
@@ -80,7 +81,7 @@ const SinglePackage = ({ plan }) => {
           <hr className='my-3' />
 
           <div className='min-h-[150px]'>
-            <ul className='mb-5'>
+            <ul className='mb-3'>
               {spec?.map((sp, index) => (
                 <li className='list-inside list-disc' key={index}>
                   {sp}
@@ -132,7 +133,7 @@ const SinglePackage = ({ plan }) => {
                 <div className={`${showDetails ? '' : 'hidden'}`}>
                   <ul className='list-inside list-disc'>
                     {facilities?.map((item, i) => (
-                      <p key={i} className='gap-x-2 flex items-center my-2'>
+                      <p key={i} className='gap-x-2 flex items-center my-5'>
                         <span className='text-sm'>
                           {' '}
                           <IoMdCheckmark color={'green'} />
@@ -156,17 +157,27 @@ const SinglePackage = ({ plan }) => {
           </div>
 
           <div>
-            {plan_name === userData?.subscription?.plan_name ? (
-              <div className='group relative  flex justify-center'>
-                <button
-                  disabled
-                  className='py-2 my-5 px-3.5 text-white bg-mainHover rounded w-full  '
-                >
-                  Current Plan
-                </button>
-                <span className='absolute -top-10 scale-0 transition-all rounded bg-slate-800 p-2 text-xs text-white group-hover:scale-100'>
-                  You already have this plan. Choose another plan.
-                </span>
+            {id === userData?.subscription?.plan_id ? (
+              <div className=' relative  flex justify-center'>
+                <div className='w-full flex flex-col'>
+                  <Link
+                    className='text-sm space-y-2 hover:text-main'
+                    href={`/dashboard/buy-credit?plan=${id}`}
+                  >
+                    Buy Credit
+                  </Link>
+                  <label htmlFor='' className='group flex flex-col'>
+                    <button
+                      disabled
+                      className=' py-2 mt-2 px-3.5 text-white bg-mainHover rounded w-full  '
+                    >
+                      Current Plan
+                    </button>
+                    <span className='absolute -top-10 scale-0 transition-all rounded bg-slate-800 p-2 text-xs text-white group-hover:scale-100'>
+                      You already have this plan. Choose another plan.
+                    </span>
+                  </label>
+                </div>
               </div>
             ) : (
               <div className='group relative  flex justify-center'>
@@ -180,7 +191,7 @@ const SinglePackage = ({ plan }) => {
                     selectedPackage.plan_name === plan_name
                       ? 'bg-green-500 hover:bg-green-600 rounded w-full disabled:bg-green-200'
                       : 'bg-blue-500 hover:bg-blue-600 rounded w-full disabled:bg-blue-200'
-                  } py-2 my-5 px-3.5 text-white `}
+                  } py-2 mt-2 my-5 px-3.5 text-white `}
                 >
                   {type == 'free' ? 'Start Free Trial' : 'Subscribe'}
                 </button>
