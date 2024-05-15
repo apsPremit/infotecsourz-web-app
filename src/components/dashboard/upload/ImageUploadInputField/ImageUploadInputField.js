@@ -20,7 +20,7 @@ const ImageUploadInputField = ({ setFileUrl, isUploading, images }) => {
   const isDisabled = uploadedImages?.length > 0 || images?.length > 0;
 
   const handleFileUrl = (e) => {
-    const generateId = randomGenerator(16);
+    const generateId = randomGenerator();
     e.preventDefault();
     console.log(
       userData?.subscription?.remaining_credit,

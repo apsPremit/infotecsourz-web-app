@@ -19,7 +19,7 @@ const PlatformSlide = () => {
   return (
     <div>
       <ImageBox />
-      <h2 className='mb-5  text-lg font-bold'>Select Image format </h2>
+      <h2 className='mb-5  text-lg font-bold'>Photos user for </h2>
       <div className='grid grid-cols-1 lg:grid-cols-3 space-y-1.5'>
         {formatOptions.map((item, i) => (
           <SwitchToggle

@@ -144,22 +144,6 @@ const StateProvider = ({ children }) => {
     }
   }, [openOptions]);
 
-  // if platforms is others then other option will be false
-  useEffect(() => {
-    // Check if 'others' is true, then set all other properties to false
-    if (platforms.others) {
-      setPlatforms((prevState) => {
-        const updatedState = { ...prevState };
-        // Set all properties to false except 'others'
-        Object.keys(updatedState).forEach((key) => {
-          if (key !== 'others') {
-            updatedState[key] = false;
-          }
-        });
-        return updatedState;
-      });
-    }
-  }, [platforms.others]);
   // ****************************************************************************************
   // **********************cost calculation ***********************************************
   // **************************************************************************************

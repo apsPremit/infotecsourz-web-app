@@ -17,6 +17,7 @@ const Invoice = ({ invoice }) => {
     id,
     sender,
     createdAT,
+    items,
     customerName,
     country,
     order_name,
@@ -185,7 +186,7 @@ const Invoice = ({ invoice }) => {
                         </tr>
                       </thead>
                       <tbody className='dark:divide-gray-700 divide-y divide-gray-200 '>
-                        <tr className='border-b-2 border-b-gray-400'>
+                        {/* <tr className='border-b-2 border-b-gray-400'>
                           <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
                             1
                           </td>
@@ -213,7 +214,30 @@ const Invoice = ({ invoice }) => {
                           <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
                             ${transaction?.total_amount.toFixed(2)}
                           </td>
-                        </tr>
+                        </tr> */}
+
+                        {items.map((item, i) => (
+                          <tr
+                            className='border-b-2 border-b-gray-400'
+                            key={item.name}
+                          >
+                            <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
+                              {i}
+                            </td>
+                            <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
+                              {item.name}
+                            </td>
+                            <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
+                              {item.quantity}
+                            </td>
+                            <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
+                              {item.price}
+                            </td>
+                            <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
+                              {item.price}
+                            </td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>

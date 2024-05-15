@@ -15,7 +15,7 @@ const NewOrderTab = () => {
     { id: 2, title: 'Name' },
     { id: 3, title: 'Formats' },
     { id: 4, title: 'Background' },
-    { id: 5, title: 'platforms' },
+    { id: 5, title: 'Platforms' },
     { id: 6, title: 'Cropping & Alignment' },
     { id: 7, title: 'Final Touch' },
   ];

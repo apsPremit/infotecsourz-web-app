@@ -160,12 +160,14 @@ const SinglePackage = ({ plan }) => {
             {id === userData?.subscription?.plan_id ? (
               <div className=' relative  flex justify-center'>
                 <div className='w-full flex flex-col'>
-                  <Link
-                    className='text-sm space-y-2 hover:text-main'
-                    href={`/dashboard/buy-credit?plan=${id}`}
-                  >
-                    Buy Credit
-                  </Link>
+                  {type === 'paid' && (
+                    <Link
+                      className='text-sm space-y-2 hover:text-main'
+                      href={`/dashboard/buy-credit?plan=${id}`}
+                    >
+                      Buy Credit
+                    </Link>
+                  )}
                   <label htmlFor='' className='group flex flex-col'>
                     <button
                       disabled

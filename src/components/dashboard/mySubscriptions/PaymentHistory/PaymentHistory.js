@@ -58,7 +58,7 @@ const PaymentHistory = ({ transactions }) => {
                             </td>
                             <td className='text-sm cursor-pointer'>
                               <Link
-                                href={`/dashboard/invoice/${transaction.order_id}`}
+                                href={`/dashboard/invoice/${transaction.invoice_id}`}
                                 className='text-main hover:underline'
                               >
                                 Download Invoice

@@ -56,7 +56,6 @@ const MyBillingPage = () => {
   if (isLoading || subscriptionLoading) {
     return <Loader />;
   }
-  console.log({ subscriptions, transactions });
 
   return (
     <div>

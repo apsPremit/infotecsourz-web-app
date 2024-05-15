@@ -6,8 +6,6 @@ import axios from 'axios';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
 import React, { useContext, useEffect, useState } from 'react';
-import { AiOutlineConsoleSql } from 'react-icons/ai';
-import { headers } from '../../../../../next.config';
 
 const SpecificationsLeftSide = () => {
   const {
@@ -57,14 +55,7 @@ const SpecificationsLeftSide = () => {
       type: 'text',
     },
   ];
-  const returnTimeOptions = [
-    { label: 'Select return time', value: 0, cost: 0 },
 
-    // { label: '12 Hours', value: 12, cost: 1 },
-    // { label: '24 Hours', value: 24, cost: 0.8 },
-    // { label: '48 Hours', value: 48, cost: 0.5 },
-    // { label: '72 Hours', value: 72, cost: 0 },
-  ];
   const handleReturnTime = (e) => {
     setReturnTime(parseInt(e.target.value));
   };

@@ -14,6 +14,7 @@ const fetchInvoice = async (orderId, accessToken) => {
       `${config.api_base_url}/invoices/${orderId}`
     );
     const result = response.data.data;
+    console.log({ result });
     return result;
   } catch (error) {}
 };
