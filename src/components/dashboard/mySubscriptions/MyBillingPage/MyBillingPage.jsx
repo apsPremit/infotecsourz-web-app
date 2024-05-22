@@ -11,7 +11,6 @@ import { useSession } from 'next-auth/react';
 import { useAuth } from '@/context/AuthProvider';
 
 const getTransactions = async (userId, accessToken) => {
-  console.log('transaction =>>>>>>>', { userId, accessToken });
   return await axios.get(
     `${config.api_base_url}/transactions/${userId}/transactions`,
     {
@@ -36,7 +35,6 @@ const getSubscriptions = async (subscriptionId, accessToken) => {
 
 const MyBillingPage = () => {
   const { userData } = useAuth();
-  console.log('user', userData);
   const session = useSession();
   const user = session?.data?.user;
   const { data: transactions, isLoading } = useQuery({

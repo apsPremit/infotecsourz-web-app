@@ -6,12 +6,17 @@ import { useRouter } from 'next/navigation';
 import { StateContext } from '@/context/StateProvider';
 import { useAuth } from '@/context/AuthProvider';
 import config from '@/config';
+import axios from 'axios';
+import { useSession } from 'next-auth/react';
 
 const PaypalSubscriptionButtons = ({ plan_id }) => {
   const { isTermsAgreed } = useContext(StateContext);
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
   const { userData } = useAuth();
+  const session = useSession();
+  const accessToken = session?.data?.user?.accessToken;
+  console.log({ accessToken });
 
   useEffect(() => {
     setLoading(false);
@@ -44,13 +49,19 @@ const PaypalSubscriptionButtons = ({ plan_id }) => {
             }}
             onApprove={async (data, actions) => {
               try {
-                const subscriptionDetails = await actions.subscription.get();
-                if (subscriptionDetails.status === 'ACTIVE') {
-                  router.replace('/subscription-success');
+                const response = await axios.post(
+                  `${config.api_base_url}/subscriptions/create-subscription`,
+                  data,
+                  { headers: { Authorization: `Bearer ${accessToken}` } }
+                );
+                const result = await response.data;
+                if (result.success) {
+                  router.replace(
+                    `/subscription-success?id=${result?.data?.subscriptionId}`
+                  );
                 }
-              } catch (error) {
-                return toast.error(error?.message);
-              }
+              } catch (error) {}
+              console.log(data);
             }}
             onError={() => {
               return toast.error('subscription failed try again');

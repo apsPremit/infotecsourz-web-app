@@ -136,7 +136,9 @@ const Invoice = ({ invoice }) => {
                   </div>
                   <div>
                     <p className='font-bold'>{id}</p>
-                    <p className='font-bold'>{transaction?.transaction_id}</p>
+                    <p className='font-bold'>
+                      {transaction?.transaction_id || <br />}
+                    </p>
                     <p>{moment(createdAT).format('D MMMM  YYYY')}</p>
                     <p>{transaction?.status}</p>
                   </div>
@@ -186,43 +188,13 @@ const Invoice = ({ invoice }) => {
                         </tr>
                       </thead>
                       <tbody className='dark:divide-gray-700 divide-y divide-gray-200 '>
-                        {/* <tr className='border-b-2 border-b-gray-400'>
-                          <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
-                            1
-                          </td>
-                          <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
-                            <span className='mb-3 block whitespace-break-spaces font-bold'>
-                              {order_name}
-                            </span>
-                            <p className='flex flex-wrap'>
-                              {additional?.map((item, index) => (
-                                <span
-                                  className="mr-1 after:content-[',']"
-                                  key={index}
-                                >
-                                  {item}
-                                </span>
-                              ))}
-                            </p>
-                          </td>
-                          <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
-                            1
-                          </td>
-                          <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
-                            ${transaction?.subtotal?.toFixed(2)}
-                          </td>
-                          <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
-                            ${transaction?.total_amount.toFixed(2)}
-                          </td>
-                        </tr> */}
-
                         {items.map((item, i) => (
                           <tr
                             className='border-b-2 border-b-gray-400'
                             key={item.name}
                           >
                             <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
-                              {i}
+                              {i + 1}
                             </td>
                             <td className='whitespace-nowrap px-6 py-2 text-start text-sm '>
                               {item.name}
@@ -268,7 +240,7 @@ const Invoice = ({ invoice }) => {
                   <div className='space-y-1.5'>
                     <p>${transaction?.subtotal?.toFixed(2)}</p>
                     <p>${transaction?.tax_total?.toFixed(2)}</p>
-                    <p>${transaction?.discount?.toFixed(2)}</p>
+                    <p>{transaction?.discount_rate}%</p>
                   </div>
                 </div>
                 <div className='grandtotal-asset text-md relative mt-5 flex items-center justify-between bg-main px-5 py-1.5 font-bold text-white md:text-lg'>

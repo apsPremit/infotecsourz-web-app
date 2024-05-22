@@ -185,8 +185,7 @@ const SinglePackage = ({ plan }) => {
               <div className='group relative  flex justify-center'>
                 <button
                   disabled={
-                    plan_name === 'free trial' &&
-                    userData?.able_free_trial === false
+                    type === 'free' && userData?.able_free_trial === false
                   }
                   onClick={() => handleNavigation(plan)}
                   className={`${

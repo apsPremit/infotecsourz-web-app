@@ -166,7 +166,15 @@ const PricingBilling = ({ plan }) => {
                     href='https://www.infotecsourz.com/terms-and-conditions/'
                     className='text-main hover:underline'
                   >
-                    Terms & Conditions
+                    Terms
+                  </Link>
+                  <span className='px-2'>&</span>
+                  <Link
+                    target='_blank'
+                    href='https://www.infotecsourz.com/terms-and-conditions/'
+                    className='text-main hover:underline'
+                  >
+                    Privacy policy
                   </Link>
                 </p>
               </label>

@@ -11,6 +11,7 @@ export const metadata = {
 const fetchPlans = async (token) => {
   try {
     const res = await fetch(`${config.api_base_url}/plans`, {
+      next: { revalidate: 60 * 5 },
       headers: {
         Authorization: `Bearer ${token}`,
         source: 'web',
