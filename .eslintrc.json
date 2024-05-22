@@ -5,6 +5,7 @@
     // "prefer-const": "error",
     // "no-unused-vars": "error",
     // "no-console": "warn",
+    // "import/no-unresolved": "error",
     "no-undef": "error"
   }
 }

@@ -1,5 +1,5 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import CreditBuyForm from '@/components/dashboard/BuyCredit/CreditBuyform';
+import CreditBuyForm from '../../../../components/dashboard/BuyCredit/CreditBuyForm';
 import config from '@/config';
 import axios from 'axios';
 import { getServerSession } from 'next-auth';
