@@ -4,19 +4,18 @@ import Link from 'next/link';
 import logo from '@/assets/images/logo.png';
 import { Controller, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 import { ImSpinner2 } from 'react-icons/im';
 import 'react-phone-input-2/lib/style.css';
 import './SignupForm.css';
 import { signIn } from 'next-auth/react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import config from '@/config';
+import { Toaster } from 'react-hot-toast';
 
 const SignUpForm = () => {
   const router = useRouter();
   const [isAgree, setAgree] = useState(false);
-  const search = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [countries, setCountries] = useState([]);
