@@ -114,7 +114,7 @@ const PricingBilling = ({ plan }) => {
               </div>
               <div>
                 <h3 className='text-xl font-bold'>
-                  <span className='mr-1'>$</span> {grandTotal?.toFixed(2)}{' '}
+                  <span className='mr-1'>$</span> {subTotal?.toFixed(2)}{' '}
                   <span>USD</span>
                 </h3>
                 <p className='text-neutral'>Cost</p>
