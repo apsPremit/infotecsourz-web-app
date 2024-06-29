@@ -1,122 +1,36 @@
-"use client";
-import { UserAuth } from "@/context/AuthProvider";
-import { baseUrl } from "@/utils/functions/baseUrl";
-import axios from "axios";
+'use client';
+import { useContext } from 'react';
+import { BsUpload } from 'react-icons/bs';
+import { StateContext } from '../../../../context/StateProvider';
 
-import { useEffect, useState } from "react";
-import { BsUpload } from "react-icons/bs";
-
-const UploadField = ({
-  uploadedImages,
-  setUploadedImages,
-  orderId,
-  setOrderId,
-  setUploadProgress,
-  setSelectedImages,
-  setUploading,
-  setTotalFileSize,
-}) => {
-  useEffect(() => {
-    if (orderId === "") {
-      const randomNum = Math.floor(Math.random() * 100000000);
-      const randomString = String(randomNum).padStart(8, "0");
-      setOrderId(randomString);
-    }
-  }, []);
-
-  const { user } = UserAuth();
-  const generateOrderId = async () => {
-    const randomNum = Math.floor(Math.random() * 100000000);
-    const randomString = String(randomNum).padStart(8, "0");
-    return randomString;
-  };
-
-  // handle image upload
-  const handleImageUpload = async (e) => {
-    setUploading(true);
-    // generate order id
-
-    const selectedFiles = e.target.files;
-
-    // store selected images
-    const selectedFileArray = Array.from(selectedFiles);
-    // calculate total size
-
-    const totalSize = selectedFileArray.reduce(
-      (acc, file) => acc + file.size,
-      0
-    );
-
-    setTotalFileSize(parseFloat(totalSize / 1000000).toFixed(2));
-
-    // generate blob urls
-    const selectedImagesGeneratedUrl = selectedFileArray.map((file) =>
-      URL.createObjectURL(file)
-    );
-    // set urls for show blob
-    setSelectedImages(selectedImagesGeneratedUrl);
-    // create form data
-    const formData = new FormData();
-
-    selectedFileArray.forEach((file) => formData.append("files", file));
-
-    // get progress
-    const config = {
-      onUploadProgress: (progressEvent) => {
-        const percentCompleted = Math.round(
-          (progressEvent.loaded * 100) / progressEvent.total
-        );
-        setUploadProgress(percentCompleted);
-      },
-    };
-
-    // upload image to server
-    try {
-      const res = await axios.post(
-        `${baseUrl}/image?folderName=${orderId}&bucketName=${process.env.NEXT_PUBLIC_USER_UPLOAD_IMAGE_BUCKET}`,
-        formData,
-        config
-      );
-
-      const data = await res.data;
-      const newUploadedImages = [...uploadedImages, ...data.urls];
-      setUploadedImages(newUploadedImages || []);
-      setUploading(false);
-    } catch (error) {
-      setUploading(false);
-    }
-
-    e.target.value = "";
-  };
-
+const UploadField = ({ uploadEvent, isDragging, dragProps }) => {
+  const { uploadedImages, imageQuantityFromUrl } = useContext(StateContext);
+  const isUploaded = uploadedImages?.length > 0 || imageQuantityFromUrl;
   return (
-    <div className=" ">
+    <div {...dragProps} className={`${isUploaded && 'pointer-events-none'}`}>
       <label
-        htmlFor="uploadField"
-        className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 "
+        className={`${
+          isDragging ? 'bg-gray-200' : 'bg-gray-50'
+        }  hover:bg-gray-100 flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg `}
       >
-        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-          <span className="text-2xl mb-3">
-            <BsUpload />
-          </span>
-          <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-            <span className="font-semibold">
-              Click to upload file from you computer.
+        {isDragging ? (
+          <p>Drop Here</p>
+        ) : (
+          <div className='flex flex-col items-center justify-center pt-5 pb-6'>
+            <span className='text-2xl mb-3'>
+              <BsUpload />
             </span>
-          </p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            SVG, PNG, JPG or GIF
-          </p>
-        </div>
-        <input
-          onChange={handleImageUpload}
-          id="uploadField"
-          type="file"
-          name="images"
-          multiple
-          accept="image/*"
-          className="hidden"
-        />
+            <button
+              disabled={isUploaded}
+              onClick={uploadEvent}
+              className='bg-blue-500 px-2 py-1.5 rounded text-white disabled:opacity-20'
+            >
+              Upload Images
+            </button>
+            <span>or</span>
+            <button> Drop Images</button>
+          </div>
+        )}
       </label>
     </div>
   );

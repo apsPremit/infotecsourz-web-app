@@ -1,20 +1,23 @@
-"use client";
-import { createContext, useEffect, useState } from "react";
-import { UserAuth } from "./AuthProvider";
+'use client';
+import { useSession } from 'next-auth/react';
+import { createContext, useEffect, useState } from 'react';
+import { useAuth } from './AuthProvider';
+import config from '@/config';
 
 export const StateContext = createContext(null);
 
 const StateProvider = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(1);
-  const [photoType, setPhotoType] = useState("");
+  const [photoType, setPhotoType] = useState(null);
+  const [isTermsAgreed, setIsTermsAgreed] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState({});
   // fileName
-  const [orderName, setOrderName] = useState("");
+  const [orderName, setOrderName] = useState('');
   // background
-  const [backgroundColor, setBackgroundColor] = useState("");
+  const [backgroundColor, setBackgroundColor] = useState('');
   const [customBackground, setCustomBackground] = useState(
-    backgroundColor === "custom" ? backgroundColor : ""
+    backgroundColor === 'custom' ? backgroundColor : ''
   );
 
   //    *******************set file format **************************************************
@@ -24,17 +27,27 @@ const StateProvider = ({ children }) => {
     tiff: false,
     psd: false,
   });
+  //    *******************set file format **************************************************
+  const [platforms, setPlatforms] = useState({
+    amazon: false,
+    shopify: false,
+    bigcommerce: false,
+    ebay: false,
+    etcy: false,
+    woocommerce: false,
+    others: false,
+  });
 
   //    *******************set alignments **************************************************
   const [alignments, setAlignments] = useState({
-    marginOverall: "",
-    marginLeft: "",
-    marginRight: "",
-    marginTop: "",
-    marginBottom: "",
-    ratio: "",
-    horizontalAlignment: "",
-    verticalAlignment: "",
+    marginOverall: null,
+    marginLeft: null,
+    marginRight: null,
+    marginTop: null,
+    marginBottom: null,
+    ratio: null,
+    horizontalAlignment: null,
+    verticalAlignment: null,
   });
 
   //    *******************set final specs alignments **************************************************
@@ -69,7 +82,7 @@ const StateProvider = ({ children }) => {
   //    *******************set options **************************************************
   const [openOptions, setOpenOptions] = useState({
     isOpenColor:
-      backgroundColor === "custom" || backgroundColor.startsWith("#")
+      backgroundColor === 'custom' || backgroundColor.startsWith('#')
         ? true
         : false,
     isOpenCrop: true,
@@ -92,11 +105,11 @@ const StateProvider = ({ children }) => {
   //    if background color is original then set custom background to ''
   useEffect(() => {
     if (
-      backgroundColor === "white" ||
-      backgroundColor == "transparent" ||
-      backgroundColor == "original"
+      backgroundColor === 'white' ||
+      backgroundColor == 'transparent' ||
+      backgroundColor == 'original'
     ) {
-      setCustomBackground("");
+      setCustomBackground(null);
     }
   }, [backgroundColor]);
 
@@ -105,9 +118,9 @@ const StateProvider = ({ children }) => {
     if (openOptions.isOriginalAspect) {
       setAlignments((prevState) => ({
         ...prevState,
-        ratio: "",
-        horizontalAlignment: "",
-        verticalAlignment: "",
+        ratio: null,
+        horizontalAlignment: null,
+        verticalAlignment: null,
       }));
     }
   }, [openOptions]);
@@ -118,15 +131,15 @@ const StateProvider = ({ children }) => {
     if (openOptions.isOpenCustomMargin) {
       setAlignments((prevState) => ({
         ...prevState,
-        marginOverall: "",
+        marginOverall: null,
       }));
     } else {
       setAlignments((prevState) => ({
         ...prevState,
-        marginTop: "",
-        marginBottom: "",
-        marginLeft: "",
-        marginRight: "",
+        marginTop: null,
+        marginBottom: null,
+        marginLeft: null,
+        marginRight: null,
       }));
     }
   }, [openOptions]);
@@ -179,8 +192,8 @@ const StateProvider = ({ children }) => {
     resizing: isResizing,
     background:
       customBackground ||
-      backgroundColor === "white" ||
-      backgroundColor === "transparent" ||
+      backgroundColor === 'white' ||
+      backgroundColor === 'transparent' ||
       false,
     masking: productFinalSpecs.masking || false,
     clipping:
@@ -202,8 +215,8 @@ const StateProvider = ({ children }) => {
     resizing: isResizing,
     background:
       customBackground ||
-      backgroundColor === "white" ||
-      backgroundColor === "transparent" ||
+      backgroundColor === 'white' ||
+      backgroundColor === 'transparent' ||
       false,
     masking: modelFinalSpecs.masking || false,
     clipping: modelFinalSpecs.clipping || false,
@@ -247,11 +260,11 @@ const StateProvider = ({ children }) => {
 
   useEffect(() => {
     setPerPhotoCost(
-      selectedPackage.package_name !== "pay as go"
+      userData?.subscription?.plan_type !== 'pay-as-go'
         ? 0
-        : photoType === "product"
-        ? productTotalCost
-        : modelTotalCost
+        : photoType === 'product'
+          ? productTotalCost
+          : modelTotalCost
     );
   }, [photoType, modelTotalCost, productTotalCost, selectedPackage]);
 
@@ -261,11 +274,14 @@ const StateProvider = ({ children }) => {
   //******************************************** */ process requirements***************************
   // ***********************************************************************************************
   const selectedFormats = Object.keys(formats).filter((key) => formats[key]);
+  const selectedPlatforms = Object.keys(platforms).filter(
+    (key) => platforms[key]
+  );
   const selectedBackground =
-    backgroundColor === "custom" ? customBackground : backgroundColor;
+    backgroundColor === 'custom' ? customBackground : backgroundColor;
   const selectedAlignments = Object.entries(alignments).reduce(
     (accumulator, [key, value]) => {
-      if (value !== "") {
+      if (value !== null) {
         accumulator[key] = value;
       }
       return accumulator;
@@ -280,42 +296,43 @@ const StateProvider = ({ children }) => {
   );
 
   const photoRequirements = {
-    type: photoType,
-    fileName: orderName,
     formats: [...selectedFormats],
-    backgroundColor: selectedBackground,
-    selectedAlignments,
+    platforms: [...selectedPlatforms],
+    background_color: selectedBackground,
+    alignments,
     additional:
-      photoType === "model" ? modelAdditionalReq : productAdditionalReq,
+      photoType === 'model' ? modelAdditionalReq : productAdditionalReq,
   };
 
   // file upload states
   const [uploadedImages, setUploadedImages] = useState([]);
   const [totalFileSize, setTotalFileSize] = useState(0);
-  const [orderId, setOrderId] = useState("");
-  const [fileUrl, setFileUrl] = useState("");
+  const [orderId, setOrderId] = useState(null);
+  const [fileUrl, setFileUrl] = useState(null);
+  const [imageSource, setImageSource] = useState(null);
+  const [instructionSource, setInstructionSource] = useState(null);
   const [imageQuantityFromUrl, setImageQuantityFromUrl] = useState(0);
 
   // specifications page state
   const [productDetailsDescription, setProductDetailsDescription] =
-    useState("");
+    useState(null);
   const [hasInstructions, setHasInstructions] = useState(false);
 
-  const { userData, setUserData, user } = UserAuth();
+  const { userData } = useAuth();
   const [updatedCredit, setUpdatedCredit] = useState(0);
 
   useEffect(() => {
     const newUpdatedCredit =
-      userData?.remainingCredit +
+      userData?.subscription?.remaining_credit +
       (selectedPackage.photos ? selectedPackage?.photos : 0);
     setUpdatedCredit(newUpdatedCredit);
-  }, [selectedPackage]);
+  }, []);
 
   // billing page states
-  const [billingMessage, setBillingMessage] = useState("");
-  const [taxRate, setTaxRate] = useState(13);
-  const [photoUrl, setPhotoUrl] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [billingMessage, setBillingMessage] = useState(null);
+  const [taxRate, setTaxRate] = useState(config.tax_rate);
+  const [photoUrl, setPhotoUrl] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState(null);
   const [orderDetails, setOrderDetails] = useState(null);
   const [isShowPricingModal, setShowPricingModal] = useState(false);
 
@@ -329,6 +346,8 @@ const StateProvider = ({ children }) => {
     orderName,
     setOrderName,
     formats,
+    platforms,
+    setPlatforms,
     setFormats,
     handleSingleValueChange,
     backgroundColor,
@@ -355,6 +374,10 @@ const StateProvider = ({ children }) => {
     setTotalFileSize,
     orderId,
     setOrderId,
+    imageSource,
+    setImageSource,
+    instructionSource,
+    setInstructionSource,
     fileUrl,
     setFileUrl,
     productDetailsDescription,
@@ -380,6 +403,8 @@ const StateProvider = ({ children }) => {
     setOrderDetails,
     isShowPricingModal,
     setShowPricingModal,
+    isTermsAgreed,
+    setIsTermsAgreed,
   };
 
   return (

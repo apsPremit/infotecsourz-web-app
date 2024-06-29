@@ -1,29 +1,28 @@
-"use client";
-import React from "react";
-
-import { UserAuth } from "@/context/AuthProvider";
-import { BsImageAlt } from "react-icons/bs";
-import Link from "next/link";
+'use client';
+import React from 'react';
+import { BsImageAlt } from 'react-icons/bs';
+import Link from 'next/link';
+import { useAuth } from '@/context/AuthProvider';
 
 const FreeTrialBox = () => {
-  const { userData } = UserAuth();
+  const { userData } = useAuth();
   return (
     <>
-      {userData?.isAvailableFreeTrial && (
-        <div className="border border-shadow p-5 rounded bg-white">
-          <div className="">
-            <p className="p-1.5 w-8 h-8 flex justify-center items-center bg-green-200 text-green-500 text-xl border border-red-20 rounded-full">
-              <BsImageAlt className="" />
+      {userData?.able_free_trial === true && (
+        <div className='rounded border border-shadow bg-white p-5'>
+          <div className=''>
+            <p className='border-red-20 flex h-8 w-8 items-center justify-center rounded-full border bg-green-200 p-1.5 text-xl text-green-500'>
+              <BsImageAlt className='' />
             </p>
           </div>
-          <div className="mt-3">
-            <p className="font-bold  text-lg">3 Credits</p>
-            <h3 className="text  text-[#9f9f9f] text-sm">
+          <div className='mt-3'>
+            <p className='text-lg  font-bold'>3 Credits</p>
+            <h3 className='text  text-sm text-[#9f9f9f]'>
               Get 3 Credits for Free trial!
             </h3>
 
-            <Link href="/dashboard/pricing">
-              <button className="px-3 py-1.5 mt-3 bg-main text-white rounded hover:bg-mainHover disabled:cursor-not-allowed disable:bg-mainHover">
+            <Link href='/dashboard/pricing'>
+              <button className='disable:bg-mainHover mt-3 rounded bg-main px-3 py-1.5 text-white hover:bg-mainHover disabled:cursor-not-allowed'>
                 Get Free Trial
               </button>
             </Link>

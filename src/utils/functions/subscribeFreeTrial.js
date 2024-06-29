@@ -1,11 +1,11 @@
-const { baseUrl } = require("./baseUrl");
+const { baseUrl } = require('./baseUrl');
 
 const subscribeFreeTrial = async (orderData) => {
   try {
     const res = await fetch(`${baseUrl}/subscription/free-trial`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-type": "application/json",
+        'Content-type': 'application/json',
       },
       body: JSON.stringify(orderData),
     });

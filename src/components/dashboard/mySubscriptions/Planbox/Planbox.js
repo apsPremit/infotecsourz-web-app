@@ -1,84 +1,70 @@
-"use client";
-import { UserAuth } from "@/context/AuthProvider";
-import React from "react";
+'use client';
 
-import moment from "moment";
-import Link from "next/link";
+import React from 'react';
 
-const PlanBox = ({ subscriptions }) => {
-  const { userData } = UserAuth();
-  if (!subscriptions) {
-    return (
-      <div className="h-screen flex justify-center items-center">
-        <p>Loading...</p>
-      </div>
-    );
-  }
+import moment from 'moment';
+import Link from 'next/link';
 
-  const currentSubscription = subscriptions[0];
+const PlanBox = ({ subscription }) => {
   const {
-    _id,
-    orderId,
-    OrderName,
-    name,
-    email,
-    status,
-    paymentStatus,
-    invoiceStatus,
-    package: pack,
-    subtotal,
-    taxRate,
-    taxTotal,
-    grandTotal,
-    createdAt,
-    paymentMethod,
-    expiration,
+    plan_name,
+    total_credit,
+    transaction,
     validity,
-    credit,
-    price,
-    photos,
-  } = currentSubscription || {};
+    createdAt,
+    status,
+    free_credit,
+    plan_type,
+    expiration,
+  } = subscription || {};
 
   return (
     <div>
-      <h1 className=" text-2xl mb-3 ml-3 text-gray-700 medium  whitespace-nowrap">
+      <h1 className=' medium mb-3 ml-3 whitespace-nowrap text-2xl  text-gray-700'>
         My Plan
       </h1>
-      <div className="bg-white p-10 rounded border">
-        <div className="flex justify-between">
+      <div className='rounded border bg-white p-10'>
+        <div className='flex justify-between'>
           <div>
-            <h3 className="font-bold text-xl text-gray-800 capitalize">
-              {pack}
-              <span className="bg-blue-500 text-white text-xs ml-5 font-normal p-1.5 rounded-xl">
-                Active
+            <h3 className='text-xl font-bold capitalize text-gray-800'>
+              {plan_name}
+              <span className='ml-5 rounded-xl bg-blue-500 p-1.5 text-xs font-normal text-white'>
+                {status}
               </span>
             </h3>
-            <p className="text-red-400 mt-3 text-sm">
-              Your subscription will be expire on{" "}
-              {moment(expiration).format("MMM D, YYYY")}
-            </p>
+            {plan_type !== 'pay-as-go' && (
+              <p className='text-red-400 mt-3 text-sm'>
+                Your subscription will be expire on{' '}
+                {moment(expiration).format('MMM D, YYYY')}
+              </p>
+            )}
+            {/* upgrade button  */}
+            <div className='mt-5 space-x-3'>
+              <Link href='/dashboard/pricing'>
+                <button className='rounded bg-main px-2.5 py-1.5 text-white hover:bg-mainHover'>
+                  Upgrade Plan
+                </button>
+              </Link>
+            </div>
           </div>
           <div>
-            <h3 className="text-lg">
-              <span className="text-main"> ${price || "0"}</span> For{" "}
-              {credit || "0"} Credit
+            <h3 className='text-lg'>
+              {plan_type !== 'pay-as-go' && (
+                <span className='text-main'>
+                  ${transaction?.total_amount || '0'} For{' '}
+                </span>
+              )}
+              {total_credit || free_credit || ' Unlimited'} Credit
             </h3>
-            <p className="text-sm">Validity {validity} Days</p>
-            <p className="text-sm">
-              Subscribed on {moment(createdAt).format("MMM D, YYYY")}
+            <p className='text-sm'>
+              {plan_type === 'pay-as-go'
+                ? 'Unlimited Validity'
+                : 'Validity' + ' ' + validity + ' ' + 'Days'}
+            </p>
+            <p className='text-sm'>
+              Subscribed on {moment(createdAt).format('MMM D, YYYY')}
             </p>
           </div>
-        </div>
-
-        <div className="space-x-3 mt-5">
-          <Link href="/dashboard/pricing">
-            <button className="bg-main text-white px-2.5 py-1.5 rounded hover:bg-mainHover">
-              Upgrade Plan
-            </button>
-          </Link>
-          {/* <button className="bg-slate-200 text-black px-2.5 py-1.5 rounded hover:bg-slate-300">
-            Details
-          </button> */}
         </div>
       </div>
     </div>

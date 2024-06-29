@@ -1,16 +1,20 @@
-"use client";
-import { UserAuth } from "@/context/AuthProvider";
+'use client';
+
+import { useAuth } from '@/context/AuthProvider';
+import { useSession } from 'next-auth/react';
 
 export const SubscribeButton = () => {
-  const { userData } = UserAuth();
+  const session = useSession();
+  const user = session?.data?.user;
+  const { userData } = useAuth();
   return (
     <button
       disabled={
-        userData?.isAvailableFreeTrial === undefined ||
-        userData?.isAvailableFreeTrial == "" ||
-        userData?.isAvailableFreeTrial === false
+        userData?.able_free_trial === undefined ||
+        userData?.able_free_trial == '' ||
+        userData?.able_free_trial === false
       }
-      className="bg-blue-400 hover:bg-blue-500 text-white mt-5 w-full py-2 disabled:bg-blue-200 "
+      className='mt-5 w-full bg-blue-400 py-2 text-white hover:bg-blue-500 disabled:bg-blue-200 '
     >
       Get Free Trial
     </button>

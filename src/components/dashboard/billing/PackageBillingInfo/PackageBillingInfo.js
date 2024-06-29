@@ -1,36 +1,37 @@
-"use client";
-import { UserAuth } from "@/context/AuthProvider";
-import { StateContext } from "@/context/StateProvider";
-import moment from "moment/moment";
-import Link from "next/link";
+'use client';
+import { StateContext } from '@/context/StateProvider';
+import moment from 'moment/moment';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 
 const PackageBillingInfo = ({ pack }) => {
-  const { userData } = UserAuth();
+  const session = useSession();
+  const user = session?.data?.user;
   const { package_name, price, photos } = pack || {};
 
   const fields = [
-    { label: "Name", value: userData?.name, type: "text" },
-    { label: "Email", value: userData?.email, type: "text" },
-    { label: "Package name", value: package_name, type: "text" },
-    { label: "Price", value: price, type: "number" },
-    { label: "Credit", value: photos, type: "number" },
+    { label: 'Name', value: user?.name, type: 'text' },
+    { label: 'Email', value: user?.email, type: 'text' },
+    { label: 'Package name', value: package_name, type: 'text' },
+    { label: 'Price', value: price, type: 'number' },
+    { label: 'Credit', value: photos, type: 'number' },
   ];
 
   return (
-    <div className="lg:w-1/2 mx-auto bg-white p-10 rounded mt-10">
-      <div className=" gap-5 space-y-4">
+    <div className='mx-auto mt-10 rounded bg-white p-10 lg:w-1/2'>
+      <div className=' gap-5 space-y-4'>
         {fields.map((field, index) => (
-          <div className="" key={index}>
+          <div className='' key={index}>
             <label>
-              <span className="text-[#9d9c9c] text-sm mb-4 ml-1">
+              <span className='mb-4 ml-1 text-sm text-[#9d9c9c]'>
                 {field?.label}
               </span>
               <input
                 type={field?.type}
                 value={field?.value}
-                className="border border-shadow w-full px-3 py-1.5 rounded outline-0 focus:rounded focus:border-main cursor-not-allowed"
+                className='w-full cursor-not-allowed rounded border border-shadow px-3 py-1.5 outline-0 focus:rounded focus:border-main'
                 disabled
               />
             </label>
@@ -39,9 +40,9 @@ const PackageBillingInfo = ({ pack }) => {
       </div>
 
       {/* btn proceed  */}
-      <div className="flex justify-center mt-5">
+      <div className='mt-5 flex justify-center'>
         <Link href={`/dashboard/pricing/billing?package=${pack?.packageId}`}>
-          <button className="text-white px-3.5 py-2 bg-main hover:bg-mainHover rounded flex disabled:cursor-not-allowed disabled:bg-mainHover">
+          <button className='flex rounded bg-main px-3.5 py-2 text-white hover:bg-mainHover disabled:cursor-not-allowed disabled:bg-mainHover'>
             Proceed
           </button>
         </Link>

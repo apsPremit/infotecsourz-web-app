@@ -1,28 +1,36 @@
-"use client";
-import { UserAuth } from "@/context/AuthProvider";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+'use client';
+import Link from 'next/link';
+import { useAuth } from '../../../../context/AuthProvider';
+import React from 'react';
 
 const SubscribedPackage = () => {
-  const { userData } = UserAuth();
+  const { userData } = useAuth();
+  // console.log("userData", userData);
 
   return (
-    <div className="grid grid-cols-1 mg:grid-cols-2 lg:grid-cols-3 mb-5 text-white  ">
-      <div className="mt-3 bg-blue-500 px-5 pt-2 pb-5 rounded-lg shadow">
-        <p className="text-sm font-bold">Subscribed Package</p>
-        <p className="text-lg font-bold my-1 capitalize">
-          {userData?.subscribedPackage}
-        </p>
-        {userData?.remainingCredit ? (
-          <p className="text-sm">
-            Remaining Credit:
-            <span className="font-bold">{userData?.remainingCredit}</span>
+    <div className='grid grid-cols-1 mg:grid-cols-2 lg:grid-cols-3 mb-5 text-white  '>
+      <div className='mt-3 bg-blue-500 px-5 pt-2 pb-5 rounded-lg shadow'>
+        <p className='text-sm font-bold'>Subscribed Package</p>
+        {userData?.subscription ? (
+          <p className='text-lg font-bold my-1 capitalize'>
+            {userData?.subscription.plan_name}
           </p>
         ) : (
-          <Link href="/dashboard/pricing">
-            <p className="text-sm font-bold hover:underline">Subscribe Now</p>
+          <Link href='/dashboard/plans'>
+            <p className='text-lg font-bold my-1 capitalize'>Subscribe Now</p>
           </Link>
         )}
+        {userData?.subscription &&
+          userData?.subscription?.plan_type !== 'pay-as-go' && (
+            <>
+              <p className='text-sm'>
+                <span className='pr-1'> Remaining Credit:</span>
+                <span className='font-bold pe-1'>
+                  {userData?.subscription?.remaining_credit || '0'}
+                </span>
+              </p>
+            </>
+          )}
       </div>
     </div>
   );
