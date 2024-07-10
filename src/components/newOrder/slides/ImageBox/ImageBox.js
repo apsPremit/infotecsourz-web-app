@@ -180,8 +180,8 @@ const ImageBox = () => {
       backgroundColor === 'original'
         ? ''
         : backgroundColor === 'custom'
-          ? customBackground
-          : backgroundColor,
+        ? customBackground
+        : backgroundColor,
     maxHeight: '700px',
     minHeight: '350px',
     aspectRatio: alignments?.ratio,
@@ -191,14 +191,14 @@ const ImageBox = () => {
       alignments.verticalAlignment === 'top'
         ? 'start'
         : alignments.verticalAlignment === 'bottom'
-          ? 'end'
-          : 'center',
+        ? 'end'
+        : 'center',
     alignItems:
       alignments.horizontalAlignment === 'left'
         ? 'start'
         : alignments.horizontalAlignment === 'right'
-          ? 'end'
-          : 'center',
+        ? 'end'
+        : 'center',
   };
 
   const imageStyle = {
@@ -238,6 +238,7 @@ const ImageBox = () => {
             : 400
         }
         style={imageStyle}
+        priority
       />
     </div>
   );
