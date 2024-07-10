@@ -1,14 +1,17 @@
 import React, { useContext, useEffect } from 'react';
 import shoes from '@/assets/images/shoes-bg.jpg';
 import Image from 'next/image';
-import modelBasic from '../../../../assets/images/model/Beauty Makeup Retouching.png';
-import productBasic from '../../../../assets/images/product/Color correction.png';
+// import modelBasic from '../../../../assets/images/model/Beauty Makeup Retouching.png';
+// import productBasic from '../../../../assets/images/product/Color correction.png';
 import { StateContext } from '@/context/StateProvider';
 import SwitchToggle from '@/components/ui/SwitchToggle';
 
 const TypeSlide = () => {
   const { photoType, setPhotoType } = useContext(StateContext);
-
+  const modelBasic =
+    'https://d34n7qm7kfn7vw.cloudfront.net/model/Beauty%20Makeup%20Retouching.png';
+  const productBasic =
+    'https://d34n7qm7kfn7vw.cloudfront.net/product/Color%20correction.png';
   return (
     <>
       <h1 className='mb-3 text-xl font-bold '>Please Select Photo Type</h1>
