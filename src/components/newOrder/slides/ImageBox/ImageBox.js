@@ -202,7 +202,7 @@ const ImageBox = () => {
   };
 
   const imageStyle = {
-    maxHeight: '350px',
+    maxHeight: '400px',
     position: currentSlide === 6 ? 'absolute' : 'relative',
     objectFit: 'contain',
     padding: alignments.marginOverall + '%',
