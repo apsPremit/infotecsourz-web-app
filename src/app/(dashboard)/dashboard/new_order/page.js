@@ -8,7 +8,7 @@ export const metadata = {
   description: 'Photo Retouching App',
 };
 
-export const preloadImages = () => {
+const PreloadImages = () => {
   return (
     <Head>
       {/* Preload images in the <head> section */}
@@ -133,7 +133,7 @@ const NewOrder = () => {
       {/* <CheckUserData /> */}
       <NewOrderTab />
       <Slider />
-      <preloadImages />
+      <PreloadImages />
       {/* <TypeSelection /> */}
     </div>
   );
