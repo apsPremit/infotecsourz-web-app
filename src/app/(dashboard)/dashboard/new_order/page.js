@@ -8,7 +8,7 @@ export const metadata = {
   description: 'Photo Retouching App',
 };
 
-const preloadImages = () => {
+export const preloadImages = () => {
   return (
     <Head>
       {/* Preload images in the <head> section */}
