@@ -180,8 +180,8 @@ const ImageBox = () => {
       backgroundColor === 'original'
         ? ''
         : backgroundColor === 'custom'
-          ? customBackground
-          : backgroundColor,
+        ? customBackground
+        : backgroundColor,
     maxHeight: '700px',
     minHeight: '350px',
     aspectRatio: alignments?.ratio,
@@ -191,18 +191,18 @@ const ImageBox = () => {
       alignments.verticalAlignment === 'top'
         ? 'start'
         : alignments.verticalAlignment === 'bottom'
-          ? 'end'
-          : 'center',
+        ? 'end'
+        : 'center',
     alignItems:
       alignments.horizontalAlignment === 'left'
         ? 'start'
         : alignments.horizontalAlignment === 'right'
-          ? 'end'
-          : 'center',
+        ? 'end'
+        : 'center',
   };
 
   const imageStyle = {
-    maxHeight: '350px',
+    maxHeight: '400px',
     position: currentSlide === 6 ? 'absolute' : 'relative',
     objectFit: 'contain',
     padding: alignments.marginOverall + '%',
