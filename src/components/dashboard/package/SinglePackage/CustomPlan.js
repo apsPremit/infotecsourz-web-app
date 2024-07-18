@@ -53,7 +53,7 @@ const CustomPlan = ({ facilities }) => {
       <div>
         <div className='group relative  flex justify-center'>
           <Link
-            href='/dashboard/support'
+            href='/dashboard/pricing/custom'
             disabled
             className='py-2 my-5 px-3.5 text-white bg-blue-500 hover:bg-blue-600 rounded w-full text-center '
           >

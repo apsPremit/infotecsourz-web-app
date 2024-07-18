@@ -60,10 +60,13 @@ const PaypalSubscriptionButtons = ({ plan_id }) => {
                     `/subscription-success?id=${result?.data?.subscriptionId}`
                   );
                 }
-              } catch (error) {}
+              } catch (error) {
+                console.log('payment error', error);
+              }
               console.log(data);
             }}
-            onError={() => {
+            onError={(error) => {
+              console.log('error', error);
               return toast.error('subscription failed try again');
             }}
           />
