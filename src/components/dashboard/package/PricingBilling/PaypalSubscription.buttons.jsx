@@ -16,7 +16,6 @@ const PaypalSubscriptionButtons = ({ plan_id }) => {
   const { userData } = useAuth();
   const session = useSession();
   const accessToken = session?.data?.user?.accessToken;
-  console.log({ accessToken });
 
   useEffect(() => {
     setLoading(false);
@@ -63,7 +62,6 @@ const PaypalSubscriptionButtons = ({ plan_id }) => {
               } catch (error) {
                 console.log('payment error', error);
               }
-              console.log(data);
             }}
             onError={(error) => {
               console.log('error', error);

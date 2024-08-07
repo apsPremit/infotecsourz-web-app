@@ -29,7 +29,7 @@ const fetchPlans = async (token) => {
 
 const Pricing = async () => {
   const session = await getServerSession(authOptions);
-  console.log({ session });
+
   const plans = await fetchPlans(session?.user?.accessToken);
   return (
     <div>

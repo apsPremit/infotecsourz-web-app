@@ -32,7 +32,7 @@ const BillingPage = () => {
   const session = useSession();
   const user = session?.data?.user;
   const [agree, setAgree] = useState(false);
-  console.log('user data', userData?.subscription?.plan_type);
+
   const { plan_name, remaining_credit, price, photos, facilities } =
     userData?.subscription || {};
 

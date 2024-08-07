@@ -23,7 +23,7 @@ const SupportForm = () => {
       description: message,
       phone,
     };
-    console.log(messageData);
+
     try {
       const supportUrl = `${config.api_base_url}/supports/create-support`;
       const res = await fetch(supportUrl, {

@@ -33,7 +33,6 @@ const Invoice = ({ invoice }) => {
     fullName,
     transactionId,
   } = invoice || {};
-  console.log('inv', invoice);
 
   const { additional } = photoRequirements || {};
   const generatePdf = useReactToPrint({

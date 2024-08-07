@@ -44,7 +44,6 @@ const UploadPage = () => {
   };
   // image Upload
   const onChange = (imageList, addUpdateIndex) => {
-    console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
 
@@ -79,11 +78,11 @@ const UploadPage = () => {
         throw new Error(res.statusText);
       }
       const result = await res.json();
-      console.log('upload result', result);
+
       setUploadedImages(result.data.images);
       setOrderId(result.data.order_id);
       setImageSource(result.data.image_source);
-      console.log('result', result);
+
       setUploading(false);
     } catch (error) {
       setUploading(false);

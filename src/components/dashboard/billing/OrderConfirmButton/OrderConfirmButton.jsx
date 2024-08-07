@@ -35,7 +35,7 @@ const OrderConfirmButton = ({ agree, setAgree, orderDetails }) => {
       if (!result.success) {
         throw new Error(result.message);
       }
-      console.log(result);
+
       router.push(
         `/order_success?orderId=${result?.data?.id}&&message=order placed successfully`
       );
