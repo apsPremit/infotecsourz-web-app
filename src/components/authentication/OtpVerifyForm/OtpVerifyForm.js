@@ -1,70 +1,101 @@
 'use client';
 import Image from 'next/image';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-
 import logo from '@/assets/images/logo.png';
+import React, { useState } from 'react';
 import Link from 'next/link';
-
+import OtpInput from 'react-otp-input';
+import {
+  useForgetPasswordMutation,
+  useVerifyOtpMutation,
+} from '@/redux/services/authApi';
+import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'next/navigation';
+import { setTime } from '@/redux/features/timeSlice';
+import Spinner from '@/components/ui/Spinner';
+import Timer from '../Timer/Timer';
 const OtpVerifyForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [otp, setOtp] = useState(null);
+  const [verifyOtp, { isError, isSuccess, isLoading }] = useVerifyOtpMutation();
+  const [forgetPassword, { isLoading: forgetLoading }] =
+    useForgetPasswordMutation();
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const time = useSelector((state) => state.timer.time);
+  const search = useSearchParams();
+  const email = search.get('email');
+  const handleOpt = async () => {
+    const response = await verifyOtp({ otp });
+    if (response.error) {
+      toast.error(response?.error?.data?.message || 'something went wrong');
+    }
+    if (response.data) {
+      const token = response?.data?.data?.token;
+      router.push(`/new-password?t=${token}`);
+    }
+  };
 
-  const onSubmit = ({ email }) => {};
+  const handleResend = async (event) => {
+    event.preventDefault();
+    const response = await forgetPassword({ email });
+    if (response?.error) {
+      return toast.error(
+        response?.error?.data?.message || 'something went wrong'
+      );
+    }
+    if (response?.data) {
+      dispatch(setTime(180));
+      toast.success('otp resent');
+    }
+  };
 
   return (
-    <div className='rounded-lg bg-white p-12'>
+    <div className='rounded-lg bg-white p-12 flex items-center flex-col'>
       <Image src={logo} alt='logo' width={56} height={50} />
-      <h2 className='my-4 text-3xl'>Verify Email Address</h2>
+      <h2 className='my-4 text-3xl'>Verify OTP</h2>
       <p className='mb-3 text-sm '>
         Enter the OTP we sent to your email address.
       </p>
 
-      <form onSubmit={handleSubmit(onSubmit)} action=''>
-        {/* ??????????????????Otp ****** */}
-        <div className='mb-3'>
-          <label className='mb-1 block text-sm' htmlFor='otp'>
-            OTP
-          </label>
-          <input
-            type='text'
-            id='otp'
-            className=' w-full  rounded-md border border-shadow px-3 py-2 outline-0 focus:border-main'
-            {...register('email', {
-              required: 'OTP is required',
-              pattern: {
-                value: /^\d{6}$/,
-                message: 'Invalid OTP',
-              },
-            })}
-          />
-          {errors.email && (
-            <p className='mt-1 text-xs text-red-400' role='alert'>
-              {errors.email?.message}
-            </p>
-          )}
-        </div>
-        <div>
-          <input
-            className='my-5 w-full rounded-lg bg-main px-3 py-3 text-center font-bold text-white hover:bg-[#5736ce] disabled:bg-opacity-50'
-            type='submit'
-            value='Confirm'
-          />
-        </div>
-      </form>
-
-      <div className='dark:text-gray-500 flex items-center py-6  uppercase text-gray-400 before:mr-6 before:flex-[1_1_0%] before:border-t before:border-shadow after:ml-6 after:flex-[1_1_0%] after:border-t after:border-shadow'>
-        Or
+      {/* ??????????????????Otp ****** */}
+      <div className='mb-3'>
+        <OtpInput
+          value={otp}
+          onChange={setOtp}
+          numInputs={6}
+          renderSeparator={<span> </span>}
+          renderInput={(props) => <input {...props} />}
+          inputStyle={{
+            width: '35px',
+            height: '35px',
+            border: '2px solid #333',
+            margin: '10px',
+            borderRadius: '3px',
+          }}
+        />
       </div>
-      <p className='text-center font-semibold'>
-        Didn’t get any code?{' '}
-        <Link className='text-main' href='#'>
+
+      {time > 0 ? (
+        <Timer />
+      ) : forgetLoading ? (
+        <Spinner />
+      ) : (
+        <button onClick={handleResend} className='hover:underline'>
           Resend
-        </Link>
-      </p>
+        </button>
+      )}
+      <button
+        onClick={handleOpt}
+        className='bg-main my-5 w-full rounded-lg px-3 py-3 text-center font-bold text-white hover:bg-[#5736ce] disabled:bg-opacity-50'
+        type='submit'
+      >
+        <span className='flex items-center justify-center gap-2'>
+          Send Otp
+          {isLoading && <Spinner />}
+        </span>
+      </button>
+      <Toaster />
     </div>
   );
 };

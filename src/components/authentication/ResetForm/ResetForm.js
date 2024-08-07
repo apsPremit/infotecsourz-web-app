@@ -2,12 +2,15 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-
 import logo from '@/assets/images/logo.png';
 import Link from 'next/link';
-import { baseUrl } from '@/utils/functions/baseUrl';
 import toast, { Toaster } from 'react-hot-toast';
 import { ImSpinner2 } from 'react-icons/im';
+import { useForgetPasswordMutation } from '@/redux/services/authApi';
+import { useDispatch } from 'react-redux';
+import { setTime } from '@/redux/features/timeSlice';
+import { useRouter } from 'next/navigation';
+import Spinner from '@/components/ui/Spinner';
 
 const ResetForm = () => {
   const {
@@ -16,32 +19,22 @@ const ResetForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [forgetPassword, { isLoading }] = useForgetPasswordMutation();
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+
   const onSubmit = async ({ email }) => {
-    setError('');
-    setLoading(true);
-    try {
-      const res = await fetch(`${baseUrl}/auth/send_reset_email`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-      const data = await res.json();
-      if (data?.error) {
-        setLoading(false);
-        reset();
-        return setError(data?.error);
-      }
-      setLoading(false);
-      reset();
-      toast.success(data?.message);
-    } catch (error) {
-      setLoading(false);
-      reset();
-      setError('server error');
+    const response = await forgetPassword({ email });
+    if (response?.error) {
+      return toast.error(
+        response?.error?.data?.message || 'something went wrong'
+      );
+    }
+    if (response?.data) {
+      dispatch(setTime(180));
+      toast.success('please check your email');
+      router.push(`verify-otp?email=${email}`);
     }
   };
 
@@ -79,19 +72,19 @@ const ResetForm = () => {
           {error && (
             <p className='my-2 text-center text-sm text-red-500'>{error}</p>
           )}
-          {loading && (
-            <div className='flex items-center justify-center text-xl text-main'>
-              <ImSpinner2 className='animate-spin' />
-            </div>
-          )}
 
           <div>
-            <input
-              disabled={loading}
+            <button
+              disabled={isLoading}
               className='my-5 w-full cursor-pointer rounded-lg bg-main px-3 py-3 text-center font-bold text-white hover:bg-[#5736ce] disabled:bg-opacity-50'
               type='submit'
               value='Send Reset Email'
-            />
+            >
+              <span className='flex items-center justify-center gap-2'>
+                Send Otp
+                {isLoading && <Spinner />}
+              </span>
+            </button>
           </div>
         </form>
 
