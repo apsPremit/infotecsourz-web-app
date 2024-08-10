@@ -10,7 +10,7 @@ import React, { useContext, useEffect, useState } from 'react';
 const SpecificationsLeftSide = () => {
   const {
     orderName,
-    uploadedImages,
+    uploadedImageCount,
     imageQuantityFromUrl,
     setReturnTime,
     returnTime,
@@ -45,7 +45,7 @@ const SpecificationsLeftSide = () => {
     {
       label: 'Product Uploaded',
       value:
-        imageQuantityFromUrl > 0 ? imageQuantityFromUrl : uploadedImages.length,
+        imageQuantityFromUrl > 0 ? imageQuantityFromUrl : uploadedImageCount,
       type: 'text',
     },
     {

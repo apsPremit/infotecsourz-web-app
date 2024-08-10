@@ -11,7 +11,7 @@ import { useSession } from 'next-auth/react';
 
 const BillingPage = () => {
   const {
-    uploadedImages,
+    uploadedImageCount,
     perPhotoCost,
     photoType,
     imageQuantityFromUrl,
@@ -37,7 +37,7 @@ const BillingPage = () => {
     userData?.subscription || {};
 
   let totalPhotos =
-    uploadedImages.length < 1 ? imageQuantityFromUrl : uploadedImages.length;
+    uploadedImageCount < 1 ? imageQuantityFromUrl : uploadedImageCount;
   let subTotal = totalPhotos * perPhotoCost;
   let taxTotal = (taxRate / 100) * subTotal;
   let grandTotal = subTotal + taxTotal;

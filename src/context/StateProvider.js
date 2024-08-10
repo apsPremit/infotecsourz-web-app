@@ -263,8 +263,8 @@ const StateProvider = ({ children }) => {
       userData?.subscription?.plan_type !== 'pay-as-go'
         ? 0
         : photoType === 'product'
-          ? productTotalCost
-          : modelTotalCost
+        ? productTotalCost
+        : modelTotalCost
     );
   }, [photoType, modelTotalCost, productTotalCost, selectedPackage]);
 
@@ -306,6 +306,8 @@ const StateProvider = ({ children }) => {
 
   // file upload states
   const [uploadedImages, setUploadedImages] = useState([]);
+  const [images, setImages] = useState([]);
+  const [uploadedImageCount, setUploadedImageCount] = useState(0);
   const [totalFileSize, setTotalFileSize] = useState(0);
   const [orderId, setOrderId] = useState(null);
   const [fileUrl, setFileUrl] = useState(null);
@@ -368,6 +370,10 @@ const StateProvider = ({ children }) => {
     // package
     selectedPackage,
     setSelectedPackage,
+    uploadedImageCount,
+    setUploadedImageCount,
+    images,
+    setImages,
     uploadedImages,
     setUploadedImages,
     totalFileSize,

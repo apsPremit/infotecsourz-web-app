@@ -4,8 +4,8 @@ import { BsUpload } from 'react-icons/bs';
 import { StateContext } from '../../../../context/StateProvider';
 
 const UploadField = ({ uploadEvent, isDragging, dragProps }) => {
-  const { uploadedImages, imageQuantityFromUrl } = useContext(StateContext);
-  const isUploaded = uploadedImages?.length > 0 || imageQuantityFromUrl;
+  const { uploadedImageCount, imageQuantityFromUrl } = useContext(StateContext);
+  const isUploaded = uploadedImageCount > 0 || imageQuantityFromUrl;
   return (
     <div {...dragProps} className={`${isUploaded && 'pointer-events-none'}`}>
       <label
