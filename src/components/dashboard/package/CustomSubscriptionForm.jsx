@@ -4,10 +4,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { customSubscriptionValidationSchema } from '@/validations/CustomSubscriptionValidationSchema';
 import axios from 'axios';
 import config from '@/config';
 import { useSession } from 'next-auth/react';
+import { customSubscriptionValidationSchema } from '@/validations/customSubscriptionValidationSchema';
 const CustomSubscriptionForm = () => {
   const session = useSession();
   const { userData } = useAuth();
