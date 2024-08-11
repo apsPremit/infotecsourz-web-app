@@ -1,15 +1,23 @@
 'use client';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-
 import logo from '@/assets/images/logo.png';
 import { useSearchParams } from 'next/navigation';
-import { baseUrl } from '@/utils/functions/baseUrl';
 import { useRouter } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
+import Spinner from '@/components/ui/Spinner';
+import { useResetPasswordMutation } from '@/redux/services/authApi';
 
 const NewPasswordForm = () => {
+  const searchParams = useSearchParams();
+  const token = searchParams.get('t');
+  useEffect(() => {
+    if (!token) {
+      router.replace('/forget-password');
+    }
+  }, []);
+
   const {
     register,
     reset,
@@ -18,38 +26,23 @@ const NewPasswordForm = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const searchParams = useSearchParams();
+
   const router = useRouter();
-  const token = searchParams.get('token');
-  const [error, setError] = useState('');
-  if (!token) {
-    return router.replace('/password_reset');
-  }
+  const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
   const password = watch('new_password', '');
-  const onSubmit = async ({ confirm_new_password }) => {
-    setError('');
-    try {
-      const res = await fetch(`${baseUrl}/auth/reset_password`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({ token, password: confirm_new_password }),
-      });
-      const data = await res.json();
-
-      if (data?.error) {
-        reset();
-        return setError(data?.error);
-      }
-      reset();
-      toast.success(data?.message);
-      router.push('/login');
-    } catch (error) {
-      reset();
-      console.log(error);
-      setError('server error');
+  const onSubmit = async (data) => {
+    const response = await resetPassword({
+      token,
+      password: data.confirm_new_password,
+    });
+    if (response.error) {
+      toast.error(response?.error?.data?.message || 'something went wrong');
+    }
+    if (response.data) {
+      const token = response?.data?.data?.token;
+      toast.success('password reset successfully');
+      router.push(`/login`);
     }
   };
 
@@ -132,15 +125,18 @@ const NewPasswordForm = () => {
             </p>
           )}
         </div>
-        {error && (
-          <p className='my-2 text-center text-sm text-red-500'>{error}</p>
-        )}
+
         <div>
-          <input
+          <button
             className='my-5 w-full cursor-pointer rounded-lg bg-main px-3 py-3 text-center font-bold text-white hover:bg-[#5736ce] disabled:bg-opacity-50'
             type='submit'
             value='Confirm'
-          />
+          >
+            <span className='flex items-center justify-center gap-2'>
+              Create Password
+              {isLoading && <Spinner />}
+            </span>
+          </button>
         </div>
       </form>
 

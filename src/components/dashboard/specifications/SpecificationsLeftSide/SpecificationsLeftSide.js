@@ -10,18 +10,17 @@ import React, { useContext, useEffect, useState } from 'react';
 const SpecificationsLeftSide = () => {
   const {
     orderName,
-    uploadedImages,
+    uploadedImageCount,
     imageQuantityFromUrl,
     setReturnTime,
     returnTime,
   } = useContext(StateContext);
 
   const { userData } = useAuth();
-  console.log({ userData });
   const session = useSession();
   const accessToken = session?.data?.user?.accessToken;
   const [plan, setPlan] = useState(null);
-  console.log(plan);
+
   const planId = userData?.subscription.plan_id;
   useEffect(() => {
     const fetchPlan = async () => {
@@ -31,7 +30,7 @@ const SpecificationsLeftSide = () => {
           { headers: { Authorization: `Bearer ${accessToken}` } }
         );
         const result = await response.data;
-        console.log(result);
+
         setPlan(result.data);
       } catch (error) {
         console.log('error', error);
@@ -46,7 +45,7 @@ const SpecificationsLeftSide = () => {
     {
       label: 'Product Uploaded',
       value:
-        imageQuantityFromUrl > 0 ? imageQuantityFromUrl : uploadedImages.length,
+        imageQuantityFromUrl > 0 ? imageQuantityFromUrl : uploadedImageCount,
       type: 'text',
     },
     {

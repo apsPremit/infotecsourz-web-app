@@ -22,9 +22,7 @@ const PlanToggle = ({ isChecked, toggler, label }) => {
               pointer-events-none inline-block h-[24px] w-[24px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
           />
         </Switch>
-        <span title className='ml-2 text-lg'>
-          Yearly Plans
-        </span>
+        <span className='ml-2 text-lg'>Yearly Plans</span>
       </label>
     </div>
   );

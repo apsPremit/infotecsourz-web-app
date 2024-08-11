@@ -25,7 +25,6 @@ const PaypalCheckoutButtons = ({ orderDetails, agree }) => {
   };
 
   const verifyOrder = async (orderDetails, paymentSource) => {
-    console.log('call verify');
     const response = await axios.post(
       `${config.api_base_url}/orders/verify`,
       { orderDetails, paymentSource },
@@ -71,7 +70,7 @@ const PaypalCheckoutButtons = ({ orderDetails, agree }) => {
                 orderDetails,
                 data.paymentSource
               );
-              console.log('validate', validationResult);
+
               if (!validationResult.success) {
                 throw new Error('something went wrong');
               }
@@ -93,11 +92,10 @@ const PaypalCheckoutButtons = ({ orderDetails, agree }) => {
             }}
             onApprove={async (data, actions) => {
               const successData = await actions.order.capture();
-              console.log({ successData });
+
               await createNewOrder(validateData, successData);
             }}
             onError={(error) => {
-              console.log('payment error', error);
               return toast.error(error.message);
             }}
           />

@@ -2,7 +2,6 @@
 import React, { useContext, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
-// import { StateContext } from "@/context/StateProvider";
 import './UploadPage.css';
 import NotificationModal from '../NotificationModal/NotificationModal';
 import ImageUploading from 'react-images-uploading';
@@ -11,43 +10,91 @@ import UploadField from '../UploadField/UploadField';
 import ImageUploadInputField from '../ImageUploadInputField/ImageUploadInputField';
 import ShowImages from '../ShowImages/ShowImages';
 import { StateContext } from '@/context/StateProvider';
-import config from '@/config';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useAuth } from '@/context/AuthProvider';
+import {
+  useGetUploadUrlMutation,
+  useUploadImageMutation,
+} from '@/redux/services/imageApi';
 
 const UploadPage = () => {
   const {
     totalFileSize,
-    setTotalFileSize,
     uploadedImages,
-    setUploadedImages,
-    imageQuantityFromUrl,
+    setUploadedImageCount,
     setFileUrl,
-    orderId,
     setOrderId,
     setImageSource,
-    perPhotoCost,
-    selectedPackage,
+    images,
+    setImages,
   } = useContext(StateContext);
   const [selectedImages, setSelectedImages] = useState([]);
   const [isUploading, setUploading] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const router = useRouter();
-  const [images, setImages] = useState([]);
   const session = useSession();
   const user = session?.data?.user;
   const { userData } = useAuth();
+  const [getUploadUrl] = useGetUploadUrlMutation();
+  const [uploadImage] = useUploadImageMutation();
   const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   const handleProceed = () => {
+    const anyImageNotUploaded = images.some((image) => !image.isUploaded);
+    if (anyImageNotUploaded) {
+      return toast.error('file upload is not completed');
+    }
     router.push('/dashboard/specifications');
   };
   // image Upload
   const onChange = (imageList, addUpdateIndex) => {
-    console.log(imageList, addUpdateIndex);
+    const images = imageList.map((img) => {
+      img.loading = false;
+      img.isUploaded = false;
+    });
     setImages(imageList);
   };
 
+  const updateImgStatus = (imageName, loading = false, isUploaded = false) => {
+    console.log('changing status', imageName);
+
+    setImages((prevImages) =>
+      prevImages.map((image) =>
+        image.file.name === imageName
+          ? { ...image, loading: loading, isUploaded: isUploaded }
+          : image
+      )
+    );
+  };
+
+  const uploadFile = async (url, file) => {
+    updateImgStatus(file.name, true, false);
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        body: file,
+        headers: {
+          'Content-Type': file.type,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to upload file: ${response.statusText}`);
+      }
+      updateImgStatus(file.name, false, true);
+      console.log(`Uploaded ${file.name} successfully`);
+    } catch (error) {
+      updateImgStatus(file.name, false, false);
+      console.error(`Error uploading ${file.name}:`, error);
+    }
+  };
+
+  const uploadFiles = async (urls, files) => {
+    const uploadPromises = urls.map((url, index) =>
+      uploadFile(url, files[index])
+    );
+    // eslint-disable-next-line no-undef
+    await Promise.all(uploadPromises);
+  };
   const handleImageUploading = async () => {
     if (images.length < 1) return;
 
@@ -58,36 +105,26 @@ const UploadPage = () => {
     ) {
       return toast.error('you have not require credit please update your plan');
     }
-
-    const formData = new FormData();
-    for (const image of images) {
-      formData.append('files', image.file);
-    }
-    try {
-      setUploading(true);
-      const res = await fetch(
-        `${config.api_base_url}/images/upload?userId=${user.userId}`,
-        {
-          method: 'POST',
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+    const files = images.map((image) => image.file);
+    console.log({ files });
+    const filePayloads = images.map((image) => ({
+      contentType: image.file.type,
+      fileName: image.file.name,
+    }));
+    const response = await getUploadUrl({ filePayloads, userId: user?.userId });
+    if (response?.error) {
+      console.log(response);
+      return toast.error(
+        response?.error?.data?.message || 'something went wrong!'
       );
-      if (!res.ok) {
-        throw new Error(res.statusText);
-      }
-      const result = await res.json();
-      console.log('upload result', result);
-      setUploadedImages(result.data.images);
-      setOrderId(result.data.order_id);
-      setImageSource(result.data.image_source);
-      console.log('result', result);
-      setUploading(false);
-    } catch (error) {
-      setUploading(false);
-      console.log('image upload error', error);
+    }
+    if (response?.data) {
+      const urls = response?.data?.data?.urls;
+      console.log(urls);
+      await uploadFiles(urls, files);
+      setOrderId(response?.data?.data?.order_id);
+      setImageSource(response?.data?.data?.image_source);
+      setUploadedImageCount(urls.length);
     }
   };
 
@@ -146,7 +183,6 @@ const UploadPage = () => {
                   <ShowImages
                     uploadHandler={handleImageUploading}
                     uploadedImage={uploadedImages}
-                    imageList={imageList}
                     onImageUpdate={onImageUpdate}
                     onImageRemove={onImageRemove}
                     onImageRemoveAll={onImageRemoveAll}
@@ -162,13 +198,9 @@ const UploadPage = () => {
           <div>
             <div className='flex  justify-center'>
               <button
-                disabled={
-                  !uploadedImages?.length > 0 && !imageQuantityFromUrl > 0
-                }
                 onClick={handleProceed}
                 className='text-white px-3.5 py-2 bg-main hover:bg-mainHover  rounded  flex disabled:opacity-20 disabled:cursor-not-allowed'
               >
-                {' '}
                 {isUploading ? 'Loading..' : 'Proceed'}
               </button>
             </div>
@@ -176,6 +208,7 @@ const UploadPage = () => {
           <NotificationModal isOpen={isOpen} setIsOpen={setOpen} />
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

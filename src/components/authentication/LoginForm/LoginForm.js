@@ -4,19 +4,13 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import logo from '@/assets/images/logo.png';
-import { useRouter, useSearchParams } from 'next/navigation';
-import toast, { Toaster } from 'react-hot-toast';
-import { ImSpinner2 } from 'react-icons/im';
-import { baseUrl } from '@/utils/functions/baseUrl';
+import { Toaster } from 'react-hot-toast';
 import { signIn } from 'next-auth/react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { useVerifyLoginMutation } from '@/redux/services/authApi';
+import Spinner from '@/components/ui/Spinner';
 
 const LoginForm = () => {
-  const search = useSearchParams();
-  const registerMessage = search.get('message');
-  const { replace } = useRouter();
-  const [isRemember, setRemember] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -33,37 +27,25 @@ const LoginForm = () => {
       confirm_password: '',
     },
   });
-
+  const [verifyLogin, { isLoading }] = useVerifyLoginMutation();
   const onSubmit = async (data) => {
-    setError('');
-    setLoading(true);
     const { email, password } = data || {};
 
     try {
-      const res = await fetch(`${baseUrl}/auth/web/login`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (data?.error) {
-        reset();
-        setLoading(false);
-        return setError(data?.error);
+      const response = await verifyLogin(data);
+      if (response?.error) {
+        setError(response?.error?.data?.message || 'something went wrong!');
       }
-
-      reset();
-      await signIn('credentials', {
-        email,
-        password,
-        callbackUrl: '/dashboard',
-        redirect: true,
-      });
-      setLoading(false);
+      if (response?.data) {
+        reset();
+        await signIn('credentials', {
+          email,
+          password,
+          callbackUrl: '/dashboard',
+          redirect: true,
+        });
+      }
     } catch (error) {
-      setLoading(false);
       setError(error?.error);
     }
   };
@@ -147,24 +129,25 @@ const LoginForm = () => {
 
           {/* ********terms checkbox *******/}
           <div className='mt-5 items-center justify-center px-2 lg:flex'>
-            <Link href='/password_reset' className='text-main hover:underline'>
+            <Link href='/forget-password' className='text-main hover:underline'>
               Forgot Password?
             </Link>
           </div>
 
           {error && <p className='text-center text-sm text-red-500'>{error}</p>}
-          {loading && (
-            <div className='flex items-center justify-center text-xl text-main'>
-              <ImSpinner2 className='animate-spin' />
-            </div>
-          )}
+
           <div>
-            <input
-              disabled={loading}
+            <button
+              disabled={isLoading}
               className='my-5 w-full cursor-pointer rounded-lg bg-main px-3 py-3 text-center font-bold text-white hover:bg-[#5736ce] disabled:bg-opacity-50'
               type='submit'
               value='Login'
-            />
+            >
+              <span className='flex items-center justify-center gap-2'>
+                Login
+                {isLoading && <Spinner />}
+              </span>
+            </button>
           </div>
         </form>
 

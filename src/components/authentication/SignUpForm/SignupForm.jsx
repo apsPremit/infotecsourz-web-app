@@ -12,15 +12,20 @@ import { signIn } from 'next-auth/react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import config from '@/config';
 import { Toaster } from 'react-hot-toast';
+import {
+  useGetCountriesQuery,
+  useRegisterMutation,
+} from '@/redux/services/authApi';
 
 const SignUpForm = () => {
   const router = useRouter();
   const [isAgree, setAgree] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [countries, setCountries] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
+  const { data: countries } = useGetCountriesQuery();
+  const [registerUser, { isLoading }] = useRegisterMutation();
   const {
     register,
     handleSubmit,
@@ -37,16 +42,6 @@ const SignUpForm = () => {
   });
   const password = watch('password', '');
 
-  useEffect(() => {
-    fetch(
-      'https://raw.githubusercontent.com/apsPremit/country-code/main/country.json'
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setCountries(data);
-      });
-  }, []);
-
   // submit form ***********
 
   const onSubmit = async ({
@@ -57,42 +52,26 @@ const SignUpForm = () => {
     country,
     company,
   }) => {
-    setError('');
-
-    setLoading(true);
-
     try {
-      const res = await fetch(`${config.api_base_url}/auth/web/register`, {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password: confirm_password,
-          country,
-          company,
-        }),
-      });
-      const result = await res.json();
-      if (result.success) {
-        const signInResponse = await signIn('credentials', {
-          email,
-          password,
-          redirect: false,
-        });
-        if (signInResponse.ok) {
-          router.replace('/dashboard/plans');
-          setLoading(false);
-        }
-        setLoading(false);
-      } else {
-        setLoading(false);
-        setError(result.message);
+      const payload = {
+        name,
+        email,
+        password: confirm_password,
+        country,
+        company,
+      };
+      const response = await registerUser(payload);
+      if (response?.error) {
+        setError(response?.error?.data?.message || 'something went wrong!');
       }
+      await signIn('credentials', {
+        email,
+        password,
+        callbackUrl: `/dashboard/plans`,
+        redirect: true,
+      });
     } catch (error) {
-      setLoading(false);
+      setError(error?.message);
     }
   };
 
@@ -246,11 +225,12 @@ const SignUpForm = () => {
               className='w-full  rounded-md border border-shadow px-3 py-2 outline-0 focus:border-main'
             >
               <option value=''>Select your Country</option>
-              {countries[0]?.map((country) => (
-                <option key={country?.code} value={country?.name}>
-                  {country?.name}
-                </option>
-              ))}
+              {countries?.length > 0 &&
+                countries[0]?.map((country) => (
+                  <option key={country?.code} value={country?.name}>
+                    {country?.name}
+                  </option>
+                ))}
             </select>
             {errors.country && (
               <p className='mt-1 text-xs text-red-400' role='alert'>

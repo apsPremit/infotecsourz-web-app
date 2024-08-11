@@ -6,7 +6,6 @@ const useUpdateSession = () => {
   const { data: session, update } = useSession();
 
   const updateSession = async (newData, able_free_trial) => {
-    console.log(newData);
     await update({
       ...session,
       user: {

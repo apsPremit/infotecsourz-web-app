@@ -10,14 +10,14 @@ const ImageUploadInputField = ({ setFileUrl, isUploading, images }) => {
   const { userData } = useAuth();
 
   const {
-    uploadedImages,
+    uploadedImageCount,
     imageQuantityFromUrl,
     fileUrl,
     setImageQuantityFromUrl,
     setOrderId,
     orderId,
   } = useContext(StateContext);
-  const isDisabled = uploadedImages?.length > 0 || images?.length > 0;
+  const isDisabled = uploadedImageCount > 0 || images?.length > 0;
 
   const handleFileUrl = (e) => {
     const generateId = randomGenerator();

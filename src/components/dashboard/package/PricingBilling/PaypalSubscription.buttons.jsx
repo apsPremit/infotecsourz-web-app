@@ -16,7 +16,6 @@ const PaypalSubscriptionButtons = ({ plan_id }) => {
   const { userData } = useAuth();
   const session = useSession();
   const accessToken = session?.data?.user?.accessToken;
-  console.log({ accessToken });
 
   useEffect(() => {
     setLoading(false);
@@ -60,10 +59,12 @@ const PaypalSubscriptionButtons = ({ plan_id }) => {
                     `/subscription-success?id=${result?.data?.subscriptionId}`
                   );
                 }
-              } catch (error) {}
-              console.log(data);
+              } catch (error) {
+                console.log('payment error', error);
+              }
             }}
-            onError={() => {
+            onError={(error) => {
+              console.log('error', error);
               return toast.error('subscription failed try again');
             }}
           />

@@ -25,7 +25,7 @@ const SlideFoot = ({ handlePrev, handleNext, currentSlide }) => {
   const session = useSession();
   const user = session?.data?.user;
   const { userData } = useAuth();
-  console.log({ userData });
+
   const goToNextPage = () => {
     if (currentSlide === 7) {
       return router.push('/dashboard/upload');

@@ -153,7 +153,7 @@ const Sidebar = () => {
             </Link>
           </li>
         </ul>
-        {session?.data?.user?.email && (
+        {session && (
           <ul className='mb-10 text-white'>
             <li>
               <button
