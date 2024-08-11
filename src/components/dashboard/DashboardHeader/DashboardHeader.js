@@ -20,7 +20,7 @@ const DashboardHeader = () => {
           {' '}
           <RxHamburgerMenu />
         </button>
-        <h2 className='text-sm font-bold lg:text-2xl'>New Order</h2>
+        <h2 className='text-sm font-bold lg:text-2xl ms-2'>New Order</h2>
       </div>
       {/* <SwitchToggle /> */}
       <div className='flex flex-nowrap items-center gap-2'>
