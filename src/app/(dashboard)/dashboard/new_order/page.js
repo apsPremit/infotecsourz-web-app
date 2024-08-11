@@ -14,8 +14,7 @@ const PreloadImages = () => {
       {/* Preload images in the <head> section */}
       <link
         rel='preload'
-        href='https://d34n7qm7kfn7vw.cloudfront.net/model/Beauty%20Makeup%20Retouching.png
-'
+        href='https://d34n7qm7kfn7vw.cloudfront.net/model/Beauty%20Makeup%20Retouching.png'
         as='image'
       />
       <link

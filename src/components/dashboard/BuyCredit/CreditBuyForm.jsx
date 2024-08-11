@@ -7,9 +7,7 @@ const CreditBuyForm = ({ plan }) => {
   const [credit, setCredit] = useState(0);
   const { userData } = useAuth();
   const router = useRouter();
-  console.log('fdf', { plan });
   const perCreditCost = plan.price / plan.credit;
-  console.log({ perCreditCost });
 
   const perPrice = perCreditCost;
   const orderDetails = { credit, price: credit * perPrice };

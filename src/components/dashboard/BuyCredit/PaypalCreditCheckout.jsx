@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 const PaypalCreditCheckout = ({ orderDetails, agree = true }) => {
-  console.log({ orderDetails });
   let validateData = null;
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
@@ -97,7 +96,7 @@ const PaypalCreditCheckout = ({ orderDetails, agree = true }) => {
             onApprove={async (data, actions) => {
               const capture = await actions.order.capture();
               const order = await actions.order.get();
-              console.log({ capture });
+
               if (capture.status === 'COMPLETED') {
                 const response = await buyCredit({
                   ...orderDetails,

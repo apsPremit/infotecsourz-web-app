@@ -14,7 +14,6 @@ export const authOptions = {
           const response = await fetch(
             `${config.api_base_url}/auth/web/login`,
             {
-              cache: 'no-store',
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

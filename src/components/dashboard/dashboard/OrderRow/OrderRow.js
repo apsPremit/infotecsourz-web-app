@@ -47,7 +47,6 @@ const OrderRow = ({ order }) => {
         setDownloading(false);
       })
       .catch((error) => {
-        console.log('download error', error);
         alert('did not find any files');
         setDownloading(false);
       });

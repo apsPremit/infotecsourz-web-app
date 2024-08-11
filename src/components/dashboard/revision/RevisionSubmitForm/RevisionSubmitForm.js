@@ -30,7 +30,6 @@ const RevisionForm = ({ order, user }) => {
       );
 
       const result = await response.json();
-      console.log('revision result', result);
 
       if (result.success) {
         router.push(`/dashboard/revision/success?orderId=${order?.id}`);
