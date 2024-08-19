@@ -73,6 +73,7 @@ const page = async (props) => {
             </Link>
           </div>
         </div>
+        {/* support  */}
         <div className='rounded border border-shadow bg-white p-5'>
           <div className=''>
             <p className='border-red-20 flex h-8 w-8 items-center justify-center rounded-full border bg-pink-200 p-1.5 text-xl text-pink-500'>
@@ -87,6 +88,25 @@ const page = async (props) => {
             <Link href='/dashboard/support'>
               <button className='mt-3 rounded bg-main px-3 py-1.5 text-white hover:bg-mainHover  '>
                 Support
+              </button>
+            </Link>
+          </div>
+        </div>
+        {/* tutoarial  */}
+        <div className='rounded border border-shadow bg-white p-5'>
+          <div className=''>
+            <p className='border-red-20 flex h-8 w-8 items-center justify-center rounded-full border bg-orange-200 p-1.5 text-xl text-orange-500'>
+              <AiOutlineQuestionCircle className='' />
+            </p>
+          </div>
+          <div className='mt-3 '>
+            <p className='text-lg  font-bold'>How can I create order</p>
+            <h3 className='text  text-sm text-[#9f9f9f]'>
+              You need a tutorial for create order.
+            </h3>
+            <Link href='/dashboard/tutorial'>
+              <button className='mt-3 rounded bg-main px-3 py-1.5 text-white hover:bg-mainHover  '>
+                Tutorial
               </button>
             </Link>
           </div>

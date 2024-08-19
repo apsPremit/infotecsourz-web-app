@@ -6,6 +6,7 @@ const config = {
       : process.env.NEXT_PUBLIC_PRODUCTION_BASE_URL,
   access_token_secret: process.env.NEXT_PUBLIC_ACCESS_TOKEN_SECRET,
   next_auth_secret: process.env.NEXT_PUBLIC_NEXT_AUTH_SECRET,
+  tutorial_link: process.env.TUTORIAL_LINK,
   paypal_client_id:
     mode === 'development'
       ? process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID_DEVELOPMENT
