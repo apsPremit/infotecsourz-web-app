@@ -7,7 +7,10 @@ const UploadField = ({ uploadEvent, isDragging, dragProps }) => {
   const { uploadedImageCount, imageQuantityFromUrl } = useContext(StateContext);
   const isUploaded = uploadedImageCount > 0 || imageQuantityFromUrl;
   return (
-    <div {...dragProps} className={`${isUploaded && 'pointer-events-none'}`}>
+    <div
+      {...dragProps}
+      className={`${imageQuantityFromUrl && 'pointer-events-none'}`}
+    >
       <label
         className={`${
           isDragging ? 'bg-gray-200' : 'bg-gray-50'
@@ -21,9 +24,9 @@ const UploadField = ({ uploadEvent, isDragging, dragProps }) => {
               <BsUpload />
             </span>
             <button
-              disabled={isUploaded}
+              // disabled={isUploaded}
               onClick={uploadEvent}
-              className='bg-blue-500 px-2 py-1.5 rounded text-white disabled:opacity-20'
+              className='bg-blue-500 px-2 py-1.5 rounded text-white disabled:opacity-20 disabled:bg-blue-100'
             >
               Upload Images
             </button>

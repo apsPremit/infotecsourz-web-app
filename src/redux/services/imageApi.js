@@ -16,7 +16,18 @@ const imageApi = baseApi.injectEndpoints({
         body: data.file,
       }),
     }),
+    deleteSingleImage: builder.mutation({
+      query: (key) => ({
+        url: `/images/delete-image`,
+        method: 'POST',
+        body: { key },
+      }),
+    }),
   }),
 });
 
-export const { useGetUploadUrlMutation, useUploadImageMutation } = imageApi;
+export const {
+  useGetUploadUrlMutation,
+  useUploadImageMutation,
+  useDeleteSingleImageMutation,
+} = imageApi;

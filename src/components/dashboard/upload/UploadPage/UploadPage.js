@@ -26,6 +26,8 @@ const UploadPage = () => {
     setOrderId,
     setImageSource,
     images,
+    fileUrl,
+    imageSource,
     setImages,
   } = useContext(StateContext);
   const [selectedImages, setSelectedImages] = useState([]);
@@ -37,22 +39,76 @@ const UploadPage = () => {
   const { userData } = useAuth();
   const [getUploadUrl] = useGetUploadUrlMutation();
   const [uploadImage] = useUploadImageMutation();
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL;
+  const [tempSource, setTempSource] = useState(null);
 
   const handleProceed = () => {
-    const anyImageNotUploaded = images.some((image) => !image.isUploaded);
-    if (anyImageNotUploaded) {
-      return toast.error('file upload is not completed');
+    if (!imageSource && !fileUrl) {
+      return toast.error('please upload your photos');
     }
     router.push('/dashboard/specifications');
   };
   // image Upload
-  const onChange = (imageList, addUpdateIndex) => {
-    const images = imageList.map((img) => {
-      img.loading = false;
-      img.isUploaded = false;
+  const onChange = async (imageList, addUpdateIndex) => {
+    // checks credit available or not
+    if (
+      userData?.subscription === null ||
+      (userData?.subscription?.plan_type === 'paid' &&
+        userData?.subscription?.remaining_credit < images?.length)
+    ) {
+      return toast.error('you have not require credit please update your plan');
+    }
+
+    const updatedImageList = imageList.map((img) => ({
+      ...img,
+      loading: false,
+      isUploaded: false,
+    }));
+
+    // Filter out files that are already in the images state
+    const filteredImageList = updatedImageList.filter((newImage) => {
+      return !images.some(
+        (existingImage) =>
+          existingImage.file.name === newImage.file.name &&
+          existingImage.file.size === newImage.file.size
+      );
     });
-    setImages(imageList);
+
+    // Merge the filtered new images with the existing ones
+    const mergedImages = [...images, ...filteredImageList];
+    setImages(mergedImages);
+
+    // Filter images that need to be uploaded
+    const imagesToUpload = mergedImages.filter((image) => !image.isUploaded);
+
+    if (imagesToUpload.length === 0) {
+      // If all images are already uploaded, proceed with the next step
+      return;
+    }
+
+    // upload image
+    const files = imagesToUpload.map((image) => image.file);
+    const filePayloads = imagesToUpload.map((image) => ({
+      contentType: image.file.type,
+      fileName: image.file.name,
+    }));
+
+    try {
+      const response = await getUploadUrl({
+        filePayloads,
+        userId: user?.userId,
+        imageSource: tempSource,
+      }).unwrap();
+
+      const urls = response?.data?.urls;
+      setTempSource(response?.data?.image_source);
+      await uploadFiles(urls, files);
+      setOrderId(response?.data?.order_id);
+      setImageSource(response?.data?.image_source);
+      setUploadedImageCount(urls.length);
+    } catch (error) {
+      console.log(error);
+      return toast.error(error?.data?.message || 'something went wrong!');
+    }
   };
 
   const updateImgStatus = (imageName, loading = false, isUploaded = false) => {
@@ -81,7 +137,6 @@ const UploadPage = () => {
         throw new Error(`Failed to upload file: ${response.statusText}`);
       }
       updateImgStatus(file.name, false, true);
-      console.log(`Uploaded ${file.name} successfully`);
     } catch (error) {
       updateImgStatus(file.name, false, false);
       console.error(`Error uploading ${file.name}:`, error);
@@ -94,38 +149,6 @@ const UploadPage = () => {
     );
     // eslint-disable-next-line no-undef
     await Promise.all(uploadPromises);
-  };
-  const handleImageUploading = async () => {
-    if (images.length < 1) return;
-
-    if (
-      userData?.subscription === null ||
-      (userData?.subscription?.plan_type === 'paid' &&
-        userData?.subscription?.remaining_credit < images?.length)
-    ) {
-      return toast.error('you have not require credit please update your plan');
-    }
-    const files = images.map((image) => image.file);
-    console.log({ files });
-    const filePayloads = images.map((image) => ({
-      contentType: image.file.type,
-      fileName: image.file.name,
-    }));
-    const response = await getUploadUrl({ filePayloads, userId: user?.userId });
-    if (response?.error) {
-      console.log(response);
-      return toast.error(
-        response?.error?.data?.message || 'something went wrong!'
-      );
-    }
-    if (response?.data) {
-      const urls = response?.data?.data?.urls;
-      console.log(urls);
-      await uploadFiles(urls, files);
-      setOrderId(response?.data?.data?.order_id);
-      setImageSource(response?.data?.data?.image_source);
-      setUploadedImageCount(urls.length);
-    }
   };
 
   return (
@@ -181,7 +204,7 @@ const UploadPage = () => {
                 {/* show images  */}
                 <div className='my-10'>
                   <ShowImages
-                    uploadHandler={handleImageUploading}
+                    // uploadHandler={handleImageUploading}
                     uploadedImage={uploadedImages}
                     onImageUpdate={onImageUpdate}
                     onImageRemove={onImageRemove}
