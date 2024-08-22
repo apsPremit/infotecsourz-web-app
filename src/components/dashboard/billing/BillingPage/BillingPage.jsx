@@ -1,5 +1,5 @@
 'use client';
-import React, { use, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StateContext } from '../../../../context/StateProvider';
 import PaypalCheckoutButtons from '../PaypalCheckoutButtons/PaypalCheckoutButtons';
 import OrderConfirmButton from '../OrderConfirmButton/OrderConfirmButton';
@@ -8,6 +8,8 @@ import Image from 'next/image';
 import paymentMethods from '../../../../../public/images/others/payment_methods.png';
 import { useAuth } from '@/context/AuthProvider';
 import { useSession } from 'next-auth/react';
+import { useApplyCouponMutation } from '@/redux/services/couponApi';
+import toast, { Toaster } from 'react-hot-toast';
 
 const BillingPage = () => {
   const {
@@ -25,9 +27,13 @@ const BillingPage = () => {
     photoRequirements,
     orderId,
   } = useContext(StateContext);
+  const [coupon, setCoupon] = useState(null);
+  const [isAppliedCoupon, setAppliedCoupon] = useState(false);
+  const [applyCoupon] = useApplyCouponMutation();
+  const [discountRate, setDiscountRate] = useState(0);
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState(null);
 
-  const [showDetails, setShowDetails] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('paypal / credit card');
   const { userData } = useAuth();
   const session = useSession();
   const user = session?.data?.user;
@@ -40,9 +46,32 @@ const BillingPage = () => {
     uploadedImageCount < 1 ? imageQuantityFromUrl : uploadedImageCount;
   let subTotal = totalPhotos * perPhotoCost;
   let taxTotal = (taxRate / 100) * subTotal;
-  let grandTotal = subTotal + taxTotal;
+  let grandTotal = subTotal + taxTotal - discountAmount;
+  console.log({ grandTotal, discountAmount });
   const remainingCredit =
     userData?.subscription?.remaining_credit - totalPhotos;
+
+  // const orderDetails = {
+  //   id: orderId,
+  //   order_name: orderName,
+  //   user_id: user?.userId,
+  //   photo_type: photoType,
+  //   plan: userData?.subscription?.plan_name,
+  //   photo_quantity: parseInt(totalPhotos),
+  //   per_photo_cost: perPhotoCost,
+  //   subtotal: subTotal,
+  //   tax_rate: taxRate,
+  //   tax_total: taxTotal,
+  //   grand_total: grandTotal,
+  //   details: productDetailsDescription,
+  //   image_url: fileUrl,
+  //   image_source: imageSource,
+  //   requirements: photoRequirements,
+  //   turn_around_time: returnTime,
+  //   instruction_source: instructionSource,
+  //   source: 'web',
+  //   discount_rate: discountRate,
+  // };
 
   const orderDetails = {
     id: orderId,
@@ -63,6 +92,7 @@ const BillingPage = () => {
     turn_around_time: returnTime,
     instruction_source: instructionSource,
     source: 'web',
+    discount_rate: discountRate,
   };
 
   let billPropertiesForPayAsGo = [
@@ -79,7 +109,14 @@ const BillingPage = () => {
     { title: 'Turn Around Time', value: returnTime + ' Hours' },
     { title: 'subtotal', value: '$' + parseFloat(subTotal).toFixed(2) },
     { title: 'Tax', value: '$' + parseFloat(taxTotal).toFixed(2) },
-    { title: 'Grand Total', value: '$' + parseFloat(grandTotal).toFixed(2) },
+    {
+      title: 'Discount',
+      value: `${orderDetails?.discount_rate}%`,
+    },
+    {
+      title: 'Grand Total',
+      value: '$' + parseFloat(orderDetails?.grand_total).toFixed(2),
+    },
   ];
 
   let billPropertiesForCreditOrder = [
@@ -99,6 +136,21 @@ const BillingPage = () => {
     userData?.subscription?.plan_type === 'pay-as-go'
       ? billPropertiesForPayAsGo
       : billPropertiesForCreditOrder;
+
+  const handleApplyCoupon = async () => {
+    try {
+      const response = await applyCoupon({ code: coupon, grandTotal }).unwrap();
+      setDiscountAmount(response?.data?.discountAmount || 0);
+      setDiscountRate(response?.data?.discountRate || 0);
+      setAppliedCoupon(true);
+      setPaymentMethod(null);
+
+      toast.success('coupon applied successfully');
+    } catch (error) {
+      console.log('error', error);
+      toast.error(error?.data?.message || 'something went wrong!');
+    }
+  };
 
   return (
     <div className='bg-white rounded p-5 '>
@@ -137,8 +189,8 @@ const BillingPage = () => {
             </div>
             <div>
               <h3 className='text-xl font-bold'>
-                <span className='mr-1'>$</span> {grandTotal.toFixed(2)}{' '}
-                <span>USD</span>
+                <span className='mr-1'>$</span>{' '}
+                {orderDetails?.grand_total.toFixed(2)} <span>USD</span>
               </h3>
               <p className='text-neutral'>Cost</p>
             </div>
@@ -160,6 +212,28 @@ const BillingPage = () => {
           {userData?.subscription?.plan_type === 'pay-as-go' && (
             <div className='p-5 border rounded-md shadow-md'>
               <h3 className='text-xl font-bold mb-5'>Billing</h3>
+
+              <div className=''>
+                <label htmlFor='' className=''>
+                  Coupon
+                </label>
+                <br />
+                <div className='w-full flex gap-5 items-center mt-1.5'>
+                  <input
+                    type='text'
+                    onChange={(e) => setCoupon(e.target.value)}
+                    className='py-1.5 px-2 border rounded w-full'
+                  />
+                  <button
+                    disabled={isAppliedCoupon}
+                    onClick={handleApplyCoupon}
+                    className='px-3 py-1.5 text-white bg-main hover:bg-mainHover rounded disabled:bg-violet-200 '
+                  >
+                    Apply
+                  </button>
+                </div>
+              </div>
+
               <p className='mt-5 mb-2'>Select Payment method</p>
               <div className=''>
                 <label
@@ -168,7 +242,13 @@ const BillingPage = () => {
                 >
                   <div className='flex items-center gap-2 font-bold'>
                     <input
-                      onChange={(e) => setPaymentMethod(e.target.value)}
+                      onClick={(e) =>
+                        setPaymentMethod(
+                          paymentMethod === e.target.value
+                            ? null
+                            : e.target.value
+                        )
+                      }
                       value='paypal / credit card'
                       id='paypal_credit'
                       type='radio'
@@ -184,39 +264,48 @@ const BillingPage = () => {
                   />
                 </label>
               </div>
-              <label
-                htmlFor='agree_terms'
-                className='flex items-start gap-x-4 px-2 mt-10 mb-5 cursor-pointer'
-              >
-                <input
-                  onChange={() => setAgree(!agree)}
-                  id='agree_terms'
-                  checked={agree}
-                  type='checkbox'
-                  className='scale-125 mt-1'
-                />
-                <p className='text-sm'>
-                  I accept{' '}
-                  <Link
-                    target='_blank'
-                    href='https://www.infotecsourz.com/terms-and-conditions/'
-                    className='text-main hover:underline'
-                  >
-                    Terms & Conditions
-                  </Link>
-                </p>
-              </label>
+
               <div>
-                <PaypalCheckoutButtons
-                  agree={agree}
-                  orderDetails={orderDetails}
-                  userData={userData}
-                />
+                <label
+                  htmlFor='agree_terms'
+                  className='flex items-start gap-x-4 px-2 mt-10 mb-5 cursor-pointer'
+                >
+                  <input
+                    onChange={() => setAgree(!agree)}
+                    id='agree_terms'
+                    checked={agree}
+                    type='checkbox'
+                    className='scale-125 mt-1'
+                  />
+
+                  <p className='text-sm'>
+                    I accept{' '}
+                    <Link
+                      target='_blank'
+                      href='https://www.infotecsourz.com/terms-and-conditions/'
+                      className='text-main hover:underline'
+                    >
+                      Terms & Conditions
+                    </Link>
+                  </p>
+                </label>
+              </div>
+              <div>
+                {paymentMethod === 'paypal / credit card' && (
+                  <div className='mt-8 '>
+                    <PaypalCheckoutButtons
+                      orderDetails={orderDetails}
+                      userData={userData}
+                      agree={agree}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           )}
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };
