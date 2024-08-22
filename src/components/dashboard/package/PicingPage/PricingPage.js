@@ -8,13 +8,18 @@ import CustomPlan from '../SinglePackage/CustomPlan';
 import PlanToggle from '@/components/ui/PlanToggle';
 
 const PricingPage = ({ plans }) => {
+  console.log({ plans });
+
   const [planType, setPlanType] = useState('monthly');
   const session = useSession();
   const user = session?.data?.user;
   const monthlyPlans = plans.filter(
     (plan) => plan.bill_type === 'monthly' || plan.bill_type === 'custom'
   );
-  const yearlyPlans = plans.filter((plan) => plan.bill_type === 'yearly') || [];
+  const yearlyPlans =
+    plans.filter(
+      (plan) => plan.bill_type === 'yearly' || plan?.type === 'free'
+    ) || [];
   const togglePlanType = () => {
     setPlanType((prevPlanType) =>
       prevPlanType === 'monthly' ? 'yearly' : 'monthly'
@@ -33,9 +38,10 @@ const PricingPage = ({ plans }) => {
         {currentPlans?.map((plan) => (
           <SinglePackage key={plan._id} plan={plan} />
         ))}
-        {plans?.length > 0 && planType === 'monthly' && (
-          <CustomPlan facilities={plans[0].facilities} />
-        )}
+        {plans?.length > 0 &&
+          (planType === 'monthly' || planType === 'yearly') && (
+            <CustomPlan facilities={plans[0].facilities} />
+          )}
       </div>
       <PricingTable />
     </div>
