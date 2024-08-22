@@ -38,9 +38,10 @@ const PricingPage = ({ plans }) => {
         {currentPlans?.map((plan) => (
           <SinglePackage key={plan._id} plan={plan} />
         ))}
-        {plans?.length > 0 && planType === 'monthly' && (
-          <CustomPlan facilities={plans[0].facilities} />
-        )}
+        {plans?.length > 0 &&
+          (planType === 'monthly' || planType === 'yearly') && (
+            <CustomPlan facilities={plans[0].facilities} />
+          )}
       </div>
       <PricingTable />
     </div>
