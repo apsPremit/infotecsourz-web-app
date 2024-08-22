@@ -55,14 +55,41 @@ const UploadPage = () => {
       (userData?.subscription?.plan_type === 'paid' &&
         userData?.subscription?.remaining_credit < images?.length)
     ) {
-      return toast.error('you have not require credit please update your plan');
+      return toast.error(
+        'You do not have enough credits. Please update your plan.'
+      );
     }
 
-    const updatedImageList = imageList.map((img) => ({
-      ...img,
-      loading: false,
-      isUploaded: false,
-    }));
+    // Function to handle renaming of files with duplicate names
+    const renameDuplicateFiles = (fileList) => {
+      const nameCount = {}; // Keeps track of file names and their counts
+      return fileList.map((file) => {
+        const { name } = file.file;
+        // Initialize or increment count for the name
+        if (!nameCount[name]) {
+          nameCount[name] = 0;
+        } else {
+          nameCount[name]++;
+        }
+
+        // Generate a new file name with a count if it's a duplicate
+        const newName =
+          nameCount[name] > 0 ? `${name} (${nameCount[name]})` : name;
+
+        return {
+          ...file,
+          file: new File([file.file], newName, { type: file.file.type }),
+        };
+      });
+    };
+
+    const updatedImageList = renameDuplicateFiles(
+      imageList.map((img) => ({
+        ...img,
+        loading: false,
+        isUploaded: false,
+      }))
+    );
 
     // Filter out files that are already in the images state
     const filteredImageList = updatedImageList.filter((newImage) => {
@@ -85,7 +112,7 @@ const UploadPage = () => {
       return;
     }
 
-    // upload image
+    // Upload image
     const files = imagesToUpload.map((image) => image.file);
     const filePayloads = imagesToUpload.map((image) => ({
       contentType: image.file.type,
@@ -96,7 +123,7 @@ const UploadPage = () => {
       const response = await getUploadUrl({
         filePayloads,
         userId: user?.userId,
-        imageSource: tempSource,
+        imageSource: tempSource || imageSource,
       }).unwrap();
 
       const urls = response?.data?.urls;
@@ -107,7 +134,7 @@ const UploadPage = () => {
       setUploadedImageCount(urls.length);
     } catch (error) {
       console.log(error);
-      return toast.error(error?.data?.message || 'something went wrong!');
+      return toast.error(error?.data?.message || 'Something went wrong!');
     }
   };
 
