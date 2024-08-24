@@ -77,12 +77,12 @@ const ShowImages = () => {
                   </span>
                 </div>
               )}
-              <p className='absolute top-1 left-2 text-xs text-ellipsis'>
+              <p className='absolute top-1 left-2 text-xs text-ellipsis bg-white px-1.5 rounded bg-opacity-25'>
                 {image.file.name.length > 25
                   ? image.file.name.substring(0, 25) + '...'
                   : image.file.name}
               </p>
-              <p className='absolute bottom-1 left-2 text-xs'>
+              <p className='absolute bottom-1 left-2 text-xs bg-white px-1.5 rounded bg-opacity-25'>
                 {(image.file.size / (1024 * 1024)).toFixed(3)} mb
               </p>
               {image?.isUploaded && (
