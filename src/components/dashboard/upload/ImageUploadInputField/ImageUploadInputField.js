@@ -41,6 +41,7 @@ const ImageUploadInputField = ({ setFileUrl, isUploading, images }) => {
     setFileUrl(url);
     setImageQuantityFromUrl(imageQuantity);
     setOrderId(generateId);
+    toast.success('image source link added');
   };
 
   return (

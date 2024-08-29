@@ -13,7 +13,7 @@ const PlanToggle = ({ isChecked, toggler, label }) => {
           id={label}
           checked={isChecked}
           onChange={toggler}
-          className={`${isChecked ? 'bg-main' : 'bg-slate-200'}
+          className={`${isChecked ? 'bg-main' : 'bg-slate-400'}
             relative inline-flex h-[27px] w-[50px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75 mx-3`}
         >
           <span

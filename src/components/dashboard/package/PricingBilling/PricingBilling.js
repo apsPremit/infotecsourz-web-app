@@ -1,6 +1,6 @@
 'use client';
 import React, { useContext, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import styles from '@/app/styles.module.css';
 import { Toaster } from 'react-hot-toast';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,7 +9,9 @@ import Swal from 'sweetalert2';
 import { StateContext } from '@/context/StateProvider';
 import PaypalSubscriptionButtons from './PaypalSubscription.buttons';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 const PricingBilling = ({ plan }) => {
+  const router = useRouter();
   const { taxRate, isTermsAgreed, setIsTermsAgreed } = useContext(StateContext);
   const [showDetails, setShowDetails] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('paypal / credit card');
@@ -186,6 +188,11 @@ const PricingBilling = ({ plan }) => {
               <PaypalSubscriptionButtons plan_id={plan_id} user={user} />
             </div>
           </div>
+        </div>
+        <div className='my-5 flex justify-end'>
+          <button onClick={() => router.back()} className={styles.btn_shadow}>
+            Back
+          </button>
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 'use client';
+import styles from '@/app/styles.module.css';
 import React, { useContext, useState } from 'react';
 import { StateContext } from '../../../../context/StateProvider';
 import PaypalCheckoutButtons from '../PaypalCheckoutButtons/PaypalCheckoutButtons';
@@ -10,8 +11,10 @@ import { useAuth } from '@/context/AuthProvider';
 import { useSession } from 'next-auth/react';
 import { useApplyCouponMutation } from '@/redux/services/couponApi';
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const BillingPage = () => {
+  const router = useRouter();
   const {
     uploadedImageCount,
     perPhotoCost,
@@ -47,7 +50,7 @@ const BillingPage = () => {
   let subTotal = totalPhotos * perPhotoCost;
   let taxTotal = (taxRate / 100) * subTotal;
   let grandTotal = subTotal + taxTotal - discountAmount;
-  console.log({ grandTotal, discountAmount });
+
   const remainingCredit =
     userData?.subscription?.remaining_credit - totalPhotos;
 
@@ -242,13 +245,14 @@ const BillingPage = () => {
                 >
                   <div className='flex items-center gap-2 font-bold'>
                     <input
-                      onClick={(e) =>
+                      onClick={(e) => {
                         setPaymentMethod(
                           paymentMethod === e.target.value
                             ? null
                             : e.target.value
-                        )
-                      }
+                        );
+                        setAgree(!agree);
+                      }}
                       value='paypal / credit card'
                       id='paypal_credit'
                       type='radio'
@@ -271,9 +275,8 @@ const BillingPage = () => {
                   className='flex items-start gap-x-4 px-2 mt-10 mb-5 cursor-pointer'
                 >
                   <input
-                    onChange={() => setAgree(!agree)}
                     id='agree_terms'
-                    checked={agree}
+                    checked={paymentMethod === 'paypal / credit card'}
                     type='checkbox'
                     className='scale-125 mt-1'
                   />
@@ -304,6 +307,11 @@ const BillingPage = () => {
             </div>
           )}
         </div>
+      </div>
+      <div className='my-5 flex justify-end'>
+        <button onClick={() => router.back()} className={styles.btn_shadow}>
+          Back
+        </button>
       </div>
       <Toaster />
     </div>
