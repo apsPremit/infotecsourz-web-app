@@ -8,8 +8,6 @@ import CustomPlan from '../SinglePackage/CustomPlan';
 import PlanToggle from '@/components/ui/PlanToggle';
 
 const PricingPage = ({ plans }) => {
-  console.log({ plans });
-
   const [planType, setPlanType] = useState('monthly');
   const session = useSession();
   const user = session?.data?.user;

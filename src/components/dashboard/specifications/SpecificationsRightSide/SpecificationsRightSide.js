@@ -1,7 +1,7 @@
 'use client';
 import config from '@/config';
 import { StateContext } from '@/context/StateProvider';
-import { baseUrl } from '@/utils/functions/baseUrl';
+import styles from '@/app/styles.module.css';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -80,7 +80,7 @@ const SpecificationsRightSide = () => {
             id=''
             onBlur={(e) => setProductDetailsDescription(e.target.value)}
             rows={5}
-            className='w-full border border-shadow px-5 py-3 text-[#9d9c9c] outline-0 focus:rounded focus:border-main'
+            className='w-full border border-shadow px-5 py-3 text-black outline-0 focus:rounded focus:border-main'
           ></textarea>
         </label>
       </div>
@@ -127,7 +127,10 @@ const SpecificationsRightSide = () => {
         </label>
       </div>
       {/* btn proceed  */}
-      <div className='mt-5 flex justify-end'>
+      <div className='mt-5 flex justify-end gap-5'>
+        <button onClick={() => router.back()} className={styles.btn_shadow}>
+          Back
+        </button>
         <button
           disabled={!returnTime}
           onClick={handleProceed}
