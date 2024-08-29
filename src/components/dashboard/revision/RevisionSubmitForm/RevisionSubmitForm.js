@@ -3,6 +3,7 @@ import config from '@/config';
 import { baseUrl } from '@/utils/functions/baseUrl';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 const RevisionForm = ({ order, user }) => {
   const router = useRouter();
@@ -33,9 +34,12 @@ const RevisionForm = ({ order, user }) => {
 
       if (result.success) {
         router.push(`/dashboard/revision/success?orderId=${order?.id}`);
+      } else {
+        return toast.error(result?.message || 'something went wrong');
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error?.message);
+      console.log('rev', error);
     }
   };
   return (
@@ -94,6 +98,7 @@ const RevisionForm = ({ order, user }) => {
           Submit
         </button>
       </form>
+      <Toaster />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 'use client';
 import React, { useContext, useState } from 'react';
-
+import styles from '@/app/styles.module.css';
 import { useRouter } from 'next/navigation';
 import './UploadPage.css';
 import NotificationModal from '../NotificationModal/NotificationModal';
@@ -132,6 +132,7 @@ const UploadPage = () => {
       setOrderId(response?.data?.order_id);
       setImageSource(response?.data?.image_source);
       setUploadedImageCount(urls.length);
+      toast.success('images uploaded successfully');
     } catch (error) {
       console.log(error);
       return toast.error(error?.data?.message || 'Something went wrong!');
@@ -246,12 +247,18 @@ const UploadPage = () => {
           </ImageUploading>
           {/* process button  */}
           <div>
-            <div className='flex  justify-center'>
+            <div className='flex  justify-end gap-5'>
+              <button
+                onClick={() => router.back()}
+                className={styles.btn_shadow}
+              >
+                Back
+              </button>
               <button
                 onClick={handleProceed}
                 className='text-white px-3.5 py-2 bg-main hover:bg-mainHover  rounded  flex disabled:opacity-20 disabled:cursor-not-allowed'
               >
-                {isUploading ? 'Loading..' : 'Proceed'}
+                Proceed
               </button>
             </div>
           </div>
