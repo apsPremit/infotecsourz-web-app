@@ -5,11 +5,9 @@ import React from 'react';
 
 const SubscribedPackage = () => {
   const { userData } = useAuth();
-  // console.log("userData", userData);
-
   return (
     <div className='grid grid-cols-1 mg:grid-cols-2 lg:grid-cols-3 mb-5 text-white  '>
-      <div className='mt-3 bg-blue-500 px-5 pt-2 pb-5 rounded-lg shadow'>
+      <div className={`mt-3 px-5 pt-2 pb-5 rounded-lg shadow bg-blue-500`}>
         <p className='text-sm font-bold'>Subscribed Package</p>
         {userData?.subscription ? (
           <p className='text-lg font-bold my-1 capitalize'>

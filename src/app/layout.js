@@ -18,6 +18,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
+      <head>
+        <link rel='icon' href='/public/logo.png' sizes='any' />
+      </head>
       <body className={poppins.className}>
         <ReduxProvider>
           <NextAuthProvider>

@@ -11,6 +11,7 @@ import { baseUrl } from '@/utils/functions/baseUrl';
 import Alert from '@/components/shared/Alert/Alert';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import config from '@/config';
+import NotificationToast from '@/components/ui/NotficationToast';
 
 export const metadata = {
   title: 'Dashboard | Infotecsourz',
@@ -52,6 +53,7 @@ const page = async (props) => {
       {props?.searchParams?.message && (
         <Alert message={props?.searchParams?.message} />
       )}
+      <NotificationToast />
       <SubscribedPackage />
       <div className='mx-auto grid-cols-3  space-y-5 lg:grid lg:gap-5 lg:space-y-0'>
         <FreeTrialBox />
