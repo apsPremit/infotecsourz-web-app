@@ -44,6 +44,16 @@ const SlideFoot = ({ handlePrev, handleNext, currentSlide }) => {
           router.push('/dashboard/pricing');
         }
       });
+    } else if (userData?.subscription?.status !== 'active') {
+      return Swal.fire({
+        title: 'Your subscription is expired please renew or upgrade you plan',
+        icon: 'warning',
+        confirmButtonText: 'Upgrade',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push('/dashboard/pricing');
+        }
+      });
     } else {
       handleNext();
     }

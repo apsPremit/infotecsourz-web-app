@@ -28,7 +28,11 @@ const PlanBox = ({ subscription }) => {
           <div>
             <h3 className='text-xl font-bold capitalize text-gray-800'>
               {plan_name}
-              <span className='ml-5 rounded-xl bg-blue-500 p-1.5 text-xs font-normal text-white'>
+              <span
+                className={`ml-5 rounded-xl  p-1.5 text-xs font-normal text-white ${
+                  status !== 'active' ? 'bg-red-500' : 'bg-blue-500'
+                }`}
+              >
                 {status}
               </span>
             </h3>

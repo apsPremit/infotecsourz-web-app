@@ -1,26 +1,25 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { IoLocationOutline } from 'react-icons/io5';
 import defaultProfileImage from '../../../../../public/images/others/profile.png';
-import axios from 'axios';
-import { baseUrl } from '@/utils/functions/baseUrl';
 import { StateContext } from '@/context/StateProvider';
 import { useSession } from 'next-auth/react';
+import { useAuth } from '@/context/AuthProvider';
 
 const ProfilePage = () => {
-  const { photoUrl, setPhotoUrl } = useContext(StateContext);
+  const { userData } = useAuth();
   const session = useSession();
   const user = session?.data?.user;
 
-  const { name, email, image, country, company } = user || {};
+  const { name, email, photo, country, company } = userData || {};
 
   return (
     <div className='lg:px-10 '>
       <div className='mb-5 space-x-5 rounded bg-white p-5 md:flex '>
         <Image
-          src={image || defaultProfileImage}
+          src={photo || defaultProfileImage}
           height={150}
           width={150}
           alt='profile photo'
@@ -39,13 +38,13 @@ const ProfilePage = () => {
             </div>
           )}
 
-          {/* <div>
+          <div>
             <Link href='/dashboard/profile/edit'>
               <button className='rounded border border-shadow px-3 py-1.5'>
                 Edit Profile
               </button>
             </Link>
-          </div> */}
+          </div>
         </div>
       </div>
 
