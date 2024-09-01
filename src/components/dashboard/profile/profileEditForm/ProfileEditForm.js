@@ -6,18 +6,19 @@ import { useForm } from 'react-hook-form';
 import defaultProfileImage from '../../../../../public/images/others/profile.png';
 import updateProfile from '@/utils/functions/updateProfile';
 import toast, { Toaster } from 'react-hot-toast';
-import axios from 'axios';
-import { baseUrl } from '@/utils/functions/baseUrl';
-import { StateContext } from '@/context/StateProvider';
 import PasswordChangeForm from '../PasswordChangeForm/PasswordChangeForm';
 import { useSession } from 'next-auth/react';
+import { useGetProfileImageUploadUlrMutation } from '@/redux/services/userApi';
+import { useAuth } from '@/context/AuthProvider';
+import { useRouter } from 'next/navigation';
 
 const ProfileEditForm = () => {
-  const session = useSession();
-  const user = session?.data?.user;
+  const { userData } = useAuth();
+  console.log('user data', userData);
   const [photoUploading, setPhotoUploading] = useState(false);
-
-  const { name, email, country, company } = user || {};
+  const [getUploadUrl] = useGetProfileImageUploadUlrMutation();
+  const router = useRouter();
+  const { name, email, country, company } = userData || {};
 
   const {
     register,
@@ -27,27 +28,31 @@ const ProfileEditForm = () => {
   } = useForm();
 
   const updateProfilePhoto = async (e) => {
-    const loadingToast = toast.loading('uploading image...');
     const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append('photo', file);
+    const filePayload = { contentType: file.type, fileName: file.name };
 
     try {
-      const res = await axios.put(
-        `${baseUrl}/user/update_profile_image/${user.email}`,
-        formData
-      );
-      const data = res?.data;
-      if (data?.error) {
-        toast.error('something wrong');
+      const response = await getUploadUrl({
+        userId: userData?.id,
+        data: filePayload,
+      }).unwrap();
+      const uploadUrl = response?.data;
+
+      const res = await fetch(uploadUrl, {
+        method: 'PUT',
+        body: file,
+        headers: {
+          'Content-Type': file.type,
+        },
+      });
+      if (!res.ok) {
+        throw new Error(`Failed to upload file: ${res.statusText}`);
       }
-      toast.dismiss(loadingToast);
-      toast.remove(loadingToast);
+
+      toast.success('profile image updated');
+      router.refresh();
     } catch (error) {
       console.log(error);
-      toast.error('something wrong');
-      toast.dismiss(loadingToast);
-      toast.remove(loadingToast);
     }
   };
 
@@ -60,7 +65,10 @@ const ProfileEditForm = () => {
     };
 
     try {
-      const updatedData = await updateProfile(email || user?.email, updateData);
+      const updatedData = await updateProfile(
+        email || userData?.email,
+        updateData
+      );
 
       if (updatedData) {
         toast.success('your profile update successful');
@@ -82,7 +90,7 @@ const ProfileEditForm = () => {
               className='w-full cursor-pointer bg-red-300 '
             >
               <Image
-                src={user?.image || defaultProfileImage}
+                src={userData?.photo || defaultProfileImage}
                 height={200}
                 width={200}
                 alt='profile photo'
