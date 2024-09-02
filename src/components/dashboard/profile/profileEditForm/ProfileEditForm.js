@@ -4,22 +4,30 @@ import { AiOutlineCamera } from 'react-icons/ai';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import defaultProfileImage from '../../../../../public/images/others/profile.png';
-import updateProfile from '@/utils/functions/updateProfile';
 import toast, { Toaster } from 'react-hot-toast';
 import PasswordChangeForm from '../PasswordChangeForm/PasswordChangeForm';
-import { useSession } from 'next-auth/react';
-import { useGetProfileImageUploadUlrMutation } from '@/redux/services/userApi';
+import {
+  useUpdateProfileImageMutation,
+  useUpdateProfileMutation,
+} from '@/redux/services/userApi';
 import { useAuth } from '@/context/AuthProvider';
 import { useRouter } from 'next/navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProfileImage } from '@/redux/features/profileImageSlice';
+import Loader from '@/components/shared/Loader/Loader';
+import { ImSpinner3 } from 'react-icons/im';
 
 const ProfileEditForm = () => {
   const { userData } = useAuth();
-  console.log('user data', userData);
-  const [photoUploading, setPhotoUploading] = useState(false);
-  const [getUploadUrl] = useGetProfileImageUploadUlrMutation();
-  const router = useRouter();
-  const { name, email, country, company } = userData || {};
+  const img = useSelector((state) => state.profileImage?.img);
+  const dispatch = useDispatch();
+  const [updateProfileImage, { isLoading }] = useUpdateProfileImageMutation();
+  const [updateProfile] = useUpdateProfileMutation();
 
+  const { name, email, country, phone } = userData || {};
+  const imgSrc = img
+    ? `${img}?t=${new Date().getTime()}`
+    : userData?.photo || defaultProfileImage;
   const {
     register,
     handleSubmit,
@@ -29,28 +37,17 @@ const ProfileEditForm = () => {
 
   const updateProfilePhoto = async (e) => {
     const file = e.target.files[0];
-    const filePayload = { contentType: file.type, fileName: file.name };
+    const formData = new FormData();
+    formData.append('profile-image', file);
 
     try {
-      const response = await getUploadUrl({
+      const response = await updateProfileImage({
         userId: userData?.id,
-        data: filePayload,
+        data: formData,
       }).unwrap();
-      const uploadUrl = response?.data;
-
-      const res = await fetch(uploadUrl, {
-        method: 'PUT',
-        body: file,
-        headers: {
-          'Content-Type': file.type,
-        },
-      });
-      if (!res.ok) {
-        throw new Error(`Failed to upload file: ${res.statusText}`);
-      }
-
+      const url = response?.data?.url;
+      dispatch(setProfileImage(url));
       toast.success('profile image updated');
-      router.refresh();
     } catch (error) {
       console.log(error);
     }
@@ -61,20 +58,14 @@ const ProfileEditForm = () => {
       name: data?.name || name,
       email: email,
       country: data?.country || country,
-      company: data?.company || company,
+      phone: data?.phone || phone,
     };
 
     try {
-      const updatedData = await updateProfile(
-        email || userData?.email,
-        updateData
-      );
-
-      if (updatedData) {
-        toast.success('your profile update successful');
-      }
+      await updateProfile({ userId: userData?.id, data: updateData }).unwrap();
+      toast.success('profile updated');
     } catch (error) {
-      toast.error('something wrong');
+      toast.error(error?.data?.message || 'something went wrong');
     }
   };
 
@@ -87,10 +78,10 @@ const ProfileEditForm = () => {
           <div className='relative overflow-hidden'>
             <label
               htmlFor='changeProfileImage'
-              className='w-full cursor-pointer bg-red-300 '
+              className='w-full cursor-pointer bg-red-300 relative'
             >
               <Image
-                src={userData?.photo || defaultProfileImage}
+                src={imgSrc}
                 height={200}
                 width={200}
                 alt='profile photo'
@@ -99,6 +90,7 @@ const ProfileEditForm = () => {
               />
 
               <input
+                disabled={isLoading}
                 onChange={updateProfilePhoto}
                 name='photo'
                 id='changeProfileImage'
@@ -108,7 +100,11 @@ const ProfileEditForm = () => {
 
               <div className='absolute  top-1/2 h-1/2 w-[200px] rounded-2xl bg-[#8a7474] text-center text-white'>
                 <span className='flex justify-center py-1 text-center text-2xl'>
-                  <AiOutlineCamera className='' />
+                  {isLoading ? (
+                    <ImSpinner3 className='animate-spin' />
+                  ) : (
+                    <AiOutlineCamera className='' />
+                  )}
                 </span>
                 <p className='px-3 text-center text-sm'>
                   Upload a new Profile Picture
@@ -159,11 +155,11 @@ const ProfileEditForm = () => {
           </div>
 
           <div className='my-3 justify-between lg:flex '>
-            <p className='text-main'>Company</p>
+            <p className='text-main'>Phone</p>
             <input
-              defaultValue={company}
-              {...register('company')}
-              name='company'
+              defaultValue={phone}
+              {...register('phone')}
+              name='phone'
               type='text'
               className='w-full rounded border border-shadow px-3 py-1.5 outline-0 focus:border-main lg:w-auto'
             />
