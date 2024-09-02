@@ -219,7 +219,7 @@ const Invoice = ({ invoice }) => {
 
             <div className='mt-5 grid grid-cols-1 gap-8 font-bold capitalize md:mt-0 md:grid-cols-2'>
               <div>
-                <div>
+                {/* <div>
                   <h3 className='mb-1 mt-3 text-sm font-bold'>
                     Terms and conditions
                   </h3>
@@ -227,7 +227,7 @@ const Invoice = ({ invoice }) => {
                     Please send payment within due date. There will be 10%
                     interest charge per month on late payment.
                   </p>
-                </div>
+                </div> */}
               </div>
               <div>
                 <div className='mt-5  flex justify-start gap-x-20 md:mt-0 md:justify-end'>
