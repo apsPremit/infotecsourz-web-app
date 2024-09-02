@@ -1,14 +1,10 @@
 'use client';
 import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import logoFull from '../../../../../public/images/others/logo-full.png';
 import { useReactToPrint } from 'react-to-print';
-import { useParams } from 'next/navigation';
-import axios from 'axios';
-import { baseUrl } from '@/utils/functions/baseUrl';
 import moment from 'moment';
 import './invoice.css';
-
 const Invoice = ({ invoice }) => {
   const componentPDF = useRef();
 

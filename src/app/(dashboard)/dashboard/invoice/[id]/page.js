@@ -14,7 +14,6 @@ const fetchInvoice = async (orderId, accessToken) => {
       `${config.api_base_url}/invoices/${orderId}`
     );
     const result = response.data.data;
-    console.log({ result });
     return result;
   } catch (error) {}
 };
@@ -26,7 +25,15 @@ const page = async ({ params }) => {
 
   return (
     <>
-      <Invoice invoice={invoice} />
+      <div>
+        {invoice ? (
+          <Invoice invoice={invoice} />
+        ) : (
+          <div className='h-screen flex items-center justify-center'>
+            <p>Something went wrong</p>
+          </div>
+        )}
+      </div>
     </>
   );
 };

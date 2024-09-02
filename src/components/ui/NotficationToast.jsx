@@ -7,7 +7,6 @@ import { IoIosWarning } from 'react-icons/io';
 const NotificationToast = () => {
   const { userData } = useAuth();
   const isActive = userData?.subscription?.status === 'active';
-  console.log('active', isActive);
   if (!userData || !userData.subscription || isActive) {
     return null;
   }

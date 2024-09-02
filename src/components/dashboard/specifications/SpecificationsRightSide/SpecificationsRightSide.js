@@ -101,14 +101,12 @@ const SpecificationsRightSide = () => {
             <span className='mb-3 text-2xl'>
               <BsUpload />
             </span>
-            <p className='dark:text-gray-400 mb-2  text-sm'>
+            <p className='text-black mb-2  text-sm'>
               <span className='font-semibold'>
                 Click to upload special instructions or sample
               </span>
             </p>
-            <p className='dark:text-gray-400  text-xs'>
-              SVG, PNG, JPG, GIF or PDF
-            </p>
+            <p className='text-black  text-xs'>SVG, PNG, JPG, GIF or PDF</p>
             {isUploading && (
               <div className='flex items-center justify-center text-xl text-main'>
                 <ImSpinner2 className='animate-spin' />
