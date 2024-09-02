@@ -11,9 +11,9 @@ export const metadata = {
 const Login = () => {
   return (
     <div>
-      <div className='mx-auto min-h-screen grid-cols-2  lg:grid '>
+      <div className='mx-auto min-h-screen flex justify-between'>
         <div
-          className={`hidden items-center justify-center lg:flex ${styles.bg_image}`}
+          className={`hidden items-center justify-center lg:flex ${styles.bg_image} w-1/2`}
         >
           <div className=' fill relative mx-20  rounded-2xl bg-opacity-80 p-20'>
             <Image

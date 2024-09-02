@@ -9,9 +9,11 @@ import { signIn } from 'next-auth/react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useVerifyLoginMutation } from '@/redux/services/authApi';
 import Spinner from '@/components/ui/Spinner';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const LoginForm = () => {
   const [error, setError] = useState('');
+  const [isVerified, setVerified] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -49,10 +51,16 @@ const LoginForm = () => {
       setError(error?.error);
     }
   };
-
+  const onChange = (value) => {
+    if (value) {
+      setVerified(true);
+    } else {
+      setVerified(false);
+    }
+  };
   return (
-    <div className='px-5 h-screen pt-10 w-4/5 border'>
-      <div className='rounded border p-5 lg:p-10'>
+    <div className='px-5 h-screen pt-10 w-full md:w-1/2 lg:w-1/3 mx-auto '>
+      <div className='rounded border px-5 p-5 '>
         <div className='flex flex-col items-center'>
           <Image src={logo} alt='logo' width={56} height={50} />
           <h2 className='my-4 text-3xl'>Login</h2>
@@ -137,8 +145,17 @@ const LoginForm = () => {
           {error && <p className='text-center text-sm text-red-500'>{error}</p>}
 
           <div>
+            <div className='flex items-center justify-center '>
+              <ReCAPTCHA
+                badge='inline'
+                type='image'
+                sitekey='6LfnnzQqAAAAAFFTCUdEI3WEtUTpmlUP5l6radc7'
+                onChange={onChange}
+                className=' flex items-center justify-center '
+              />
+            </div>
             <button
-              disabled={isLoading}
+              disabled={isLoading || !isVerified}
               className='my-5 w-full cursor-pointer rounded-lg bg-main px-3 py-3 text-center font-bold text-white hover:bg-[#5736ce] disabled:bg-opacity-50'
               type='submit'
               value='Login'
