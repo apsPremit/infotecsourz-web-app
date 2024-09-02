@@ -7,19 +7,22 @@ import defaultProfileImage from '../../../../../public/images/others/profile.png
 import { StateContext } from '@/context/StateProvider';
 import { useSession } from 'next-auth/react';
 import { useAuth } from '@/context/AuthProvider';
+import { useSelector } from 'react-redux';
 
 const ProfilePage = () => {
   const { userData } = useAuth();
   const session = useSession();
   const user = session?.data?.user;
-
-  const { name, email, photo, country, company } = userData || {};
-
+  const img = useSelector((state) => state.profileImage?.img);
+  const { name, email, phone, country, company } = userData || {};
+  const imgSrc = img
+    ? `${img}?t=${new Date().getTime()}`
+    : userData?.photo || defaultProfileImage;
   return (
     <div className='lg:px-10 '>
       <div className='mb-5 space-x-5 rounded bg-white p-5 md:flex '>
         <Image
-          src={photo || defaultProfileImage}
+          src={imgSrc}
           height={150}
           width={150}
           alt='profile photo'
@@ -66,8 +69,8 @@ const ProfilePage = () => {
           <p>{country}</p>
         </div>
         <div className='mb-2 justify-between md:flex'>
-          <p className='text-main'>Company Name</p>
-          <p>{company}</p>
+          <p className='text-main'>Phone</p>
+          <p>{phone}</p>
         </div>
       </div>
     </div>

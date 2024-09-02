@@ -1,13 +1,13 @@
-import { baseUrl } from '@/utils/functions/baseUrl';
+import { useChangePasswordMutation } from '@/redux/services/authApi';
 import { useSession } from 'next-auth/react';
-import React, { useState } from 'react';
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
 const PasswordChangeForm = () => {
   const session = useSession();
   const user = session?.data?.user;
-  const [error, setError] = useState('');
+  const [changePassword] = useChangePasswordMutation();
 
   const {
     register,
@@ -21,30 +21,17 @@ const PasswordChangeForm = () => {
   const newPassword = watch('newPassword');
 
   const onSubmit = async (data) => {
-    setError('');
     try {
-      const res = await fetch(
-        `${baseUrl}/auth/change_password/${user?.email}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        }
-      );
-      const result = await res.json();
-
-      if (result?.error) {
-        reset();
-        return setError(result?.error);
-      }
-
+      const payload = {
+        userId: user?.userId,
+        oldPassword: data.oldPassword,
+        newPassword: data?.newPassword,
+      };
+      await changePassword(payload).unwrap();
       toast.success('Password changed');
       reset();
     } catch (error) {
-      reset();
-      setError(error?.message);
+      toast.error(error?.data?.message || 'something went wrong');
     }
   };
 
@@ -99,7 +86,7 @@ const PasswordChangeForm = () => {
                 }}
                 render={({ field }) => (
                   <input
-                    type='password'
+                    type='text'
                     id='newPassword'
                     className='w-full rounded border border-shadow px-3 py-1.5 outline-0 focus:border-main lg:w-auto'
                     {...field}
@@ -136,7 +123,7 @@ const PasswordChangeForm = () => {
                 }}
                 render={({ field }) => (
                   <input
-                    type='password'
+                    type='text'
                     id='confirmPassword'
                     className='w-full rounded border border-shadow px-3 py-1.5 outline-0 focus:border-main lg:w-auto'
                     {...field}
@@ -152,7 +139,6 @@ const PasswordChangeForm = () => {
             </div>
           </div>
 
-          {error && <p className='text-center text-sm text-red-500'>{error}</p>}
           <div className='mt-5 justify-center lg:flex'>
             <button
               type='submit'
@@ -163,6 +149,7 @@ const PasswordChangeForm = () => {
           </div>
         </div>
       </form>
+      <Toaster />
     </div>
   );
 };

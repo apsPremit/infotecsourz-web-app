@@ -2,9 +2,16 @@ import baseApi from '../baseApi';
 
 const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getProfileImageUploadUlr: builder.mutation({
+    updateProfileImage: builder.mutation({
       query: ({ userId, data }) => ({
-        url: `/users/${userId}/profile-image-upload-url`,
+        url: `/users/${userId}/update-profile-image`,
+        method: 'PATCH',
+        body: data,
+      }),
+    }),
+    updateProfile: builder.mutation({
+      query: ({ userId, data }) => ({
+        url: `/users/${userId}/update-profile`,
         method: 'PATCH',
         body: data,
       }),
@@ -12,4 +19,5 @@ const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetProfileImageUploadUlrMutation } = userApi;
+export const { useUpdateProfileImageMutation, useUpdateProfileMutation } =
+  userApi;
