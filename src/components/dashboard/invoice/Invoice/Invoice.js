@@ -97,7 +97,7 @@ const Invoice = ({ invoice }) => {
                         formateBillingAddress(transaction?.shipping_address)
                           .name
                       }
-                      ,
+
                       {
                         formateBillingAddress(transaction?.shipping_address)
                           .street
@@ -107,12 +107,12 @@ const Invoice = ({ invoice }) => {
                         formateBillingAddress(transaction?.shipping_address)
                           .city
                       }
-                      ,
+
                       {
                         formateBillingAddress(transaction?.shipping_address)
                           .postal
                       }
-                      ,
+
                       {
                         formateBillingAddress(transaction?.shipping_address)
                           .country
@@ -123,18 +123,22 @@ const Invoice = ({ invoice }) => {
                 <div className='flex md:justify-end md:gap-x-20'>
                   <div className='capitalize'>
                     <p className='font-bold '>Invoice no:</p>
-                    <p className='whitespace-nowrap font-bold'>
-                      Transaction Id:
-                    </p>
+                    {transaction?.transaction_id && (
+                      <p className='whitespace-nowrap font-bold'>
+                        Transaction Id:
+                      </p>
+                    )}
                     <p>date:</p>
                     <p>status:</p>
                   </div>
                   <div>
                     <p className='font-bold'>{id}</p>
-                    <p className='font-bold'>
-                      {transaction?.transaction_id || <br />}
-                    </p>
-                    <p>{moment(createdAT).format('D MMMM  YYYY')}</p>
+                    {transaction?.transaction_id && (
+                      <p className='font-bold'>
+                        {transaction?.transaction_id || <br />}
+                      </p>
+                    )}
+                    <p>{moment(createdAT).format('MMM D, YYYY')}</p>
                     <p>{transaction?.status}</p>
                   </div>
                 </div>
