@@ -16,10 +16,12 @@ import {
   useGetCountriesQuery,
   useRegisterMutation,
 } from '@/redux/services/authApi';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const SignUpForm = () => {
   const router = useRouter();
   const [isAgree, setAgree] = useState(false);
+  const [isVerified, setVerified] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -74,7 +76,13 @@ const SignUpForm = () => {
       setError(error?.message);
     }
   };
-
+  const onChange = (value) => {
+    if (value) {
+      setVerified(true);
+    } else {
+      setVerified(false);
+    }
+  };
   return (
     <div className=' px-5 py-12 w-4/5 mx-auto'>
       <div className='rounded border p-5 lg:p-10'>
@@ -276,9 +284,20 @@ const SignUpForm = () => {
               <ImSpinner2 className='animate-spin' />
             </div>
           )}
+          <div className='flex items-center justify-center '>
+            {isAgree && (
+              <ReCAPTCHA
+                badge='inline'
+                type='image'
+                sitekey='6LfnnzQqAAAAAFFTCUdEI3WEtUTpmlUP5l6radc7'
+                onChange={onChange}
+                className=' flex items-center justify-center '
+              />
+            )}
+          </div>
           <div>
             <input
-              disabled={!isAgree}
+              disabled={!isAgree || !isVerified}
               className='mb-5 mt-3 w-full cursor-pointer rounded-lg bg-main px-3 py-3 text-center font-bold text-white hover:bg-[#5736ce] disabled:bg-opacity-50'
               type='submit'
               value='Sign Up'

@@ -16,8 +16,17 @@ const userApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    deleteUser: builder.mutation({
+      query: (userId) => ({
+        url: `/users/${userId}/delete`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
-export const { useUpdateProfileImageMutation, useUpdateProfileMutation } =
-  userApi;
+export const {
+  useUpdateProfileImageMutation,
+  useUpdateProfileMutation,
+  useDeleteUserMutation,
+} = userApi;
