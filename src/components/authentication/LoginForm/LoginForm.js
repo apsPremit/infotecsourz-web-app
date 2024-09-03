@@ -13,7 +13,6 @@ import ReCAPTCHA from 'react-google-recaptcha';
 
 const LoginForm = () => {
   const [error, setError] = useState('');
-  const [isVerified, setVerified] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -51,13 +50,7 @@ const LoginForm = () => {
       setError(error?.error);
     }
   };
-  const onChange = (value) => {
-    if (value) {
-      setVerified(true);
-    } else {
-      setVerified(false);
-    }
-  };
+
   return (
     <div className='px-5 h-screen pt-10 w-full md:w-1/2 lg:w-1/3 mx-auto '>
       <div className='rounded border px-5 p-5 '>
@@ -145,17 +138,8 @@ const LoginForm = () => {
           {error && <p className='text-center text-sm text-red-500'>{error}</p>}
 
           <div>
-            <div className='flex items-center justify-center '>
-              <ReCAPTCHA
-                badge='inline'
-                type='image'
-                sitekey='6LfnnzQqAAAAAFFTCUdEI3WEtUTpmlUP5l6radc7'
-                onChange={onChange}
-                className=' flex items-center justify-center '
-              />
-            </div>
             <button
-              disabled={isLoading || !isVerified}
+              disabled={isLoading}
               className='my-5 w-full cursor-pointer rounded-lg bg-main px-3 py-3 text-center font-bold text-white hover:bg-[#5736ce] disabled:bg-opacity-50'
               type='submit'
               value='Login'
