@@ -3,8 +3,14 @@ import ImageBox from '../ImageBox/ImageBox';
 import RadioButton from '@/components/shared/RadioButton/RadioButton';
 import SlideFoot from '../SlideFoot/SlideFoot';
 import { StateContext } from '@/context/StateProvider';
-import { SketchPicker } from 'react-color';
+import {
+  BlockPicker,
+  GithubPicker,
+  PhotoshopPicker,
+  SketchPicker,
+} from 'react-color';
 import SwitchToggle from '@/components/ui/SwitchToggle';
+import Draggable from 'react-draggable';
 
 const BackgroundSlide = () => {
   const {
@@ -27,26 +33,35 @@ const BackgroundSlide = () => {
 
   return (
     <div className='relative'>
-      <ImageBox />
-      <h2 className='mb-5  text-lg font-bold'>Choose a background </h2>
-      <div className='grid grid-cols-2 lg:grid-cols-3 space-y-1.5'>
-        {backgroundOptions.map((item, i) => (
-          <SwitchToggle
-            toggler={() => setBackgroundColor(item.value)}
-            key={i}
-            label={item.title}
-            isChecked={item?.value === backgroundColor}
-          />
-        ))}
-        {backgroundColor === 'custom' && (
-          <div className='absolute -right-10 top-0'>
+      <div>
+        <ImageBox />
+        <h2 className='mb-5  text-lg font-bold'>Choose a background </h2>
+        <div className='grid grid-cols-2 lg:grid-cols-3 space-y-1.5'>
+          {backgroundOptions.map((item, i) => (
+            <SwitchToggle
+              toggler={() => setBackgroundColor(item.value)}
+              key={i}
+              label={item.title}
+              isChecked={item?.value === backgroundColor}
+            />
+          ))}
+        </div>
+      </div>
+
+      {backgroundColor === 'custom' && (
+        <Draggable handle='.drag-handle' cancel='.sketch-picker *'>
+          <div className='absolute  top-0 -right-10 lg:-right-56  '>
+            <div className='drag-handle cursor-move bg-gray-200 p-2 rounded-t text-center'>
+              Drag
+            </div>
             <SketchPicker
+              className='sketch-picker'
               onChange={handleColorChange}
               color={backgroundColor}
             />
           </div>
-        )}
-      </div>
+        </Draggable>
+      )}
     </div>
   );
 };

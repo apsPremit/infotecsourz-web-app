@@ -1,16 +1,24 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { IoLocationOutline } from 'react-icons/io5';
 import defaultProfileImage from '../../../../../public/images/others/profile.png';
 import { StateContext } from '@/context/StateProvider';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { useAuth } from '@/context/AuthProvider';
 import { useSelector } from 'react-redux';
+import Modal from '@/components/ui/Modal';
+import { useDeleteUserMutation } from '@/redux/services/userApi';
+import toast, { Toaster } from 'react-hot-toast';
+import UncancelModal from '@/components/ui/UncancelModal';
+import { ImSpinner3 } from 'react-icons/im';
 
 const ProfilePage = () => {
   const { userData } = useAuth();
+  const [isOpen, setOpen] = useState(false);
+  const [openUncancel, setOpenUncancel] = useState(false);
+  const [deleteAccount] = useDeleteUserMutation();
   const session = useSession();
   const user = session?.data?.user;
   const img = useSelector((state) => state.profileImage?.img);
@@ -18,6 +26,21 @@ const ProfilePage = () => {
   const imgSrc = img
     ? `${img}?t=${new Date().getTime()}`
     : userData?.photo || defaultProfileImage;
+
+  const handleAccountDelete = async () => {
+    try {
+      await deleteAccount(user?.userId).unwrap();
+      setOpen(false);
+      setOpenUncancel(true);
+      setTimeout(() => {
+        setOpenUncancel(false);
+        signOut();
+      }, 500);
+    } catch (error) {
+      toast.error(error?.data?.message || 'something went wrong');
+    }
+  };
+
   return (
     <div className='lg:px-10 '>
       <div className='mb-5 space-x-5 rounded bg-white p-5 md:flex '>
@@ -73,6 +96,55 @@ const ProfilePage = () => {
           <p>{phone}</p>
         </div>
       </div>
+      {/* basic informatin  */}
+      <div className='mb-5 rounded bg-white p-5 border-red-500 border shadow'>
+        <h3 className='mb-3  text-xl font-bold'>Delete Account</h3>
+        <p>
+          You are about to permanently delete your account from the Infotecsourz
+          app. This action is irreversible, order and photos will be lost.
+          Please proceed with caution.
+        </p>
+        <div className='flex justify-end mt-5'>
+          <button
+            onClick={() => setOpen(true)}
+            className='px-3 py-1.5 rounded text-white bg-red-500 hover:bg-red-700'
+          >
+            Delete Account
+          </button>
+        </div>
+        <Modal isOpen={isOpen} setOpen={setOpen} className='w-[450px]'>
+          <div>
+            <h3 className='text-xl font-semibold '>Confirm Account Deletion</h3>
+            <div className='my-3'>
+              <p>
+                Please confirm that you want to proceed with this action. If you
+                have any concerns, do not hesitate to contact our support team.
+              </p>
+
+              <div className='flex justify-end'>
+                <button
+                  onClick={handleAccountDelete}
+                  className='mt-3 px-3 py-1.5 rounded text-white bg-red-500 hover:bg-red-700'
+                  variant='primary'
+                >
+                  Confirm
+                </button>
+              </div>
+            </div>
+          </div>
+        </Modal>
+        <UncancelModal
+          isOpen={openUncancel}
+          setOpen={setOpenUncancel}
+          className='w-[200px]'
+        >
+          <div className='flex flex-col justify-center items-center space-y-3'>
+            <h3 className='text-xl font-semibold text-center'>Sign Out</h3>
+            <ImSpinner3 className='text-main animate-spin' size={25} />
+          </div>
+        </UncancelModal>
+      </div>
+      <Toaster />
     </div>
   );
 };
