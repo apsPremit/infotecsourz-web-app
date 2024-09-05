@@ -8,8 +8,13 @@ import { useDeleteSingleImageMutation } from '@/redux/services/imageApi';
 
 const ShowImages = () => {
   const [deleteImage] = useDeleteSingleImageMutation();
-  const { uploadedImageCount, images, setImages, imageSource } =
-    useContext(StateContext);
+  const {
+    uploadedImageCount,
+    setUploadedImageCount,
+    images,
+    setImages,
+    imageSource,
+  } = useContext(StateContext);
   const isUploaded = uploadedImageCount > 0;
   const allUploaded = images.every((img) => img.isUploaded === true);
   const handleDeleteImage = async (index) => {

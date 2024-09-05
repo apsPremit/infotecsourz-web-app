@@ -14,6 +14,7 @@ const SpecificationsLeftSide = () => {
     imageQuantityFromUrl,
     setReturnTime,
     returnTime,
+    images,
   } = useContext(StateContext);
 
   const { userData } = useAuth();
@@ -44,8 +45,7 @@ const SpecificationsLeftSide = () => {
 
     {
       label: 'Product Uploaded',
-      value:
-        imageQuantityFromUrl > 0 ? imageQuantityFromUrl : uploadedImageCount,
+      value: imageQuantityFromUrl > 0 ? imageQuantityFromUrl : images?.length,
       type: 'text',
     },
     {
