@@ -140,8 +140,6 @@ const UploadPage = () => {
   };
 
   const updateImgStatus = (imageName, loading = false, isUploaded = false) => {
-    console.log('changing status', imageName);
-
     setImages((prevImages) =>
       prevImages.map((image) =>
         image.file.name === imageName
