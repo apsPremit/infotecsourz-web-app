@@ -29,6 +29,7 @@ const BillingPage = () => {
     instructionSource,
     photoRequirements,
     orderId,
+    images,
   } = useContext(StateContext);
   const [coupon, setCoupon] = useState(null);
   const [isAppliedCoupon, setAppliedCoupon] = useState(false);
@@ -46,35 +47,13 @@ const BillingPage = () => {
     userData?.subscription || {};
 
   let totalPhotos =
-    uploadedImageCount < 1 ? imageQuantityFromUrl : uploadedImageCount;
+    uploadedImageCount < 1 ? imageQuantityFromUrl : images?.length;
   let subTotal = totalPhotos * perPhotoCost;
   let taxTotal = (taxRate / 100) * subTotal;
   let grandTotal = subTotal + taxTotal - discountAmount;
 
   const remainingCredit =
     userData?.subscription?.remaining_credit - totalPhotos;
-
-  // const orderDetails = {
-  //   id: orderId,
-  //   order_name: orderName,
-  //   user_id: user?.userId,
-  //   photo_type: photoType,
-  //   plan: userData?.subscription?.plan_name,
-  //   photo_quantity: parseInt(totalPhotos),
-  //   per_photo_cost: perPhotoCost,
-  //   subtotal: subTotal,
-  //   tax_rate: taxRate,
-  //   tax_total: taxTotal,
-  //   grand_total: grandTotal,
-  //   details: productDetailsDescription,
-  //   image_url: fileUrl,
-  //   image_source: imageSource,
-  //   requirements: photoRequirements,
-  //   turn_around_time: returnTime,
-  //   instruction_source: instructionSource,
-  //   source: 'web',
-  //   discount_rate: discountRate,
-  // };
 
   const orderDetails = {
     id: orderId,
