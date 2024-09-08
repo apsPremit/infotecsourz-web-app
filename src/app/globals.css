@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@media print {
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+  /* Ensure content fits within the A4 page */
+  .invoice-container {
+    width: 100%;
+    height: auto;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+
 /* p,
 span {
   color: #1F2937
