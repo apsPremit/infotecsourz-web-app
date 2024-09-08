@@ -59,7 +59,7 @@ const Invoice = ({ invoice }) => {
         </div>
         <div
           ref={componentPDF}
-          className='mx-auto w-full rounded-lg   border bg-white lg:w-3/4'
+          className='invoice-container mx-auto w-full rounded-lg   border bg-white lg:w-3/4'
         >
           {/* Card */}
           <div className='p-5 md:p-16 '>

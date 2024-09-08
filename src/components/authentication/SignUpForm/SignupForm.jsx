@@ -260,24 +260,38 @@ const SignUpForm = () => {
           </div>
 
           {/* ********terms checkbox *******/}
-          <label htmlFor='checkbox' className='my-4 accent-main'>
-            <input
-              onChange={() => setAgree(!isAgree)}
-              checked={isAgree}
-              type='checkbox'
-              className='mr-2 '
-            />
-            <span className='text-sm'>
-              I accept{' '}
-              <Link
-                target='_blank'
-                href='https://www.infotecsourz.com/terms-and-conditions/'
-                className='text-main hover:underline'
-              >
-                Terms & Conditions
-              </Link>
-            </span>
-          </label>
+          <div>
+            <label
+              htmlFor='agree_terms'
+              className='flex items-start gap-x-4 px-2 mt-3 cursor-pointer'
+            >
+              <input
+                onChange={() => setAgree(!isAgree)}
+                id='agree_terms'
+                checked={isAgree}
+                type='checkbox'
+                className='scale-125 mt-1'
+              />
+              <p className='text-sm'>
+                I accept{' '}
+                <Link
+                  target='_blank'
+                  href='https://www.infotecsourz.com/terms-and-conditions/'
+                  className='text-main hover:underline'
+                >
+                  Terms
+                </Link>
+                <span className='px-2'>&</span>
+                <Link
+                  target='_blank'
+                  href='https://www.infotecsourz.com/terms-and-conditions/'
+                  className='text-main hover:underline'
+                >
+                  Privacy policy
+                </Link>
+              </p>
+            </label>
+          </div>
           {error && <p className='text-center text-sm text-red-500'>{error}</p>}
           {loading && (
             <div className='flex items-center justify-center text-xl text-main'>

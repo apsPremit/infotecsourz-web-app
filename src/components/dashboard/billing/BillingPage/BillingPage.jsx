@@ -248,7 +248,7 @@ const BillingPage = () => {
                 </label>
               </div>
 
-              <div>
+              {/* <div>
                 <label
                   htmlFor='agree_terms'
                   className='flex items-start gap-x-4 px-2 mt-10 mb-5 cursor-pointer'
@@ -271,7 +271,39 @@ const BillingPage = () => {
                     </Link>
                   </p>
                 </label>
+              </div> */}
+              <div>
+                <label
+                  htmlFor='agree_terms'
+                  className='flex items-start gap-x-4 px-2 mt-3 cursor-pointer'
+                >
+                  <input
+                    checked={paymentMethod === 'paypal / credit card'}
+                    id='agree_terms'
+                    type='checkbox'
+                    className='scale-125 mt-1'
+                  />
+                  <p className='text-sm'>
+                    I accept{' '}
+                    <Link
+                      target='_blank'
+                      href='https://www.infotecsourz.com/terms-and-conditions/'
+                      className='text-main hover:underline'
+                    >
+                      Terms
+                    </Link>
+                    <span className='px-2'>&</span>
+                    <Link
+                      target='_blank'
+                      href='https://www.infotecsourz.com/terms-and-conditions/'
+                      className='text-main hover:underline'
+                    >
+                      Privacy policy
+                    </Link>
+                  </p>
+                </label>
               </div>
+
               <div>
                 {paymentMethod === 'paypal / credit card' && (
                   <div className='mt-8 '>
