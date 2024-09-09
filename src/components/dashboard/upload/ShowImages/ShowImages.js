@@ -92,7 +92,7 @@ const ShowImages = () => {
               </p>
               {image?.isUploaded && (
                 <div className='absolute bottom-1  font-bold flex gap-5 right-2 '>
-                  <span className=' text-green-500 p-1.5 bg-white rounded-full text-sm'>
+                  <span className=' text-white p-1.5 bg-green-500 rounded-full text-sm'>
                     <FaCheck />
                   </span>
                   {allUploaded && (
