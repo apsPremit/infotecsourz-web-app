@@ -93,8 +93,8 @@ const page = () => {
         <p className='text-start'>
           Let us know if you need any clarification on these steps or have
           additional questions e-mail us to{' '}
-          <span className='text-main'>contact@infotecsourez.com</span> or
-          contact support.
+          <span className='text-main'>contact@infotecsourz.com</span> or contact
+          support.
         </p>
       </div>
     </div>
