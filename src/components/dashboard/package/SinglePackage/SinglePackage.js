@@ -51,10 +51,13 @@ const SinglePackage = ({ plan }) => {
     type,
     validity,
     bill_type,
+    turn_around_time,
+    title,
   } = plan || {};
+
   return (
     <>
-      <div className={`border-shadow rounded   p-5 shadow relative bg-white`}>
+      <div className={`border-shadow rounded   p-5 shadow relative bg-white `}>
         <label className='cursor-pointer ' htmlFor={plan_name}>
           <div className='min-h-[52px]'>
             <h1 className='font-bold text-2xl capitalize'>{plan_name}</h1>
@@ -63,19 +66,23 @@ const SinglePackage = ({ plan }) => {
                 ${price}
                 {bill_type && (
                   <span className=''>
-                    /{bill_type === 'custom' ? validity + 'Days' : bill_type}
+                    /
+                    {bill_type === 'custom'
+                      ? validity + 'Days'
+                      : bill_type?.split('ly')[0]}
                   </span>
                 )}
               </h3>
             )}
             {free_credit > 0 && (
               <h3 className='font-bold'>
-                {free_credit} <span>Credit</span>
+                {free_credit} <span>Credit/${validity} Days</span>
               </h3>
             )}
             {type === 'pay-as-go' && (
               <h3 className='font-bold'>$0.39 to $6.59/photo</h3>
             )}
+            {title && <p className='text-sm'>{title}</p>}
           </div>
 
           <hr className='my-3' />
@@ -93,20 +100,30 @@ const SinglePackage = ({ plan }) => {
               {credit > 0 && (
                 <li className='list-inside list-disc'>{credit} Photos</li>
               )}
-              {credit === 0 && (
+              {type === 'pay-as-go' && (
                 <li className='list-inside list-disc'>Unlimited Credits</li>
               )}
-              {credit === 0 && (
+              {type === 'pay-as-go' && (
                 <li className='list-inside list-disc'>Unlimited Photos</li>
               )}
-              {validity > 0 && (
+              {free_credit > 0 && (
+                <li className='list-inside list-disc'>{free_credit} Credits</li>
+              )}
+              {free_credit > 0 && (
+                <li className='list-inside list-disc'>{free_credit} Photos</li>
+              )}
+
+              {turn_around_time.length > 0 && (
                 <li className='list-inside list-disc'>
-                  {validity} days validity
+                  {turn_around_time?.length > 1
+                    ? `${turn_around_time[0]}-${
+                        turn_around_time[turn_around_time.length - 1]
+                      }`
+                    : turn_around_time[0]}{' '}
+                  Turn around time
                 </li>
               )}
-              {/* {validity == 0 && (
-                <li className="list-inside list-disc">Unlimited validity</li>
-              )} */}
+
               {credit > 0 && (
                 <li className='list-inside list-disc'>
                   ${getPerCost(price, credit)} price per photo
@@ -117,6 +134,8 @@ const SinglePackage = ({ plan }) => {
                   $0.39 to $6.59 per photo
                 </li>
               )}
+
+              <li className='list-inside list-disc'>All service included</li>
             </ul>
 
             {/* details  */}
@@ -165,7 +184,9 @@ const SinglePackage = ({ plan }) => {
                       className='text-sm space-y-2 hover:text-main'
                       href={`/dashboard/buy-credit?plan=${id}`}
                     >
-                      Buy Credit
+                      <button className='px-3 py-1.5 bg-green-500 text-white rounded w-full'>
+                        Add credit
+                      </button>
                     </Link>
                   )}
                   <label htmlFor='' className='group flex flex-col'>
