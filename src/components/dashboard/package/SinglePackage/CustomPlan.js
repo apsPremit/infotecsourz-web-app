@@ -8,9 +8,7 @@ const CustomPlan = ({ facilities }) => {
     <div className={`border-shadow rounded p-5 shadow relative bg-white`}>
       <div className='min-h-[52px]'>
         <h1 className='font-bold text-2xl capitalize'>Custom Plan</h1>
-        <h3 className='font-bold'>
-          <span>Unlimited Credits</span>
-        </h3>
+        <p className='text-sm font-normal'>Enterprise solutions for business</p>
       </div>
 
       <hr className='my-3' />
@@ -20,7 +18,8 @@ const CustomPlan = ({ facilities }) => {
           <li className='list-inside list-disc'>Unlimited Credits</li>
           <li className='list-inside list-disc'>Unlimited Photos</li>
 
-          <li className='list-inside list-disc'> 30 days validity</li>
+          <li className='list-inside list-disc'>12-72 Turn around time</li>
+          <li className='list-inside list-disc'>All services included</li>
         </ul>
 
         <div>

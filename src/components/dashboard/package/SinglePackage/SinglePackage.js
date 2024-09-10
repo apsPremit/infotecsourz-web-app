@@ -52,10 +52,12 @@ const SinglePackage = ({ plan }) => {
     validity,
     bill_type,
     turn_around_time,
+    title,
   } = plan || {};
+
   return (
     <>
-      <div className={`border-shadow rounded   p-5 shadow relative bg-white`}>
+      <div className={`border-shadow rounded   p-5 shadow relative bg-white `}>
         <label className='cursor-pointer ' htmlFor={plan_name}>
           <div className='min-h-[52px]'>
             <h1 className='font-bold text-2xl capitalize'>{plan_name}</h1>
@@ -80,6 +82,7 @@ const SinglePackage = ({ plan }) => {
             {type === 'pay-as-go' && (
               <h3 className='font-bold'>$0.39 to $6.59/photo</h3>
             )}
+            {title && <p className='text-sm'>{title}</p>}
           </div>
 
           <hr className='my-3' />
@@ -97,12 +100,17 @@ const SinglePackage = ({ plan }) => {
               {credit > 0 && (
                 <li className='list-inside list-disc'>{credit} Photos</li>
               )}
-
-              {credit === 0 && (
+              {type === 'pay-as-go' && (
                 <li className='list-inside list-disc'>Unlimited Credits</li>
               )}
-              {credit === 0 && (
+              {type === 'pay-as-go' && (
                 <li className='list-inside list-disc'>Unlimited Photos</li>
+              )}
+              {free_credit > 0 && (
+                <li className='list-inside list-disc'>{free_credit} Credits</li>
+              )}
+              {free_credit > 0 && (
+                <li className='list-inside list-disc'>{free_credit} Photos</li>
               )}
 
               {turn_around_time.length > 0 && (
@@ -126,6 +134,8 @@ const SinglePackage = ({ plan }) => {
                   $0.39 to $6.59 per photo
                 </li>
               )}
+
+              <li className='list-inside list-disc'>All service included</li>
             </ul>
 
             {/* details  */}
