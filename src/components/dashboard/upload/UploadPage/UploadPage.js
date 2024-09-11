@@ -152,11 +152,13 @@ const UploadPage = () => {
   const uploadFile = async (url, file) => {
     updateImgStatus(file.name, true, false);
     try {
+      console.log('file', file.type);
       const response = await fetch(url, {
         method: 'PUT',
         body: file,
         headers: {
           'Content-Type': file.type,
+          'content-length': 0,
         },
       });
       if (!response.ok) {
