@@ -10,71 +10,71 @@ const NewOrderPage = () => {
     () => [
       {
         name: 'productImage',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/product/Product%20retouching.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Product%20retouching.png',
       },
       {
         name: 'modelImage',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/model/Noise%20remove.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Noise%20remove.png',
       },
       {
         name: 'modelMakeup',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/model/Beauty%20Makeup%20Retouching.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Beauty%20Makeup%20Retouching%20(2).png',
       },
       {
         name: 'modelClithFixing',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/model/Cloth%20&%20Shoe%20fixing.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Cloth%20&%20Shoe%20fixing.png',
       },
       {
         name: 'modelClipping',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/model/Clipping%20path.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Clipping%20path.png',
       },
       {
         name: 'modelBodyShaping',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/model/Body%20shaping.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Body%20shaping.png',
       },
       {
         name: 'modelColorCorrection',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/model/Color%20correction.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Color%20correction.png',
       },
       {
         name: 'modelTeethAndRedEye',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/model/Eye%20Retoching.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Eye%20Retoching.png',
       },
       {
         name: 'productNaturalShadow',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/product/Natural%20shadow.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Natural%20shadow.png',
       },
       {
         name: 'productReflectionShadow',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/product/Reflection%20shadow.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Reflection%20shadow.png',
       },
       {
         name: 'productMasking',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/product/Masking.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Masking.png',
       },
       {
         name: 'productBasicClipping',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/product/clipping%20path.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/clipping%20path.png',
       },
       {
         name: 'productMultipleClipping',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/product/Multiple%20clipping%20path.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Multiple%20clipping%20path.png',
       },
       {
         name: 'productColorCorrection',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/product/Color%20correction.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Color%20correction.png',
       },
       {
         name: 'productGhostMannequin',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/product/Product%20retouching.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Product%20retouching.png',
       },
       {
         name: 'productRetouching',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/product/Product%20retouching.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Product%20retouching.png',
       },
       {
         name: 'productColorVariant',
-        url: 'https://d34n7qm7kfn7vw.cloudfront.net/product/Color%20chnaging.png',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Color%20chnaging.png',
       },
     ],
     []
