@@ -9,9 +9,9 @@ import SwitchToggle from '@/components/ui/SwitchToggle';
 const TypeSlide = () => {
   const { photoType, setPhotoType } = useContext(StateContext);
   const modelBasic =
-    'https://d34n7qm7kfn7vw.cloudfront.net/model/Beauty%20Makeup%20Retouching.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Beauty%20Makeup%20Retouching%20(2).png';
   const productBasic =
-    'https://d34n7qm7kfn7vw.cloudfront.net/product/Color%20correction.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Color%20correction.png';
   return (
     <>
       <h1 className='mb-3 text-xl font-bold '>Please Select Photo Type</h1>

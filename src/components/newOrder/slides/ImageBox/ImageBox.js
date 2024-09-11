@@ -22,39 +22,39 @@ import { StateContext } from '@/context/StateProvider';
 
 const ImageBox = () => {
   const productImage =
-    'https://d34n7qm7kfn7vw.cloudfront.net/product/Product%20retouching.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Product%20retouching.png';
   const modelImage =
-    'https://d34n7qm7kfn7vw.cloudfront.net/model/Noise%20remove.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Noise%20remove.png';
   const modelMakeup =
-    'https://d34n7qm7kfn7vw.cloudfront.net/model/Beauty%20Makeup%20Retouching.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Beauty%20Makeup%20Retouching%20(2).png';
   const modelClithFixing =
-    'https://d34n7qm7kfn7vw.cloudfront.net/model/Cloth%20&%20Shoe%20fixing.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Cloth%20&%20Shoe%20fixing.png';
   const modelClipping =
-    'https://d34n7qm7kfn7vw.cloudfront.net/model/Clipping%20path.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Clipping%20path.png';
   const modelBodyShaping =
-    'https://d34n7qm7kfn7vw.cloudfront.net/model/Body%20shaping.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Body%20shaping.png';
   const modelColorCorrection =
-    'https://d34n7qm7kfn7vw.cloudfront.net/model/Color%20correction.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Color%20correction.png';
   const modelTeethAndRedEye =
-    'https://d34n7qm7kfn7vw.cloudfront.net/model/Eye%20Retoching.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Eye%20Retoching.png';
   const productNaturalShadow =
-    'https://d34n7qm7kfn7vw.cloudfront.net/product/Natural%20shadow.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Natural%20shadow.png';
   const productReflectionShadow =
-    'https://d34n7qm7kfn7vw.cloudfront.net/product/Reflection%20shadow.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Reflection%20shadow.png';
   const productMasking =
-    'https://d34n7qm7kfn7vw.cloudfront.net/product/Masking.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Masking.png';
   const productBasicClipping =
-    'https://d34n7qm7kfn7vw.cloudfront.net/product/clipping%20path.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/clipping%20path.png';
   const productMultipleClipping =
-    'https://d34n7qm7kfn7vw.cloudfront.net/product/Multiple%20clipping%20path.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Multiple%20clipping%20path.png';
   const productColorCorrection =
-    'https://d34n7qm7kfn7vw.cloudfront.net/product/Color%20correction.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Color%20correction.png';
   const productGhostMannequin =
-    'https://d34n7qm7kfn7vw.cloudfront.net/product/Product%20retouching.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Product%20retouching.png';
   const productRetouching =
-    'https://d34n7qm7kfn7vw.cloudfront.net/product/Product%20retouching.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Product%20retouching.png';
   const productColorVariant =
-    'https://d34n7qm7kfn7vw.cloudfront.net/product/Color%20chnaging.png';
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Color%20chnaging.png';
 
   const {
     photoType,
