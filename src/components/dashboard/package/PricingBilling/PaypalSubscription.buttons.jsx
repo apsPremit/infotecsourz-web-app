@@ -9,8 +9,7 @@ import config from '@/config';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 
-const PaypalSubscriptionButtons = ({ plan_id }) => {
-  const { isTermsAgreed } = useContext(StateContext);
+const PaypalSubscriptionButtons = ({ plan_id, agree }) => {
   const [isLoading, setLoading] = useState(true);
   const router = useRouter();
   const { userData } = useAuth();
@@ -38,7 +37,7 @@ const PaypalSubscriptionButtons = ({ plan_id }) => {
       ) : (
         <PayPalScriptProvider options={initialOptions}>
           <PayPalButtons
-            disabled={!isTermsAgreed}
+            disabled={!agree}
             style={{ label: 'subscribe' }}
             createSubscription={(data, actions) => {
               return actions.subscription.create({

@@ -14,7 +14,8 @@ const PricingBilling = ({ plan }) => {
   const router = useRouter();
   const { taxRate, isTermsAgreed, setIsTermsAgreed } = useContext(StateContext);
   const [showDetails, setShowDetails] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('paypal / credit card');
+  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [agree, setAgree] = useState(false);
   const { data: session, update } = useSession();
   const user = session?.user;
 
@@ -131,11 +132,16 @@ const PricingBilling = ({ plan }) => {
             <div className=''>
               <label
                 htmlFor='paypal_credit'
-                className='border px-3 py-2 rounded grid grid-cols-2 items-center courser-pointer mb-5'
+                className='border px-3 py-2 rounded grid grid-cols-2 items-center cursor-pointer mb-5'
               >
                 <div className='flex items-center gap-2 font-bold'>
                   <input
-                    onChange={(e) => setPaymentMethod(e.target.value)}
+                    onClick={(e) => {
+                      setPaymentMethod(
+                        paymentMethod === e.target.value ? null : e.target.value
+                      );
+                      setAgree(!agree);
+                    }}
                     value='paypal / credit card'
                     id='paypal_credit'
                     type='radio'
@@ -155,9 +161,9 @@ const PricingBilling = ({ plan }) => {
                 className='flex items-start gap-x-4 px-2 mt-3 cursor-pointer'
               >
                 <input
-                  onChange={() => setIsTermsAgreed(!isTermsAgreed)}
+                  readOnly
                   id='agree_terms'
-                  checked={isTermsAgreed}
+                  checked={agree}
                   type='checkbox'
                   className='scale-125 mt-1'
                 />
@@ -185,7 +191,11 @@ const PricingBilling = ({ plan }) => {
             {/* paypal payment  */}
 
             <div className='my-10 '>
-              <PaypalSubscriptionButtons plan_id={plan_id} user={user} />
+              <PaypalSubscriptionButtons
+                plan_id={plan_id}
+                user={user}
+                agree={agree}
+              />
             </div>
           </div>
         </div>
