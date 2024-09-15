@@ -248,30 +248,6 @@ const BillingPage = () => {
                 </label>
               </div>
 
-              {/* <div>
-                <label
-                  htmlFor='agree_terms'
-                  className='flex items-start gap-x-4 px-2 mt-10 mb-5 cursor-pointer'
-                >
-                  <input
-                    id='agree_terms'
-                    checked={paymentMethod === 'paypal / credit card'}
-                    type='checkbox'
-                    className='scale-125 mt-1'
-                  />
-
-                  <p className='text-sm'>
-                    I accept{' '}
-                    <Link
-                      target='_blank'
-                      href='https://www.infotecsourz.com/terms-and-conditions/'
-                      className='text-main hover:underline'
-                    >
-                      Terms & Conditions
-                    </Link>
-                  </p>
-                </label>
-              </div> */}
               <div>
                 <label
                   htmlFor='agree_terms'
