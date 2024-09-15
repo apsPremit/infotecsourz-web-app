@@ -189,6 +189,7 @@ const UploadPage = () => {
             multiple
             value={images}
             onChange={onChange}
+            maxNumber={100000}
             dataURLKey='data_url'
             acceptType={['jpg', 'gif', 'png', 'jpeg', 'webp']}
           >
