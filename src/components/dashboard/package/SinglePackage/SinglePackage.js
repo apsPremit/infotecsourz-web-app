@@ -76,7 +76,7 @@ const SinglePackage = ({ plan }) => {
             )}
             {free_credit > 0 && (
               <h3 className='font-bold'>
-                {free_credit} <span>Credit/${validity} Days</span>
+                {free_credit} <span>Credit/{validity} Days</span>
               </h3>
             )}
             {type === 'pay-as-go' && (
