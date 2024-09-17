@@ -16,6 +16,7 @@ import {
   useGetUploadUrlMutation,
   useUploadImageMutation,
 } from '@/redux/services/imageApi';
+import { imageFormats } from '@/assets/images/imgTypes';
 
 const UploadPage = () => {
   const {
@@ -191,7 +192,7 @@ const UploadPage = () => {
             onChange={onChange}
             maxNumber={100000}
             dataURLKey='data_url'
-            // acceptType={['jpg', 'gif', 'png', 'jpeg', 'webp']}
+            acceptType={imageFormats}
           >
             {({
               imageList,
