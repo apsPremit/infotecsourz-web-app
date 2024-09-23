@@ -59,8 +59,8 @@ const LoginForm = () => {
     }
   };
   return (
-    <div className='px-5 h-screen pt-10 w-full md:w-1/2 lg:w-1/3 mx-auto '>
-      <div className='rounded border px-5 p-5 '>
+    <div className='px-5 h-screen  w-full flex-1 mx-auto flex items-center justify-center'>
+      <div className='rounded border px-5 p-5 w-full md:w-3/4 xl:w-1/2'>
         <div className='flex flex-col items-center'>
           <Image src={logo} alt='logo' width={56} height={50} />
           <h2 className='my-4 text-3xl'>Login</h2>
