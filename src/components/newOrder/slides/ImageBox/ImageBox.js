@@ -27,6 +27,9 @@ const ImageBox = () => {
     'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Noise%20remove.png';
   const modelMakeup =
     'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Beauty%20Makeup%20Retouching%20(2).png';
+  const modelMasking =
+    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Masking.png';
+  const modelPimpleRemove = `https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Pimples,%20blemishes%20remove%20from%20face%20and%20skin.png`;
   const modelClithFixing =
     'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Cloth%20&%20Shoe%20fixing.png';
   const modelClipping =
@@ -122,6 +125,7 @@ const ImageBox = () => {
   }, [productFinalSpecs]);
 
   const getImageSrc = () => {
+    console.log({ modelUpdatedProperty });
     if (photoType === 'product') {
       switch (productUpdatedProperty) {
         case 'naturalShadow':
@@ -158,7 +162,7 @@ const ImageBox = () => {
         case 'bodyShaping':
           return modelBodyShaping;
         case 'pimplesRemove':
-          return modelMakeup;
+          return modelPimpleRemove;
         case 'wrinklesRemove':
           return modelColorCorrection;
         case 'teethRetouching':
@@ -168,7 +172,7 @@ const ImageBox = () => {
         case 'redEyeFixing':
           return modelTeethAndRedEye;
         case 'masking':
-          return modelMakeup;
+          return modelMasking;
         default:
           return modelImage;
       }
@@ -180,8 +184,8 @@ const ImageBox = () => {
       backgroundColor === 'original'
         ? ''
         : backgroundColor === 'custom'
-        ? customBackground
-        : backgroundColor,
+          ? customBackground
+          : backgroundColor,
     maxHeight: '700px',
     minHeight: '350px',
     aspectRatio: alignments?.ratio,
@@ -191,14 +195,14 @@ const ImageBox = () => {
       alignments.verticalAlignment === 'top'
         ? 'start'
         : alignments.verticalAlignment === 'bottom'
-        ? 'end'
-        : 'center',
+          ? 'end'
+          : 'center',
     alignItems:
       alignments.horizontalAlignment === 'left'
         ? 'start'
         : alignments.horizontalAlignment === 'right'
-        ? 'end'
-        : 'center',
+          ? 'end'
+          : 'center',
   };
 
   const imageStyle = {

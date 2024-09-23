@@ -21,6 +21,14 @@ const NewOrderPage = () => {
         url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Beauty%20Makeup%20Retouching%20(2).png',
       },
       {
+        name: 'modelMasking',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Masking.png',
+      },
+      {
+        name: 'modelPimpleRemove',
+        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Pimples,%20blemishes%20remove%20from%20face%20and%20skin.png',
+      },
+      {
         name: 'modelClithFixing',
         url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Cloth%20&%20Shoe%20fixing.png',
       },
