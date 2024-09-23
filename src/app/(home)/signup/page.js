@@ -12,7 +12,7 @@ const SignUp = () => {
   return (
     <div className='mx-auto min-h-screen grid-cols-2  lg:grid '>
       <div
-        className={`hidden items-center justify-center lg:flex ${styles.bg_image}`}
+        className={`hidden items-center justify-center lg:flex flex-1 ${styles.bg_image}`}
       >
         <div className=' fill fixed top-64  mx-20 rounded-2xl  bg-opacity-80 p-20'>
           <Image
