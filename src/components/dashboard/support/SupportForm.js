@@ -1,5 +1,6 @@
 'use client';
 import config from '@/config';
+import { useCreateTicketMutation } from '@/redux/services/supportApi';
 import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
@@ -8,6 +9,7 @@ import { ImSpinner2 } from 'react-icons/im';
 const SupportForm = () => {
   const session = useSession();
   const user = session?.data?.user;
+  const [createSupport, { isLoading }] = useCreateTicketMutation();
   const [loading, setLoading] = useState(false);
 
   const sendMessage = async (e) => {
@@ -17,32 +19,21 @@ const SupportForm = () => {
     const subject = form.subject.value;
     const message = form.message.value;
     const phone = form.phone.value;
+    const email = form.email.value;
     const messageData = {
       user_id: user?.userId,
       subject,
       description: message,
       phone,
+      email,
     };
 
     try {
-      const supportUrl = `${config.api_base_url}/supports/create-support`;
-      const res = await fetch(supportUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-        body: JSON.stringify(messageData),
-      });
-      if (!res.ok) throw new Error(res.statusText);
+      await createSupport(messageData).unwrap();
+      toast.success('Ticket has been created!');
       form.reset();
-      toast.success('request sent');
-      setLoading(false);
     } catch (error) {
-      console.log('er', error);
-      toast.error(error.message);
-      form.reset();
-      setLoading(false);
+      toast.error(error.data?.message || 'something went wrong');
     }
   };
 
@@ -50,7 +41,7 @@ const SupportForm = () => {
     <section className='bg-white dark:bg-gray-900'>
       <div className='py-8 lg:py-16 px-4 mx-auto max-w-screen-md'>
         <h2 className='mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white'>
-          Contact Us
+          Get Support
         </h2>
         <p className='mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl'>
           Got a technical issue? Want to send feedback about a our services?
@@ -123,7 +114,7 @@ const SupportForm = () => {
               placeholder='Leave a comment...'
             />
           </div>
-          {loading && (
+          {isLoading && (
             <div className='flex items-center lg:ml-5 justify-start text-xl text-main'>
               <ImSpinner2 className='animate-spin' />
             </div>
@@ -133,7 +124,7 @@ const SupportForm = () => {
             type='submit'
             className='bg-main px-3 py-2.5 text-white hover:bg-mainHover rounded '
           >
-            Send Message
+            Create Ticket
           </button>
         </form>
       </div>

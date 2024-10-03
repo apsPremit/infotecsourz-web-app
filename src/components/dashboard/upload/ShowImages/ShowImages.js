@@ -28,10 +28,7 @@ const ShowImages = () => {
       return;
     }
 
-    console.log('All images are uploaded, proceeding with deletion.');
-
     const key = `${imageSource}/${removedImage?.file?.name}`;
-    console.log(key);
 
     try {
       const response = await deleteImage(key).unwrap();
@@ -67,7 +64,7 @@ const ShowImages = () => {
                 src={image['data_url']}
                 width={300}
                 height={180}
-                alt={`uploaded image ${index}`}
+                alt={index}
                 className='max-h-44 w-full '
                 style={{ objectFit: 'fill', height: '100%' }}
               />
@@ -82,7 +79,7 @@ const ShowImages = () => {
                   </span>
                 </div>
               )}
-              <p className='absolute top-1 left-2 text-xs text-ellipsis bg-white px-1.5 rounded bg-opacity-25'>
+              <p className='absolute top-3 left-2 text-xs text-ellipsis bg-white px-1.5 rounded bg-opacity-25'>
                 {image.file.name.length > 25
                   ? image.file.name.substring(0, 25) + '...'
                   : image.file.name}
