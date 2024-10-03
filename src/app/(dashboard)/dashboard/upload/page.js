@@ -7,7 +7,7 @@ export const metadata = {
 
 const Upload = () => {
   return (
-    <div>
+    <div className=''>
       <UploadPage />
     </div>
   );

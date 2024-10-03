@@ -50,6 +50,10 @@ const UploadPage = () => {
   };
   // image Upload
   const onChange = async (imageList, addUpdateIndex) => {
+    imageList.forEach((image) => {
+      console.log('File type:', image.file.type); // Log file types to console
+    });
+
     // checks credit available or not
     if (
       userData?.subscription === null ||
@@ -186,6 +190,7 @@ const UploadPage = () => {
       <div>
         <div className=''>
           <ImageUploading
+            allowNonImageType
             onError={(error) => console.log('upload error', error)}
             multiple
             value={images}
