@@ -179,7 +179,7 @@ const PricingBilling = ({ plan }) => {
                   <span className='px-2'>&</span>
                   <Link
                     target='_blank'
-                    href='https://www.infotecsourz.com/terms-and-conditions/'
+                    href='https://www.infotecsourz.com/privacy-policy/'
                     className='text-main hover:underline'
                   >
                     Privacy policy
