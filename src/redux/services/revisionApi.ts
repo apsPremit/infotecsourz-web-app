@@ -4,15 +4,14 @@ const revisionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getRevisionImgUploadUrl: builder.mutation({
       query: (data) => ({
-        url: `/images/generate-url`,
+        url: `revisions/${data.orderId}/get-upload-url`,
         method: 'POST',
-        body: data,
+        body: data.data,
       }),
     }),
-
-    deleteSingleRevisionImage: builder.mutation({
+    deleteRevisionSingleImage: builder.mutation({
       query: (key) => ({
-        url: `/images/delete-image`,
+        url: `revisions/delete-image`,
         method: 'POST',
         body: { key },
       }),
@@ -22,5 +21,5 @@ const revisionApi = baseApi.injectEndpoints({
 
 export const {
   useGetRevisionImgUploadUrlMutation,
-  useDeleteSingleRevisionImageMutation,
+  useDeleteRevisionSingleImageMutation,
 } = revisionApi;

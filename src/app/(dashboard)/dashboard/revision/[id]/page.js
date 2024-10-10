@@ -1,5 +1,5 @@
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import RevisionForm from '@/components/dashboard/revision/RevisionSubmitForm/RevisionSubmitForm';
+import RevisionSubmitPage from '@/components/dashboard/revision/RevisionSubmitForm/RevisionSubmitPage';
 import Loader from '@/components/shared/Loader/Loader';
 import config from '@/config';
 import { getServerSession } from 'next-auth';
@@ -27,9 +27,9 @@ const Revision = async ({ params }) => {
   const order = await fetchOrder(id, session?.user?.accessToken);
 
   return (
-    <div className=' flex items-center justify-center'>
+    <div className=''>
       <Suspense fallback={<Loader />}>
-        <RevisionForm order={order} user={session?.user} />
+        <RevisionSubmitPage order={order} user={session?.user} />
       </Suspense>
     </div>
   );

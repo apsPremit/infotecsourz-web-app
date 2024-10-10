@@ -8,7 +8,7 @@ const RevisionImgUploadField = ({ uploadEvent, isDragging, dragProps }) => {
       <label
         className={`${
           isDragging ? 'bg-gray-200' : 'bg-gray-50'
-        }  hover:bg-gray-100 flex  items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-lg `}
+        }  hover:bg-gray-100 flex  items-center justify-center w-full h-80 border-2 border-gray-300 border-dashed rounded-lg `}
       >
         {isDragging ? (
           <p>Drop Here</p>
@@ -18,6 +18,7 @@ const RevisionImgUploadField = ({ uploadEvent, isDragging, dragProps }) => {
               <BsUpload />
             </span>
             <button
+              type='button'
               // disabled={isUploaded}
               onClick={uploadEvent}
               className='bg-blue-500 px-2 py-1.5 rounded text-white disabled:opacity-20 disabled:bg-blue-100'

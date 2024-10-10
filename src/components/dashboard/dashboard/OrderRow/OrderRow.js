@@ -15,7 +15,7 @@ const OrderRow = ({ order }) => {
   const session = useSession();
   const user = session?.data?.user;
   const router = useRouter();
-  const [downloading, setDownloading] = useState(false);
+  const [downloading, setDownloading] = useState({ type: null, id: null });
   const {
     _id,
     id,
@@ -27,10 +27,10 @@ const OrderRow = ({ order }) => {
     delivered_file_url,
   } = order || {};
 
-  const handleDownload = () => {
-    setDownloading(true);
+  const handleDownload = (url, fileName, id, type = 'order') => {
+    setDownloading({ type, id });
     axios
-      .get(`${config.api_base_url}/images/download?orderId=${id}`, {
+      .get(url, {
         responseType: 'blob',
         headers: { Authorization: `Bearer ${user?.accessToken}` },
       })
@@ -40,15 +40,15 @@ const OrderRow = ({ order }) => {
         });
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
-        link.setAttribute('download', `${id}.zip`);
+        link.setAttribute('download', fileName);
         link.href = url;
         link.click();
         window.URL.revokeObjectURL(url);
-        setDownloading(false);
+        setDownloading({ type: null, id: null });
       })
       .catch((error) => {
         alert('did not find any files');
-        setDownloading(false);
+        setDownloading({ type: null, id: null });
       });
   };
 
@@ -70,10 +70,16 @@ const OrderRow = ({ order }) => {
             </Link>
           ) : (
             <button
-              onClick={handleDownload}
+              onClick={() =>
+                handleDownload(
+                  `${config.api_base_url}/images/download?orderId=${id}`,
+                  `${id}.zip`,
+                  id
+                )
+              }
               className='text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded'
             >
-              {downloading ? (
+              {downloading.type == 'order' && downloading.id === id ? (
                 <span className='flex items-center justify-center  text-xs text-white'>
                   Downloading
                   <ImSpinner2 className='animate-spin ml-2 text-white' />
@@ -102,7 +108,7 @@ const OrderRow = ({ order }) => {
         </span>
       </td>
       <td className='whitespace-nowrap px-6 py-4 text-sm   text-black  '>
-        {moment(createdAt).format('MMM Do YY, h:mm:ss a')}
+        {moment(createdAt).format('MM DD YY, h:mm a')}
       </td>
       <td className='whitespace-nowrap px-6 py-4 text-sm   text-black  '>
         {turn_around_time && turn_around_time + ' Hours'}
@@ -113,16 +119,38 @@ const OrderRow = ({ order }) => {
         </Link>
       </td>
 
-      <td className='whitespace-nowrap px-6 py-4 text-sm   text-black text-center '>
-        {status == 'in-revision' ? (
-          <p>Request Sent</p>
-        ) : status == 'delivered' ? (
+      <td className='whitespace-nowrap px-6 py-4 text-sm text-black text-center '>
+        {order?.revision ? (
+          order.revision.status === 'pending' ? (
+            <p>Request Sent</p>
+          ) : order.revision.resolved_image_source ? (
+            <button
+              onClick={() =>
+                handleDownload(
+                  `${config.api_base_url}/revisions/${order?.revision?.id}/download-image`,
+                  `revision_${id}.zip`,
+                  order?.revision?.id,
+                  'revision'
+                )
+              }
+              className='text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded'
+            >
+              {downloading.type == 'revision' &&
+              downloading.id === order?.revision?.id ? (
+                <span className='flex items-center justify-center  text-xs text-white'>
+                  Downloading
+                  <ImSpinner2 className='animate-spin ml-2 text-white' />
+                </span>
+              ) : (
+                'Download'
+              )}
+            </button>
+          ) : null // Handle other statuses if needed
+        ) : order?.status === 'delivered' ? (
           <Link className='underline' href={`/dashboard/revision/${id}`}>
             Send Request
           </Link>
-        ) : (
-          ''
-        )}
+        ) : null}
       </td>
     </tr>
   );
