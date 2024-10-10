@@ -18,7 +18,7 @@ const OrderTable = ({ orders }) => {
             <div className='-m-1.5 overflow-x-auto'>
               <div className='inline-block min-w-full p-1.5 align-middle'>
                 <div className='overflow-hidden'>
-                  <table className='min-w-full divide-y divide-gray-200 '>
+                  <table className='min-w-full divide-y divide-gray-200 px-3'>
                     <thead>
                       <tr>
                         <th
