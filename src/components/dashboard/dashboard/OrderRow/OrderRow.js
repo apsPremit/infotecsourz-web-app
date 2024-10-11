@@ -61,7 +61,7 @@ const OrderRow = ({ order }) => {
         {order_name}
       </td>
       <td className='whitespace-nowrap px-6 py-4 text-sm   text-black '>
-        {status === 'delivered' &&
+        {(status === 'delivered' || status == 'in-revision') &&
           (delivered_file_url ? (
             <Link target='_blank' to={delivered_file_url}>
               <button className='text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded'>
