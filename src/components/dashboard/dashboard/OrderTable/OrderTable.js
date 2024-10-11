@@ -71,6 +71,12 @@ const OrderTable = ({ orders }) => {
                         >
                           Revision request
                         </th>
+                        <th
+                          scope='col'
+                          className='px-6 py-3 text-left text-sm font-medium text-black whitespace-nowrap '
+                        >
+                          Resolved File
+                        </th>
                       </tr>
                     </thead>
                     <tbody className='dark:divide-gray-700 divide-y divide-gray-200'>

@@ -119,38 +119,42 @@ const OrderRow = ({ order }) => {
         </Link>
       </td>
 
-      <td className='whitespace-nowrap px-6 py-4 text-sm text-black text-center '>
-        {order?.revision ? (
-          order.revision.status === 'pending' ? (
-            <p>Request Sent</p>
-          ) : order.revision.resolved_image_source ? (
-            <button
-              onClick={() =>
-                handleDownload(
-                  `${config.api_base_url}/revisions/${order?.revision?.id}/download-image`,
-                  `revision_${id}.zip`,
-                  order?.revision?.id,
-                  'revision'
-                )
-              }
-              className='text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded'
-            >
-              {downloading.type == 'revision' &&
-              downloading.id === order?.revision?.id ? (
-                <span className='flex items-center justify-center  text-xs text-white'>
-                  Downloading
-                  <ImSpinner2 className='animate-spin ml-2 text-white' />
-                </span>
-              ) : (
-                'Download'
-              )}
-            </button>
-          ) : null // Handle other statuses if needed
-        ) : order?.status === 'delivered' ? (
+      <td className='whitespace-nowrap px-6 py-4 text-sm   text-black text-center '>
+        {status == 'in-revision' ? (
+          <p>Request Sent</p>
+        ) : status == 'delivered' ? (
           <Link className='underline' href={`/dashboard/revision/${id}`}>
             Send Request
           </Link>
-        ) : null}
+        ) : (
+          ''
+        )}
+      </td>
+
+      <td className='whitespace-nowrap px-6 py-4 text-sm text-black text-center'>
+        {order?.revision && order?.revision?.resolved_image_source && (
+          <button
+            onClick={() =>
+              handleDownload(
+                `${config.api_base_url}/revisions/${order?.revision?.id}/download-image`,
+                `revision_${id}.zip`,
+                order?.revision?.id,
+                'revision'
+              )
+            }
+            className='text-xs px-1.5 py-1 bg-main hover:bg-mainHover text-white rounded'
+          >
+            {downloading.type === 'revision' &&
+            downloading.id === order?.revision?.id ? (
+              <span className='flex items-center justify-center text-xs text-white'>
+                Downloading
+                <ImSpinner2 className='animate-spin ml-2 text-white' />
+              </span>
+            ) : (
+              'Download'
+            )}
+          </button>
+        )}
       </td>
     </tr>
   );
