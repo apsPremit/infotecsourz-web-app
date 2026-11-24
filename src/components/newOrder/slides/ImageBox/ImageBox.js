@@ -22,42 +22,42 @@ import { StateContext } from '@/context/StateProvider';
 
 const ImageBox = () => {
   const productImage =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Product%20retouching.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Product%20retouching.png';
   const modelImage =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Noise%20remove.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Noise%20remove.png';
   const modelMakeup =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Beauty%20Makeup%20Retouching%20(2).png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Beauty%20Makeup%20Retouching%20(2).png';
   const modelMasking =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Masking.png';
-  const modelPimpleRemove = `https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Pimples,%20blemishes%20remove%20from%20face%20and%20skin.png`;
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Masking.png';
+  const modelPimpleRemove = `https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Pimples,%20blemishes%20remove%20from%20face%20and%20skin.png`;
   const modelClithFixing =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Cloth%20&%20Shoe%20fixing.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Cloth%20&%20Shoe%20fixing.png';
   const modelClipping =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Clipping%20path.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Clipping%20path.png';
   const modelBodyShaping =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Body%20shaping.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Body%20shaping.png';
   const modelColorCorrection =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Color%20correction.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Color%20correction.png';
   const modelTeethAndRedEye =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Eye%20Retoching.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Eye%20Retoching.png';
   const productNaturalShadow =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Natural%20shadow.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Natural%20shadow.png';
   const productReflectionShadow =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Reflection%20shadow.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Reflection%20shadow.png';
   const productMasking =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Masking.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Masking.png';
   const productBasicClipping =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/clipping%20path.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/clipping%20path.png';
   const productMultipleClipping =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Multiple%20clipping%20path.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Multiple%20clipping%20path.png';
   const productColorCorrection =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Color%20correction.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Color%20correction.png';
   const productGhostMannequin =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Product%20retouching.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Product%20retouching.png';
   const productRetouching =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Product%20retouching.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Product%20retouching.png';
   const productColorVariant =
-    'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Color%20chnaging.png';
+    'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Color%20chnaging.png';
 
   const {
     photoType,
