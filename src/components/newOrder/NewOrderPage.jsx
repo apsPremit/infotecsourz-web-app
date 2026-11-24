@@ -10,79 +10,79 @@ const NewOrderPage = () => {
     () => [
       {
         name: 'productImage',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Product%20retouching.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Product%20retouching.png',
       },
       {
         name: 'modelImage',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Noise%20remove.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Noise%20remove.png',
       },
       {
         name: 'modelMakeup',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Beauty%20Makeup%20Retouching%20(2).png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Beauty%20Makeup%20Retouching%20(2).png',
       },
       {
         name: 'modelMasking',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Masking.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Masking.png',
       },
       {
         name: 'modelPimpleRemove',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Pimples,%20blemishes%20remove%20from%20face%20and%20skin.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Pimples,%20blemishes%20remove%20from%20face%20and%20skin.png',
       },
       {
         name: 'modelClithFixing',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Cloth%20&%20Shoe%20fixing.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Cloth%20&%20Shoe%20fixing.png',
       },
       {
         name: 'modelClipping',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Clipping%20path.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Clipping%20path.png',
       },
       {
         name: 'modelBodyShaping',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Body%20shaping.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Body%20shaping.png',
       },
       {
         name: 'modelColorCorrection',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Color%20correction.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Color%20correction.png',
       },
       {
         name: 'modelTeethAndRedEye',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/model/Eye%20Retoching.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/model/Eye%20Retoching.png',
       },
       {
         name: 'productNaturalShadow',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Natural%20shadow.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Natural%20shadow.png',
       },
       {
         name: 'productReflectionShadow',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Reflection%20shadow.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Reflection%20shadow.png',
       },
       {
         name: 'productMasking',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Masking.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Masking.png',
       },
       {
         name: 'productBasicClipping',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/clipping%20path.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/clipping%20path.png',
       },
       {
         name: 'productMultipleClipping',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Multiple%20clipping%20path.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Multiple%20clipping%20path.png',
       },
       {
         name: 'productColorCorrection',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Color%20correction.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Color%20correction.png',
       },
       {
         name: 'productGhostMannequin',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Product%20retouching.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Product%20retouching.png',
       },
       {
         name: 'productRetouching',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Product%20retouching.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Product%20retouching.png',
       },
       {
         name: 'productColorVariant',
-        url: 'https://infotec-app-image-model-product.nyc3.cdn.digitaloceanspaces.com/product/Color%20chnaging.png',
+        url: 'https://pub-da46853260144bf6a37d018115493205.r2.dev/model-product/product/Color%20chnaging.png',
       },
     ],
     []
